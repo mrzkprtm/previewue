@@ -1,0 +1,88 @@
+---
+interface Props {
+  date: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  slug: string;
+}
+
+const { date, title, excerpt, category, slug } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<article class="article-card">
+  <span class="category">{category}</span>
+  <h3><a href={`/articles/${slug}`}>{title}</a></h3>
+  <p class="date">{formattedDate}</p>
+  <p class="excerpt">{excerpt}</p>
+  <a href={`/articles/${slug}`} class="read-more">Read More →</a>
+</article>
+
+<style>
+  .article-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #0066cc;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+
+  .article-card:hover {
+    transform: translateX(4px);
+  }
+
+  .category {
+    display: inline-block;
+    background: #0066cc;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .article-card h3 {
+    margin: 0.5rem 0;
+    color: #333;
+  }
+
+  .article-card h3 a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .article-card h3 a:hover {
+    color: #0066cc;
+  }
+
+  .date {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .excerpt {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .read-more {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .read-more:hover {
+    color: #0052a3;
+  }
+</style>

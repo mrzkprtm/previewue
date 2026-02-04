@@ -1,0 +1,63 @@
+---
+interface Props {
+  title?: string;
+  faqs?: {
+    question: string;
+    answer: string;
+  }[];
+}
+
+const {
+  title = "Pertanyaan Seputar Ultimate Education",
+  faqs = [
+    {
+      question: "Berapa lama kursus IELTS sampai skor 7.0?",
+      answer: "Durasi bervariasi tergantung level awal, namun rata-rata siswa kami membutuhkan 2-3 bulan program intensif untuk naik 1.0 - 1.5 band score."
+    },
+    {
+      question: "Apakah kelas tersedia online?",
+      answer: "Ya, kami menyediakan kelas Online Interactive (Live Zoom) dan Offline eksklusif. Materi dan kualitas pengajaran dijamin sama efektifnya."
+    },
+    {
+      question: "Apakah ada garansi skor?",
+      answer: "Kami memiliki program khusus dengan Garansi Skor (Score Guarantee) untuk IELTS dan TOEFL, di mana Anda bisa mengulang kelas gratis jika target belum tercapai."
+    },
+    {
+      question: "Tes apa yang dibutuhkan untuk kuliah luar negeri?",
+      answer: "Umumnya IELTS/TOEFL untuk syarat bahasa, dan SAT/GMAT/GRE untuk syarat akademik. Tim konsultan kami akan membantu menentukan tes yang tepat untuk tujuan Anda."
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4">
+        {title.includes('Ultimate Education') ? (
+           <>Pertanyaan Seputar <span class="text-primary">Ultimate Education</span></>
+        ) : title}
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      {faqs.map((faq, index) => (
+        <details class="group bg-gray-50 rounded-xl overflow-hidden border border-gray-100 h-full" open={false}>
+          <summary class="flex justify-between items-center p-6 cursor-pointer list-none h-full">
+            <h3 class="text-lg font-semibold text-gray-800 font-heading group-hover:text-primary transition-colors pr-4">
+              {faq.question}
+            </h3>
+            <span class="transform group-open:rotate-180 transition-transform duration-300 text-primary flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 leading-relaxed font-body border-t border-gray-100 pt-4">
+            {faq.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

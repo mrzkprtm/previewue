@@ -1,0 +1,365 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Mock promo data - akan di-fetch dari backend
+const promotions = [
+  {
+    id: '1',
+    title: 'Diskon 50% Kursus Spesial',
+    description: 'Dapatkan diskon hingga 50% untuk semua kursus pilihan minggu ini. Penawaran terbatas hanya untuk 100 pendaftar pertama!',
+    discount: 50,
+    validFrom: '2026-02-02',
+    validUntil: '2026-02-04',
+    programs: ['IELTS', 'SAT', 'GMAT'],
+    highlight: true,
+  },
+  {
+    id: '2',
+    title: 'Bundle Program Hemat',
+    description: 'Ambil 2 program sekaligus dan hemat 30%. Pilih kombinasi program favorit Anda dan maksimalkan persiapan tes internasional.',
+    discount: 30,
+    validFrom: '2026-02-02',
+    validUntil: '2026-02-10',
+    programs: ['Semua Program'],
+    highlight: false,
+  },
+  {
+    id: '3',
+    title: 'Early Bird Spesial - Akses Seumur Hidup',
+    description: 'Pendaftar awal dapat akses seumur hidup dengan harga spesial hanya $99. Gratis update semua materi dan akses ke mentor expert kami.',
+    discount: 70,
+    validFrom: '2026-02-02',
+    validUntil: '2026-02-15',
+    programs: ['Program Paket Lengkap'],
+    highlight: true,
+  },
+  {
+    id: '4',
+    title: 'Referral Program',
+    description: 'Ajak teman dan dapatkan komisi 10% dari setiap pendaftaran. Semakin banyak teman yang kamu ajak, semakin besar bonus yang kamu terima!',
+    discount: 10,
+    validFrom: '2026-02-01',
+    validUntil: '2026-03-31',
+    programs: ['Komisi Referral'],
+    highlight: false,
+  },
+];
+
+const daysUntilEnd = (date: string) => {
+  const today = new Date('2026-02-02');
+  const end = new Date(date);
+  const diff = Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  return diff > 0 ? diff : 0;
+};
+---
+
+<Layout title="Promosi - Ultimate Education" description="Dapatkan diskon dan penawaran spesial untuk program persiapan tes internasional dan beasiswa. Penawaran terbatas untuk waktu tertentu!">
+  <!-- Header -->
+  <section class="promo-header" role="region" aria-label="Header promosi">
+    <h1>Promosi Minggu Ini</h1>
+    <p>Jangan lewatkan penawaran spesial dan diskon eksklusif kami!</p>
+  </section>
+
+  <!-- Promotions Grid -->
+  <section class="promos-grid" role="region" aria-label="Daftar promosi">
+    {promotions.map(promo => (
+      <div class={`promo-card ${promo.highlight ? 'highlight' : ''}`}>
+        <div class="promo-badge">{promo.discount}% OFF</div>
+        <div class="promo-body">
+          <h3>{promo.title}</h3>
+          <p class="promo-description">{promo.description}</p>
+          
+          <div class="promo-programs">
+            {promo.programs.map(prog => (
+              <span class="program-tag">{prog}</span>
+            ))}
+          </div>
+
+          <div class="promo-validity">
+            <p><strong>Berlaku hingga:</strong> {new Date(promo.validUntil).toLocaleDateString('id-ID', { month: 'long', day: 'numeric' })}</p>
+            <p class="days-left">
+              {daysUntilEnd(promo.validUntil) === 0 
+                ? '❌ Penawaran Berakhir'
+                : `⏰ Sisa ${daysUntilEnd(promo.validUntil)} hari`
+              }
+            </p>
+          </div>
+
+          <a href="https://api.whatsapp.com/send/?phone=6283812310368" class="btn btn-primary">Manfaatkan Promo</a>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" role="region" aria-label="Pertanyaan yang sering diajukan">
+    <h2>Pertanyaan yang Sering Diajukan</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Bagaimana cara menggunakan kode promo?</summary>
+        <p>Hubungi kami melalui WhatsApp dengan menyebutkan promosi yang ingin Anda gunakan. Tim kami akan membantu proses pendaftaran dan pemberian diskon untuk Anda.</p>
+      </details>
+      
+      <details class="faq-item">
+        <summary>Apakah promosi bisa digabungkan dengan penawaran lain?</summary>
+        <p>Tidak, promosi tidak bisa digabungkan dengan penawaran atau diskon lainnya. Anda hanya bisa menggunakan satu penawaran per pendaftaran.</p>
+      </details>
+      
+      <details class="faq-item">
+        <summary>Bagaimana jika saya mendaftar setelah promo berakhir?</summary>
+        <p>Jangan khawatir! Selalu ada promosi baru setiap minggu. Ikuti media sosial kami untuk mendapatkan update penawaran terbaru.</p>
+      </details>
+      
+      <details class="faq-item">
+        <summary>Apakah ada jaminan uang kembali?</summary>
+        <p>Ya, kami memberikan garansi uang kembali 100% dalam 7 hari pertama jika Anda tidak puas dengan program kami.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" role="region" aria-label="Ajakan untuk mendaftar">
+    <div class="cta-content">
+      <h2>Tunggu Apa Lagi?</h2>
+      <p>Manfaatkan penawaran terbaik kami dan mulai perjalanan menuju kampus impian Anda hari ini!</p>
+      <a href="https://api.whatsapp.com/send/?phone=6283812310368" class="btn btn-primary btn-large">Hubungi Kami Sekarang</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .promo-header {
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .promo-header h1 {
+    margin-bottom: 1rem;
+  }
+
+  .promo-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .promos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .promo-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .promo-card:hover {
+    border-color: #0066cc;
+    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .promo-card.highlight {
+    border: 2px solid #ff6b6b;
+    background: linear-gradient(135deg, #fff5f5, #fff);
+  }
+
+  .promo-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  }
+
+  .promo-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .promo-card h3 {
+    color: #1a1a1a;
+  }
+
+  .promo-description {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .promo-programs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .program-tag {
+    background: #e6f2ff;
+    color: #0066cc;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .promo-validity {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 3px solid #0066cc;
+  }
+
+  .promo-validity p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
+  }
+
+  .days-left {
+    color: #ff6b6b;
+    font-weight: 600;
+    margin-top: 0.5rem !important;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: #0066cc;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  }
+
+  .btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    background: #f8f9fa;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    margin: 3rem 0;
+  }
+
+  .faq-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .faq-item summary {
+    padding: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.3s ease;
+  }
+
+  .faq-item summary:hover {
+    background: #f8f9fa;
+  }
+
+  .faq-item summary::after {
+    content: '▼';
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(180deg);
+  }
+
+  .faq-item p {
+    padding: 0 1.5rem 1.5rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    color: white;
+    padding: 3rem 0;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .cta-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cta-content h2 {
+    color: white;
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 400px;
+  }
+
+  @media (max-width: 768px) {
+    .promos-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-section {
+      padding: 2rem 1rem;
+    }
+
+    .cta-section {
+      padding: 2rem 1rem;
+    }
+  }
+</style>

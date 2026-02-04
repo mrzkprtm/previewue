@@ -1,0 +1,1676 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const programOptions = [
+  'IELTS',
+  'TOEFL iBT',
+  'GMAT',
+  'SAT',
+  'GRE',
+  'Program Beasiswa',
+  'Kelas Bahasa',
+];
+
+const partners = [
+  { name: 'Pertamina', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/pertamina-1.png' },
+  { name: 'BNI', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/BNI-1.png' },
+  { name: 'Bank Indonesia', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/bi-1.png' },
+  { name: 'Deloitte', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/Deloitte-1.png' },
+  { name: 'Mandiri', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/mandiri-1.png' },
+  { name: 'PLN', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/pln-1.png' },
+  { name: 'Pertamina', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/pertamina-1.png' },
+  { name: 'BNI', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/BNI-1.png' },
+  { name: 'Bank Indonesia', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/bi-1.png' },
+  { name: 'Deloitte', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/Deloitte-1.png' },
+  { name: 'Mandiri', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/mandiri-1.png' },
+  { name: 'PLN', logo: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/02/pln-1.png' },
+];
+
+const testPrograms = [
+  { name: 'IELTS', icon: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/ielts-100x100.png', link: 'https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=42' },
+  { name: 'TOEFL iBT', icon: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/toefl-100x100.png', link: 'https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=41' },
+  { name: 'GMAT', icon: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/gmat-100x100.png', link: 'https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=44' },
+  { name: 'SAT', icon: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/sat-100x100.png', link: 'https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=49' },
+];
+
+const programs = [
+  {
+    title: 'Persiapan Maksimal Raih Beasiswa Impian lewat Ultimate Scholarship Preparation',
+    description: 'Mulai dari pemetaan tujuan, strategi beasiswa, pembuatan dokumen, penulisan esai, hingga simulasi wawancara - semua kamu dapatkan di sini!',
+    cta: 'Pelajari lebih lanjut',
+    link: '/program/beasiswa',
+    image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/scholarship-prep.jpg',
+  },
+  {
+    title: 'Siapkan IELTS-mu dan Lolos ke Kampus Top Dunia bareng Ultimate IELTS',
+    description: 'Bingung mulai belajar IELTS? Tenang, IELTS Academy siap bantu dari dasar sampai mahir! Belajar efektif, latihan terarah, dan bimbingan tutor andal untuk capai skor 6.5+ ke atas.',
+    cta: 'Cek Ultimate IELTS',
+    link: '/program/ielts',
+    image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/ielts-prep.jpg',
+  },
+  {
+    title: 'Belajar Bahasa Asing Lebih Terarah, Skor Tes Lebih Maksimal',
+    description: 'Kuasai bahasa asing dan persiapkan dirimu untuk tes seperti HSK, JLPT, TOEFL, dan TOPIK bersama Ultimate Education. Sertifikasi internasional? Bisa kamu dapatkan!',
+    cta: 'Cek Program Bimbingan',
+    link: '/program/bahasa',
+    image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/language-prep.jpg',
+  },
+  {
+    title: 'Capai Skor Maksimal untuk Tes Masuk Universitas Luar Negeri',
+    description: 'Bersama tutor ahli, kamu bisa siap hadapi ACT, GMAT, GRE, dan SAT dengan lebih percaya diri. Ikuti program intensif demi lolos kampus impian!',
+    cta: 'Cek Program Persiapan',
+    link: '/program/tes',
+    image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/test-prep.jpg',
+  },
+];
+
+const mentors = [
+  { name: 'Mr. Ballard', title: 'IELTS Expert', university: 'Swineburn University', qualification: 'Native Speakers, 8 Years Teaching Experience', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/mr-ballard.jpg' },
+  { name: 'Ms. Dee', title: 'Tesol Certified', university: 'University of Hull', qualification: 'Native Speakers, 10 Years Teaching Experience', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/ms-dee.jpg' },
+  { name: 'Kak Ifa', title: 'LPDP Awardee', university: 'University of Edinburgh', qualification: '7.5 IELTS Score, 8 Years Teaching Experience', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/kak-ifa.jpg' },
+  { name: 'Kak Umen', title: 'LPDP Awardee', university: 'Univ College London', qualification: '7.5 IELTS Score, 8 Years Teaching Experience', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/kak-umen.jpg' },
+];
+
+const testimonials = [
+  { name: 'YUDISTIRA YUDADISASTRA', position: 'Assistant Vice President MANDIRI SEKURITAS', text: 'Ultimate Education is one of the great English courses in town. The course is well-administered by professional teachers. They also provide additional lessons to help us improve our English skills.', category: 'Ultimate IELTS', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/yudistira.jpg' },
+  { name: 'SATRIYO BHAWIKO ADHI', position: 'Assurances Services Advisory Deloitte', text: 'This course gave me further understanding about the IELTS test as it was taught by the experts. They also did not hesitate to give us an extra free course on grammar so that we could have better test results.', category: 'Ultimate IELTS', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/satriyo.jpg' },
+  { name: 'ASTRID GLORIA PEPITA', position: 'Assistant Manager Grab', text: 'Joining Ultimate Education\'s program was a good decision. It helped me to understand the test better. I can finally get 8.0 in the IELTS test. Thank you Ultimate Education.', category: 'Ultimate IELTS', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2024/03/astrid.jpg' },
+];
+
+const faqs = [
+  { question: 'Apa itu Ultimate Education?', answer: 'Ultimate Education adalah lembaga pendidikan yang menyediakan berbagai program persiapan tes seperti IELTS, TOEFL, GMAT, SAT, GRE, serta program persiapan beasiswa dan kelas bahasa asing.' },
+  { question: 'Berapa biaya untuk belajar di Ultimate Education?', answer: 'Biaya program bervariasi tergantung tipe program, durasi, dan intensitas belajar. Silakan hubungi tim kami untuk informasi lebih lanjut mengenai harga dan promo yang tersedia.' },
+  { question: 'Bagaimana cara mendaftar di Ultimate Education?', answer: 'Anda bisa mendaftar dengan menghubungi kami melalui WhatsApp di +62 838 1231 0368 atau datang langsung ke kantor kami di Jakarta atau Bandung.' },
+  { question: 'Apa saja program yang disediakan oleh Ultimate Education?', answer: 'Kami menyediakan program persiapan IELTS, TOEFL, SAT, GMAT, GRE, ACT, PTE, TOEIC, IGCSE, GED, serta program persiapan beasiswa dan kelas bahasa asing (Inggris, Mandarin, Jepang, Korea).' },
+  { question: 'Program lainnya?', answer: 'Selain program persiapan tes, kami juga menyediakan konsultasi beasiswa, penulisan esai, dan simulasi wawancara untuk membantu Anda meraih beasiswa impian.' },
+];
+---
+
+<Layout title="Kursus Persiapan IELTS, SAT, GRE & GMAT - Ultimate Education" description="Platform edukasi terkemuka untuk persiapan IELTS, SAT, GRE, GMAT, dan program beasiswa impian Anda.">
+  
+  <section class="hero">
+    <!-- SVG Decorative Elements -->
+    <div class="hero-decor">
+      <svg class="decor-circle-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+      </svg>
+      <svg class="decor-dots" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="3" fill="rgba(255,255,255,0.2)"/>
+        <circle cx="30" cy="25" r="2" fill="rgba(255,255,255,0.15)"/>
+        <circle cx="50" cy="10" r="4" fill="rgba(255,255,255,0.1)"/>
+        <circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.2)"/>
+        <circle cx="90" cy="15" r="2" fill="rgba(255,255,255,0.15)"/>
+        <circle cx="20" cy="50" r="3" fill="rgba(255,255,255,0.1)"/>
+        <circle cx="60" cy="60" r="2" fill="rgba(255,255,255,0.2)"/>
+        <circle cx="80" cy="50" r="4" fill="rgba(255,255,255,0.15)"/>
+      </svg>
+      <svg class="decor-wave" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+        <path fill="rgba(255,255,255,0.03)" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,144C672,139,768,181,864,197.3C960,213,1056,203,1152,181.3C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+      </svg>
+      <svg class="decor-grad-line" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(255,255,255,0.2)"/>
+            <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+          </linearGradient>
+        </defs>
+        <path d="M50,200 Q200,50 350,200" fill="none" stroke="url(#lineGrad)" stroke-width="2"/>
+        <path d="M50,250 Q200,100 350,250" fill="none" stroke="url(#lineGrad)" stroke-width="1.5"/>
+      </svg>
+    </div>
+    
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFD700"/>
+          </svg>
+          <span>Trusted by 10,000+ Students</span>
+        </div>
+        <h1>Kursus Persiapan <span class="gradient-text">IELTS, SAT, GRE & GMAT</span> untuk tingkatkan peluang kuliah di luar negri</h1>
+        
+        <div class="hero-features">
+          <div class="feature-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Native Speakers</span>
+          </div>
+          <div class="feature-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Garansi Skor</span>
+          </div>
+          <div class="feature-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Kelas Online & Offline</span>
+          </div>
+        </div>
+        
+        <div class="lead-form-card">
+          <h3>Dapatkan <span class="highlight">Penawaran Spesial</span>!</h3>
+          <form class="lead-form" id="leadForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="whatsapp">Nomor Whatsapp*</label>
+                <div class="input-group">
+                  <span class="input-prefix">+62</span>
+                  <input type="tel" id="whatsapp" name="whatsapp" placeholder="8123456789" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="program">Program Pilihan*</label>
+                <select id="program" name="program" required>
+                  <option value="">Pilih program...</option>
+                  {programOptions.map((opt) => (
+                    <option value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Dapatkan Penawaran!
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="hero-image-container">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=500&fit=crop" alt="Students studying" class="hero-image" />
+          <div class="floating-card card-score">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M12 3L13.9101 4.87147L16.5 4.20577L17.2184 6.78155L19.7942 7.5L19.1285 10.0899L21 12L19.1285 13.9101L19.7942 16.5L17.2184 17.2184L16.5 19.7942L13.9101 19.1285L12 21L10.0899 19.1285L7.5 19.7942L6.78155 17.2184L4.20577 16.5L4.87147 13.9101L3 12L4.87147 10.0899L4.20577 7.5L6.78155 6.78155L7.5 4.20577L10.0899 4.87147L12 3Z" fill="#145DA0" stroke="#145DA0" stroke-width="2"/>
+            </svg>
+            <div>
+              <strong>IELTS 8.0</strong>
+              <span>Achieved!</span>
+            </div>
+          </div>
+          <div class="floating-card card-students">
+            <div class="student-avatars">
+              <img src="https://i.pravatar.cc/40?img=1" alt="Student" />
+              <img src="https://i.pravatar.cc/40?img=2" alt="Student" />
+              <img src="https://i.pravatar.cc/40?img=3" alt="Student" />
+            </div>
+            <div>
+              <strong>10,000+</strong>
+              <span>Happy Students</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="partners">
+    <div class="partners-track">
+      {partners.map((partner) => (
+        <div class="partner-logo">
+          <img src={partner.logo} alt={partner.name} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="free-test">
+    <div class="section-header">
+      <span class="section-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5M12 12H15M12 16H15M9 12H9.01M9 16H9.01" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Free Test
+      </span>
+      <h2>Yakin Dengan Kemampuan Bahasa Inggrismu?</h2>
+      <p>Coba Tes Gratis di Ultimate Education</p>
+    </div>
+    <div class="test-grid">
+      <a href="https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=42" class="test-card" target="_blank" rel="noopener noreferrer">
+        <div class="test-icon ielts">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h4>IELTS</h4>
+        <p class="test-desc">International English Language Testing System</p>
+        <span class="test-cta">
+          Mulai Tes
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <a href="https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=41" class="test-card" target="_blank" rel="noopener noreferrer">
+        <div class="test-icon toefl">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 19.5V4.5C4 3.67 4.67 3 5.5 3H18.5C19.33 3 20 3.67 20 4.5V19.5C20 20.33 19.33 21 18.5 21H5.5C4.67 21 4 20.33 4 19.5Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 7H16M8 11H16M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h4>TOEFL iBT</h4>
+        <p class="test-desc">Test of English as a Foreign Language</p>
+        <span class="test-cta">
+          Mulai Tes
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <a href="https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=44" class="test-card" target="_blank" rel="noopener noreferrer">
+        <div class="test-icon gmat">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3V21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 14L11 10L15 14L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h4>GMAT</h4>
+        <p class="test-desc">Graduate Management Admission Test</p>
+        <span class="test-cta">
+          Mulai Tes
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+      <a href="https://learn.ultimateducation.co.id/local/invitation/join.php?courseid=49" class="test-card" target="_blank" rel="noopener noreferrer">
+        <div class="test-icon sat">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 14L8 10H10V6H14V10H16L12 14Z" fill="currentColor"/>
+            <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 17H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h4>SAT</h4>
+        <p class="test-desc">Scholastic Assessment Test</p>
+        <span class="test-cta">
+          Mulai Tes
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section class="programs">
+    <div class="section-header">
+      <span class="section-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 10V6C22 4.89543 21.1046 4 20 4H4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H12" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 18L18 20L22 16" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 8H18M6 12H12" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Program Terbaik
+      </span>
+      <h2>Program Unggulan Ultimate Education</h2>
+    </div>
+    <div class="programs-list">
+      <div class="program-card">
+        <div class="program-content">
+          <div class="program-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M8.21 13.89L7 23L12 20L17 23L15.79 13.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Scholarship
+          </div>
+          <h3>Persiapan Maksimal Raih Beasiswa Impian lewat Ultimate Scholarship Preparation</h3>
+          <p>Mulai dari pemetaan tujuan, strategi beasiswa, pembuatan dokumen, penulisan esai, hingga simulasi wawancara - semua kamu dapatkan di sini!</p>
+          <a href="/program/beasiswa" class="program-link">
+            Pelajari lebih lanjut
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="program-image">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&h=350&fit=crop" alt="Scholarship Preparation" />
+        </div>
+      </div>
+      
+      <div class="program-card reverse">
+        <div class="program-content">
+          <div class="program-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            IELTS
+          </div>
+          <h3>Siapkan IELTS-mu dan Lolos ke Kampus Top Dunia bareng Ultimate IELTS</h3>
+          <p>Bingung mulai belajar IELTS? Tenang, IELTS Academy siap bantu dari dasar sampai mahir! Belajar efektif, latihan terarah, dan bimbingan tutor andal untuk capai skor 6.5+ ke atas.</p>
+          <a href="/program/ielts" class="program-link">
+            Cek Ultimate IELTS
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="program-image">
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=350&fit=crop" alt="IELTS Preparation" />
+        </div>
+      </div>
+      
+      <div class="program-card">
+        <div class="program-content">
+          <div class="program-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 5H15M9 3V5M10.0482 14.5C10.4116 15.1671 10.6334 15.9126 10.6334 16.7063C10.6334 19.0847 8.69336 21 6.28333 21C3.87329 21 1.93333 19.0847 1.93333 16.7063C1.93333 15.9126 2.15545 15.1671 2.51882 14.5M6.28333 21H21L18 7H8L10.0482 14.5M6.28333 21L6.28333 16.7063M10.0482 14.5H5.51882L6.28333 16.7063" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Language
+          </div>
+          <h3>Belajar Bahasa Asing Lebih Terarah, Skor Tes Lebih Maksimal</h3>
+          <p>Kuasai bahasa asing dan persiapkan dirimu untuk tes seperti HSK, JLPT, TOEFL, dan TOPIK bersama Ultimate Education. Sertifikasi internasional? Bisa kamu dapatkan!</p>
+          <a href="/program/bahasa" class="program-link">
+            Cek Program Bimbingan
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="program-image">
+          <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=500&h=350&fit=crop" alt="Language Preparation" />
+        </div>
+      </div>
+      
+      <div class="program-card reverse">
+        <div class="program-content">
+          <div class="program-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 3V21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 14L11 10L15 14L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Test Prep
+          </div>
+          <h3>Capai Skor Maksimal untuk Tes Masuk Universitas Luar Negeri</h3>
+          <p>Bersama tutor ahli, kamu bisa siap hadapi ACT, GMAT, GRE, dan SAT dengan lebih percaya diri. Ikuti program intensif demi lolos kampus impian!</p>
+          <a href="/program/tes" class="program-link">
+            Cek Program Persiapan
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="program-image">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&h=350&fit=crop" alt="Test Preparation" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mentors">
+    <div class="section-header">
+      <span class="section-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="9" cy="7" r="4" stroke="#145DA0" stroke-width="2"/>
+          <path d="M23 21V19C23 17.1362 21.7252 15.5701 20 15.126" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 3.12602C17.7252 3.57006 19 5.13623 19 7C19 8.86377 17.7252 10.4299 16 10.874" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Expert Mentors
+      </span>
+      <h2>Mentor Terbaik Ultimate Education</h2>
+    </div>
+    <div class="mentors-grid">
+      <div class="mentor-card">
+        <div class="mentor-image">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Mr. Ballard" />
+          <div class="mentor-badge">IELTS Expert</div>
+        </div>
+        <h3>Mr. Ballard</h3>
+        <p class="mentor-university">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 14L21 9L12 4L3 9L12 14Z" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 9V15" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 11.5V17.5C6 17.5 8 20 12 20C16 20 18 17.5 18 17.5V11.5" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Swineburn University
+        </p>
+        <p class="mentor-qualification">Native Speakers, 8 Years Teaching Experience</p>
+      </div>
+      
+      <div class="mentor-card">
+        <div class="mentor-image">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face" alt="Ms. Dee" />
+          <div class="mentor-badge">TESOL Certified</div>
+        </div>
+        <h3>Ms. Dee</h3>
+        <p class="mentor-university">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 14L21 9L12 4L3 9L12 14Z" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 9V15" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 11.5V17.5C6 17.5 8 20 12 20C16 20 18 17.5 18 17.5V11.5" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          University of Hull
+        </p>
+        <p class="mentor-qualification">Native Speakers, 10 Years Teaching Experience</p>
+      </div>
+      
+      <div class="mentor-card">
+        <div class="mentor-image">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&h=200&fit=crop&crop=face" alt="Kak Ifa" />
+          <div class="mentor-badge">LPDP Awardee</div>
+        </div>
+        <h3>Kak Ifa</h3>
+        <p class="mentor-university">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 14L21 9L12 4L3 9L12 14Z" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 9V15" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 11.5V17.5C6 17.5 8 20 12 20C16 20 18 17.5 18 17.5V11.5" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          University of Edinburgh
+        </p>
+        <p class="mentor-qualification">7.5 IELTS Score, 8 Years Teaching Experience</p>
+      </div>
+      
+      <div class="mentor-card">
+        <div class="mentor-image">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt="Kak Umen" />
+          <div class="mentor-badge">LPDP Awardee</div>
+        </div>
+        <h3>Kak Umen</h3>
+        <p class="mentor-university">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 14L21 9L12 4L3 9L12 14Z" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 9V15" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 11.5V17.5C6 17.5 8 20 12 20C16 20 18 17.5 18 17.5V11.5" stroke="#145DA0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Univ College London
+        </p>
+        <p class="mentor-qualification">7.5 IELTS Score, 8 Years Teaching Experience</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="section-header">
+      <span class="section-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Testimonials
+      </span>
+      <h2>Cerita Alumni Tentang Ultimate Education</h2>
+    </div>
+    <div class="testimonial-tabs">
+      <button class="tab-btn active">Ultimate IELTS</button>
+      <button class="tab-btn">Program Beasiswa</button>
+      <button class="tab-btn">Program Bahasa</button>
+      <button class="tab-btn">Program Persiapan</button>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 21C5.33333 17.6667 6.5 14.3333 6.5 11C6.5 7.66667 5.33333 5.33333 3 4H8C10.3333 5.33333 11.5 7.66667 11.5 11C11.5 14.3333 10.3333 17.6667 8 21H3ZM13.5 21C15.8333 17.6667 17 14.3333 17 11C17 7.66667 15.8333 5.33333 13.5 4H18.5C20.8333 5.33333 22 7.66667 22 11C22 14.3333 20.8333 17.6667 18.5 21H13.5Z" fill="#145DA0" opacity="0.2"/>
+          </svg>
+        </div>
+        <p class="testimonial-text">Ultimate Education is one of the great English courses in town. The course is well-administered by professional teachers. They also provide additional lessons to help us improve our English skills.</p>
+        <div class="testimonial-footer">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face" alt="Yudistira" class="author-photo" />
+          <div class="author-info">
+            <strong>YUDISTIRA YUDADISASTRA</strong>
+            <span>Assistant Vice President MANDIRI SEKURITAS</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="quote-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 21C5.33333 17.6667 6.5 14.3333 6.5 11C6.5 7.66667 5.33333 5.33333 3 4H8C10.3333 5.33333 11.5 7.66667 11.5 11C11.5 14.3333 10.3333 17.6667 8 21H3ZM13.5 21C15.8333 17.6667 17 14.3333 17 11C17 7.66667 15.8333 5.33333 13.5 4H18.5C20.8333 5.33333 22 7.66667 22 11C22 14.3333 20.8333 17.6667 18.5 21H13.5Z" fill="#145DA0" opacity="0.2"/>
+          </svg>
+        </div>
+        <p class="testimonial-text">This course gave me further understanding about the IELTS test as it was taught by the experts. They also did not hesitate to give us an extra free course on grammar so that we could have better test results.</p>
+        <div class="testimonial-footer">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face" alt="Satriyo" class="author-photo" />
+          <div class="author-info">
+            <strong>SATRIYO BHAWIKO ADHI</strong>
+            <span>Assurances Services Advisory Deloitte</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="quote-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 21C5.33333 17.6667 6.5 14.3333 6.5 11C6.5 7.66667 5.33333 5.33333 3 4H8C10.3333 5.33333 11.5 7.66667 11.5 11C11.5 14.3333 10.3333 17.6667 8 21H3ZM13.5 21C15.8333 17.6667 17 14.3333 17 11C17 7.66667 15.8333 5.33333 13.5 4H18.5C20.8333 5.33333 22 7.66667 22 11C22 14.3333 20.8333 17.6667 18.5 21H13.5Z" fill="#145DA0" opacity="0.2"/>
+          </svg>
+        </div>
+        <p class="testimonial-text">Joining Ultimate Education's program was a good decision. It helped me to understand the test better. I can finally get 8.0 in the IELTS test. Thank you Ultimate Education.</p>
+        <div class="testimonial-footer">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80&h=80&fit=crop&crop=face" alt="Astrid" class="author-photo" />
+          <div class="author-info">
+            <strong>ASTRID GLORIA PEPITA</strong>
+            <span>Assistant Manager Grab</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="section-header">
+      <span class="section-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="#145DA0" stroke-width="2"/>
+          <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="17" r="1" fill="#145DA0"/>
+        </svg>
+        FAQ
+      </span>
+      <h2>Seputar Ultimate Education</h2>
+    </div>
+    <div class="faq-list">
+      {faqs.map((faq) => (
+        <details class="faq-item">
+          <summary>
+            <span>{faq.question}</span>
+            <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5V19M5 12H19" stroke="#145DA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-decor">
+      <svg class="cta-circle-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+      </svg>
+      <svg class="cta-circle-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="cta-content">
+      <div class="cta-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18457 2.99721 7.13633 4.39828 5.49707C5.79935 3.85782 7.69279 2.71538 9.79619 2.24015C11.8996 1.76491 14.1003 1.98234 16.07 2.86" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 4L12 14.01L9 11.01" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>Skor Naik, Beasiswa Tercapai!</h2>
+      <p>Bersama Ultimate Education</p>
+      <a href="https://api.whatsapp.com/send/?phone=6283812310368" class="btn-cta">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Mulai Persiapan Sekarang
+      </a>
+    </div>
+  </section>
+
+  <a href="https://api.whatsapp.com/send/?phone=6283812310368" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat via WhatsApp">
+    <svg viewBox="0 0 32 32" fill="white" width="30" height="30">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.825.736 5.478 2.024 7.79L0 32l8.418-2.206A15.908 15.908 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0z"/>
+    </svg>
+  </a>
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(288deg, #145DA0 0%, #07223A 100%);
+    color: white;
+    padding: 4rem 1.5rem 6rem;
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Hero Decorative Elements */
+  .hero-decor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .decor-circle-1 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+    animation: rotate 30s linear infinite;
+  }
+
+  .decor-dots {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    left: 5%;
+    opacity: 0.5;
+  }
+
+  .decor-wave {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+
+  .decor-grad-line {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: 30%;
+    opacity: 0.3;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .hero-badge span {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .hero-content h1 {
+    color: white;
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .lead-form-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    max-width: 450px;
+  }
+
+  .lead-form-card h3 {
+    text-align: center;
+    color: #1F2937;
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .lead-form-card .highlight {
+    color: #145DA0;
+    font-weight: 700;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .form-group label {
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .input-group {
+    display: flex;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .input-group:focus-within {
+    border-color: #145DA0;
+  }
+
+  .input-prefix {
+    background: #F3F4F6;
+    padding: 0.625rem 0.875rem;
+    color: #4B5563;
+    border-right: 2px solid #E5E7EB;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .input-group input {
+    flex: 1;
+    border: none;
+    padding: 0.625rem 0.875rem;
+    outline: none;
+    font-size: 0.95rem;
+  }
+
+  .form-group select {
+    padding: 0.625rem 0.875rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    background: white;
+    color: #334155;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .form-group select:focus {
+    border-color: #145DA0;
+    outline: none;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 0.875rem;
+    background: linear-gradient(135deg, #145DA0, #0d4a80);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .btn-submit:hover {
+    background: linear-gradient(135deg, #0d4a80, #07223A);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(20, 93, 160, 0.3);
+  }
+
+  /* Hero Visual Side */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+  }
+
+  .floating-card {
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .floating-card strong {
+    display: block;
+    color: #07223A;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .floating-card span {
+    display: block;
+    color: #666;
+    font-size: 0.75rem;
+  }
+
+  .card-score {
+    top: 20px;
+    right: -30px;
+    animation-delay: 0s;
+  }
+
+  .card-students {
+    bottom: 40px;
+    left: -30px;
+    animation-delay: 1.5s;
+  }
+
+  .student-avatars {
+    display: flex;
+  }
+
+  .student-avatars img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: -10px;
+  }
+
+  .student-avatars img:first-child {
+    margin-left: 0;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Partners Section */
+  .partners {
+    background: white;
+    padding: 1.5rem 2rem;
+    overflow: hidden;
+    border-radius: 70px;
+    margin: -2rem auto 2rem;
+    max-width: 1100px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .partners-track {
+    display: flex;
+    gap: 3rem;
+    animation: scroll 25s linear infinite;
+  }
+
+  .partner-logo {
+    flex-shrink: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .partner-logo img {
+    height: 40px;
+    width: auto;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s;
+  }
+
+  .partner-logo:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Section Headers */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #E8F4FF, #D4EBFF);
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #145DA0;
+  }
+
+  .section-header h2 {
+    color: #07223A;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-header p {
+    color: #666;
+    font-size: 1.125rem;
+  }
+
+  /* Free Test Section */
+  .free-test {
+    background: linear-gradient(180deg, #F1F8FF 0%, #E8F4FF 100%);
+    padding: 5rem 1.5rem;
+  }
+
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .test-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .test-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(20, 93, 160, 0.15);
+    border-color: #145DA0;
+  }
+
+  .test-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .test-icon.ielts {
+    background: linear-gradient(135deg, #E8F4FF, #C8E1FF);
+    color: #145DA0;
+  }
+
+  .test-icon.toefl {
+    background: linear-gradient(135deg, #FFF3E8, #FFE5CC);
+    color: #D97706;
+  }
+
+  .test-icon.gmat {
+    background: linear-gradient(135deg, #E8FFF3, #C8FFE1);
+    color: #059669;
+  }
+
+  .test-icon.sat {
+    background: linear-gradient(135deg, #F3E8FF, #E1C8FF);
+    color: #7C3AED;
+  }
+
+  .test-card:hover .test-icon {
+    transform: scale(1.1);
+  }
+
+  .test-card h4 {
+    color: #07223A;
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .test-desc {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .test-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #145DA0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: auto;
+  }
+
+  .test-card:hover .test-cta {
+    gap: 0.75rem;
+  }
+
+  /* Programs Section */
+  .programs {
+    padding: 5rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .programs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .program-card {
+    background: white;
+    border-radius: 24px;
+    padding: 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .program-card:hover {
+    box-shadow: 0 15px 50px rgba(20, 93, 160, 0.15);
+    transform: translateY(-5px);
+  }
+
+  .program-card.reverse {
+    direction: rtl;
+  }
+
+  .program-card.reverse > * {
+    direction: ltr;
+  }
+
+  .program-content {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .program-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #E8F4FF, #D4EBFF);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #145DA0;
+    width: fit-content;
+  }
+
+  .program-content h3 {
+    color: #07223A;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.35;
+  }
+
+  .program-content p {
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .program-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #145DA0, #0d4a80);
+    color: white;
+    padding: 0.875rem 1.75rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    width: fit-content;
+  }
+
+  .program-link:hover {
+    background: linear-gradient(135deg, #0d4a80, #07223A);
+    transform: translateX(5px);
+    box-shadow: 0 8px 20px rgba(20, 93, 160, 0.3);
+  }
+
+  .program-image {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .program-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .program-card:hover .program-image img {
+    transform: scale(1.05);
+  }
+
+  /* Mentors Section */
+  .mentors {
+    background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+    padding: 5rem 1.5rem;
+  }
+
+  .mentors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .mentor-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s;
+  }
+
+  .mentor-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(20, 93, 160, 0.12);
+  }
+
+  .mentor-image {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.25rem;
+  }
+
+  .mentor-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #E8F4FF;
+    transition: all 0.3s;
+  }
+
+  .mentor-card:hover .mentor-image img {
+    border-color: #145DA0;
+  }
+
+  .mentor-badge {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #145DA0, #0d4a80);
+    color: white;
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(20, 93, 160, 0.3);
+  }
+
+  .mentor-card h3 {
+    color: #07223A;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .mentor-university {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    color: #145DA0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .mentor-qualification {
+    color: #666;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* Testimonials Section */
+  .testimonials {
+    padding: 5rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .testimonial-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #E5E7EB;
+    background: white;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+
+  .tab-btn:hover, .tab-btn.active {
+    border-color: #145DA0;
+    color: #145DA0;
+    background: linear-gradient(135deg, #F1F8FF, #E8F4FF);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .testimonial-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-card:hover {
+    box-shadow: 0 15px 40px rgba(20, 93, 160, 0.12);
+    transform: translateY(-5px);
+  }
+
+  .quote-icon {
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-text {
+    color: #4B5563;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E5E7EB;
+  }
+
+  .author-photo {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #E8F4FF;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .author-info strong {
+    color: #07223A;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .author-info span {
+    color: #666;
+    font-size: 0.8rem;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+    padding: 5rem 1.5rem;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+    border: 1px solid #E5E7EB;
+    transition: all 0.3s;
+  }
+
+  .faq-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .faq-item summary {
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    color: #07223A;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .faq-item summary span {
+    flex: 1;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-item summary:hover {
+    background: #F8FAFC;
+  }
+
+  .faq-item p {
+    padding: 0 1.5rem 1.5rem;
+    color: #666;
+    line-height: 1.7;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(288deg, #145DA0 0%, #07223A 100%);
+    padding: 6rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-decor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  .cta-circle-1 {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -50px;
+    animation: rotate 30s linear infinite;
+  }
+
+  .cta-circle-2 {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    left: -50px;
+    animation: rotate 25s linear infinite reverse;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .cta-content h2 {
+    color: white;
+    font-size: 2.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: white;
+    color: #145DA0;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.05rem;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  /* WhatsApp Float */
+  .wa-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    transition: all 0.3s;
+  }
+
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .hero-content {
+      order: 1;
+    }
+    .hero-visual {
+      order: 0;
+      margin-bottom: 2rem;
+    }
+    .hero-badge {
+      justify-content: center;
+    }
+    .hero-features {
+      justify-content: center;
+    }
+    .lead-form-card {
+      margin: 0 auto;
+    }
+    .floating-card {
+      display: none;
+    }
+    .test-grid, .mentors-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+    .program-card {
+      grid-template-columns: 1fr;
+    }
+    .program-card.reverse {
+      direction: ltr;
+    }
+    .program-image {
+      min-height: 300px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 1rem 4rem;
+    }
+    .hero-content h1 {
+      font-size: 1.75rem;
+    }
+    .hero-image-container {
+      max-width: 350px;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    .partners {
+      margin: -2rem 1rem 2rem;
+      border-radius: 30px;
+      padding: 1rem 1.5rem;
+    }
+    .section-header h2 {
+      font-size: 1.5rem;
+    }
+    .cta-content h2 {
+      font-size: 1.75rem;
+    }
+    .cta-content p {
+      font-size: 1.125rem;
+    }
+    .program-content {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .test-grid, .mentors-grid {
+      grid-template-columns: 1fr;
+    }
+    .testimonial-tabs {
+      flex-direction: column;
+    }
+    .tab-btn {
+      width: 100%;
+    }
+    .hero-features {
+      flex-direction: column;
+      align-items: center;
+    }
+    .section-badge {
+      font-size: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('leadForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const whatsapp = formData.get('whatsapp');
+    const program = formData.get('program');
+    const message = encodeURIComponent('Halo, saya tertarik dengan program ' + program + '. Nomor WA saya: +62' + whatsapp);
+    window.open('https://api.whatsapp.com/send/?phone=6283812310368&text=' + message, '_blank');
+  });
+</script>

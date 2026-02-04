@@ -1,0 +1,120 @@
+---
+interface Props {
+  social?: { icon: string; href: string; label: string }[];
+  contact?: { label: string; text: string }[];
+  programs?: string[];
+  company?: string[];
+}
+
+const {
+  social = [
+    { icon: 'instagram', href: 'https://instagram.com/ultimateeducation', label: 'Instagram' },
+    { icon: 'linkedin', href: 'https://linkedin.com/company/ultimateeducation', label: 'LinkedIn' },
+    { icon: 'youtube', href: 'https://youtube.com/@ultimateeducation', label: 'YouTube' },
+    { icon: 'tiktok', href: 'https://tiktok.com/@ultimateeducation', label: 'TikTok' },
+    { icon: 'facebook', href: 'https://facebook.com/ultimateeducation', label: 'Facebook' },
+  ],
+  contact = [
+    { label: 'Jakarta', text: 'Sampoerna Strategic Square, Jalan Jenderal Sudirman No. 45 – 46 (Lantai 18)' },
+    { label: 'Bandung', text: 'Jl. Ir. H. Juanda No.84, Lebakgede, Kecamatan Coblong' },
+    { label: 'Phone', text: '+6283812310368' },
+    { label: 'Landline', text: '(021) 50913616' },
+  ],
+  programs = [
+    'IELTS', 'SAT', 'GMAT', 'GRE', 'TOEFL', 'IGCSE', 'GED', 'ACT', 'PTE', 'TOEIC'
+  ],
+  company = [
+    'About Us', 'Testimonials', 'Blog', 'Sales'
+  ]
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full bg-hero-gradient text-white py-16">
+  <div class="container mx-auto px-4 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 text-sm">
+      
+      {/* Column 1: Logo & Social (Span 2 cols on LG for space) */}
+      <div class="space-y-6 lg:col-span-2">
+        <a href="/" class="block">
+          <img src="https://placehold.co/200x60/white/0369a1?text=Ultimate+Education" alt="Ultimate Education" class="bg-white p-2 rounded max-w-[200px]" />
+        </a>
+        <p class="text-white/80 leading-relaxed max-w-xs">
+          Konsultan pendidikan luar negeri terpercaya dengan layanan persiapan tes bahasa dan akademik terlengkap di Indonesia.
+        </p>
+        <div>
+           <h3 class="text-lg font-semibold font-heading mb-4">Social Media</h3>
+           <div class="flex gap-4">
+             {social.map((item) => (
+               <a href={item.href} target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110" aria-label={item.label}>
+                  {item.icon === 'instagram' && (
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  )}
+                  {item.icon === 'linkedin' && (
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.327c0-3.771 4.968-4.085 4.968 0v8.327h5v-9.352c0-5.717-6.142-5.496-7.551-2.709l-.449-.788v-3.15z"/></svg>
+                  )}
+                  {item.icon === 'default' && (
+                    <span class="text-xs font-bold">{item.icon[0]}</span>
+                  )}
+                  {/* Reuse other SVG logic from previous block if needed, simplified here for brevity */}
+                  {!['instagram', 'linkedin'].includes(item.icon) && (
+                     <span class="text-xs font-bold flex items-center justify-center w-full h-full">{item.label[0]}</span>
+                  )}
+               </a>
+             ))}
+           </div>
+        </div>
+      </div>
+
+      {/* Column 2: Programs - Persiapan Tes */}
+      <div>
+        <h3 class="text-lg font-semibold font-heading mb-6">Persiapan Tes</h3>
+        <ul class="space-y-2 font-body text-white/90">
+           {['IELTS', 'TOEFL iBT', 'SAT Prep', 'GMAT', 'GRE', 'PTE Academic', 'TOEIC', 'GED', 'ACT'].map((item) => (
+             <li><a href="#" class="hover:text-yellow-400 transition-colors block">{item}</a></li>
+           ))}
+        </ul>
+      </div>
+
+      {/* Column 3: Programs - Kursus Bahasa */}
+      <div>
+        <h3 class="text-lg font-semibold font-heading mb-6">Kursus Bahasa</h3>
+        <ul class="space-y-2 font-body text-white/90">
+           {['General English', 'Business English', 'Mandarin (HSK)', 'Japanese (JLPT)', 'Korean (TOPIK)', 'French (DELF)'].map((item) => (
+             <li><a href="#" class="hover:text-yellow-400 transition-colors block">{item}</a></li>
+           ))}
+        </ul>
+      </div>
+
+      {/* Column 4: Programs - Lainnya/Company */}
+      <div>
+        <h3 class="text-lg font-semibold font-heading mb-6">Program Lainnya</h3>
+        <ul class="space-y-2 font-body text-white/90">
+           {['Study Abroad', 'Scholarship Mentoring', 'Essay Review', 'Simulasi Interview', 'Corporate Training', 'Proofreading'].map((item) => (
+             <li><a href="#" class="hover:text-yellow-400 transition-colors block">{item}</a></li>
+           ))}
+        </ul>
+      </div>
+
+      {/* Column 5: Contact Us */}
+      <div>
+        <h3 class="text-lg font-semibold font-heading mb-6">Hubungi Kami</h3>
+        <ul class="space-y-4 text-sm font-body">
+          {contact.map((item) => (
+            <li class="flex gap-3 items-start">
+               <span class="mt-1 w-5 h-5 bg-white/20 rounded-full flex-shrink-0 flex items-center justify-center text-[10px]">📍</span>
+               <div>
+                  <span class="font-bold block text-white">{item.label}</span>
+                  <span class="opacity-80 block">{item.text}</span>
+               </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    <div class="mt-12 pt-8 border-t border-white/10 text-center text-sm opacity-60 font-body">
+      &copy; {currentYear} Ultimate Education. All rights reserved.
+    </div>
+  </div>
+</footer>

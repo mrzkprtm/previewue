@@ -1,0 +1,440 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const articles = [
+  {
+    id: 1,
+    title: 'Ultimate Education Ngadain Lomba Writing untuk Kamu yang Jago Nulis, Yuk Ikutan!',
+    excerpt: 'Kesempatan emas untuk menunjukkan kemampuan writing Anda. Ikuti lomba writing kami dengan hadiah menarik dan kesempatan untuk dipublikasikan.',
+    date: 'Feb 1, 2026',
+    author: 'Zola Azizah',
+    category: 'Tips',
+    slug: 'lomba-writing-ultimate-education',
+    image: '✍️'
+  },
+  {
+    id: 2,
+    title: 'Berapa Lama Sertifikat IELTS Berlaku?',
+    excerpt: 'Penting untuk mengetahui validitas sertifikat IELTS Anda, terutama jika Anda merencanakan untuk aplikasi beasiswa atau kerja di luar negeri.',
+    date: 'Jan 28, 2026',
+    author: 'Zola Azizah',
+    category: 'Persiapan IELTS',
+    slug: 'berapa-lama-sertifikat-ielts-berlaku',
+    image: '📜'
+  },
+  {
+    id: 3,
+    title: 'Persiapan Tes IELTS Mulai dari Nol sampai Hari Ujian!',
+    excerpt: 'Panduan lengkap untuk mempersiapkan tes IELTS dari pemula hingga siap ujian. Tips, strategi, dan materi yang perlu Anda ketahui.',
+    date: 'Jan 24, 2026',
+    author: 'Zola Azizah',
+    category: 'Persiapan IELTS',
+    slug: 'persiapan-tes-ielts-mulai-dari-nol',
+    image: '📚'
+  },
+  {
+    id: 4,
+    title: 'Native Speaker Pasti Dapat Skor IELTS Tinggi?',
+    excerpt: 'Ternyata native speaker tidak selalu mendapat skor IELTS tinggi. Pelajari mengapa dan apa yang sebenarnya dibutuhkan untuk mencapai skor tinggi.',
+    date: 'Jan 20, 2026',
+    author: 'Zola Azizah',
+    category: 'Persiapan IELTS',
+    slug: 'native-speaker-ielts-tinggi',
+    image: '🎤'
+  },
+  {
+    id: 5,
+    title: '12 Tips IELTS Writing yang Sering Dilupakan Peserta',
+    excerpt: 'Kumpulan tips praktis untuk IELTS Writing yang sering terlewatkan oleh peserta. Terapkan tips ini untuk meningkatkan skor writing Anda.',
+    date: 'Jan 15, 2026',
+    author: 'Zola Azizah',
+    category: 'Persiapan IELTS',
+    slug: '12-tips-ielts-writing',
+    image: '✏️'
+  },
+  {
+    id: 6,
+    title: 'Persiapan TOEFL iBT: Strategi dan Tip Sukses',
+    excerpt: 'Strategi komprehensif untuk lulus TOEFL iBT dengan skor tinggi. Pelajari tips dari expert yang telah membantu ribuan peserta.',
+    date: 'Jan 10, 2026',
+    author: 'Zola Azizah',
+    category: 'Persiapan TOEFL',
+    slug: 'persiapan-toefl-ibt-strategi',
+    image: '🎯'
+  },
+  {
+    id: 7,
+    title: 'Panduan Beasiswa Luar Negeri: Dari Persiapan hingga Penerimaan',
+    excerpt: 'Panduan lengkap tentang cara mendapatkan beasiswa ke luar negeri. Mulai dari persiapan dokumen, tes bahasa, hingga interview.',
+    date: 'Jan 5, 2026',
+    author: 'Zola Azizah',
+    category: 'Beasiswa',
+    slug: 'panduan-beasiswa-luar-negeri',
+    image: '🏆'
+  },
+  {
+    id: 8,
+    title: 'Perbedaan GMAT dan GRE: Mana yang Cocok Untuk Anda?',
+    excerpt: 'Ketahui perbedaan antara GMAT dan GRE untuk memilih tes yang tepat sesuai dengan program MBA atau Master yang Anda inginkan.',
+    date: 'Dec 28, 2025',
+    author: 'Zola Azizah',
+    category: 'Persiapan GMAT',
+    slug: 'perbedaan-gmat-gre',
+    image: '📊'
+  }
+];
+
+const categories = ['Semua', 'Persiapan IELTS', 'Persiapan TOEFL', 'Persiapan GMAT', 'Beasiswa', 'Tips'];
+const params = new URL(Astro.request.url).searchParams;
+const selectedCategory = params.get('category') || 'Semua';
+const filteredArticles = selectedCategory === 'Semua' ? articles : articles.filter(a => a.category === selectedCategory);
+---
+
+<Layout title="Blog - Ultimate Education" description="Baca tips dan panduan terbaru tentang persiapan tes internasional dan beasiswa dari para expert di Ultimate Education.">
+  <!-- Header -->
+  <section class="articles-header" role="region" aria-label="Header artikel">
+    <h1>Blog & Artikel</h1>
+    <p>Tips, panduan, dan berita terbaru seputar persiapan tes internasional dan beasiswa</p>
+  </section>
+
+  <!-- Category Filter -->
+  <section class="filter-section" role="region" aria-label="Filter kategori artikel">
+    <div class="filter-buttons">
+      {categories.map((cat) => (
+        <a 
+          href={`?category=${cat}`}
+          class={`filter-btn ${cat === selectedCategory ? 'active' : ''}`}
+          role="button"
+          aria-pressed={cat === selectedCategory}
+        >
+          {cat}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Articles Grid -->
+  <section class="articles-section" role="region" aria-label="Daftar artikel">
+    {filteredArticles.length > 0 ? (
+      <div class="articles-grid">
+        {filteredArticles.map((article) => (
+          <article class="article-card" role="article">
+            <div class="article-image">{article.image}</div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="category-badge">{article.category}</span>
+                <span class="article-date">{article.date}</span>
+              </div>
+              <h3>
+                <a href={`/articles/${article.slug}`}>{article.title}</a>
+              </h3>
+              <p class="article-excerpt">{article.excerpt}</p>
+              <div class="article-footer">
+                <span class="article-author">Oleh {article.author}</span>
+                <a href={`/articles/${article.slug}`} class="read-more">Baca Selengkapnya →</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="no-articles">
+        <p>Tidak ada artikel dalam kategori ini. Coba pilih kategori lain.</p>
+      </div>
+    )}
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="newsletter-section" role="region" aria-label="Berlangganan newsletter">
+    <h2>Jangan Lewatkan Update Terbaru</h2>
+    <p>Daftarkan email Anda untuk mendapatkan tips dan panduan terbaru langsung ke inbox Anda</p>
+    <form class="newsletter-form">
+      <input 
+        type="email" 
+        placeholder="Masukkan email Anda" 
+        required 
+        aria-label="Email untuk newsletter"
+      />
+      <button type="submit">Berlangganan</button>
+    </form>
+  </section>
+</Layout>
+
+<style>
+  .articles-header {
+    text-align: center;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .articles-header h1 {
+    margin-bottom: 1rem;
+  }
+
+  .articles-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  /* Filter Section */
+  .filter-section {
+    text-align: center;
+    margin: 2rem 0 3rem;
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .filter-btn:hover {
+    border-color: #0066cc;
+    color: #0066cc;
+  }
+
+  .filter-btn.active {
+    background: #0066cc;
+    color: white;
+    border-color: #0066cc;
+  }
+
+  .filter-btn:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
+
+  /* Articles Grid */
+  .articles-section {
+    margin: 3rem 0;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .article-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 102, 204, 0.15);
+    transform: translateY(-8px);
+    border-color: #0066cc;
+  }
+
+  .article-image {
+    font-size: 4rem;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f4f8, #e0eaf5);
+  }
+
+  .article-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #e3f2fd;
+    color: #0066cc;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .article-date {
+    font-size: 0.9rem;
+    color: #999;
+  }
+
+  .article-card h3 {
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .article-card h3 a {
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .article-card h3 a:hover {
+    color: #0066cc;
+  }
+
+  .article-card h3 a:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
+
+  .article-excerpt {
+    color: #666;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    line-height: 1.6;
+  }
+
+  .article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .article-author {
+    font-size: 0.9rem;
+    color: #999;
+  }
+
+  .read-more {
+    color: #0066cc;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .read-more:hover {
+    gap: 0.5rem;
+  }
+
+  .read-more:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
+
+  .no-articles {
+    text-align: center;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #666;
+  }
+
+  /* Newsletter Section */
+  .newsletter-section {
+    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .newsletter-section h2 {
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .newsletter-section p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .newsletter-form input:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .newsletter-form button {
+    padding: 0.75rem 2rem;
+    background: white;
+    color: #0066cc;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-form button:hover {
+    background: #f0f4f8;
+    transform: translateY(-2px);
+  }
+
+  .newsletter-form button:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .filter-buttons {
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .articles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .newsletter-form {
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    .newsletter-form input {
+      min-width: 200px;
+    }
+
+    .newsletter-form button {
+      width: 100%;
+    }
+  }
+</style>

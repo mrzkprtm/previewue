@@ -1,0 +1,17 @@
+---
+/**
+ * OWNER: STATIC (Dev A)
+ * Wrapper for WP HTML content using Tailwind Typography.
+ */
+interface Props {
+  html: string;
+  class?: string;
+}
+
+const { html, class: className } = Astro.props;
+---
+
+<article 
+  class:list={["prose prose-lg max-w-none prose-img:rounded-xl prose-a:text-blue-600", className]} 
+  set:html={html} 
+/>

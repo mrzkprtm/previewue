@@ -1,0 +1,10 @@
+- [ ] Project uses Astro for course selling platform
+- [ ] Backend integration: Replace mock data with real API calls from WordPress/backend
+- [ ] Payment integration: Use Stripe for course purchases
+- [ ] Environment variables: BACKEND_API_URL, STRIPE keys (see .env.example)
+- [ ] Development: Run `npm install` then `npm run dev`
+- [ ] Build: Run `npm run build` for production
+- [ ] When adding features: Keep components in `src/components/`, pages in `src/pages/`, API utilities in `src/api/`
+- [ ] API routes are in Node.js adapter - use `export const POST` for server functions
+- [ ] Mock data locations: `src/pages/` (replace with real API calls)
+- [ ] Payment gateway: `src/api/payment.ts` - integrate with Stripe checkout
