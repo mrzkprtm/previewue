@@ -156,8 +156,8 @@ Sekarang PR di GitHub akan hijau kembali.
 
 ## 8. Best Practices
 
-1.  **PR Kecil-kecil:** Jangan menumpuk codingan seminggu dalam satu PR. Selesaikan satu fitur, PR. Selesaikan satu bug, PR.
-2.  **Hargai Owner:** Jangan ubah kode orang lain diam-diam. Gunakan fitur "Comment" di GitHub Review untuk saran.
+1.  **PR Kecil-kecil:** Jangan menumpuk codingan dalam satu PR. Selesaikan satu fitur, PR. Selesaikan satu bug, PR.
+2.  Gunakan fitur "Comment" di GitHub Review untuk saran.
 3.  **Cek Mobile:** Selalu cek hasil codingan di tampilan mobile view (Inspect Element).
 4.  **Backend Changes:** Jika Dev B mengubah struktur data di WordPress (tambah field ACF baru), kabari Dev A agar UI bisa disesuaikan.
 
