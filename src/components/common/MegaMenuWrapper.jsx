@@ -115,7 +115,7 @@ export default function MegaMenuWrapper() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[998] lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[998] lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         ></div>
       )}

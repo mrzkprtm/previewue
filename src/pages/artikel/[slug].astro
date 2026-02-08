@@ -5,6 +5,7 @@
  * SSR mode for dynamic slug handling.
  */
 import Layout from "../../layouts/Layout.astro";
+import UnifiedHero from "../../components/common/UnifiedHero.astro";
 import type { WPPost } from "../../types/wp";
 
 // SSR for dynamic routing
@@ -169,8 +170,32 @@ const breadcrumbStructuredData = {
 
   <div class="bg-slate-50 min-h-screen">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Hero Section -->
+      <UnifiedHero title={post.title} subtitle={post.excerpt.replace(/<[^>]*>/g, "").substring(0, 160)} pillText={post.categories[0]?.name || "Artikel"} image={post.featuredImage?.src} showPatterns={true}>
+        <div class="mt-8 flex flex-wrap items-center gap-4 text-sm text-blue-100">
+          {
+            post.author && (
+              <div class="flex items-center gap-2">
+                {post.author.avatar ? (
+                  <img src={post.author.avatar} alt={post.author.name} class="w-8 h-8 rounded-full object-cover border-2 border-white/20" loading="lazy" />
+                ) : (
+                  <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">{post.author.name.charAt(0)}</span>
+                  </div>
+                )}
+                <span class="font-medium">{post.author.name}</span>
+              </div>
+            )
+          }
+          <span class="opacity-50">•</span>
+          <time datetime={post.date}>{formatDate(post.date)}</time>
+          <span class="opacity-50">•</span>
+          <span>{readingTime} menit baca</span>
+        </div>
+      </UnifiedHero>
+
       <!-- Breadcrumb -->
-      <nav class="pt-6 pb-4" aria-label="Breadcrumb">
+      <nav class="pt-6 pb-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" aria-label="Breadcrumb">
         <ol class="flex items-center gap-2 text-sm text-slate-500">
           <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
           <li><span class="mx-1">/</span></li>
@@ -194,43 +219,10 @@ const breadcrumbStructuredData = {
         </ol>
       </nav>
 
-      <article class="pb-12 lg:pb-16">
-        <!-- Article Header -->
-        <header class="mb-8">
-          <!-- Category -->
-          {
-            post.categories[0] && (
-              <a href={`/artikel/category/${post.categories[0].slug}`} class="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold mb-4 hover:bg-primary hover:text-white transition-colors">
-                {post.categories[0].name}
-              </a>
-            )
-          }
-
-          <h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold font-heading text-gray-900 leading-tight mb-6">
-            {post.title}
-          </h1>
-
-          <!-- Meta -->
-          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500">
-            {
-              post.author && (
-                <a href={`/artikel/author/${post.author.name.toLowerCase().replace(/\s+/g, "-")}`} class="flex items-center gap-2 hover:text-primary transition-colors">
-                  {post.author.avatar ? (
-                    <img src={post.author.avatar} alt={post.author.name} class="w-8 h-8 rounded-full object-cover" loading="lazy" />
-                  ) : (
-                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span class="text-primary font-bold text-sm">{post.author.name.charAt(0)}</span>
-                    </div>
-                  )}
-                  <span class="font-medium text-gray-700">{post.author.name}</span>
-                </a>
-              )
-            }
-            <span class="text-slate-300">•</span>
-            <time datetime={post.date}>{formatDate(post.date)}</time>
-            <span class="text-slate-300">•</span>
-            <span>{readingTime} menit baca</span>
-          </div>
+      <article class="pb-12 lg:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Article Header (Removed original header) -->
+        <header class="mb-8 sr-only">
+          <h1>{post.title}</h1>
         </header>
 
         <!-- Featured Image -->

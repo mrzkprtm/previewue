@@ -9,6 +9,7 @@ import FeaturedPost from "../../components/blog/FeaturedPost.astro";
 import ArticleCard from "../../components/blog/ArticleCard.astro";
 import Pagination from "../../components/blog/Pagination.astro";
 import PopularTopics from "../../components/blog/PopularTopics.astro";
+import UnifiedHero from "../../components/common/UnifiedHero.astro";
 import type { WPPost, WPCategory } from "../../types/wp";
 
 const currentPage = 1;
@@ -194,13 +195,10 @@ const canonicalUrl = Astro.url.origin + "/artikel";
   </Fragment>
 
   <div class="bg-slate-50 min-h-screen">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Page Header -->
-      <div class="pt-8 pb-6 lg:pt-12 lg:pb-8">
-        <h1 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900">Blog & Artikel</h1>
-        <p class="text-slate-500 mt-2">Tips persiapan tes & beasiswa luar negeri</p>
-      </div>
+    <!-- Hero Section -->
+    <UnifiedHero title="Blog & Artikel" subtitle="Tips, panduan, dan berita terbaru seputar persiapan tes internasional dan beasiswa luar negeri" pillText="Wawasan Terbaru" showPatterns={true} />
 
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {error && <div class="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm">⚠️ {error}</div>}
 
       <!-- Featured Post -->

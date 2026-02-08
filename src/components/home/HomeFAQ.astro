@@ -19,29 +19,21 @@ const faqs = [
 ];
 ---
 
-<section class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50">
+<section class="py-16 md:py-24 bg-slate-50">
     <div class="max-w-4xl mx-auto px-4">
         <div class="grid md:grid-cols-3 gap-12">
             <div>
-                <h2
-                    class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy dark:text-white leading-tight"
-                >
+                <h2 class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy leading-tight">
                     Seputar <br /> Ultimate Education
                 </h2>
-                <p class="text-slate-500 text-sm mt-4">
-                    Punya pertanyaan lain? Tim kami siap membantumu!
-                </p>
+                <p class="text-slate-500 text-sm mt-4">Punya pertanyaan lain? Tim kami siap membantumu!</p>
             </div>
             <div class="md:col-span-2 space-y-4">
                 {
                     faqs.map((faq) => (
-                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex justify-between items-center cursor-pointer group hover:border-ultimate-blue transition-all">
-                            <span class="font-bold text-slate-800 dark:text-slate-200">
-                                {faq.question}
-                            </span>
-                            <span class="material-symbols-outlined text-slate-400 group-hover:text-ultimate-blue transition-colors">
-                                expand_more
-                            </span>
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex justify-between items-center cursor-pointer group hover:border-ultimate-blue transition-all">
+                            <span class="font-bold text-slate-800">{faq.question}</span>
+                            <span class="material-symbols-outlined text-slate-400 group-hover:text-ultimate-blue transition-colors">expand_more</span>
                         </div>
                     ))
                 }

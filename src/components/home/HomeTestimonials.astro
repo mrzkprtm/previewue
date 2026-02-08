@@ -18,47 +18,25 @@ const testimonials = [
 ];
 ---
 
-<section class="py-16 md:py-24 bg-white dark:bg-slate-900">
+<section class="py-16 md:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4">
-        <h2
-            class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy dark:text-white text-center mb-12"
-        >
-            Cerita Alumni Tentang Ultimate Education
-        </h2>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy text-center mb-12">Cerita Alumni Tentang Ultimate Education</h2>
         <div class="flex flex-wrap justify-center gap-3 mb-16">
-            <button
-                class="bg-ultimate-blue text-white px-8 py-3 rounded-xl font-bold shadow-lg text-sm"
-                >Ultimate IELTS</button
-            >
-            <button
-                class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-sm"
-                >Program Beasiswa</button
-            >
-            <button
-                class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-sm"
-                >Program Bahasa</button
-            >
-            <button
-                class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-sm"
-                >Program Persiapan</button
-            >
+            <button class="bg-ultimate-blue text-white px-8 py-3 rounded-xl font-bold shadow-lg text-sm">Ultimate IELTS</button>
+            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-sm">Program Beasiswa</button>
+            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-sm">Program Bahasa</button>
+            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-sm">Program Persiapan</button>
         </div>
         <div class="grid md:grid-cols-3 gap-8">
             {
                 testimonials.map((t) => (
-                    <div class="bg-slate-50 dark:bg-slate-800/50 p-10 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative">
+                    <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 shadow-sm relative">
                         <div class="absolute -top-4 left-10 text-ultimate-blue/10">
-                            <span class="material-symbols-outlined text-6xl">
-                                format_quote
-                            </span>
+                            <span class="material-symbols-outlined text-6xl">format_quote</span>
                         </div>
                         <h4 class="font-bold text-lg mb-1">{t.name}</h4>
-                        <p class="text-ultimate-blue text-[10px] font-bold mb-6 uppercase tracking-wider">
-                            {t.program}
-                        </p>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed italic">
-                            "{t.text}"
-                        </p>
+                        <p class="text-ultimate-blue text-[10px] font-bold mb-6 uppercase tracking-wider">{t.program}</p>
+                        <p class="text-slate-600 text-sm leading-relaxed italic">"{t.text}"</p>
                     </div>
                 ))
             }
