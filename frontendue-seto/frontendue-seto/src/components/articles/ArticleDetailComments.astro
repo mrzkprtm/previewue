@@ -1,0 +1,85 @@
+---
+interface Comment {
+    name: string;
+    role?: string;
+    date: string;
+    content: string;
+    image: string;
+}
+
+const defaultComments: Comment[] = [
+    {
+        name: "Sarah Amalia",
+        date: "2 jam yang lalu",
+        content:
+            "Sangat membantu kak! Bagian struktur past-present-future itu eye-opening banget buat aku yang lagi struggling nulis draft.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC6USLt0jg6mNJp0qyqJwv39QInz2wmxiPVr2z_ymbkk-IEhpw9QP54aHc0bF_Y_NfIYxvGWxCFUsYckOahx3X7wwfMDAmTQckLD4bMo0TelM2YNCqkJeaM2JpRWRCvuEZwjDqTKTB7ibDG-uFqCgKj8wAvULV02Ikrxghx6iVgQwtSQeRecKV_F1a4kkKkPB5jcTiSKCdf4RsZf9Ns7kTBkcQaRzlahnA32PvMAb3GWdKFFo52bufTZfAQaO6QPkWDPbD_F7hQNC0",
+    },
+    {
+        name: "Budi Santoso",
+        date: "5 jam yang lalu",
+        content:
+            "Apakah tips ini juga berlaku untuk beasiswa AAS kak? Atau spesifik hanya untuk format essay LPDP?",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC5XMV8LcxZwpK1MSVN7tlakUHGrdjqSenBwOOXCaGc9k8cwlhtRuQevwGicDeNlZ9eM8rrPfiMSr-WHIoE8XYG477GJz7gQTTmnY46vMIP1ShEvU9w15PxwyKCYNueJd2SJ69-sI1xWVsnM8my2rgXEyR8qow7sJvkKChvF1jaVmN4n53cJZZH46GMqbkzZ9v7aZuV1nSNua8aZ_1AajZyUSbIX9vIL_fdAF0FCsUNN91DE5jz_K_jiNDGoxC1IEFWUVFJOAgtrrY",
+    },
+];
+
+const { comments = defaultComments } = Astro.props;
+---
+
+<div class="mt-16">
+    <h3
+        class="font-heading font-bold text-2xl text-ultimate-navy dark:text-white mb-6 transition-colors"
+    >
+        Komentar ({comments.length})
+    </h3>
+
+    <div
+        class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl mb-8 transition-colors"
+    >
+        <textarea
+            class="w-full bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 rounded-xl p-4 text-sm focus:ring-ultimate-blue focus:border-ultimate-blue mb-3 outline-none dark:text-white transition-colors"
+            placeholder="Tulis komentar Anda disini..."
+            rows="3"></textarea>
+        <div class="flex justify-end">
+            <button
+                class="bg-ultimate-navy text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-ultimate-blue transition-colors"
+                >Kirim Komentar</button
+            >
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        {
+            comments.map((comment: Comment) => (
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex-shrink-0 overflow-hidden">
+                        <img
+                            alt={comment.name}
+                            class="w-full h-full object-cover"
+                            src={comment.image}
+                        />
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl rounded-tl-none border border-slate-100 dark:border-slate-700 transition-colors">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-ultimate-navy dark:text-white text-sm">
+                                    {comment.name}
+                                </h4>
+                                <span class="text-xs text-slate-400">
+                                    {comment.date}
+                                </span>
+                            </div>
+                            <p class="text-sm text-slate-600 dark:text-slate-300">
+                                {comment.content}
+                            </p>
+                        </div>
+                        <button class="text-xs font-semibold text-slate-500 mt-1 ml-2 hover:text-ultimate-blue transition-colors">
+                            Balas
+                        </button>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</div>

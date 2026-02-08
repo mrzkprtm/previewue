@@ -1,0 +1,70 @@
+---
+/**
+ * OWNER: DYNAMIC (Dev B)
+ * Blog listing page.
+ * TODO: Add pagination (currently hardcoded page 1).
+ */
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Card from '../../components/ui/Card.astro';
+import { getPosts } from '../../lib/api/endpoints';
+import type { WPPost } from '../../types/wp';
+
+let posts: WPPost[] = [];
+let error: string | null = null;
+
+try {
+  // Fetch posts for page 1
+  posts = await getPosts();
+} catch (e) {
+  console.error("Failed to load posts", e);
+  error = "Failed to load latest articles.";
+}
+---
+
+<SiteLayout title="Blog - Latest Articles">
+  <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold mb-8">Latest Articles</h1>
+
+    {error && (
+      <div class="bg-red-50 text-red-600 p-4 rounded-md mb-8">
+        {error}
+      </div>
+    )}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {posts.map((post) => (
+        <Card class="flex flex-col h-full hover:-translate-y-1 transition-transform duration-200">
+          {post.featuredImage && (
+            <img 
+              src={post.featuredImage.src} 
+              alt={post.featuredImage.alt} 
+              class="w-full h-48 object-cover"
+            />
+          )}
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="text-sm text-blue-600 font-medium mb-2">
+              {post.categories.map(c => c.name).join(', ')}
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2">
+              <a href={`/blog/${post.slug}`} class="hover:text-blue-600 transition-colors">
+                {post.title}
+              </a>
+            </h2>
+            <div class="text-gray-600 text-sm mb-4 line-clamp-3" set:html={post.excerpt} />
+            <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-500">
+              <span>{new Date(post.date).toLocaleDateString()}</span>
+              <a href={`/blog/${post.slug}`} class="font-medium text-blue-600 hover:text-blue-800">
+                Read more &rarr;
+              </a>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    <!-- TODO: Implement Pagination Controls -->
+    <div class="mt-12 text-center text-gray-500 py-8 border-t">
+      [Pagination Placeholder]
+    </div>
+  </div>
+</SiteLayout>

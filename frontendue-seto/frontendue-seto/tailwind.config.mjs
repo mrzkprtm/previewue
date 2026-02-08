@@ -1,0 +1,64 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        // New Home Page Design Colors
+        'ultimate-blue': '#145da0',
+        'ultimate-yellow': '#FFBB00',
+        'ultimate-navy': '#07223a',
+        // Existing Colors...
+        primary: '#F58220',
+        'theme-blue': '#083D77',
+        'theme-blue-dark': '#052a53',
+        'background-light': '#F9FAFB',
+        'surface-light': '#FFFFFF',
+        'text-main-light': '#1F2937',
+        'text-muted-light': '#6B7280',
+        'contact-primary': '#F58220',
+        'contact-blue': '#083D77',
+        'contact-blue-dark': '#052a53',
+        'contact-bg-light': '#F9FAFB',
+        'contact-bg-dark': '#111827',
+        'contact-surface-light': '#FFFFFF',
+        'contact-surface-dark': '#1F2937',
+        'contact-text-main-light': '#1F2937',
+        'contact-text-main-dark': '#F3F4F6',
+        'contact-text-muted-light': '#6B7280',
+        'contact-text-muted-dark': '#9CA3AF',
+      },
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+        heading: ['Poppins', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        open: ['Poppins', 'sans-serif'],
+      },
+      backgroundImage: {
+        'hero-gradient': 'linear-gradient(135deg, #07223a 0%, #145da0 100%)',
+      },
+      boxShadow: {
+        'header': '0px 0px 30px 0px rgba(0,0,0,0.30)',
+        'card': '0px 4px 6px -2px rgba(0,0,0,0.05), 0px 4px 15px -3px rgba(0,0,0,0.10)',
+      },
+      animation: {
+        marquee: 'marquee 25s linear infinite',
+        'scroll': 'scroll 40s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        'scroll': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(calc(-250px * 5))' },
+        }
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+}

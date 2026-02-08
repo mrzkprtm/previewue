@@ -1,309 +1,112 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/ui/Card.astro";
+import Button from "../components/ui/Button.astro";
 
-const programCategories = [
-  {
-    title: 'Persiapan Tes Internasional',
-    programs: [
-      {
-        name: 'Ultimate IELTS',
-        description: 'Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja',
-        target: '🎯 Mahasiswa & profesional muda',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate TOEFL',
-        description: 'Persiapan TOEFL intensif untuk kuliah dan beasiswa keluar negeri',
-        target: '🎯 Calon mahasiswa MBA',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate GMAT',
-        description: 'Persiapan GMAT intensif untuk lanjut kuliah S2 bisnis di luar negeri',
-        target: '🎯 Calon mahasiswa MBA',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate GRE',
-        description: 'Persiapan GRE intensif untuk lanjut kuliah S2 ke luar negeri',
-        target: '🎯 Mahasiswa tingkat akhir & lulusan S1',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate SAT',
-        description: 'Bimbingan intensif tes SAT untuk persiapan kuliah keluar negeri',
-        target: '🎯 Pelajar SMA & calon mahasiswa',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate PTE',
-        description: 'Bimbingan PTE intensif untuk kuliah dan kerja di luar negeri',
-        target: '🎯 Calon Mahasiswa',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-    ],
-  },
-  {
-    title: 'Program Bahasa Asing',
-    programs: [
-      {
-        name: 'Ultimate JLPT',
-        description: 'Bimbingan JLPT intensif untuk lulus ujian dan raih peluang studi atau kerja di Jepang',
-        target: '🎯 Pelajar, pencari kerja & peminat studi ke Jepang',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate HSK',
-        description: 'Bimbingan HSK intensif untuk lulus ujian dan lanjut studi atau kerja di Tiongkok',
-        target: '🎯 Pelajar, mahasiswa & profesional',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate TOPIK',
-        description: 'Bimbingan TOPIK intensif untuk lulus ujian dan lanjut studi atau kerja di Korea Selatan',
-        target: '🎯 Mahasiswa & profesional muda',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate DELF',
-        description: 'Bimbingan DELF intensif untuk lulus ujian dan lanjut studi atau kerja di negara berbahasa Prancis',
-        target: '🎯 Pelajar, mahasiswa & profesional',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate TestDaF',
-        description: 'Bimbingan TestDaF intensif untuk lulus ujian dan lanjut kuliah di Jerman',
-        target: '🎯 Pelajar & mahasiswa yang ingin kuliah di Jerman',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-    ],
-  },
-  {
-    title: 'Program Khusus',
-    programs: [
-      {
-        name: 'Ultimate Scholarship',
-        description: 'Bimbingan Persiapan Beasiswa untuk Masuk Perguruan Tinggi Negeri',
-        target: '🎯 Pelajar dan Mahasiswa',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'General English',
-        description: 'Kelas General English intensif untuk mahir berkomunikasi dalam bahasa Inggris sehari-hari',
-        target: '🎯 Pemula yang ingin lancar berbahasa Inggris',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Business English',
-        description: 'Kelas Business English intensif untuk lancar komunikasi profesional di dunia kerja',
-        target: '🎯 Karyawan, pebisnis, & profesional muda',
-        duration: '🕒 Durasi 4–8 minggu',
-        includes: '🎁 Simulasi, soal, sertifikat',
-      },
-      {
-        name: 'Ultimate BIPA',
-        description: 'Intensive BIPA class for fluency in Indonesian for daily life & work',
-        target: '🎯 Students, expatriates, & foreign professionals',
-        duration: '🕒 Duration: 4–8 weeks',
-        includes: '🎁 Simulations, exercises, certificate',
-      },
-    ],
-  },
-];
+import { programsData as programCategories } from "../data/programs";
 ---
 
-<Layout title="Semua Program Ultimate Education" description="Jelajahi semua program persiapan tes internasional, bahasa asing, dan program khusus kami.">
-  <!-- Header -->
-  <section class="program-header">
-    <h1>Semua Program Ultimate Education</h1>
-    <p>Pilih program yang sesuai dengan tujuan pendidikan dan karir Anda</p>
+<Layout title="Semua Program - Ultimate Education" description="Jelajahi program persiapan tes internasional (IELTS, TOEFL, SAT), kursus bahasa asing, dan bimbingan beasiswa kami.">
+  <!-- Hero Section -->
+  <section class="bg-hero-gradient text-white py-20 px-6 text-center relative overflow-hidden">
+    <!-- Abstract Background Elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+      <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-ultimate-blue/30 rounded-full blur-[100px]"></div>
+      <div class="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-ultimate-yellow/10 rounded-full blur-[80px]"></div>
+    </div>
+
+    <div class="container mx-auto max-w-4xl relative z-10">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-6 tracking-tight leading-tight">
+        Pilih Program <span class="text-ultimate-yellow">Masa Depanmu</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-blue-100 font-sans max-w-2xl mx-auto leading-relaxed">Kami menyediakan solusi pendidikan terlengkap untuk membantu Anda meraih impian studi dan karir global.</p>
+    </div>
   </section>
 
-  <!-- Program Categories -->
-  {programCategories.map(category => (
-    <section class="program-category">
-      <h2>{category.title}</h2>
-      <div class="programs-list">
-        {category.programs.map(program => (
-          <div class="program-item">
-            <div class="program-item-content">
-              <h3>{program.name}</h3>
-              <p class="program-description">{program.description}</p>
-              <div class="program-details">
-                <p>{program.target}</p>
-                <p>{program.duration}</p>
-                <p>{program.includes}</p>
-              </div>
-            </div>
-            <a href="https://api.whatsapp.com/send/?phone=6283812310368" class="btn btn-primary">Pelajari lebih lanjut →</a>
+  <!-- Main Content -->
+  <div class="container mx-auto px-6 py-20 space-y-24">
+    {
+      programCategories.map((category) => (
+        <section>
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-12 border-b border-gray-100 pb-6">
+            <div class="h-12 w-2 bg-ultimate-yellow rounded-full hidden md:block" />
+            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy">{category.title}</h2>
           </div>
-        ))}
-      </div>
-    </section>
-  ))}
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {category.programs.map((program) => (
+              <Card class="flex flex-col h-full hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-t-ultimate-blue group relative bg-white">
+                <div class="p-8 flex flex-col h-full relative z-10">
+                  <div class="mb-8">
+                    <h3 class="text-2xl font-bold font-heading text-ultimate-blue mb-4 group-hover:text-ultimate-navy transition-colors">{program.name}</h3>
+                    <p class="text-gray-600 leading-relaxed font-sans text-base min-h-[4.5rem]">{program.description}</p>
+                  </div>
+
+                  <div class="space-y-4 mb-8 flex-grow bg-slate-50 p-6 rounded-xl border border-slate-100 group-hover:bg-blue-50/50 group-hover:border-blue-100 transition-colors">
+                    <div class="flex items-start gap-4">
+                      <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🎯</span>
+                      <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Target</span>
+                        <span class="text-sm font-medium text-gray-800 leading-snug">{program.target.replace("🎯 ", "")}</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🕒</span>
+                      <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Durasi</span>
+                        <span class="text-sm font-medium text-gray-800 leading-snug">{program.duration.replace("🕒 ", "")}</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🎁</span>
+                      <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Fasilitas</span>
+                        <span class="text-sm font-medium text-gray-800 leading-snug">{program.includes.replace("🎁 ", "")}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button href={`/program/${program.slug}`} variant="primary" class="w-full justify-between items-center group/btn shadow-md hover:shadow-lg bg-ultimate-blue hover:bg-ultimate-navy border-none py-3">
+                    <span class="font-bold tracking-wide">Lihat Detail</span>
+                    <div class="bg-white/20 rounded-full p-1 group-hover/btn:translate-x-1 transition-transform">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
 
   <!-- CTA Section -->
-  <section class="cta-section">
-    <h2>Belum Yakin Program Mana yang Cocok?</h2>
-    <p>Hubungi konsultan kami untuk mendapatkan saran program yang paling sesuai dengan kebutuhan Anda</p>
-    <a href="https://api.whatsapp.com/send/?phone=6283812310368" class="btn btn-primary btn-large">Konsultasi Gratis</a>
+  <section class="bg-slate-50 py-24 px-6">
+    <div class="container mx-auto max-w-5xl">
+      <div class="bg-hero-gradient rounded-[2.5rem] p-12 md:p-20 text-center text-white shadow-2xl relative overflow-hidden ring-8 ring-white">
+        <!-- Abstract Decoration -->
+        <div class="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 -ml-32 -mb-32 w-80 h-80 bg-ultimate-yellow/20 rounded-full blur-3xl"></div>
+
+        <div class="relative z-10">
+          <h2 class="text-3xl md:text-5xl font-bold font-heading mb-8 leading-tight">Masih Bingung Memilih Program?</h2>
+          <p class="text-lg md:text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Konsultasikan kebutuhan belajarmu dengan tim ahli kami. Kami siap memberikan rekomendasi program terbaik yang disesuaikan dengan target masa depanmu.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-6">
+            <Button
+              href="https://api.whatsapp.com/send/?phone=6283812310368"
+              class="bg-ultimate-yellow text-ultimate-navy hover:bg-white hover:text-ultimate-blue font-bold px-10 py-4 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all rounded-xl border-none"
+            >
+              Konsultasi Gratis
+            </Button>
+            <Button href="/kontak" class="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 font-bold px-10 py-4 text-lg rounded-xl backdrop-blur-sm transition-all"> Hubungi Kami </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </Layout>
-
-<style>
-  .program-header {
-    text-align: center;
-    padding: 3rem 0;
-    margin-bottom: 2rem;
-  }
-
-  .program-header h1 {
-    margin-bottom: 1rem;
-  }
-
-  .program-header p {
-    color: #666;
-    font-size: 1.1rem;
-  }
-
-  .program-category {
-    margin-bottom: 4rem;
-  }
-
-  .program-category h2 {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 3px solid #0066cc;
-    display: inline-block;
-  }
-
-  .programs-list {
-    display: grid;
-    gap: 2rem;
-  }
-
-  .program-item {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    transition: all 0.3s ease;
-  }
-
-  .program-item:hover {
-    border-color: #0066cc;
-    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.1);
-    transform: translateY(-2px);
-  }
-
-  .program-item-content {
-    flex: 1;
-  }
-
-  .program-item h3 {
-    color: #0066cc;
-    margin-bottom: 0.5rem;
-  }
-
-  .program-description {
-    color: #333;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-
-  .program-details {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .program-details p {
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-
-  .btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .btn-primary {
-    background: #0066cc;
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background: #0052a3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
-  }
-
-  .btn-large {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-  }
-
-  .cta-section {
-    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-    color: white;
-    padding: 3rem 0;
-    border-radius: 8px;
-    text-align: center;
-    margin-top: 4rem;
-  }
-
-  .cta-section h2 {
-    color: white;
-    margin-bottom: 1rem;
-  }
-
-  .cta-section p {
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  @media (max-width: 768px) {
-    .program-item {
-      flex-direction: column;
-    }
-
-    .program-details {
-      grid-template-columns: 1fr;
-    }
-
-    .btn {
-      width: 100%;
-    }
-  }
-</style>
-

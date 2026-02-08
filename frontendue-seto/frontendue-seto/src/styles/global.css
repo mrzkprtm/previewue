@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OWNER: STATIC (Dev A) */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-gray-900 bg-gray-50;
+  }
+
+  .content-area h2 {
+    @apply text-2xl font-bold text-ultimate-navy mt-8 mb-4;
+  }
+
+  .content-area p {
+    @apply text-slate-600 dark:text-slate-400 leading-relaxed mb-6 text-lg;
+  }
+
+  .content-area ul {
+    @apply list-disc list-inside text-slate-600 dark:text-slate-400 mb-6 space-y-2 text-lg;
+  }
+
+  .content-area blockquote {
+    @apply border-l-4 border-ultimate-yellow bg-orange-50 dark:bg-slate-800 p-6 my-8 italic text-ultimate-navy dark:text-ultimate-yellow font-medium text-xl;
+  }
+
+  .prose p {
+    @apply mb-6 leading-[1.8];
+  }
+
+  .prose h2 {
+    @apply font-heading font-bold text-2xl mt-10 mb-4 text-ultimate-navy dark:text-white;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6 mb-6;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+}
+
+@layer utilities {
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+}

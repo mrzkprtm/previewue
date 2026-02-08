@@ -1,0 +1,38 @@
+---
+const partners = [
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuD7Xi4Zx2KqcDQld775wljojqgNMP4X64UMzPlxGokgz_qPxNMVE-c0PQh5p5gvkqqIW3hLvznN80Uy0T1SaMhs4M2GR8ZanYDVdZ3Feq4lWslhAMZej5yEcS-zPz16qeB0_yIlZTWVNi9WEQ9HqP5DGX4HkOqIQaSP0_JkoTOaXcaRREM7EmDut5UolTXYSi905im1rNhXoDPqZ9_Qrv2IRqNWdOsT-eI_avXojjF_6wH85dncTaRWlvyo-AqkaficczJa6vDkNYU",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuBCEKqU-Z6skfNlgBG3sAIe0BCBiYgDtkRDvTu9Ry7Wb_hpRJSmAJZA9zWZad0Kh7xpUZzP0Al0-8cz_iBcFzEP2gdAPzjGDDHN8828IVXBwpAwSHpdXM3x6f6QKMQsiXE6uwTbLUt9xsUFvXZMovUSwHlwGZpMqsjJszg9bDKUwR0OMJ5xtdLtTaDNm1N9Wqg_VN89VSNuIavz8GkLYVkRO-9cChvLxhVC8Bw7X_2y0GGtgra0Br4Qh0FPvxqvmUDIvI7uyHmfVJI",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuAmyMSgnQ4QX2yQKKDHOLaoOL5b4HpzYwxiOSbegctBp0D_8oF-zY10f4oRQNiKV985H8TfTvDjaaZxv3yA2ui5PFAAKEwzBRSdMSPCBzApRRl_E4IqaNgLSukdcuTUwxUOY7cKmYHtTPk6NVli9oGVAqmVGxQHaoNEL16Ow6AIwGzhvQSvBUe_SyZLhUxUA01wExoEnA8m61HVyfE0eUy3cOrODt3lqhncGEOobeVY-CsyVhMM-5dS_eHMLtJi356UcOQi_t4j7aM",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuCc58W3XXXl7nEYArskY4MGdUbBOWkvqz07xPVSl5jCABu4FbleFglQbX7oeKuH_RfzJmOtbgRoivaJhkPT9Y1yelO0fmi-5f1Qe2BwjrsX_Ivu_aGaBJdA_mmOCqbybuQ6wCTIMq2gyio4eij7ZA5oR3wXb19fdgD3hAwDve5GMpec9aCb01VXciuXzKb9gz60wMcWA3W4U9McTUqnsNFX2Xs3QMQPM0NxrapsdUALZ7VWFkwP7XCTR-2ho7nMyMUTSQeLcSck0II",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuC-jDkriYQI9wfDOsXJr6qzyoTaviIhgWKMRo2gJGEEncqoyteo0W5cqabVyfk2YL-TMAVLMCVT2H_BTFO6vQ0EBsLpR7SCvYKQ0h3_hfDs46mLfFewiA3IDW2opfEU6igBvv4Hv2KrCY_PRJQJx5Lg9D0AIwom5T2RqPhLoJOqFDkRnGnDD8bv8tBJX9nZluipWyqRkKBhPRMJthDQcrc0SMwksfDHceOvh_T6CWPcvE19wiHle6-YKf2Lmh2rUZTd9ZIhUzsoP9A",
+];
+---
+
+<section
+    class="py-12 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 overflow-hidden"
+>
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="relative flex overflow-hidden">
+            <div
+                class="animate-scroll flex items-center gap-12 md:gap-24 opacity-40 grayscale"
+            >
+                {
+                    [...partners, ...partners].map((logo) => (
+                        <img
+                            alt="Partner Logo"
+                            class="h-8 md:h-12 w-auto object-contain"
+                            src={logo}
+                        />
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .animate-scroll {
+        display: flex;
+        width: max-content;
+    }
+</style>

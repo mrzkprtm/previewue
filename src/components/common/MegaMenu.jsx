@@ -5,52 +5,52 @@ const megaMenuData = [
     id: 'terfavorit',
     label: 'Program Terfavorit',
     items: [
-      { name: 'Ultimate IELTS', href: '/persiapan-ielts', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592.webp', desc: 'Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja' },
-      { name: 'Ultimate SAT', href: '/persiapan-sat', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592-3.webp', desc: 'Bimbingan intensif tes SAT untuk persiapan kuliah ke luar negeri' },
-      { name: 'Ultimate GRE', href: '/persiapan-gre', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592-1.webp', desc: 'Persiapan lengkap GRE untuk program Master di luar negeri' },
-      { name: 'Ultimate TOEFL', href: '/persiapan-toefl', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592-4.webp', desc: 'Strategi dan latihan TOEFL iBT untuk skor tinggi' }
+      { name: 'Ultimate IELTS', href: '/program/ielts', image: '/program/ielts.png', desc: 'Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja' },
+      { name: 'Ultimate SAT', href: '/program/sat', image: '/program/sat.png', desc: 'Bimbingan intensif tes SAT untuk persiapan kuliah ke luar negeri' },
+      { name: 'Ultimate GRE', href: '/program/gre', image: '/program/gre.png', desc: 'Persiapan lengkap GRE untuk program Master di luar negeri' },
+      { name: 'Ultimate TOEFL', href: '/program/toefl', image: '/program/toefl.png', desc: 'Strategi dan latihan TOEFL iBT untuk skor tinggi' }
     ]
   },
   {
     id: 'kuliah-luar-negeri',
     label: 'Kuliah di Luar Negeri',
     items: [
-      { name: 'Persiapan Beasiswa', href: '/beasiswa', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/beasiswa.webp', desc: 'Panduan lengkap mendapatkan beasiswa kuliah di luar negeri' },
-      { name: 'Study in USA', href: '/study-usa', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/usa.webp', desc: 'Konsultasi kuliah di Amerika Serikat' },
-      { name: 'Study in UK', href: '/study-uk', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/uk.webp', desc: 'Konsultasi kuliah di Inggris' },
-      { name: 'Study in Australia', href: '/study-australia', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/australia.webp', desc: 'Konsultasi kuliah di Australia' }
+      { name: 'Persiapan Beasiswa', href: '/program/beasiswa', image: '/program/ausbildung.png', desc: 'Panduan lengkap mendapatkan beasiswa kuliah di luar negeri' },
+      { name: 'Study in USA', href: '/study-usa', image: '/program/sat.png', desc: 'Konsultasi kuliah di Amerika Serikat' },
+      { name: 'Study in UK', href: '/study-uk', image: '/program/ielts.png', desc: 'Konsultasi kuliah di Inggris' },
+      { name: 'Study in Australia', href: '/study-australia', image: '/program/pte.png', desc: 'Konsultasi kuliah di Australia' }
     ]
   },
   {
     id: 'persiapan-tes',
     label: 'Persiapan Tes',
     items: [
-      { name: 'IELTS', href: '/persiapan-ielts', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592.webp', desc: 'International English Language Testing System' },
-      { name: 'TOEFL', href: '/persiapan-toefl', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592-4.webp', desc: 'Test of English as a Foreign Language' },
-      { name: 'SAT', href: '/persiapan-sat', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592-3.webp', desc: 'Scholastic Assessment Test' },
-      { name: 'GRE', href: '/persiapan-gre', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/Group-592-1.webp', desc: 'Graduate Record Examination' },
-      { name: 'GMAT', href: '/persiapan-gmat', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/gmat.webp', desc: 'Graduate Management Admission Test' },
-      { name: 'PTE', href: '/persiapan-pte', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/pte.webp', desc: 'Pearson Test of English' }
+      { name: 'IELTS', href: '/program/ielts', image: '/program/ielts.png', desc: 'International English Language Testing System' },
+      { name: 'TOEFL', href: '/program/toefl', image: '/program/toefl.png', desc: 'Test of English as a Foreign Language' },
+      { name: 'SAT', href: '/program/sat', image: '/program/sat.png', desc: 'Scholastic Assessment Test' },
+      { name: 'GRE', href: '/program/gre', image: '/program/gre.png', desc: 'Graduate Record Examination' },
+      { name: 'GMAT', href: '/program/gmat', image: '/program/gmat.png', desc: 'Graduate Management Admission Test' },
+      { name: 'PTE', href: '/program/pte', image: '/program/pte.png', desc: 'Pearson Test of English' }
     ]
   },
   {
     id: 'kelas-bahasa',
     label: 'Kelas Bahasa',
     items: [
-      { name: 'JLPT - Bahasa Jepang', href: '/kelas-jlpt', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/jlpt.webp', desc: 'Japanese Language Proficiency Test' },
-      { name: 'HSK - Bahasa Mandarin', href: '/kelas-hsk', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/hsk.webp', desc: 'Hanyu Shuiping Kaoshi (Chinese Proficiency)' },
-      { name: 'TOPIK - Bahasa Korea', href: '/kelas-topik', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/topik.webp', desc: 'Test of Proficiency in Korean' },
-      { name: 'DELF - Bahasa Prancis', href: '/kelas-delf', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/delf.webp', desc: 'Diplome d Etudes en Langue Francaise' }
+      { name: 'JLPT - Bahasa Jepang', href: '/program/jlpt', image: '/program/jlpt.png', desc: 'Japanese Language Proficiency Test' },
+      { name: 'HSK - Bahasa Mandarin', href: '/program/hsk', image: '/program/hsk.png', desc: 'Hanyu Shuiping Kaoshi (Chinese Proficiency)' },
+      { name: 'TOPIK - Bahasa Korea', href: '/program/topik', image: '/program/topik.png', desc: 'Test of Proficiency in Korean' },
+      { name: 'DELF - Bahasa Prancis', href: '/program/delf', image: '/program/delf.png', desc: 'Diplome d Etudes en Langue Francaise' }
     ]
   },
   {
     id: 'lainnya',
     label: 'Lainnya',
     items: [
-      { name: 'General English', href: '/general-english', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/general-english.webp', desc: 'Kursus Bahasa Inggris untuk semua level' },
-      { name: 'Business English', href: '/business-english', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/business-english.webp', desc: 'Bahasa Inggris untuk profesional' },
-      { name: 'BIPA', href: '/bipa', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/bipa.webp', desc: 'Bahasa Indonesia bagi Penutur Asing' },
-      { name: 'Corporate Training', href: '/corporate', image: 'https://www.ultimateducation.co.id/wp-content/uploads/2025/08/corporate.webp', desc: 'Program pelatihan khusus perusahaan' }
+      { name: 'General English', href: '/program/general-english', image: '/program/ge.png', desc: 'Kursus Bahasa Inggris untuk semua level' },
+      { name: 'Business English', href: '/program/business-english', image: '/program/be.png', desc: 'Bahasa Inggris untuk profesional' },
+      { name: 'BIPA', href: '/program/bipa', image: '/program/bipa.png', desc: 'Bahasa Indonesia bagi Penutur Asing' },
+      { name: 'Corporate Training', href: '/corporate', image: '/program/be.png', desc: 'Program pelatihan khusus perusahaan' }
     ]
   }
 ];
@@ -61,58 +61,77 @@ export default function MegaMenu({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div 
-      className="absolute top-full left-1/2 -translate-x-1/2 w-full max-w-[1140px] bg-white border-t-[3px] border-[#046bd2] rounded-b-xl shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+    <div
+      className="absolute top-full left-1/2 -translate-x-1/2 w-full bg-white rounded-2xl shadow-2xl z-50 animate-in fade-in slide-in-from-top-4 duration-300 overflow-hidden"
       onMouseLeave={onClose}
     >
-      <div className="flex flex-col">
-        {/* Tabs Header */}
-        <div className="flex bg-[#F0F5FA] border-b border-gray-200">
+      <div className="flex flex-col lg:flex-row">
+        {/* Tabs Sidebar/Header */}
+        <div className="flex lg:flex-col bg-slate-50 lg:w-56 border-r border-slate-100">
           {megaMenuData.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               onMouseEnter={() => setActiveTab(tab.id)}
-              className={`flex-1 py-4 px-5 text-sm font-semibold transition-colors duration-200 border-b-2 -mb-[1px] ${
-                activeTab === tab.id
-                  ? 'bg-white text-[#046bd2] border-[#046bd2]'
-                  : 'text-slate-600 hover:text-[#046bd2] hover:bg-[#046bd2]/5 border-transparent'
-              }`}
+              className={`flex-1 lg:flex-initial py-3 px-5 text-xs font-bold font-heading uppercase tracking-wider text-left transition-all duration-200 border-b lg:border-b-0 lg:border-l-4 ${activeTab === tab.id
+                ? 'bg-white text-ultimate-blue border-ultimate-blue'
+                : 'text-slate-500 hover:text-ultimate-blue hover:bg-white/50 border-transparent'
+                }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-        {/* Content */}
-        <div className="p-6">
+        {/* Content Area */}
+        <div className="flex-1 p-6 max-h-[60vh] overflow-y-auto">
           {megaMenuData.map((tab) => (
             <div
               key={tab.id}
-              className={`${activeTab === tab.id ? 'grid' : 'hidden'} grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5`}
+              className={`${activeTab === tab.id ? 'block' : 'hidden'}`}
             >
-              {tab.items.map((item, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4">
+                {tab.items.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="group relative flex items-center gap-3 p-2 rounded-xl overflow-hidden border border-slate-100 hover:border-ultimate-blue transition-all duration-300 hover:shadow-md bg-white"
+                  >
+                    {/* Square image */}
+                    <div className="w-16 h-16 shrink-0 overflow-hidden rounded-lg bg-slate-50">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-slate-800 group-hover:text-ultimate-blue mb-0.5 transition-colors font-heading text-xs uppercase tracking-wide truncate">
+                        {item.name}
+                      </h3>
+                      <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-2 font-sans">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              {/* View All Programs Link */}
+              <div className="flex justify-center pt-3 border-t border-slate-100">
                 <a
-                  key={index}
-                  href={item.href}
-                  className="group flex flex-col p-4 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all duration-200 hover:-translate-y-1"
+                  href="/program"
+                  className="group inline-flex items-center gap-2 px-5 py-2 text-ultimate-blue hover:text-white bg-white hover:bg-ultimate-blue border-2 border-ultimate-blue font-bold font-heading text-xs uppercase tracking-wider rounded-lg transition-all duration-300"
                 >
-                  <div className="h-28 w-full mb-3 rounded-md overflow-hidden bg-gray-100 p-2">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-contain mix-blend-multiply"
-                      loading="lazy"
-                    />
-                  </div>
-                  <h3 className="font-semibold text-slate-800 group-hover:text-[#046bd2] mb-1 transition-colors">
-                    {item.name}
-                  </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                    {item.desc}
-                  </p>
+                  <span>Lihat Semua Program</span>
+                  <svg className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </a>
-              ))}
+              </div>
             </div>
           ))}
         </div>
@@ -120,4 +139,3 @@ export default function MegaMenu({ isOpen, onClose }) {
     </div>
   );
 }
-

@@ -1,0 +1,32 @@
+---
+import ArticlesCard from "./ArticlesCard.astro";
+
+interface Props {
+    articles: Array<{
+        title: string;
+        excerpt: string;
+        date: string;
+        author: string;
+        category: string;
+        slug: string;
+        image: string;
+    }>;
+    categories: string[];
+    selectedCategory: string;
+}
+
+const { articles, categories, selectedCategory } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {articles.map((article) => <ArticlesCard {...article} />)}
+</div>
+
+<div class="flex justify-center mt-16">
+    <button
+        class="px-8 py-3 rounded-full border-2 border-ultimate-navy dark:border-white text-ultimate-navy dark:text-white font-bold text-sm hover:bg-ultimate-navy dark:hover:bg-white hover:text-white dark:hover:text-ultimate-navy transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-lg"
+    >
+        <span>Load More Articles</span>
+        <span class="material-symbols-outlined">expand_more</span>
+    </button>
+</div>

@@ -1,0 +1,31 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HomeHero from "../components/home/HomeHero.astro";
+import HomePaths from "../components/home/HomePaths.astro";
+import HomeSuccessCTA from "../components/home/HomeSuccessCTA.astro";
+import HomePromos from "../components/home/HomePromos.astro";
+import HomeFeatures from "../components/home/HomeFeatures.astro";
+import HomePlacementTest from "../components/home/HomePlacementTest.astro";
+import HomeMentors from "../components/home/HomeMentors.astro";
+import HomeScholarships from "../components/home/HomeScholarships.astro";
+import HomeTestimonials from "../components/home/HomeTestimonials.astro";
+import HomeFAQ from "../components/home/HomeFAQ.astro";
+
+const title =
+  "Ultimate Education - Solusi Terbaik Persiapan Studi Luar Negeri & Beasiswa";
+const description =
+  "Pusat bimbingan persiapan beasiswa, IELTS, SAT, GMAT, GRE, dan bahasa asing terpercaya di Indonesia.";
+---
+
+<Layout title={title} description={description}>
+  <HomeHero />
+  <HomePaths />
+  <HomeSuccessCTA />
+  <HomePromos />
+  <HomeFeatures />
+  <HomePlacementTest />
+  <HomeMentors />
+  <HomeScholarships />
+  <HomeTestimonials />
+  <HomeFAQ />
+</Layout>

@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MitraHero from "../components/mitra/MitraHero.astro";
+import MitraReasons from "../components/mitra/MitraReasons.astro";
+import MitraCommission from "../components/mitra/MitraCommission.astro";
+import MitraSteps from "../components/mitra/MitraSteps.astro";
+import MitraCTA from "../components/mitra/MitraCTA.astro";
+import MitraTestimonials from "../components/mitra/MitraTestimonials.astro";
+import MitraFAQ from "../components/mitra/MitraFAQ.astro";
+---
+
+<Layout
+  title="Ultimate Education Partnership - Wujudkan Penghasilan dari Rumah"
+  description="Cukup bagikan link referral, tanpa modal! Yuk, jadi #MitraUltimate sekarang dan nikmati keuntungannya."
+>
+  <main
+    class="flex-grow bg-slate-50 dark:bg-slate-900 transition-colors duration-300"
+  >
+    <!-- Hero Section -->
+    <MitraHero />
+
+    <!-- Why Choose Section -->
+    <MitraReasons />
+
+    <!-- Commission Section -->
+    <MitraCommission />
+
+    <!-- How it Works Section -->
+    <MitraSteps />
+
+    <!-- CTA Section -->
+    <MitraCTA />
+
+    <!-- Testimonials Section -->
+    <MitraTestimonials />
+
+    <!-- FAQ Section -->
+    <MitraFAQ />
+  </main>
+</Layout>

@@ -1,0 +1,151 @@
+---
+import ProgramCard from "./ProgramCard.astro";
+
+const programs = [
+    {
+        title: "Ultimate IELTS",
+        description:
+            "Bimbingan intensif tes IELTS dengan native speaker & garansi skor.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCXncOSXUZLNOkTdyTdi7vBh4uoP4jKkyI5gkSEK28HDs9rgTqWHFjgbMw0AvW1MWOvdKfizPhtHkp-RIKk3ridv_cT5DrmUGrIrP78a6x0U71o2f9fyxNQWUeFZ0494XUUdOZXhR1j6xEhQqf3UyFrhkk78akVwxiciHNZuahG6eAs3dhNJLD2JUBiv6So076p0xmNRjKfQMFdQCA_ZXv9c_hJevhZ__7u73LII-GNYk4PJ7GIsjtuSqMsG1gBhkI4OWkYrh18zE0",
+        rating: "4.9",
+        reviews: "1.2k",
+        category: "Test Prep",
+        categoryColor: "bg-blue-600",
+        target: "Mahasiswa & profesional muda",
+        duration: "4-8 minggu",
+        includes: "Simulasi, soal, sertifikat",
+    },
+    {
+        title: "Ultimate SAT",
+        description:
+            "Bimbingan intensif tes SAT untuk persiapan kuliah di luar negeri.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSb2tRhVWBh3f3mdjKODL4KgrFoFV8eUZhWhvF0nO9rs-oQM2YmP8x-K8819B-7880DCrDR-SWy5-ladBypwMPm5aAQOVslnIfO5ztKs_JknUTGEPzHr45oFhlCKeaIT2-FKenkf1R0lZ1zmlzW9_odD8YLhnyE2SA47dXejDVmyC0x14vosCQI0ltUdJLr08rPpgAQgpsKByWntDEU44SNzmzOhjLKgGcEvC1R5A8EDrzQWXD735uTrhwVxyJH9ybPAu4lOTiq4Y",
+        rating: "4.8",
+        reviews: "850",
+        category: "Univ Prep",
+        categoryColor: "bg-purple-600",
+        target: "Pelajar SMA & calon mahasiswa",
+        duration: "4-8 minggu",
+        includes: "Simulasi, soal, sertifikat",
+    },
+    {
+        title: "Ultimate GMAT",
+        description:
+            "Persiapan GMAT intensif untuk menembus sekolah bisnis top dunia.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDyIXgqVLOnzr5b3oQ44-sKWoft0Qzsxnmg3ajxNLbqeUk3Bza86ictGoZU3kFPuZAcg4pP5jbOVwx7JGgdugwSiQyJTASrOX2mRI1HmaiAyxd2c9DhlWqlmw7W1jEGLZ3X44L1z23n4lhgH6POyHLOcZtWEFc1jErFGqEwcv4vNbEIPrKQtoBWq6BIAwRjTS4tx0nyWzgAt7_Xe7LYEqrUK-Nn7Foq-MHXh3SyHHIdTjvRsR4md0Gfqnf4yrPQYerfo7f_UCqM4RQ",
+        rating: "5.0",
+        reviews: "420",
+        category: "MBA Prep",
+        categoryColor: "bg-emerald-600",
+        target: "Calon mahasiswa MBA",
+        duration: "4-8 minggu",
+        includes: "Simulasi, soal, sertifikat",
+    },
+    {
+        title: "Ultimate GRE",
+        description:
+            "Persiapan GRE intensif untuk aplikasi pascasarjana bidang sains/teknik.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBiZdZvk-STNLFyC4jmQwCcJYcI-zr3jYly9-ml_ROYAZjIjUML8bhkm1mo-sMq8qDcEIaVHjzJ47WkBwi5KwFWn61YMGHEovjyYBLGJiFFEqM-0jz8Nw_dVfdob79-i0tVwoKDa7jDlOfkFGN5a1IuqATWsVjzZHy_biIQAeV4WSibaNLZ-Qx3ohXcmATH4Rc6MB8nHynTR8FHtipoHRGDDtRQkCH1_OyvaEUQEAhDMHlu0DNJ_8bv87MEYvdCi4sfbJlbQgjz-S0",
+        rating: "4.9",
+        reviews: "512",
+        category: "Grad Prep",
+        categoryColor: "bg-orange-600",
+        target: "Mahasiswa akhir & Lulusan S1",
+        duration: "4-8 minggu",
+        includes: "Simulasi, soal, sertifikat",
+    },
+    {
+        title: "Ultimate TOEFL iBT",
+        description:
+            "Strategi jitu taklukan TOEFL iBT dalam waktu singkat dan efektif.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqcl3-YQhh7gSyoum1LfZZAv82IctyWkaCy5BvHEQeWwp51ujF5s6Y86h7oj54kTqQyaS1LrBdti7crLMVUvDypAVDkrrMZ5_VEic5t9IvdcqgWhs9adKLaSU43R4gq4FS6gQYzC1sbiMtgOUDxOGh2Ez7z7Ne_9AD3mqHA8icpC9fK4mNj581qs9Z0wjVXJTjeHihsQw2VAGiBBdpMCgqXRRQEmM5boSNsZmJXqEmYCNxCbTRgNVEF2k2iL6JOJH-VVdfPtXnbE0",
+        rating: "4.8",
+        reviews: "2.1k",
+        category: "Language",
+        categoryColor: "bg-teal-600",
+        target: "Umum, Mahasiswa, Karyawan",
+        duration: "2-4 minggu",
+        includes: "Simulasi, soal, sertifikat",
+    },
+    {
+        title: "Essay Mentoring",
+        description:
+            "Review personal statement dan essay beasiswa secara mendalam.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAkb_67WG2bXQoGRxU5SeFFGonSlc9NBdJVu5HgmCeEvKYsibjlktCgrBPC7CmBWvyeXWr5qfBz9Pe8LKA7LxLwP-l45yZ1i88qf5mHi2y18E-cQj_hQWRrAWVVMP5u-AVZpa06Wv-ikJrkBeRHZvy1ZLvqN3Uyz4-xvp2YPvMc-xFESj4_snBQAyinLY8TvuI52MwDEdvlZVV5ZRr4YZEa324YYEWY9nms9aKI92cFCfSOTmrg0UIZKdtewDDTgCgbYbpoLO7vJUg",
+        rating: "5.0",
+        reviews: "156",
+        category: "Mentoring",
+        categoryColor: "bg-pink-600",
+        target: "Pemburu Beasiswa",
+        duration: "Fleksibel",
+        includes: "1-on-1, Unlimited Review",
+    },
+    {
+        title: "Mock Interview",
+        description:
+            "Simulasi wawancara beasiswa dengan pertanyaan prediktif dan feedback.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB1W7xskCW-Fj-QpihieohMHaq4sGSgOEchODXPDIR7cy2uMt-gMhWFlv6QQW-57Zi6FudFUBUfNeb3qHWkZWoRz9pM1UmWinSH6AecpxzJ8Mm4BO2_3SkVEHVakX2uNYYMfMEQLxlsFD7U4iZOTPrJTyT-DyqppfvlVWndZ8hdFvL-m9Mv1IIvYX1U-97ZdJ5Jjcn1uGw3Rm5DOQ1yd-T2p1ZWQznhaYTQqeawWJEQy2sgL_iAZFA87Bt_YjPJ2wJttpUwnKHCl8A",
+        rating: "4.9",
+        reviews: "320",
+        category: "Interview",
+        categoryColor: "bg-cyan-600",
+        target: "Shortlisted Candidates",
+        duration: "1-3 Sesi",
+        includes: "Recording, Written Feedback",
+    },
+    {
+        title: "General English",
+        description:
+            "Tingkatkan kemampuan bahasa Inggris untuk komunikasi sehari-hari.",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYMlYOAPYjRSEBm8i9ux5QjF-QzobwfrD8N6hkt90Gadk0JM_UHXTFdLSvV97sRAUN-7UlyvWfRuvIqPmBLgtjMpK9WB6T0XNWJ0KehYjpC4FPpexcgx9d_Uu8Qq3iSMcBALZFf4YHfy_pcW4BnmfH2aXjyhNrDTRFaw-Z1xqZCG8oaOcFg2mX8o3jUvdlx22MlF1Mw0rfKG8Gg7UE8xqlKIgs_zp3jVQVsglvzrrYWSrqqlQW4eEBdwTpkBLbQW-Q5RbyMxv-MGE",
+        rating: "4.7",
+        reviews: "980",
+        category: "Language",
+        categoryColor: "bg-indigo-600",
+        target: "Semua Umur",
+        duration: "2-3 Bulan",
+        includes: "Workbook, Sertifikat",
+    },
+];
+---
+
+<section
+    class="py-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4"
+        >
+            <h2
+                class="text-2xl font-bold font-heading text-ultimate-navy dark:text-white"
+            >
+                Program Pilihan
+            </h2>
+            <div class="text-sm text-slate-500">
+                Menampilkan <span
+                    class="font-bold text-ultimate-navy dark:text-white"
+                    >{programs.length}</span
+                > dari <span
+                    class="font-bold text-ultimate-navy dark:text-white"
+                    >24</span
+                > program
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {programs.map((program) => <ProgramCard {...program} />)}
+        </div>
+
+        <div class="flex justify-center mt-12">
+            <button
+                class="group px-8 py-3 rounded-full border-2 border-ultimate-navy dark:border-white text-ultimate-navy dark:text-white font-bold text-sm hover:bg-ultimate-navy dark:hover:bg-white hover:text-white dark:hover:text-ultimate-navy transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-lg"
+            >
+                <span>Load More</span>
+                <span
+                    class="material-symbols-outlined group-hover:translate-y-1 transition-transform duration-300"
+                    >expand_more</span
+                >
+            </button>
+        </div>
+    </div>
+</section>

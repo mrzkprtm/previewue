@@ -1,0 +1,22 @@
+import { c as createComponent, m as maybeRenderHead, d as addAttribute, r as renderTemplate, f as createAstro } from './astro/server_CQNAQ0jI.mjs';
+import 'kleur/colors';
+import 'clsx';
+
+const $$Astro = createAstro();
+const $$ScholarshipCard = createComponent(($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$ScholarshipCard;
+  const { scholarship } = Astro2.props;
+  function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+  }
+  return renderTemplate`${maybeRenderHead()}<article class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-slate-100 flex flex-col md:flex-row p-4 gap-6"> <!-- Image Section --> <div class="w-full md:w-1/3 shrink-0"> <a${addAttribute(`/beasiswa/${scholarship.slug}`, "href")} class="block h-full min-h-[250px] relative rounded-xl overflow-hidden group"> ${scholarship.featuredImage ? renderTemplate`<img${addAttribute(scholarship.featuredImage.src, "src")}${addAttribute(scholarship.featuredImage.alt, "alt")} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy">` : renderTemplate`<div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400"> <svg class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path> </svg> </div>`} </a> </div> <!-- Content Section --> <div class="flex-grow flex flex-col justify-between"> <div> <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-center md:text-left mb-6 leading-tight"> <a${addAttribute(`/beasiswa/${scholarship.slug}`, "href")} class="hover:text-primary transition-colors"> ${scholarship.title} </a> </h3> <!-- Fields Grid --> <div class="space-y-3 mb-6"> <!-- Universitas --> <div class="flex items-center gap-4"> <span class="w-24 text-sm font-bold text-slate-500 shrink-0">Universitas</span> <div class="flex-grow bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium"> ${scholarship.university || "Berbagai universitas"} </div> </div> <!-- Negara --> <div class="flex items-center gap-4"> <span class="w-24 text-sm font-bold text-slate-500 shrink-0">Negara</span> <div class="flex-grow bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium"> ${scholarship.country || "-"} </div> </div> <!-- Jenjang --> <div class="flex items-center gap-4"> <span class="w-24 text-sm font-bold text-slate-500 shrink-0">Jenjang</span> <div class="flex-grow bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-700 font-medium"> ${scholarship.degree || "-"} </div> </div> </div> </div> <!-- Bottom Actions --> <div> <!-- Dates --> <div class="flex flex-wrap gap-3 mb-4"> ${scholarship.startDate && renderTemplate`<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-200">Start date : ${scholarship.startDate}</span>`}  ${scholarship.deadline && renderTemplate`<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200">End date : ${formatDate(scholarship.deadline)}</span>`} </div> <!-- Button --> <a${addAttribute(`/beasiswa/${scholarship.slug}`, "href")} class="block w-full bg-[#0F4C81] hover:bg-[#0d4270] text-white font-bold text-center py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+Informasi Lebih Lanjut
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </a> </div> </div> </article>`;
+}, "C:/laragon/www/frontendue/src/components/scholarship/ScholarshipCard.astro", void 0);
+
+export { $$ScholarshipCard as $ };

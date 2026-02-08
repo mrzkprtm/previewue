@@ -1,0 +1,97 @@
+---
+/**
+ * OWNER: DYNAMIC (Dev B)
+ * Blog Detail Page with SSG.
+ */
+import Layout from "../../layouts/Layout.astro";
+import ArticleDetailHeader from "../../components/articles/ArticleDetailHeader.astro";
+import ArticleDetailImage from "../../components/articles/ArticleDetailImage.astro";
+import ArticleDetailBody from "../../components/articles/ArticleDetailBody.astro";
+import ArticleDetailSidebar from "../../components/articles/ArticleDetailSidebar.astro";
+import ArticleDetailComments from "../../components/articles/ArticleDetailComments.astro";
+import ArticlesNewsletter from "../../components/articles/ArticlesNewsletter.astro";
+
+import { getPostBySlug, getAllPostsSlugs } from "../../lib/api/endpoints";
+import type { WPPost } from "../../types/wp";
+
+export async function getStaticPaths() {
+  try {
+    const slugs = await getAllPostsSlugs();
+    return slugs.map((slug) => ({
+      params: { slug },
+    }));
+  } catch (error) {
+    console.error("Error generating static paths for blog:", error);
+    return [];
+  }
+}
+
+const { slug } = Astro.params;
+let post: WPPost | null = null;
+
+if (slug) {
+  try {
+    post = await getPostBySlug(slug);
+  } catch (e) {
+    console.error(`Failed to fetch post: ${slug}`, e);
+  }
+}
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+// Map WP data to component props
+const authorInfo = {
+  name: post.author?.name || "Admin Ultimate",
+  role: "Senior IELTS Instructor", // Hardcoded for design fidelity
+  image:
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuApZq_yqmBdRi2UZACu6gi0NEZ1SLbZtSUb6FOOmW3pplMASjtril2QSrAhj03vghHZJgvS5TUxLLvAVp3Xah_MT83B8SVWI6T80JeKLLPuyzbIbM3pSM4AkqXDYnJVsWD6cyT_f1xI9mhSaNrnN2L74nDH-PGMyaaiW0I_v_kXZm2Iej1-3ZM1PXjJjfc4WiV7Nzzq7zol3gmH4He-t_PSBu8kgFZz7R4weocXpGZiskIDnGsKHTuAwdf_vx2tf6lGOUxZmIDw7lQ",
+};
+
+const categoryName = post.categories?.[0]?.name || "IELTS";
+const formattedDate = new Date(post.date).toLocaleDateString("id-ID", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<Layout
+  title={`${post.title} - Ultimate Education`}
+  description={post.excerpt?.replace(/<[^>]*>?/gm, "") ||
+    `Baca artikel lengkap tentang ${post.title} di Ultimate Insights.`}
+>
+  <main
+    class="pt-32 pb-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300"
+  >
+    <ArticleDetailHeader
+      title={post.title}
+      category={categoryName}
+      date={formattedDate}
+      author={authorInfo}
+    />
+
+    <ArticleDetailImage
+      image={post.featuredImage?.src ||
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuC6q6fm7FUNWyd3lBrivk0NXu6nY9duJOHZ3tNgXZ0pZlBBUTcWP-Ltp9-MQ-pzNDi3ocRGE_aKBiMyMUvVGSVK7YpyDaDJ1FvwZZ45H66-AMc5LqwxTFlm3Pykwf9fAl4OqB7nAaBkcrllL7ngSCJQSxfYLaPupixzw-oiBZCqZJAPT4Ho9sy5eLHEYnFIxoTfWKMvTxJxzPMzqk00WkUMBMCw6FrZBevxBkCaFEgrOStvXt9L4p9sLoRQEx5lOPdK2inNpmAzMmE"}
+      alt={post.title}
+    />
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-8">
+          <ArticleDetailBody
+            content={post.content}
+            tags={["IELTS Preparation", "Study Tips", "Education"]}
+          />
+          <ArticleDetailComments />
+        </div>
+
+        <ArticleDetailSidebar />
+      </div>
+    </div>
+  </main>
+
+  <ArticlesNewsletter />
+</Layout>

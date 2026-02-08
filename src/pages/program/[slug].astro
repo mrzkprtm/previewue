@@ -1,244 +1,196 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { programs } from "../../data/programData";
+import Button from "../../components/ui/Button.astro";
+import { allPrograms } from "../../data/programs";
 
 export function getStaticPaths() {
-    return programs.map((program) => ({
+    return allPrograms.map((program) => ({
         params: { slug: program.slug },
         props: { program },
     }));
 }
 
 const { program } = Astro.props;
-
-const title = `${program.title} | Ultimate Education`;
-const description = program.subtitle;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={`${program.name} - Ultimate Education`} description={program.description}>
     <!-- Hero Section -->
-    <header class="bg-[#0F4C81] text-white pt-32 pb-20 relative overflow-hidden">
-        <!-- Abstract Shapes Background -->
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-800/20 rounded-l-full transform translate-x-1/3 -skew-x-12"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 text-center md:text-left">
-                <span class="inline-block bg-yellow-400 text-blue-900 text-xs font-bold px-3 py-1 rounded-full mb-4">
-                    {program.category}
-                </span>
-                <h1 class="text-4xl md:text-6xl font-bold font-heading mb-6 leading-tight">
-                    Kursus Persiapan <span class="text-yellow-400">{program.title.replace("Ultimate ", "")}</span>
+    <section class="relative bg-ultimate-blue py-12 text-white">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-bold mb-4"> Kursus Intensif </span>
+                <h1 class="text-3xl md:text-5xl font-bold font-heading mb-4">
+                    Kursus Persiapan {program.name}
                 </h1>
-                <p class="text-lg text-blue-100 mb-8 max-w-xl">
-                    {program.subtitle}. Dapatkan skor impianmu dengan metode belajar proven dan tutor expert.
+                <p class="text-blue-100 text-lg mb-0 max-w-xl">
+                    {program.description}
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="#pricing" class="bg-yellow-400 hover:bg-yellow-300 text-blue-900 font-bold py-3 px-8 rounded-full transition-colors shadow-lg shadow-yellow-400/20"> Daftar Sekarang </a>
-                    <a href="#curriculum" class="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-full transition-colors border border-white/20 backdrop-blur-sm"> Lihat Kurikulum </a>
-                </div>
             </div>
-            <div class="flex-1 relative hidden md:block">
-                <img src="/student-hero.png" alt="Student Success" class="relative z-10 w-full max-w-lg mx-auto drop-shadow-2xl" onerror="this.src='https://placehold.co/500x600/transparent/white?text=Student+Image'" />
+            <div class="flex justify-end hidden md:flex">
+                <img src={program.image} alt={program.name} class="w-64 h-64 object-cover rounded-full border-4 border-white/20 shadow-xl" />
             </div>
         </div>
-    </header>
+    </section>
 
-    <main class="bg-slate-50 min-h-screen py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <!-- Left Content -->
-                <div class="lg:col-span-2 space-y-16">
+    <!-- Content Layout -->
+    <section class="py-12 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Left Column: Main Content -->
+                <div class="lg:w-2/3 space-y-12">
                     <!-- Gambaran Kursus -->
-                    <section id="overview" class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-                            <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
-                            Gambaran Kursus
-                        </h2>
-                        <div class="prose prose-lg text-slate-600 max-w-none">
-                            <p>{program.description}</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                                {
-                                    program.benefits.map((benefit) => (
-                                        <div class="flex items-start gap-3">
-                                            <svg class="w-6 h-6 text-green-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            <span class="font-medium text-slate-700">{benefit}</span>
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
+                        <h2 class="text-2xl font-bold text-ultimate-navy mb-4 border-b pb-4">Gambaran Kursus</h2>
+                        <div class="prose max-w-none text-gray-600 leading-relaxed">
+                            <p>
+                                Program <strong>{program.name}</strong> di Ultimate Education dirancang khusus untuk membantu siswa mencapai skor maksimal. Dengan metode pembelajaran yang terstruktur dan pengajar yang berpengalaman, Anda akan
+                                dibimbing untuk memahami setiap aspek tes dengan baik.
+                            </p>
+                            <p class="mt-4">
+                                Program ini mencakup {program.curriculum ? program.curriculum.length : "berbagai"} modul pembelajaran intensif, latihan soal otentik, serta personal feedback untuk memastikan peningkatan kemampuan Anda secara signifikan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Kurikulum / Topik -->
+                    {
+                        program.curriculum && (
+                            <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
+                                <h2 class="text-2xl font-bold text-ultimate-navy mb-6 border-b pb-4">Topik Pembelajaran</h2>
+                                <div class="grid gap-4">
+                                    {program.curriculum.map((item, index) => (
+                                        <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-ultimate-blue/30 transition-colors">
+                                            <div class="w-8 h-8 rounded-full bg-ultimate-blue text-white flex items-center justify-center font-bold text-sm shrink-0">{index + 1}</div>
+                                            <span class="font-medium text-gray-800">{item}</span>
                                         </div>
-                                    ))
-                                }
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    }
+
+                    <!-- Schedule Mock -->
+                    <div class="bg-ultimate-navy rounded-2xl p-8 shadow-lg text-white relative overflow-hidden">
+                        <div class="relative z-10">
+                            <h2 class="text-2xl font-bold mb-6 text-center">Jadwal Kelas {program.name} di Ultimate Education</h2>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 text-center">
+                                <p class="text-lg mb-4">📅 Kelas tersedia setiap bulan!</p>
+                                <p class="mb-6">Hubungi admin kami untuk mendapatkan jadwal terupdate yang sesuai dengan kesibukan Anda (Online/Offline).</p>
+                                <Button
+                                    href="https://api.whatsapp.com/send/?phone=6283812310368&text=Halo%20Admin,%20saya%20ingin%20tanya%20jadwal%20kelas"
+                                    class="bg-white text-ultimate-navy hover:bg-ultimate-yellow font-bold px-8 py-2 rounded-lg"
+                                    target="_blank"
+                                >
+                                    Cek Jadwal Terbaru
+                                </Button>
                             </div>
                         </div>
-                    </section>
+                    </div>
 
-                    <!-- Topik / Kurikulum -->
-                    <section id="curriculum">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-                            <span class="w-2 h-8 bg-yellow-400 rounded-full"></span>
-                            Topik Pembelajaran
-                        </h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {
-                                program.topics.map((topic, index) => (
-                                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
-                                        <div class="flex items-center gap-4 mb-4">
-                                            <div
-                                                class={`w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl
-                                ${index % 4 === 0 ? "bg-blue-500" : index % 4 === 1 ? "bg-purple-500" : index % 4 === 2 ? "bg-pink-500" : "bg-orange-500"}`}
-                                            >
-                                                {index + 1}
+                    <!-- Why Us -->
+                    {
+                        program.benefits && (
+                            <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
+                                <h2 class="text-2xl font-bold text-ultimate-navy mb-6">Kenapa Kami?</h2>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    {program.benefits.map((benefit, index) => (
+                                        <div class="flex items-start gap-4">
+                                            <div class="w-10 h-10 rounded-lg bg-blue-50 text-ultimate-blue flex items-center justify-center text-xl shrink-0">✓</div>
+                                            <div>
+                                                <h4 class="font-bold text-gray-900">{benefit}</h4>
                                             </div>
-                                            <h3 class="text-xl font-bold text-slate-800">{topic.title}</h3>
                                         </div>
-                                        <ul class="space-y-3">
-                                            {topic.content.map((item) => (
-                                                <li class="flex items-start gap-2 text-slate-600 text-sm">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 mt-2 shrink-0" />
-                                                    {item}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </section>
-
-                    <!-- Jadwal Kelas (Calendar Placeholder) -->
-                    <section id="schedule" class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 overflow-hidden">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-                            <span class="w-2 h-8 bg-purple-600 rounded-full"></span>
-                            Jadwal Kelas
-                        </h2>
-                        <div class="bg-slate-50 rounded-2xl p-6 text-center border border-slate-200">
-                            <p class="text-slate-600 mb-6">Jadwal kelas tersedia untuk Online & Offline. Silakan hubungi admin untuk ketersediaan slot terbaru.</p>
-
-                            {/* Visual Calendar Mockup */}
-                            <div class="grid grid-cols-7 gap-2 max-w-md mx-auto mb-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span class="text-red-400">Sat</span><span class="text-red-400">Sun</span>
+                                    ))}
+                                </div>
                             </div>
-                            <div class="grid grid-cols-7 gap-2 max-w-md mx-auto mb-8">
-                                {
-                                    Array.from({ length: 30 }).map((_, i) => (
-                                        <div
-                                            class={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium
-                             ${[2, 5, 9, 12, 16, 19, 23, 26].includes(i + 1) ? "bg-blue-100 text-blue-700 ring-1 ring-blue-200" : "text-slate-400"}
-                         `}
+                        )
+                    }
+                </div>
+
+                <!-- Right Column: Sidebar -->
+                <div class="lg:w-1/3">
+                    <div class="sticky top-24 space-y-6">
+                        <!-- Pricing Card -->
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 transform hover:-translate-y-1 transition-transform duration-300">
+                            <div class="bg-ultimate-blue p-6 text-white text-center">
+                                <p class="text-sm font-bold uppercase opacity-90 tracking-widest mb-1">Paket Belajar</p>
+                                <h3 class="text-2xl font-bold">{program.name} Intensive</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="text-center mb-6">
+                                    <span class="text-3xl font-black text-slate-800 block">{program.price || "Hubungi Kami"}</span>
+                                    <span class="text-sm text-slate-500 font-medium">{program.priceNote || "untuk info harga"}</span>
+                                </div>
+
+                                <ul class="space-y-4 mb-8">
+                                    <li class="flex items-center gap-3 text-sm text-gray-600">
+                                        <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg
                                         >
-                                            {i + 1}
-                                        </div>
-                                    ))
-                                }
-                            </div>
+                                        {program.duration}
+                                    </li>
+                                    <li class="flex items-center gap-3 text-sm text-gray-600">
+                                        <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg
+                                        >
+                                        {program.includes}
+                                    </li>
+                                    <li class="flex items-center gap-3 text-sm text-gray-600">
+                                        <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg
+                                        >
+                                        Sertifikat
+                                    </li>
+                                    <li class="flex items-center gap-3 text-sm text-gray-600">
+                                        <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg
+                                        >
+                                        Konsultasi Gratis
+                                    </li>
+                                </ul>
 
-                            <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20mau%20tanya%20jadwal%20kelas%20IELTS" target="_blank" class="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                                <Button
+                                    href="https://api.whatsapp.com/send/?phone=6283812310368"
+                                    class="w-full justify-center bg-ultimate-navy text-white hover:bg-ultimate-blue font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                                    target="_blank"
+                                >
+                                    Daftar Sekarang
+                                </Button>
+                                <p class="text-center text-xs text-gray-400 mt-4">*Harga dapat berubah sewaktu-waktu</p>
+                            </div>
+                        </div>
+
+                        <!-- Contact Card -->
+                        <div class="bg-white rounded-2xl p-6 shadow-md border border-slate-100">
+                            <h4 class="font-bold text-gray-900 mb-2">Butuh Bantuan?</h4>
+                            <p class="text-sm text-gray-600 mb-4">Konsultasikan kebutuhan belajarmu dengan tim ahli kami secara gratis.</p>
+                            <a href="https://wa.me/6283812310368" target="_blank" class="flex items-center gap-3 text-ultimate-blue font-bold text-sm hover:underline">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
                                     ><path
-                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.506-.669-.514-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.084 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
                                     ></path></svg
                                 >
-                                Cek Slot via WhatsApp
+                                Chat WhatsApp
                             </a>
                         </div>
-                    </section>
-
-                    <!-- Enrollment Flow -->
-                    <section>
-                        <h2 class="text-2xl font-bold text-slate-800 mb-8 text-center">Cara Mendaftar</h2>
-                        <div class="relative max-w-3xl mx-auto">
-                            {/* Line */}
-                            <div class="absolute left-6 top-6 bottom-6 w-0.5 bg-slate-200 md:left-1/2 md:-ml-px"></div>
-
-                            {
-                                [
-                                    { title: "Kirim Data Diri", desc: "Kirimkan nama lengkap dan alamat email aktif kamu ke tim UE.", number: "1" },
-                                    { title: "Tunggu Konfirmasi", desc: "Kami akan kirim invoice & link formulir ke email kamu.", number: "2" },
-                                    { title: "Lengkapi Formulir", desc: "Lengkapi data biar pendaftaranmu cepat diproses.", number: "3" },
-                                    { title: "Lakukan Pembayaran", desc: "Transfer sesuai invoice, mudah & fleksibel!", number: "4" },
-                                ].map((step, i) => (
-                                    <div class={`relative flex items-center mb-8 last:mb-0 ${i % 2 === 0 ? "md:flex-row-reverse" : ""}`}>
-                                        <div class="flex-1 md:w-1/2" />
-
-                                        <div class="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 bg-white border-4 border-blue-500 rounded-full flex items-center justify-center font-bold text-blue-500 z-10 shadow-sm">{step.number}</div>
-
-                                        <div class={`flex-1 md:w-1/2 pl-16 md:pl-0 ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
-                                            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                                                <h3 class="font-bold text-lg text-slate-800 mb-2">{step.title}</h3>
-                                                <p class="text-sm text-slate-600">{step.desc}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </section>
+                    </div>
                 </div>
-
-                <!-- Sidebar -->
-                <aside class="space-y-8 lg:sticky lg:top-8 h-fit">
-                    <!-- Pricing Card -->
-                    <div id="pricing" class="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
-
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Pilih Paket Belajar</h3>
-
-                        {/* Toggle (Mockup) */}
-                        <div class="flex bg-slate-100 p-1 rounded-xl mb-6">
-                            <button class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-slate-800 shadow-sm transition-all">Online</button>
-                            <button class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Offline</button>
-                        </div>
-
-                        <div class="text-center mb-6">
-                            <span class="text-slate-400 text-sm line-through">Rp 3.000.000</span>
-                            <div class="flex items-center justify-center gap-2">
-                                <span class="text-4xl font-bold text-slate-900">Rp {program.pricing?.online.toLocaleString("id-ID")}</span>
-                            </div>
-                            <span class="inline-block bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded mt-2">Hemat 50%</span>
-                        </div>
-
-                        <ul class="space-y-3 mb-8">
-                            {
-                                program.benefits.slice(0, 5).map((benefit) => (
-                                    <li class="flex items-center gap-3 text-sm text-slate-600">
-                                        <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        {benefit}
-                                    </li>
-                                ))
-                            }
-                        </ul>
-
-                        <button class="w-full bg-[#0F4C81] hover:bg-[#0d4270] text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-900/20 active:scale-95"> Daftar Sekarang </button>
-                        <p class="text-xs text-center text-slate-400 mt-4">Garansi skor meningkat atau uang kembali*</p>
-                    </div>
-
-                    <!-- FAQ Widget -->
-                    <div class="bg-blue-50 rounded-3xl p-6 border border-blue-100">
-                        <h3 class="font-bold text-blue-900 mb-4 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            FAQ Singkat
-                        </h3>
-                        <div class="space-y-4">
-                            {
-                                program.faq.slice(0, 3).map((item) => (
-                                    <div class="bg-white p-4 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-shadow">
-                                        <h4 class="font-bold text-sm text-slate-800 mb-1">{item.question}</h4>
-                                        <p class="text-xs text-slate-500 line-clamp-2">{item.answer}</p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </aside>
             </div>
         </div>
-    </main>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="bg-ultimate-blue rounded-3xl p-12 text-center text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold font-heading mb-6">{program.name} Preparation Online dan Offline - Terdekat dan Terpercaya!</h2>
+                    <Button
+                        href="https://api.whatsapp.com/send/?phone=6283812310368"
+                        class="bg-ultimate-yellow text-ultimate-navy font-bold px-10 py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all text-lg"
+                        target="_blank"
+                    >
+                        Join Your Class
+                    </Button>
+                </div>
+                <div class="absolute inset-0 bg-pattern opacity-10"></div>
+            </div>
+        </div>
+    </section>
 </Layout>

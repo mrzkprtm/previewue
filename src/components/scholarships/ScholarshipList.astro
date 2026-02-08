@@ -1,0 +1,130 @@
+---
+import ScholarshipCard from "./ScholarshipCard.astro";
+
+const scholarships = [
+    {
+        title: "Chevening Scholarship",
+        provider: "UK Government",
+        location: "United Kingdom",
+        level: "Master (S2)",
+        type: "Full",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD3LOfJFMPsboIicJfAlsrl6hFDGoEj12GGTlzridCtKy43507p9FXB-CMn-JerITBdia4BNk6UehpkuJDPUt_7UN7YJ4DNYoCyEFPDNejrAyJecR0jGBXZTVh8l2ucdm3K4ecI-YSzBwgdse3P23Y2CUJ0klMKBCK2hW9V6GPswTfWq2EQlGxh41jIHntyoDCGxHyKAJbvRy3a9cmeB8xLsxLxb3iUpRE9kT0MbdXeZhVoRNpq0Ak-tAm7i68eBBGpUZK4HEQR1h8",
+    },
+    {
+        title: "Fulbright Scholarship",
+        provider: "AMINEF",
+        location: "USA",
+        level: "Master & PhD",
+        type: "Full",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYq1zaflMjoNthlG3RAB60rjYst3cU86O9PPK-Jal4SRYW7MERsSFnyqxRJQIu78MB_oRvNAVE6sJ6jha0Rcz-a5a_TIJYspCPLopXTeePvNLF3GDkuCWD7piIRlwZIFcJQ1cPxBfMrEcPE63Gv1OkGsbs-5_jq6PDn61hlnZ0ZUW9M903IkCsG5YsWNYGWgXGCfmuukx4BtV-OBeRe9_rVo9YJLeK8Ig44722yTmQ3SPCO2Yfz10d-8wpV0V-I-T-5uO5jzRrJTE",
+    },
+    {
+        title: "MEXT Scholarship",
+        provider: "Japanese Government",
+        location: "Japan",
+        level: "Undergrad, Master, PhD",
+        type: "Full",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWkDuepSze09oM1wpfViFS8ntEdB0JD6oehKDA3_RtChlds5hleGuvE9uTkBxs_5tR4RYT4K6onOyJ8fBC9eIIEJjnIXBOMUS6GvN_i5ihpmuprwbwXt7GQ4r4WtAdZgBqhqFm85qaFbW63kkeOdsnUiEcUfi0Lj3iWEFIDHEUIuTtgDLg5xaPF-yCrq7R95dbe-bcgk0j9oRP45Bn2MvOSxVppruC4j0ZRkIZ23F6t4t3B1qmWM1jSZArxS_TaCl3gcN9ruVe-8w",
+    },
+    {
+        title: "Australia Awards (AAS)",
+        provider: "Australian Government",
+        location: "Australia",
+        level: "Master & PhD",
+        type: "Full",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAmyMSgnQ4QX2yQKKDHOLaoOL5b4HpzYwxiOSbegctBp0D_8oF-zY10f4oRQNiKV985H8TfTvDjaaZxv3yA2ui5PFAAKEwzBRSdMSPCBzApRRl_E4IqaNgLSukdcuTUwxUOY7cKmYHtTPk6NVli9oGVAqmVGxQHaoNEL16Ow6AIwGzhvQSvBUe_SyZLhUxUA01wExoEnA8m61HVyfE0eUy3cOrODt3lqhncGEOobeVY-CsyVhMM-5dS_eHMLtJi356UcOQi_t4j7aM",
+    },
+    {
+        title: "Erasmus Mundus",
+        provider: "European Union",
+        location: "Europe (Various)",
+        level: "Master (S2)",
+        type: "Partial",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD3LOfJFMPsboIicJfAlsrl6hFDGoEj12GGTlzridCtKy43507p9FXB-CMn-JerITBdia4BNk6UehpkuJDPUt_7UN7YJ4DNYoCyEFPDNejrAyJecR0jGBXZTVh8l2ucdm3K4ecI-YSzBwgdse3P23Y2CUJ0klMKBCK2hW9V6GPswTfWq2EQlGxh41jIHntyoDCGxHyKAJbvRy3a9cmeB8xLsxLxb3iUpRE9kT0MbdXeZhVoRNpq0Ak-tAm7i68eBBGpUZK4HEQR1h8",
+    },
+    {
+        title: "Global Korea Scholarship",
+        provider: "South Korean Govt",
+        location: "South Korea",
+        level: "Undergrad & Grad",
+        type: "Full",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYq1zaflMjoNthlG3RAB60rjYst3cU86O9PPK-Jal4SRYW7MERsSFnyqxRJQIu78MB_oRvNAVE6sJ6jha0Rcz-a5a_TIJYspCPLopXTeePvNLF3GDkuCWD7piIRlwZIFcJQ1cPxBfMrEcPE63Gv1OkGsbs-5_jq6PDn61hlnZ0ZUW9M903IkCsG5YsWNYGWgXGCfmuukx4BtV-OBeRe9_rVo9YJLeK8Ig44722yTmQ3SPCO2Yfz10d-8wpV0V-I-T-5uO5jzRrJTE",
+    },
+    {
+        title: "Turkiye Burslari",
+        provider: "Turkey Government",
+        location: "Turkey",
+        level: "All Levels",
+        type: "Full",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWkDuepSze09oM1wpfViFS8ntEdB0JD6oehKDA3_RtChlds5hleGuvE9uTkBxs_5tR4RYT4K6onOyJ8fBC9eIIEJjnIXBOMUS6GvN_i5ihpmuprwbwXt7GQ4r4WtAdZgBqhqFm85qaFbW63kkeOdsnUiEcUfi0Lj3iWEFIDHEUIuTtgDLg5xaPF-yCrq7R95dbe-bcgk0j9oRP45Bn2MvOSxVppruC4j0ZRkIZ23F6t4t3B1qmWM1jSZArxS_TaCl3gcN9ruVe-8w",
+    },
+    {
+        title: "DAAD Scholarship",
+        provider: "German Government",
+        location: "Germany",
+        level: "Master & PhD",
+        type: "Partial",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAmyMSgnQ4QX2yQKKDHOLaoOL5b4HpzYwxiOSbegctBp0D_8oF-zY10f4oRQNiKV985H8TfTvDjaaZxv3yA2ui5PFAAKEwzBRSdMSPCBzApRRl_E4IqaNgLSukdcuTUwxUOY7cKmYHtTPk6NVli9oGVAqmVGxQHaoNEL16Ow6AIwGzhvQSvBUe_SyZLhUxUA01wExoEnA8m61HVyfE0eUy3cOrODt3lqhncGEOobeVY-CsyVhMM-5dS_eHMLtJi356UcOQi_t4j7aM",
+    },
+];
+---
+
+<section
+    class="py-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center mb-10">
+            <h2
+                class="text-2xl font-bold font-heading text-ultimate-navy dark:text-white text-left"
+            >
+                Peluang Beasiswa Terbaru
+            </h2>
+            <div class="text-sm text-slate-500">
+                Menampilkan <span
+                    class="font-bold text-ultimate-navy dark:text-white">8</span
+                > dari <span
+                    class="font-bold text-ultimate-navy dark:text-white"
+                    >124</span
+                > beasiswa
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {scholarships.map((s) => <ScholarshipCard {...s} />)}
+        </div>
+
+        <div class="flex justify-center mt-12">
+            <nav class="flex items-center gap-2">
+                <a
+                    class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    href="#"
+                >
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </a>
+                <a
+                    class="w-10 h-10 flex items-center justify-center rounded-lg bg-ultimate-blue text-white font-bold"
+                    href="#">1</a
+                >
+                <a
+                    class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+                    href="#">2</a
+                >
+                <a
+                    class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+                    href="#">3</a
+                >
+                <span class="px-2 text-slate-400">...</span>
+                <a
+                    class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+                    href="#">12</a
+                >
+                <a
+                    class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    href="#"
+                >
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+</section>

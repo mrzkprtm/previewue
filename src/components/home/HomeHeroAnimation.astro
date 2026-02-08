@@ -1,0 +1,220 @@
+---
+const avatars = [
+    {
+        img: "https://i.pravatar.cc/100?img=12",
+        text: "Accepted at UI",
+        color: "bg-green-500",
+        delay: "0s",
+        duration: "20s",
+        pathClass: "path-1",
+    },
+    {
+        img: "https://i.pravatar.cc/100?img=32",
+        text: "IELTS 8.0",
+        color: "bg-ultimate-blue",
+        delay: "4s",
+        duration: "22s",
+        pathClass: "path-2",
+    },
+    {
+        img: "https://i.pravatar.cc/100?img=53",
+        text: "Scholarship Awardee",
+        color: "bg-ultimate-yellow",
+        textCol: "text-ultimate-navy",
+        delay: "8s",
+        duration: "24s",
+        pathClass: "path-3",
+    },
+    {
+        img: "https://i.pravatar.cc/100?img=45",
+        text: "Accepted at UGM",
+        color: "bg-purple-500",
+        delay: "12s",
+        duration: "21s",
+        pathClass: "path-1",
+    },
+    {
+        img: "https://i.pravatar.cc/100?img=11",
+        text: "TOEFL 110",
+        color: "bg-pink-500",
+        delay: "16s",
+        duration: "23s",
+        pathClass: "path-2",
+    },
+];
+---
+
+<div
+    class="absolute inset-0 z-5 overflow-visible pointer-events-none"
+    aria-hidden="true"
+>
+    <!-- SVG Background Lines (Right to Left, Full Width) -->
+    <svg
+        class="absolute w-full h-full opacity-30"
+        viewBox="0 0 100 100"
+        fill="none"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <!-- Path 1: Top curve -->
+        <path
+            d="M 110 20 Q 70 15, 50 30 T -10 40"
+            stroke="url(#grad1)"
+            stroke-width="0.3"
+            fill="none"
+            class="animate-pulse-slow"
+            vector-effect="non-scaling-stroke"></path>
+
+        <!-- Path 2: Middle curve -->
+        <path
+            d="M 110 50 Q 60 45, 40 55 T -10 60"
+            stroke="url(#grad2)"
+            stroke-width="0.3"
+            fill="none"
+            class="animate-pulse-slow delay-1000"
+            vector-effect="non-scaling-stroke"></path>
+
+        <!-- Path 3: Bottom curve -->
+        <path
+            d="M 110 70 Q 65 80, 35 70 T -10 75"
+            stroke="url(#grad3)"
+            stroke-width="0.3"
+            fill="none"
+            class="animate-pulse-slow delay-2000"
+            vector-effect="non-scaling-stroke"></path>
+
+        <defs>
+            <linearGradient id="grad1" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" style="stop-color:rgba(255,255,255,0)"></stop>
+                <stop offset="30%" style="stop-color:rgba(255,255,255,0.5)"
+                ></stop>
+                <stop offset="70%" style="stop-color:rgba(255,255,255,0.3)"
+                ></stop>
+                <stop offset="100%" style="stop-color:rgba(255,255,255,0)"
+                ></stop>
+            </linearGradient>
+            <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" style="stop-color:rgba(255,187,0,0)"></stop>
+                <stop offset="30%" style="stop-color:rgba(255,187,0,0.5)"
+                ></stop>
+                <stop offset="70%" style="stop-color:rgba(255,187,0,0.3)"
+                ></stop>
+                <stop offset="100%" style="stop-color:rgba(255,187,0,0)"></stop>
+            </linearGradient>
+            <linearGradient id="grad3" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" style="stop-color:rgba(0,86,179,0)"></stop>
+                <stop offset="30%" style="stop-color:rgba(0,86,179,0.5)"></stop>
+                <stop offset="70%" style="stop-color:rgba(0,86,179,0.3)"></stop>
+                <stop offset="100%" style="stop-color:rgba(0,86,179,0)"></stop>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Floating Avatars -->
+    {
+        avatars.map((avatar, index) => (
+            <div
+                class={`absolute avatar-float ${avatar.pathClass}`}
+                style={{
+                    animationDelay: avatar.delay,
+                    animationDuration: avatar.duration,
+                }}
+            >
+                <div class="relative group">
+                    <img
+                        src={avatar.img}
+                        alt="Student"
+                        class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/80 shadow-lg object-cover"
+                    />
+
+                    {/* Auto Popup Balloon */}
+                    <div class="absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 popup-balloon">
+                        <div
+                            class={`${avatar.color} ${avatar.textCol || "text-white"} px-3 py-1.5 rounded-lg shadow-xl text-xs font-bold relative`}
+                        >
+                            {avatar.text}
+                            <div
+                                class={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 ${avatar.color} rotate-45`}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .avatar-float {
+        offset-rotate: 0deg;
+        animation: moveAsCurve linear infinite;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Paths using percentage-based coordinates for full-width flow */
+    .path-1 {
+        offset-path: path("M 110 20 Q 70 15, 50 30 T -10 40");
+    }
+    .path-2 {
+        offset-path: path("M 110 50 Q 60 45, 40 55 T -10 60");
+    }
+    .path-3 {
+        offset-path: path("M 110 70 Q 65 80, 35 70 T -10 75");
+    }
+
+    @keyframes moveAsCurve {
+        0% {
+            offset-distance: 0%;
+            opacity: 0;
+            transform: scale(0.6);
+        }
+        5% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        95% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        100% {
+            offset-distance: 100%;
+            opacity: 0;
+            transform: scale(0.6);
+        }
+    }
+
+    .popup-balloon {
+        animation: balloonFloat 4s ease-in-out infinite;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes balloonFloat {
+        0%,
+        100% {
+            transform: translate(-50%, 8px) scale(0.85);
+            opacity: 0;
+        }
+        25%,
+        75% {
+            transform: translate(-50%, -8px) scale(1);
+            opacity: 1;
+        }
+    }
+
+    .animate-pulse-slow {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .delay-1000 {
+        animation-delay: 1s;
+    }
+
+    .delay-2000 {
+        animation-delay: 2s;
+    }
+</style>

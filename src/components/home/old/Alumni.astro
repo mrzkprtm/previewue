@@ -1,0 +1,62 @@
+---
+const testimonials = {
+    ielts: [
+        {
+            name: "YUDISTIRA YUDADISASTRA",
+            position: "Assistant Vice President MANDIRI SEKURITAS",
+            text: "Ultimate Education is one of the great English courses in town. The course is well-administered by professional teachers. They also provide additional lessons to help us improve our English skills.",
+            image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face",
+        },
+        {
+            name: "SATRIYO BHAWIKO ADHI",
+            position: "Assurances Services Advisory Deloitte",
+            text: "This course gave me further understanding about the IELTS test as it was taught by the experts. They also did not hesitate to give us an extra free course on grammar so that we could have better test results.",
+            image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face",
+        },
+        {
+            name: "ASTRID GLORIA PEPITA",
+            position: "Assistant Manager Grab",
+            text: "Joining Ultimate Education's program was a good decision. It helped me to understand the test better. I can finally get 8.0 in the IELTS test. Thank you Ultimate Education.",
+            image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80&h=80&fit=crop&crop=face",
+        },
+    ],
+    // Other categories can be added if needed, focusing on IELTS for now as main display or use client-side logic for tabs
+};
+
+// Flatten for simple display, or use just IELTS for now to keep it clean, as tabs might require client-side JS
+const displayTestimonials = testimonials.ielts;
+---
+
+<section class="py-20 bg-slate-50 overflow-hidden">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="inline-block py-1 px-3 rounded-full bg-white border border-slate-200 text-ultimate-blue text-sm font-bold uppercase tracking-wider mb-4 shadow-sm"> Testimonials </span>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy mb-4">Cerita Alumni Tentang Ultimate Education</h2>
+            <p class="text-gray-600">Apa kata mereka yang telah sukses meraih impian?</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {
+                displayTestimonials.map((t) => (
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 relative group hover:-translate-y-2 transition-transform duration-300">
+                        <div class="absolute top-6 right-8 text-ultimate-blue opacity-10 transform translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:-translate-y-0 transition-transform">
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14.017 21L14.017 18C14.017 16.05 14.383 14.35 15.117 12.9C15.867 11.45 16.917 10.333 18.267 9.55L18.967 10.9C18.15 11.283 17.533 11.833 17.117 12.55C16.717 13.25 16.517 14.067 16.517 15L16.517 21L14.017 21ZM5.01697 21L5.01697 18C5.01697 16.05 5.38323 14.35 6.11697 12.9C6.86697 11.45 7.91697 10.333 9.26697 9.55L9.96697 10.9C9.1503 11.283 8.53323 11.833 8.11697 12.55C7.71697 13.25 7.51697 14.067 7.51697 15L7.51697 21L5.01697 21Z" />
+                            </svg>
+                        </div>
+
+                        <p class="text-gray-600 mb-8 relative z-10 italic leading-relaxed">"{t.text}"</p>
+
+                        <div class="flex items-center gap-4 mt-auto">
+                            <img src={t.image} alt={t.name} class="w-12 h-12 rounded-full border-2 border-ultimate-blue/20" loading="lazy" />
+                            <div>
+                                <h4 class="font-bold text-ultimate-navy text-sm">{t.name}</h4>
+                                <p class="text-xs text-ultimate-blue font-medium mt-0.5">{t.position}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

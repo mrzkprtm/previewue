@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PartnershipHero from "../components/partnership/PartnershipHero.astro";
+import PartnershipAdvantage from "../components/partnership/PartnershipAdvantage.astro";
+import PartnershipLogos from "../components/partnership/PartnershipLogos.astro";
+import PartnershipPrograms from "../components/partnership/PartnershipPrograms.astro";
+import PartnershipMedia from "../components/partnership/PartnershipMedia.astro";
+import PartnershipForm from "../components/partnership/PartnershipForm.astro";
+---
+
+<Layout
+    title="Ultimate Education Institutional Partnership - Solusi Pendidikan Instansi"
+    description="Kini Ultimate Education menawarkan program khusus partner seperti perusahaan, sekolah, dan institusi lainnya untuk meningkatkan kualitas SDM melalui pendidikan bahasa berkualitas."
+>
+    <main
+        class="flex-grow bg-slate-50 dark:bg-slate-900 transition-colors duration-300"
+    >
+        <!-- Hero Section -->
+        <PartnershipHero />
+
+        <!-- Advantages Section -->
+        <PartnershipAdvantage />
+
+        <!-- Trust Markers / Logos -->
+        <PartnershipLogos />
+
+        <!-- Program Options -->
+        <PartnershipPrograms />
+
+        <!-- Media Coverage -->
+        <PartnershipMedia />
+
+        <!-- Contact Form -->
+        <PartnershipForm />
+    </main>
+</Layout>

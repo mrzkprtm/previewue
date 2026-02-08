@@ -1,0 +1,46 @@
+---
+const mentors = [
+    { name: "Mr. Ballard", title: "IELTS Expert", university: "Swineburn University", qualification: "Native Speaker • 8 Years Experience", image: "/images/mentor/12505828bf851b9c213d2ec3d522d4fe34ca870b.png" },
+    { name: "Ms. Dee", title: "TESOL Certified", university: "University of Hull", qualification: "Native Speaker • 10 Years Experience", image: "/images/mentor/882da435fb72ca1762594ce50f496e802c95458c.png" },
+    { name: "Kak Ifa", title: "LPDP Awardee", university: "University of Edinburgh", qualification: "IELTS 7.5 • 8 Years Experience", image: "/images/mentor/e36acd71c9d0a3cf31eb26fc4e64d423d6fb6974.png", rotate: true },
+    { name: "Kak Umen", title: "LPDP Awardee", university: "Univ College London", qualification: "IELTS 7.5 • 8 Years Experience", image: "/images/mentor/c71ca56cbe2522a1a282382e8abf61230a86320d.png" },
+];
+---
+
+<section class="py-20 bg-slate-50">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="inline-block py-1 px-3 rounded-full bg-white border border-slate-200 text-ultimate-blue text-sm font-bold uppercase tracking-wider mb-4 shadow-sm"> Expert Mentors </span>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy">Mentor Terbaik Ultimate Education</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {
+                mentors.map((mentor) => (
+                    <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-slate-100 group">
+                        <div class="relative mb-6 mx-auto w-40 h-40">
+                            <div class={`absolute inset-0 bg-ultimate-yellow rounded-full transform ${mentor.rotate ? "rotate-6" : "-rotate-6"} group-hover:rotate-0 transition-transform duration-300 opacity-20`} />
+                            <img src={mentor.image} alt={mentor.name} class="w-full h-full object-cover rounded-full border-4 border-white shadow-md relative z-10" loading="lazy" />
+                            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-ultimate-navy text-white text-xs font-bold py-1 px-3 rounded-full z-20 whitespace-nowrap">{mentor.title}</div>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-ultimate-navy mb-2">{mentor.name}</h3>
+                            <div class="flex items-center justify-center gap-2 text-ultimate-blue text-sm font-medium mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                    />
+                                </svg>
+                                {mentor.university}
+                            </div>
+                            <p class="text-gray-500 text-sm border-t border-slate-100 pt-3">{mentor.qualification}</p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

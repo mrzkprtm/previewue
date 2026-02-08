@@ -1,9 +1,9 @@
 /* empty css                                       */
-import { c as createComponent, e as renderComponent, r as renderTemplate, f as createAstro, m as maybeRenderHead } from '../../../chunks/astro/server_DWPYSQod.mjs';
+import { c as createComponent, e as renderComponent, r as renderTemplate, f as createAstro, m as maybeRenderHead } from '../../../chunks/astro/server_CQNAQ0jI.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../../chunks/Layout_B7meVBy6.mjs';
-import { $ as $$ScholarshipCard } from '../../../chunks/ScholarshipCard_5zSGeJXr.mjs';
-import { $ as $$Pagination } from '../../../chunks/Pagination_n9RwW6-W.mjs';
+import { $ as $$Layout } from '../../../chunks/Layout_DspkV-i-.mjs';
+import { $ as $$ScholarshipCard } from '../../../chunks/ScholarshipCard_0XWJXcNL.mjs';
+import { $ as $$Pagination } from '../../../chunks/Pagination_ByS00C8I.mjs';
 export { renderers } from '../../../renderers.mjs';
 
 const $$Astro = createAstro();

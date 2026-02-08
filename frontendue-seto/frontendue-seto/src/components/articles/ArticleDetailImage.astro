@@ -1,0 +1,22 @@
+---
+interface Props {
+    image: string;
+    alt: string;
+}
+
+const { image, alt } = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+    <div class="rounded-3xl overflow-hidden shadow-lg h-[400px] relative group">
+        <img
+            alt={alt}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            src={image}
+        />
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
+        >
+        </div>
+    </div>
+</section>

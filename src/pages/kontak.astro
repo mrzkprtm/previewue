@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContactHero from "../components/contact/ContactHero.astro";
+import ContactInfo from "../components/contact/ContactInfo.astro";
+import ContactForm from "../components/contact/ContactForm.astro";
+import ContactMap from "../components/contact/ContactMap.astro";
+---
+
+<Layout
+  title="Hubungi Kami - Ultimate Education"
+  description="Punya pertanyaan seputar persiapan kuliah ke luar negeri? Tim kami siap membantu Anda mewujudkan mimpi akademik Anda."
+>
+  <main
+    class="flex-grow bg-white dark:bg-slate-900 transition-colors duration-300"
+  >
+    <!-- Hero Section -->
+    <ContactHero />
+
+    <!-- Content Section: Info & Form -->
+    <section class="pt-8 pb-16 md:pt-12 md:pb-20 bg-white dark:bg-slate-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          <!-- Left Column: Contact info -->
+          <ContactInfo />
+
+          <!-- Right Column: Form -->
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <ContactMap />
+  </main>
+</Layout>

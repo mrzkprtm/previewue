@@ -1,0 +1,94 @@
+---
+interface Props {
+    title: string;
+    excerpt: string;
+    date: string;
+    author: string;
+    authorImage?: string;
+    category: string;
+    slug: string;
+    image: string;
+    readTime?: string;
+    rating?: string;
+    categoryColor?: string;
+}
+
+const {
+    title,
+    excerpt,
+    date,
+    author,
+    authorImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuA2PNSnJ09kSJKWMU-n_I_xvEHrKaKM9_uovYdpLbnK2KvTVTXPtbX9wR0yNXgiV8OA6gcDEo1LcEQk3ejUZu3J1no5oguEIkpDJVGXsaALWzgaZkC09EZXMGzNB2mWuGB6hVmD7wqlQi0wfqOH86lS07_JUaflcm6Cyac6GSQyVHGAI70ppukSHnGtJ8rRjnMNn_XuJehT2XnJHYYnQJFYbG_6e2zhTunQXWsyZjh12xmRA7s4EQUPxdb-cyUqlgl_14l9DAQTT9c",
+    category,
+    slug,
+    image,
+    readTime = "5 min read",
+    rating = "4.9",
+    categoryColor = "bg-ultimate-blue",
+} = Astro.props;
+---
+
+<div
+    class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group border border-slate-100 dark:border-slate-700"
+>
+    <div class="relative h-48 overflow-hidden">
+        <img
+            alt={title}
+            class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+            src={image}
+        />
+        <div class="absolute top-4 left-4">
+            <span
+                class={`${categoryColor} text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wide`}
+                >{category}</span
+            >
+        </div>
+        <div
+            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4"
+        >
+            <div class="flex items-center gap-1 text-ultimate-yellow">
+                <span class="material-symbols-outlined text-[16px] fill-1"
+                    >star</span
+                >
+                <span class="text-xs font-bold text-white">{rating}</span>
+            </div>
+        </div>
+    </div>
+    <div class="p-5 flex-1 flex flex-col">
+        <div class="flex items-center gap-2 text-xs text-slate-400 mb-3">
+            <span>{date}</span>
+            <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+            <span>{readTime}</span>
+        </div>
+        <h3
+            class="font-bold text-lg text-ultimate-navy dark:text-white mb-2 line-clamp-2 group-hover:text-ultimate-blue transition-colors font-heading"
+        >
+            <a href={`/artikel/${slug}`}>{title}</a>
+        </h3>
+        <p class="text-slate-500 text-sm mb-4 line-clamp-2">{excerpt}</p>
+        <div
+            class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between"
+        >
+            <div class="flex items-center gap-2">
+                <img
+                    alt={author}
+                    class="w-6 h-6 rounded-full object-cover bg-slate-200"
+                    src={authorImage}
+                />
+                <span
+                    class="text-xs font-medium text-slate-600 dark:text-slate-300"
+                    >{author}</span
+                >
+            </div>
+            <a
+                href={`/artikel/${slug}`}
+                class="text-ultimate-blue hover:text-blue-700 text-xs font-bold flex items-center gap-1"
+            >
+                Baca
+                <span class="material-symbols-outlined text-[14px]"
+                    >arrow_right_alt</span
+                >
+            </a>
+        </div>
+    </div>
+</div>

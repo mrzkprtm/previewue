@@ -1,0 +1,51 @@
+---
+const faqs = [
+    {
+        question: "Apa itu Ultimate Education?",
+        answer: "Ultimate Education adalah lembaga pendidikan yang menyediakan berbagai program persiapan tes seperti IELTS, TOEFL, GMAT, SAT, GRE, serta program persiapan beasiswa.",
+    },
+    {
+        question: "Berapa biaya belajar di sini?",
+        answer: "Biaya belajar bervariasi tergantung pada program yang dipilih. Silakan hubungi kami untuk informasi lebih lanjut.",
+    },
+    {
+        question: "Bagaimana cara mendaftarnya?",
+        answer: "Anda dapat mendaftar melalui form pendaftaran di website kami atau menghubungi WhatsApp kami.",
+    },
+    {
+        question: "Apa saja program yang disediakan?",
+        answer: "Kami menyediakan persiapan IELTS, SAT, GMAT, GRE, beasiswa, dan kelas bahasa lainnya.",
+    },
+];
+---
+
+<section class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-12">
+            <div>
+                <h2
+                    class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy dark:text-white leading-tight"
+                >
+                    Seputar <br /> Ultimate Education
+                </h2>
+                <p class="text-slate-500 text-sm mt-4">
+                    Punya pertanyaan lain? Tim kami siap membantumu!
+                </p>
+            </div>
+            <div class="md:col-span-2 space-y-4">
+                {
+                    faqs.map((faq) => (
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex justify-between items-center cursor-pointer group hover:border-ultimate-blue transition-all">
+                            <span class="font-bold text-slate-800 dark:text-slate-200">
+                                {faq.question}
+                            </span>
+                            <span class="material-symbols-outlined text-slate-400 group-hover:text-ultimate-blue transition-colors">
+                                expand_more
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>

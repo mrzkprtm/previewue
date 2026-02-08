@@ -1,0 +1,24 @@
+# Default owners
+* @seto @mrizkiprtm
+
+# --------------------------------------------------------
+# STATIC DEVELOPER (Dev A)
+# Focus: Layouts, UI Components, Global Styles, Static Pages
+# --------------------------------------------------------
+src/layouts/**          @seto
+src/components/ui/**    @seto
+src/styles/**           @seto
+src/pages/index.astro   @seto
+src/pages/about.astro   @seto
+# Fallback for root pages (usually static)
+src/pages/*.astro       @seto
+
+# --------------------------------------------------------
+# DYNAMIC DEVELOPER (Dev B)
+# Focus: Logic, Data Fetching, Types, Dynamic Routes
+# --------------------------------------------------------
+src/lib/api/**          @mrizkiprtm
+src/types/**            @mrizkiprtm
+src/pages/blog/**       @mrizkiprtm
+# If you add other dynamic sections (e.g. products, courses)
+# src/pages/courses/**  @mrizkiprtm

@@ -1,0 +1,78 @@
+---
+const mentors = [
+    {
+        name: "Mr. Ballard",
+        title: "IELTS Expert",
+        university: "Swinburne University",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD8-gPbUPejotRAbbSojoSyGiXdiAjGqkHnkdWDC96Oujl8YbYQq_BM-EfvJQ701gZj28WGwba9CIrmXHtPx1nPK5kHlVRWJSIH6I7RwmULSZEg5AVNbg001dyTe0kcNyN93UhOnUbTCIdW_-oqwYpMfee2DKbAiodjxbqixJFr4D6Bq1VvQAUXHWu9AqUpOpgTNh2RjdfAEV_GXtfkeyD6wP7OBqjoZVkMrB8dynppc710e6edugHzcRmU_clQckwx6DWnYd1vtdo",
+        qualifications: ["Native Speaker", "8 Years Teaching Exp"],
+    },
+    {
+        name: "Ms. Dee",
+        title: "Tesol Certified",
+        university: "University of Hull",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDOYU492MlbEJPz7H3uH3xWKJ2VaKE-lK3AvPdKEF7bTvVXi5ObOH0989M36LFgGikE2582lfCIFd-nMYbwbw1XKqtsAV915zlV6WIy7Jm1TjFrJxLTDmvJBAFP5QSLpABynS_SEo5eSNjxGCssOqufD3-yVrP2ucFaHo9YIgVbHhsdyS5HlxKVbc3tJyKjUzhM697t8-kdBbUZfem5j2DEfE72ai3uMIChegZTjzb6fvVEs0Y2U09279DEpObgSyxcn6cHvXw-4_s",
+        qualifications: ["Native Speaker", "10 Years Teaching Exp"],
+    },
+    {
+        name: "Kak Ifa",
+        title: "LPDP Awardee",
+        university: "University of Edinburgh",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCCsFuBfcYtod5Z8uadR8ipAEjXXkAmrAilDHd1vPJq26EIB2SeELxEpkHRXcbaRt64pfiGxGLJ67ai-krczIM3FSYmRrZkZCe0zEv0iHs6PFX6ohYup8zIUV7_VZ5hRqYFlQ8PGzOzNbDLGkZ2aG6YXB1weU4cOb7cGEoUaS8_XKuONwOK46PYmptPdOwTdJkhNz8pX4T2b_qT9FSu5XTiSY60iZu0SGSw6_qqLMMlu5iOmVI8ait_HVTUvw8NN5s_cvSIM35dKjQ",
+        qualifications: ["7.5 IELTS Score", "5 Years Experience"],
+    },
+    {
+        name: "Kak Umam",
+        title: "LPDP Awardee",
+        university: "University College London",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAekI-0hTGJ-5fIs6gzvb0W6IIabTMYfWRKlGc3aHDUmsO1IopIK4HWRQcDOY1aFlOz8UkaYtMNmnw2pRSNdejdViOdW3i6nNJeZvfn6l8oL7dkVnL3quaT8yaffvwF2g4Y7LBtcNfn52GrC1iyFkk59LvKMp_Dajs-eZMIGyK6-74HyeNW0NzrJC_uMCq9fI-FtUOgGiPFHrdswXHi_qQX6mGsEofrj0gmKpKb1lY0qxmMgL1zumv1JaVE-o2Cvq57AJY2xn61EIk",
+        qualifications: ["7.5 IELTS Score", "8 Years Experience"],
+    },
+];
+---
+
+<section class="py-16 md:py-24 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2
+            class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy dark:text-white text-center mb-12"
+        >
+            Mentor Terbaik Ultimate Education
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {
+                mentors.map((mentor) => (
+                    <div class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700 group hover:shadow-xl transition-all">
+                        <div class="h-80 overflow-hidden">
+                            <img
+                                alt={mentor.name}
+                                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                                src={mentor.image}
+                            />
+                        </div>
+                        <div class="p-6">
+                            <span class="bg-ultimate-blue/10 text-ultimate-blue text-[10px] font-bold px-3 py-1 rounded-full uppercase">
+                                {mentor.title}
+                            </span>
+                            <h4 class="font-bold text-lg mt-3 text-ultimate-navy dark:text-white">
+                                {mentor.name}
+                            </h4>
+                            <p class="text-slate-500 text-xs mb-4">
+                                {mentor.university}
+                            </p>
+                            <ul class="text-xs space-y-2 border-t pt-4 border-slate-100 dark:border-slate-700">
+                                {mentor.qualifications.map((q) => (
+                                    <li class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-green-500 text-sm">
+                                            check_circle
+                                        </span>{" "}
+                                        {q}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

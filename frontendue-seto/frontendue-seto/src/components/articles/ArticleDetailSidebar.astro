@@ -1,0 +1,125 @@
+---
+interface Props {
+    relatedArticles?: {
+        title: string;
+        date: string;
+        image: string;
+        href: string;
+    }[];
+}
+
+const defaultRelated = [
+    {
+        title: "Panduan Lengkap Wawancara Beasiswa Chevening",
+        date: "10 Aug 2024",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAul63IHhr6rHdchF5AYqv3uUj7q1FnLjUJtU5UWNE4uuJBXixfuNSnV7yjtM_pEO-JAQdLSsHR8C_wkNhuc7cx8EtRJ5kwTNRKRnTv8IKirfiROK3SoHAb5pVDZ_JDmq6qCQuhRqxWzf615ECbobDxcrMBJorPDKA3ipjwh6rOajixzNPysIvylQfSGhB_vSOmXl4JSW2Q_cN0BafwmNzc833InIUcm-fx-_aru2D9CpW5fCy28d28hvkR9UVih-bO04d3NIxJTHs",
+        href: "#",
+    },
+    {
+        title: "5 Universitas Terbaik di UK untuk Jurusan Bisnis",
+        date: "08 Aug 2024",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDJ7yenF4R_XVAd_DN51yvKKj3_ZECdka4Oh5L4FTgfOIHlSXdpJccNAr-XbGFLEzNNTyYUqVNoIqEK89tmAWEDHKGnqY_QGHTR44qYYxGWBtpjxl7a68Bjm3qa0sWsXb-4KCSaCvRmct2jNFmZpxbSfQinsAvimUzMp88nQbWSwjdUnAuhtOStABByLv53rVPxP7sQbbbfVm8o4YOrsZ_6JznH-BGbvKpBQ5CLf2AgG-qo969t9WQla1FAJYxrFMn0hQLiXnuGvwg",
+        href: "#",
+    },
+    {
+        title: "Cara Mengatasi Nervous saat Speaking IELTS",
+        date: "05 Aug 2024",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC5ur7FW0QlJ3YFPMx-jIGNcEcIBZshLObJb-frm7hC_7ukJMnQ4y9vmH1Ew2Ek5umb4Zb0PUncaQ_QzJBWMFGLQbfb3fIQgty4ttcW6mOWJ660639R2XP627nOLjjnn9TUaG0aAdRp2QvrgE2Y1MakGLbxdYYCKguPoZrxdpbNwp7hzKtBlQhc_75eSj81hosyzPchLOHPzic1pE7PT772cxoJMHT8IJn_v52y6KlWSv64nuhZH2P3cm1qyLqwPwse98VWRm2T6XQ",
+        href: "#",
+    },
+];
+
+const { relatedArticles = defaultRelated } = Astro.props;
+---
+
+<aside class="lg:col-span-4 space-y-8">
+    <div
+        class="bg-ultimate-navy rounded-2xl p-8 relative overflow-hidden text-center group"
+    >
+        <div
+            class="absolute inset-0 bg-ultimate-blue opacity-20"
+            style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 20px 20px;"
+        >
+        </div>
+        <div
+            class="absolute -top-10 -right-10 w-32 h-32 bg-ultimate-yellow rounded-full blur-3xl opacity-20"
+        >
+        </div>
+        <div class="relative z-10">
+            <span
+                class="inline-block bg-ultimate-yellow text-ultimate-navy text-[10px] font-bold px-2 py-1 rounded mb-4 uppercase tracking-wider"
+                >Promo Spesial</span
+            >
+            <h3 class="text-2xl font-heading font-bold text-white mb-2">
+                Kejar Skor IELTS 7.0+?
+            </h3>
+            <p class="text-slate-300 text-sm mb-6">
+                Dapatkan bimbingan intensif dan review essay sepuasnya bareng
+                mentor awardee.
+            </p>
+            <button
+                class="w-full bg-white text-ultimate-navy font-bold py-3 rounded-xl hover:bg-ultimate-yellow hover:text-ultimate-navy transition-all shadow-lg transform group-hover:translate-y-[-2px]"
+            >
+                Daftar Program Sekarang
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-100 dark:border-slate-700 shadow-sm"
+    >
+        <h3
+            class="font-heading font-bold text-lg text-ultimate-navy dark:text-white mb-6 border-b border-slate-100 dark:border-slate-700 pb-4"
+        >
+            Artikel Terkait
+        </h3>
+        <div class="space-y-6">
+            {
+                relatedArticles.map((article) => (
+                    <a class="group flex gap-4 items-start" href={article.href}>
+                        <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                            <img
+                                alt={article.title}
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                src={article.image}
+                            />
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-ultimate-navy dark:text-white line-clamp-2 group-hover:text-ultimate-blue transition-colors mb-1">
+                                {article.title}
+                            </h4>
+                            <p class="text-xs text-slate-500">{article.date}</p>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+
+    <div
+        class="bg-blue-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-blue-100 dark:border-slate-700 text-center"
+    >
+        <div
+            class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-ultimate-blue font-bold"
+        >
+            <span class="material-symbols-outlined">mail</span>
+        </div>
+        <h3
+            class="font-bold text-ultimate-navy dark:text-white mb-2 font-heading"
+        >
+            Subscribe Newsletter
+        </h3>
+        <p class="text-xs text-slate-500 mb-4">
+            Dapatkan tips beasiswa langsung ke inboxmu setiap minggu.
+        </p>
+        <input
+            class="w-full rounded-lg border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm p-3 mb-3 focus:ring-ultimate-blue focus:border-ultimate-blue"
+            placeholder="Email kamu..."
+            type="email"
+        />
+        <button
+            class="w-full bg-ultimate-navy text-white font-bold py-2 rounded-lg text-sm hover:bg-ultimate-blue transition-colors"
+            >Langganan</button
+        >
+    </div>
+</aside>

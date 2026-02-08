@@ -1,0 +1,70 @@
+---
+interface Props {
+    content: string;
+    tags?: string[];
+}
+
+const { content, tags = [] } = Astro.props;
+---
+
+<article
+    class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300"
+>
+    <div set:html={content} />
+
+    <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center gap-6"
+        >
+            {
+                tags.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                        {tags.map((tag) => (
+                            <span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-full text-xs font-medium">
+                                #{tag.replace(/\s+/g, "")}
+                            </span>
+                        ))}
+                    </div>
+                )
+            }
+            <div class="flex items-center gap-4">
+                <span
+                    class="text-sm font-semibold text-ultimate-navy dark:text-white"
+                    >Bagikan:</span
+                >
+                <button
+                    class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors"
+                >
+                    <img
+                        alt="FB"
+                        class="w-4 h-4 invert"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd8lyjyxPpnBeg9tOKxW5_Ess8vnU_ZDxLVvjl3c8GGcnNWNLNuS8c6gwZlUS_U7A-6F2c3FeneaOlRlPyUw1ZclUCcrGQVQlS9bCv5tZ220b5hbomLQySXSDHBlI1lUb-BYbHg9b-ucC-loT9BrfyXtz8-9NApjIx8Cf87O31QzpvyMesnbROCEoO7VTg6WTZ3N-JAkZKeZYJeW7r3VNf6zxMMqavLwNf22YFrkKSRVvkeRcpRBZfZnXafKPpTGZmL7hf1D5KW38"
+                    />
+                </button>
+                <button
+                    class="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center hover:bg-sky-600 transition-colors"
+                >
+                    <img
+                        alt="Twitter"
+                        class="w-4 h-4 invert"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9PY_rk-fy-cne8wpdZ1TDvPYmXmr0CgAbyig30hd80HZxHIpuwCLm2HxpBIFMQ7oBCZ2JxWr7fSKT3umFMkShGjzdLhirRsytNgyMskrETnYJ9Wrgw14b48aD0zGoBXJDprlxUm_OBL_dcGm739MV027LlDoOTlG4FxczYKvsg6xVX_UTwMBMw-jWalqyXaD520ZUis5EHFsX6dUpezCuiYDi9g7xycQKybFMqInOeXKU_91k6IwmERltWGbh0xCTydcheETgE-g"
+                    />
+                </button>
+                <button
+                    class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition-colors"
+                >
+                    <img
+                        alt="WA"
+                        class="w-4 h-4 invert"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjgHag13HxRKmkdPqSawoeR_HxrkzrcpHAbMqITHt8ilzoP_wKNhdnZNzADUsRdfkUgoOvADeXlL8PtcyiGLNj5VJ9Z4B7JjoMmDYw1hTOLSEVq0Ez8DkUXmwe0eror9uYZkLc4YeuH-_PkeD4P_E7wteguQFZhdkpWAOABO51R4f5l2SicQXr3zLg3QVrdsiyzz5yQfrkn88s5lmrzk0d3M5xaIauDtCJx9JWCv6Urigtdxo04-dCeaoTOhpgo9HqQxjCv_sVpEI"
+                    />
+                </button>
+                <button
+                    class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-white flex items-center justify-center hover:bg-slate-300 transition-colors"
+                >
+                    <span class="material-symbols-outlined text-sm">link</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</article>

@@ -1,0 +1,155 @@
+---
+const offices = [
+    {
+        name: "Kantor Jakarta",
+        address:
+            "Sampoerna Strategic Square, Jalan Jenderal Sudirman Kav 45-46, Jakarta Selatan, DKI Jakarta 12930",
+        icon: "location_on",
+    },
+    {
+        name: "Kantor Bandung",
+        address:
+            "Jl. Ir. H. Juanda No.84, Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132",
+        icon: "location_on",
+    },
+];
+
+const contacts = [
+    {
+        label: "Telepon & WhatsApp",
+        items: ["(021) 50913616 (Office)", "0812-1210-3168 (WhatsApp)"],
+        icon: "call",
+    },
+    {
+        label: "Email",
+        items: [
+            "info@ultimateeducation.com",
+            "admissions@ultimateeducation.com",
+        ],
+        icon: "mail",
+    },
+];
+
+const socials = [
+    {
+        name: "Instagram",
+        href: "#",
+        icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuA2PNSnJ09kSJKWMU-n_I_xvEHrKaKM9_uovYdpLbnK2KvTVTXPtbX9wR0yNXgiV8OA6gcDEo1LcEQk3ejUZu3J1no5oguEIkpDJVGXsaALWzgaZkC09EZXMGzNB2mWuGB6hVmD7wqlQi0wfqOH86lS07_JUaflcm6Cyac6GSQyVHGAI70ppukSHnGtJ8rRjnMNn_XuJehT2XnJHYYnQJFYbG_6e2zhTunQXWsyZjh12xmRA7s4EQUPxdb-cyUqlgl_14l9DAQTT9c",
+    },
+    {
+        name: "Facebook",
+        href: "#",
+        icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuBdVB8-cZXfy-It9E7LVkyQE-5wfbG5FMSKYbb_X0bZsXtl5j6F29f_BF6CywlvO5XEdue7FLP3Fo25TnhLv_JtunnlEy2o_8Yu82bShN75bPF3VBbL6DnxwnvlYJ1G_0cceBdGvlCZSoJioWtkQCq0vXmUqRsAYbYnZwELjd-OcbnWNLRZH-nPP1DWbWQykFMti1kRm3UxB5-Ez-HtbjvO6YthgUfG_Zjw0UEGf5Z4Uj084wY_vEJ02EDCraHKKElrYrrp_r1yZq0",
+    },
+    {
+        name: "LinkedIn",
+        href: "#",
+        icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWm-BcWEdgI5oQlnn5AsPl5APG6sFOL35PiSGwh3ci8VRBq7wQpadfj1RvldmaadPLl_vNPjaCQq2VN91pctO0uaNcHcmmG9YIDL2RexWQk0sCKkV6QbOxwm90F2KeujwNUa7HkomR4BRJRrFlS6599iHnuMFEGE5Veq0R1zyBXffbgOEoNGeItvXBFSWMc99Yvl9Y8-pPpvxtKFuQsoZuHVkrJnsUhj2shLFOFjM7rcU6kxPSpUdd2i722ab6FnWSYZVrCRpbHdQ",
+    },
+];
+---
+
+<div class="space-y-12">
+    <div>
+        <h2
+            class="text-3xl font-heading font-bold text-ultimate-navy dark:text-white mb-6"
+        >
+            Informasi Kontak
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+            Kunjungi kantor kami atau hubungi kami melalui kontak di bawah ini
+            untuk konsultasi gratis mengenai program persiapan kuliah ke luar
+            negeri.
+        </p>
+
+        <div class="space-y-8">
+            {
+                offices.map((office) => (
+                    <div class="flex items-start gap-4">
+                        <div class="bg-slate-100 dark:bg-slate-800 p-3 rounded-xl text-ultimate-blue flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">
+                                {office.icon}
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-ultimate-navy dark:text-white mb-1">
+                                {office.name}
+                            </h3>
+                            <p
+                                class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-xs"
+                                set:html={office.address.replace(
+                                    /, /g,
+                                    ",<br/>",
+                                )}
+                            />
+                        </div>
+                    </div>
+                ))
+            }
+
+            {
+                contacts.map((contact) => (
+                    <div class="flex items-start gap-4">
+                        <div class="bg-slate-100 dark:bg-slate-800 p-3 rounded-xl text-ultimate-blue flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">
+                                {contact.icon}
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-ultimate-navy dark:text-white mb-1">
+                                {contact.label}
+                            </h3>
+                            {contact.items.map((item) => (
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-0.5">
+                                    {item}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <div>
+        <h3 class="font-bold text-lg text-ultimate-navy dark:text-white mb-4">
+            Ikuti Kami
+        </h3>
+        <div class="flex gap-4">
+            {
+                socials.map((social) => (
+                    <a
+                        href={social.href}
+                        class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ultimate-navy dark:text-white hover:bg-ultimate-yellow hover:text-ultimate-navy transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 group"
+                        aria-label={social.name}
+                    >
+                        {social.name === "Instagram" && (
+                            <svg
+                                class="w-6 h-6 fill-current group-hover:scale-110 transition-transform"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        )}
+                        {social.name === "Facebook" && (
+                            <svg
+                                class="w-6 h-6 fill-current group-hover:scale-110 transition-transform"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-8.77h-2.946v-3.429h2.946v-2.528c0-2.921 1.784-4.51 4.387-4.51 1.246 0 2.318.092 2.63.133v3.049l-1.805.001c-1.417 0-1.691.674-1.691 1.662v2.183h3.375l-.439 3.429h-2.936v8.77h6.148c.731 0 1.325-.593 1.325-1.324v-21.351c0-.732-.594-1.325-1.325-1.325z" />
+                            </svg>
+                        )}
+                        {social.name === "LinkedIn" && (
+                            <svg
+                                class="w-6 h-6 fill-current group-hover:scale-110 transition-transform"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.327c0-3.771 4.968-4.085 4.968 0v8.327h5v-9.352c0-5.717-6.142-5.496-7.551-2.709l-.449-.788v-3.15z" />
+                            </svg>
+                        )}
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</div>

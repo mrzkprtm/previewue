@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ArticlesHero from "../../components/articles/ArticlesHero.astro";
+import ArticlesFeatured from "../../components/articles/ArticlesFeatured.astro";
+import ArticlesList from "../../components/articles/ArticlesList.astro";
+import ArticlesNewsletter from "../../components/articles/ArticlesNewsletter.astro";
+
+const articles = [
+  {
+    id: 1,
+    title: "Panduan Lengkap Memahami Format GMAT Versi Terbaru 2024",
+    excerpt:
+      "Pelajari perubahan struktur soal dan bagaimana mengoptimalkan strategi belajar Anda.",
+    date: "10 Okt 2023",
+    author: "Admin",
+    category: "Persiapan Tes",
+    slug: "format-gmat-2024",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC6q6fm7FUNWyd3lBrivk0NXu6nY9duJOHZ3tNgXZ0pZlBBUTcWP-Ltp9-MQ-pzNDi3ocRGE_aKBiMyMUvVGSVK7YpyDaDJ1FvwZZ45H66-AMc5LqwxTFlm3Pykwf9fAl4OqB7nAaBkcrllL7ngSCJQSxfYLaPupixzw-oiBZCqZJAPT4Ho9sy5eLHEYnFIxoTfWKMvTxJxzPMzqk00WkUMBMCw6FrZBevxBkCaFEgrOStvXt9L4p9sLoRQEx5lOPdK2inNpmAzMmE",
+  },
+  {
+    id: 2,
+    title:
+      "5 Daftar Beasiswa S2 Luar Negeri yang Tidak Mewajibkan Pengalaman Kerja",
+    excerpt:
+      "Mulai perjalanan akademik internasional Anda langsung setelah lulus sarjana dengan beasiswa ini.",
+    date: "08 Okt 2023",
+    author: "Staff",
+    category: "Beasiswa",
+    slug: "beasiswa-s2-no-experience",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuDJgPiDi4okxDbWyMXnUqGeXfad1tfy6SMT66ekZ-SvUMEQMCirKw8X4v1N9E4XCH4HaL5VjMoN6Eez7gGCB7LWZRXn2pasfhduQtDAOmOpvoCgPJki8IU-RRgbFPSWaqRR2APfC1eEeH9q5YFf9RM1feQG7-N0M3os2YtiCRfjLLcSlY00FrUda6ioskPP-TGcuXvGBKtDShzgETwL8gQZVMWDJdvGgE35RquTwRs17CvZpEjW7LawSCod3StF0bHsJYHdEXnuZX0",
+  },
+  {
+    id: 3,
+    title:
+      "Tingkatkan Kosakata Bahasa Inggris dengan 5 Kebiasaan Sederhana Ini",
+    excerpt:
+      "Membangun kebiasaan harian yang menyenangkan untuk memperkaya vocabulary tanpa merasa terbebani.",
+    date: "05 Okt 2023",
+    author: "Tutor",
+    category: "Lifestyle",
+    slug: "tips-kosakata-bahasa-inggris",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBaSkfUGJ--3uOVatl1lLxGaZTmU0CFNuXgBimXYaYY7TuaRW5yVobyAEAtrvFkBpyhzfTs91VuQ5-5CER8Ic_wuIk5bpE67pq5hMTTcSK3C9ak07_wWAVywfrV-_aW3xrOeGBRoUPdIpicz5_JBsfaYoJiWdbx8tGfNF4vEBDqciTJaHKGz1ffHCLW4IrmzNTiE2Wi4R5yu67nrrDaiEgmy9NmPVi0LHPGilHz2AyGxRcP_L6UminRGQ0H1WJ7CD73IBr0fx6G6QY",
+  },
+];
+
+const categories = ["Semua", "IELTS", "TOEFL", "Beasiswa", "Lifestyle"];
+const params = new URL(Astro.request.url).searchParams;
+const selectedCategory = params.get("category") || "Semua";
+const filteredArticles =
+  selectedCategory === "Semua"
+    ? articles
+    : articles.filter((a) => a.category === selectedCategory);
+---
+
+<Layout
+  title="Ultimate Insights - Blog & Artikel Pendidikan Terkini"
+  description="Informasi terkini seputar beasiswa, tips IELTS, dan kehidupan kuliah di luar negeri dari Ultimate Education."
+>
+  <main
+    class="flex-grow bg-slate-50 dark:bg-slate-900 transition-colors duration-300"
+  >
+    <ArticlesHero />
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <ArticlesFeatured />
+      <ArticlesList
+        articles={filteredArticles}
+        categories={categories}
+        selectedCategory={selectedCategory}
+      />
+    </div>
+
+    <ArticlesNewsletter />
+  </main>
+</Layout>
