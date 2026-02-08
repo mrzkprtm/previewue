@@ -1,11 +1,11 @@
 ---
-import Header from '../components/common/Header.astro';
-import Footer from '../components/common/Footer.astro';
-import ChatWidget from '../components/common/ChatWidget.astro';
+import Header from "../components/common/Header.astro";
+import Footer from "../components/common/Footer.astro";
+import ChatWidget from "../components/common/ChatWidget.astro";
 
 interface Props {
-	title: string;
-	description?: string;
+  title: string;
+  description?: string;
 }
 
 const { title, description = "Astro WordPress Headless Site" } = Astro.props;
@@ -13,16 +13,16 @@ const { title, description = "Astro WordPress Headless Site" } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+
     <!-- SEO Metadata -->
     <meta name="title" content={title} />
     <meta name="description" content={description} />
@@ -48,46 +48,62 @@ const { title, description = "Astro WordPress Headless Site" } = Astro.props;
     <meta property="twitter:image" content="https://placehold.co/1200x630?text=Ultimate+Education" />
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "Ultimate Education",
-      "url": Astro.url.origin,
-      "logo": "https://placehold.co/200x60",
-      "description": "Konsultan pendidikan luar negeri dan pusat persiapan tes IELTS, SAT, GRE, GMAT terpercaya di Indonesia.",
-      "address": [
-        {
-          "@type": "PostalAddress",
-          "streetAddress": "Sampoerna Strategic Square, Jalan Jenderal Sudirman No. 45 – 46",
-          "addressLocality": "Jakarta",
-          "addressCountry": "ID"
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        name: "Ultimate Education",
+        url: Astro.url.origin,
+        logo: "https://placehold.co/200x60",
+        description: "Konsultan pendidikan luar negeri dan pusat persiapan tes IELTS, SAT, GRE, GMAT terpercaya di Indonesia.",
+        address: [
+          {
+            "@type": "PostalAddress",
+            streetAddress: "Sampoerna Strategic Square, Jalan Jenderal Sudirman No. 45 – 46",
+            addressLocality: "Jakarta",
+            addressCountry: "ID",
+          },
+          {
+            "@type": "PostalAddress",
+            streetAddress: "Jl. Ir. H. Juanda No.84, Lebakgede",
+            addressLocality: "Bandung",
+            addressCountry: "ID",
+          },
+        ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: "+6283812310368",
+          contactType: "customer service",
         },
-        {
-          "@type": "PostalAddress",
-          "streetAddress": "Jl. Ir. H. Juanda No.84, Lebakgede",
-          "addressLocality": "Bandung",
-          "addressCountry": "ID"
-        }
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+6283812310368",
-        "contactType": "customer service"
-      },
-      "sameAs": [
-        "https://instagram.com/ultimateeducation",
-        "https://linkedin.com/company/ultimateeducation"
-      ]
-    })} />
+        sameAs: ["https://instagram.com/ultimateeducation", "https://linkedin.com/company/ultimateeducation"],
+      })}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        url: Astro.url.origin,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${Astro.url.origin}/artikel?search={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      })}
+    />
 
-		<title>{title}</title>
-	</head>
-	<body class="bg-white text-gray-900 font-sans antialiased min-h-screen flex flex-col">
-		<Header />
-		<main class="flex-grow w-full relative">
-			<slot />
-		</main>
-		<Footer />
+    <title>{title}</title>
+  </head>
+  <body class="bg-white text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-grow w-full relative">
+      <slot />
+    </main>
+    <Footer />
     <ChatWidget />
-	</body>
+  </body>
 </html>

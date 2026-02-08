@@ -2,6 +2,17 @@
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
+    container: {
+      center: true,
+      padding: '1.5rem',
+      screens: {
+        sm: '100%',
+        md: '100%',
+        lg: '1320px',
+        xl: '1320px',
+        '2xl': '1320px',
+      },
+    },
 		extend: {
       colors: {
         primary: '#145da0', // Main Color & Button Background

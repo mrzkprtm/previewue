@@ -1,0 +1,153 @@
+---
+/**
+ * OWNER: DYNAMIC (Dev B)
+ * Dynamic pagination page for blog listing.
+ */
+import Layout from "../../../layouts/Layout.astro";
+import ArticleCard from "../../../components/blog/ArticleCard.astro";
+import Pagination from "../../../components/blog/Pagination.astro";
+import type { WPPost, WPCategory } from "../../../types/wp";
+
+export async function getStaticPaths() {
+    const pages = Array.from({ length: 10 }, (_, i) => ({
+        params: { page: String(i + 1) },
+    }));
+    return pages;
+}
+
+const { page } = Astro.params;
+const currentPage = parseInt(page || "1");
+const postsPerPage = 9;
+
+// Redirect page 1 to main blog
+if (currentPage === 1) {
+    return Astro.redirect("/artikel");
+}
+
+let posts: WPPost[] = [];
+let categories: WPCategory[] = [];
+let totalPages = 1;
+let error: string | null = null;
+
+try {
+    const { getPostsWithPagination, getCategories } = await import("../../../lib/api/endpoints");
+    const [postsResponse, categoriesResponse] = await Promise.all([getPostsWithPagination(currentPage, postsPerPage), getCategories()]);
+    posts = postsResponse.posts;
+    totalPages = postsResponse.totalPages;
+    categories = categoriesResponse;
+} catch (e) {
+    console.error("Failed to fetch posts:", e);
+    error = "Menggunakan data contoh";
+    posts = [
+        {
+            id: 1,
+            slug: "artikel-page-" + currentPage,
+            title: `Artikel Halaman ${currentPage}`,
+            content: "",
+            excerpt: "<p>Contoh artikel</p>",
+            date: "2026-02-01T10:00:00",
+            featuredImage: { src: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=500&fit=crop", alt: "Artikel" },
+            author: { name: "Admin" },
+            categories: [{ name: "IELTS", slug: "ielts" }],
+        },
+    ];
+    categories = [{ id: 1, name: "IELTS", slug: "ielts", count: 5 }];
+    totalPages = 2;
+}
+
+const canonicalUrl = `${Astro.url.origin}/artikel/page/${currentPage}`;
+---
+
+<Layout title={`Blog - Halaman ${currentPage} | Ultimate Education`} description={`Halaman ${currentPage} - Tips persiapan tes IELTS, TOEFL, GMAT dan beasiswa luar negeri.`}>
+    <Fragment slot="head">
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="robots" content="noindex, follow" />
+    </Fragment>
+
+    <div class="bg-slate-50 min-h-screen">
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Breadcrumb -->
+            <nav class="pt-6 pb-4" aria-label="Breadcrumb">
+                <ol class="flex items-center gap-2 text-sm text-slate-500">
+                    <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+                    <li><span class="mx-1">/</span></li>
+                    <li><a href="/artikel" class="hover:text-primary transition-colors">Artikel</a></li>
+                    <li><span class="mx-1">/</span></li>
+                    <li class="text-slate-400">Halaman {currentPage}</li>
+                </ol>
+            </nav>
+
+            <!-- Header -->
+            <div class="pt-4 pb-8">
+                <h1 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900">Blog & Artikel</h1>
+                <p class="text-slate-500 mt-2">Halaman {currentPage}</p>
+            </div>
+
+            {error && <div class="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm">⚠️ {error}</div>}
+
+            <!-- Filter Bar -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                <h2 class="text-xl font-bold font-heading text-gray-900">Semua Artikel</h2>
+
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <select
+                            id="category-filter"
+                            class="appearance-none bg-white border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer"
+                        >
+                            <option value="">Semua Kategori</option>
+                            {categories.map((cat) => <option value={cat.slug}>{cat.name}</option>)}
+                        </select>
+                        <svg class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+
+                    <div class="relative">
+                        <input
+                            type="search"
+                            placeholder="Cari..."
+                            id="search-input"
+                            class="w-40 sm:w-48 pl-9 pr-3 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        />
+                        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Articles Grid -->
+            <section class="pb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    {posts.map((post) => <ArticleCard post={post} />)}
+                </div>
+
+                <Pagination currentPage={currentPage} totalPages={totalPages} />
+            </section>
+        </main>
+    </div>
+</Layout>
+
+<script>
+    const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
+    if (categoryFilter) {
+        categoryFilter.addEventListener("change", () => {
+            const value = categoryFilter.value;
+            if (value) {
+                window.location.href = `/artikel/category/${value}`;
+            } else {
+                window.location.href = "/artikel";
+            }
+        });
+    }
+
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    if (searchInput) {
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && searchInput.value.trim()) {
+                window.location.href = `/artikel?search=${encodeURIComponent(searchInput.value.trim())}`;
+            }
+        });
+    }
+</script>

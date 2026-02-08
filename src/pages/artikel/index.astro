@@ -1,0 +1,300 @@
+---
+/**
+ * OWNER: DYNAMIC (Dev B)
+ * Blog listing page with featured post, category dropdown filter, and article grid.
+ * Full SEO optimization with structured data.
+ */
+import Layout from "../../layouts/Layout.astro";
+import FeaturedPost from "../../components/blog/FeaturedPost.astro";
+import ArticleCard from "../../components/blog/ArticleCard.astro";
+import Pagination from "../../components/blog/Pagination.astro";
+import PopularTopics from "../../components/blog/PopularTopics.astro";
+import type { WPPost, WPCategory } from "../../types/wp";
+
+const currentPage = 1;
+const postsPerPage = 10;
+
+let allPosts: WPPost[] = [];
+let categories: WPCategory[] = [];
+let totalPages = 1;
+let error: string | null = null;
+
+try {
+  const { getPostsWithPagination, getCategories } = await import("../../lib/api/endpoints");
+  const [postsResponse, categoriesResponse] = await Promise.all([getPostsWithPagination(currentPage, postsPerPage), getCategories()]);
+  allPosts = postsResponse.posts;
+  totalPages = postsResponse.totalPages;
+  categories = categoriesResponse;
+} catch (e) {
+  console.error("Failed to fetch from WordPress:", e);
+  error = "Menggunakan data contoh";
+
+  allPosts = [
+    {
+      id: 1,
+      slug: "tips-ielts",
+      title: "Tips IELTS 7.0+ untuk Beasiswa",
+      content: "",
+      excerpt: "<p>Panduan IELTS lengkap</p>",
+      date: "2026-02-05T10:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=500&fit=crop", alt: "Siswa belajar IELTS" },
+      author: { name: "Admin UE", avatar: undefined },
+      categories: [{ name: "IELTS", slug: "ielts" }],
+    },
+    {
+      id: 2,
+      slug: "beasiswa-chevening",
+      title: "Beasiswa Chevening 2026",
+      content: "",
+      excerpt: "<p>Info Chevening terbaru</p>",
+      date: "2026-02-03T14:30:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=500&fit=crop", alt: "Wisuda beasiswa" },
+      author: { name: "Tim Beasiswa", avatar: undefined },
+      categories: [{ name: "Beasiswa", slug: "beasiswa" }],
+    },
+    {
+      id: 3,
+      slug: "toefl-writing",
+      title: "TOEFL Writing Tips",
+      content: "",
+      excerpt: "<p>Tips TOEFL Writing</p>",
+      date: "2026-02-01T09:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&h=500&fit=crop", alt: "Menulis TOEFL" },
+      author: { name: "Mentor TOEFL", avatar: undefined },
+      categories: [{ name: "TOEFL", slug: "toefl" }],
+    },
+    {
+      id: 4,
+      slug: "study-australia",
+      title: "Study di Australia",
+      content: "",
+      excerpt: "<p>Info kuliah Australia</p>",
+      date: "2026-01-28T11:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&h=500&fit=crop", alt: "Sydney Opera House" },
+      author: { name: "Konsultan", avatar: undefined },
+      categories: [{ name: "Study Abroad", slug: "study-abroad" }],
+    },
+    {
+      id: 5,
+      slug: "gmat-prep",
+      title: "Persiapan GMAT",
+      content: "",
+      excerpt: "<p>Tips GMAT</p>",
+      date: "2026-01-25T10:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop", alt: "Persiapan GMAT" },
+      author: { name: "Admin", avatar: undefined },
+      categories: [{ name: "GMAT", slug: "gmat" }],
+    },
+    {
+      id: 6,
+      slug: "ielts-speaking",
+      title: "IELTS Speaking",
+      content: "",
+      excerpt: "<p>Tips Speaking</p>",
+      date: "2026-01-22T09:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&h=500&fit=crop", alt: "Latihan speaking" },
+      author: { name: "Mentor", avatar: undefined },
+      categories: [{ name: "IELTS", slug: "ielts" }],
+    },
+    {
+      id: 7,
+      slug: "lpdp-2026",
+      title: "Beasiswa LPDP 2026",
+      content: "",
+      excerpt: "<p>Info LPDP</p>",
+      date: "2026-01-20T08:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&h=500&fit=crop", alt: "Wisuda LPDP" },
+      author: { name: "Tim", avatar: undefined },
+      categories: [{ name: "Beasiswa", slug: "beasiswa" }],
+    },
+    {
+      id: 8,
+      slug: "belajar-efektif",
+      title: "Tips Belajar Efektif",
+      content: "",
+      excerpt: "<p>Cara belajar</p>",
+      date: "2026-01-18T13:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=800&h=500&fit=crop", alt: "Belajar efektif" },
+      author: { name: "Admin", avatar: undefined },
+      categories: [{ name: "Tips", slug: "tips" }],
+    },
+    {
+      id: 9,
+      slug: "sat-math",
+      title: "SAT Math Section",
+      content: "",
+      excerpt: "<p>Tips SAT Math</p>",
+      date: "2026-01-15T10:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=500&fit=crop", alt: "Matematika SAT" },
+      author: { name: "Mentor", avatar: undefined },
+      categories: [{ name: "SAT", slug: "sat" }],
+    },
+    {
+      id: 10,
+      slug: "motivation-letter",
+      title: "Motivation Letter Tips",
+      content: "",
+      excerpt: "<p>Cara nulis</p>",
+      date: "2026-01-12T09:00:00",
+      featuredImage: { src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop", alt: "Menulis motivation letter" },
+      author: { name: "Tim", avatar: undefined },
+      categories: [{ name: "Beasiswa", slug: "beasiswa" }],
+    },
+  ];
+  categories = [
+    { id: 1, name: "IELTS", slug: "ielts", count: 5 },
+    { id: 2, name: "Beasiswa", slug: "beasiswa", count: 8 },
+    { id: 3, name: "TOEFL", slug: "toefl", count: 3 },
+    { id: 4, name: "Study Abroad", slug: "study-abroad", count: 4 },
+    { id: 5, name: "GMAT", slug: "gmat", count: 2 },
+    { id: 6, name: "SAT", slug: "sat", count: 3 },
+  ];
+  totalPages = 2;
+}
+
+const featuredPost = allPosts.length > 0 ? allPosts[0] : null;
+const posts = allPosts.slice(1);
+
+// SEO structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Blog Ultimate Education",
+  description: "Tips persiapan tes IELTS, TOEFL, GMAT, GRE, SAT dan beasiswa luar negeri.",
+  url: Astro.url.href,
+  publisher: {
+    "@type": "Organization",
+    name: "Ultimate Education",
+    logo: { "@type": "ImageObject", url: `${Astro.url.origin}/logo.png` },
+  },
+  blogPost: allPosts.slice(0, 5).map((p) => ({
+    "@type": "BlogPosting",
+    headline: p.title,
+    url: `${Astro.url.origin}/artikel/${p.slug}`,
+    datePublished: p.date,
+    author: {
+      "@type": "Person",
+      name: p.author?.name || "Ultimate Education",
+      url: p.author ? `${Astro.url.origin}/artikel/author/${p.author.name.toLowerCase().replace(/\s+/g, "-")}` : undefined,
+    },
+  })),
+};
+
+const canonicalUrl = Astro.url.origin + "/artikel";
+---
+
+<Layout title="Blog & Artikel | Ultimate Education" description="Tips, panduan, dan berita seputar persiapan tes IELTS, TOEFL, GMAT, GRE, SAT dan beasiswa luar negeri dari Ultimate Education.">
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content="Blog & Artikel | Ultimate Education" />
+    <meta property="og:description" content="Tips persiapan tes dan beasiswa luar negeri" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </Fragment>
+
+  <div class="bg-slate-50 min-h-screen">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Page Header -->
+      <div class="pt-8 pb-6 lg:pt-12 lg:pb-8">
+        <h1 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900">Blog & Artikel</h1>
+        <p class="text-slate-500 mt-2">Tips persiapan tes & beasiswa luar negeri</p>
+      </div>
+
+      {error && <div class="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm">⚠️ {error}</div>}
+
+      <!-- Featured Post -->
+      {
+        featuredPost && (
+          <section class="mb-10 lg:mb-12">
+            <FeaturedPost post={featuredPost} />
+          </section>
+        )
+      }
+
+      <!-- Filter Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <h2 class="text-xl lg:text-2xl font-bold font-heading text-gray-900">Artikel Terbaru</h2>
+
+        <div class="flex items-center gap-3">
+          <!-- Category Dropdown -->
+          <div class="relative">
+            <select
+              id="category-filter"
+              class="appearance-none bg-white border border-slate-200 rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer"
+            >
+              <option value="">Semua Kategori</option>
+              {
+                categories.map((cat) => (
+                  <option value={cat.slug}>
+                    {cat.name} ({cat.count})
+                  </option>
+                ))
+              }
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+
+          <!-- Search -->
+          <div class="relative">
+            <input type="search" placeholder="Cari..." id="search-input" class="w-40 sm:w-48 pl-9 pr-3 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" />
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article Grid -->
+      <section class="mb-12">
+        {
+          posts.length > 0 ? (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {posts.map((post) => (
+                <ArticleCard post={post} />
+              ))}
+            </div>
+          ) : (
+            <div class="text-center py-12 bg-white rounded-2xl">
+              <p class="text-slate-500">Belum ada artikel.</p>
+            </div>
+          )
+        }
+
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
+      </section>
+
+      <!-- Popular Topics -->
+      <section class="pb-12 lg:pb-16">
+        <PopularTopics />
+      </section>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  // Category filter redirect
+  const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
+  if (categoryFilter) {
+    categoryFilter.addEventListener("change", () => {
+      const value = categoryFilter.value;
+      if (value) {
+        window.location.href = `/artikel/category/${value}`;
+      } else {
+        window.location.href = "/artikel";
+      }
+    });
+  }
+
+  // Search redirect
+  const searchInput = document.getElementById("search-input") as HTMLInputElement;
+  if (searchInput) {
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && searchInput.value.trim()) {
+        window.location.href = `/artikel?search=${encodeURIComponent(searchInput.value.trim())}`;
+      }
+    });
+  }
+</script>

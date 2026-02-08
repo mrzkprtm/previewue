@@ -1,0 +1,128 @@
+---
+/**
+ * OWNER: DYNAMIC (Dev B)
+ * Pagination Component for Blog Archive
+ * Now uses /artikel/halaman/X format for SSG compatibility
+ */
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl?: string;
+  rootUrl?: string;
+  queryParams?: string;
+}
+
+const { currentPage, totalPages, baseUrl = '/artikel/page', rootUrl = '/artikel', queryParams = '' } = Astro.props;
+
+// Generate page numbers to show
+function getPageNumbers(current: number, total: number): (number | '...')[] {
+  if (total <= 5) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  
+  const pages: (number | '...')[] = [];
+  
+  pages.push(1);
+  
+  if (current > 3) {
+    pages.push('...');
+  }
+  
+  for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) {
+    if (!pages.includes(i)) {
+      pages.push(i);
+    }
+  }
+  
+  if (current < total - 2) {
+    pages.push('...');
+  }
+  
+  if (!pages.includes(total)) {
+    pages.push(total);
+  }
+  
+  return pages;
+}
+
+const pageNumbers = getPageNumbers(currentPage, totalPages);
+
+// Helper to generate page URL
+function getPageUrl(page: number): string {
+  const params = queryParams ? `?${queryParams}&page=${page}` : `?page=${page}`;
+  // For scholarship page, we always use query params style pagination if queryParams is meaningful or we are in /beasiswa context
+  // But standard blog uses /page/X structure.
+  // Let's adapt based on baseUrl. If baseUrl contains [page], it's dynamic route.
+  // For /beasiswa, we use query params '?page=X'.
+  
+  if (baseUrl === '/beasiswa') {
+       return `${baseUrl}?${queryParams ? queryParams + '&' : ''}page=${page}`;
+  }
+
+  // Fallback to existing path-based pagination for blog
+  if (page === 1) {
+    return rootUrl + (queryParams ? `?${queryParams}` : '');
+  }
+  return `${baseUrl}/${page}` + (queryParams ? `?${queryParams}` : '');
+}
+---
+
+{totalPages > 1 && (
+  <nav class="flex items-center justify-center gap-2 mt-12" aria-label="Pagination">
+    <!-- Previous Button -->
+    <a
+      href={currentPage > 1 ? getPageUrl(currentPage - 1) : undefined}
+      class:list={[
+        "w-10 h-10 flex items-center justify-center rounded-xl border transition-colors",
+        currentPage > 1 
+          ? "bg-white text-slate-500 hover:text-primary hover:border-primary border-slate-200" 
+          : "bg-slate-100 text-slate-300 border-slate-100 pointer-events-none"
+      ]}
+      aria-label="Halaman sebelumnya"
+      aria-disabled={currentPage <= 1}
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </a>
+    
+    <!-- Page Numbers -->
+    {pageNumbers.map((page) => (
+      page === '...' ? (
+        <span class="text-slate-400 px-2">...</span>
+      ) : (
+        <a
+          href={page !== currentPage ? getPageUrl(page) : undefined}
+          class:list={[
+            "w-10 h-10 flex items-center justify-center rounded-xl font-semibold transition-colors text-sm",
+            page === currentPage
+              ? "bg-primary text-white shadow-lg shadow-primary/30"
+              : "bg-white text-slate-600 hover:text-primary border border-slate-200 hover:border-primary"
+          ]}
+          aria-label={`Halaman ${page}`}
+          aria-current={page === currentPage ? 'page' : undefined}
+        >
+          {page}
+        </a>
+      )
+    ))}
+    
+    <!-- Next Button -->
+    <a
+      href={currentPage < totalPages ? getPageUrl(currentPage + 1) : undefined}
+      class:list={[
+        "w-10 h-10 flex items-center justify-center rounded-xl border transition-colors",
+        currentPage < totalPages 
+          ? "bg-white text-slate-500 hover:text-primary hover:border-primary border-slate-200" 
+          : "bg-slate-100 text-slate-300 border-slate-100 pointer-events-none"
+      ]}
+      aria-label="Halaman berikutnya"
+      aria-disabled={currentPage >= totalPages}
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </nav>
+)}
+
