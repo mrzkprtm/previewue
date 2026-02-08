@@ -1,167 +1,156 @@
 ---
 interface Props {
-  headline?: string;
-  subheadline?: string;
-  partners?: { name: string; logo: string }[];
+    headline?: string;
+    subheadline?: string;
+    partners?: { name: string; logo: string }[];
 }
 
 const {
-  headline = "Kursus Persiapan IELTS, SAT, GRE & GMAT untuk tingkatkan peluang kuliah di luar negeri",
-  subheadline = "Dapatkan bimbingan intensif dengan materi terlengkap dan mentor berpengalaman.",
-  partners = [
-    { name: 'Euroasiatic', logo: 'https://placehold.co/120x40/white/000000?text=Euroasiatic' },
-    { name: 'Police', logo: 'https://placehold.co/120x40/white/000000?text=Police' },
-    { name: 'GIS', logo: 'https://placehold.co/120x40/white/000000?text=GIS' },
-    { name: 'Pertamina', logo: 'https://placehold.co/120x40/white/000000?text=Pertamina' },
-    { name: 'Panasonic', logo: 'https://placehold.co/120x40/white/000000?text=Panasonic' },
-    { name: 'Bursa', logo: 'https://placehold.co/120x40/white/000000?text=Bursa' }
-  ]
+    headline = "Kursus Persiapan IELTS, SAT, GRE & GMAT untuk tingkatkan peluang kuliah di luar negeri",
+    subheadline = "Dapatkan bimbingan intensif dengan materi terlengkap dan mentor berpengalaman.",
+    partners = [
+        { name: "Euroasiatic", logo: "https://placehold.co/120x40/white/000000?text=Euroasiatic" },
+        { name: "Police", logo: "https://placehold.co/120x40/white/000000?text=Police" },
+        { name: "GIS", logo: "https://placehold.co/120x40/white/000000?text=GIS" },
+        { name: "Pertamina", logo: "https://placehold.co/120x40/white/000000?text=Pertamina" },
+        { name: "Panasonic", logo: "https://placehold.co/120x40/white/000000?text=Panasonic" },
+        { name: "Bursa", logo: "https://placehold.co/120x40/white/000000?text=Bursa" },
+    ],
 } = Astro.props;
 ---
 
-<section class="relative min-h-screen flex flex-col justify-center overflow-hidden bg-hero-gradient pt-32 pb-24 lg:pt-40 lg:pb-32 z-0">
-  
-  {/* Left Column Background Effect (Optional for depth) */}
-  <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-      <div class="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-white/5 rounded-full blur-[100px]"></div>
-  </div>
+<section class="relative min-h-screen flex flex-col justify-center overflow-visible bg-hero-gradient pt-32 pb-24 lg:pt-40 lg:pb-32 z-20">
+    {/* Left Column Background Effect (Optional for depth) */}
+    <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-white/5 rounded-full blur-[100px]"></div>
+    </div>
 
-  <div class="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
-      
-      {/* LEFT COLUMN (Content + Form) */}
-      <div class="w-full lg:w-[55%] flex flex-col space-y-10 relative z-20">
-        
-        {/* Headline & Subheadline */}
-        <div class="space-y-6 text-center lg:text-left">
-            <h1 class="text-white text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-heading leading-[1.15] tracking-tight">
-              Kursus Persiapan IELTS, SAT, GRE, GMAT & TOEFL untuk Kuliah ke Luar Negeri
-            </h1>
-            <p class="text-gray-200 text-lg lg:text-xl font-body leading-relaxed max-w-2xl mx-auto lg:mx-0 opacity-90">
-              Program intensif dengan mentor berpengalaman untuk bantu kamu tembus skor target dan lolos kampus impian di luar negeri.
-            </p>
-            
-            {/* Value Bullets */}
-            <ul class="flex flex-wrap gap-4 justify-center lg:justify-start text-white/90 text-sm font-medium">
-               <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Kelas online & offline</li>
-               <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Mentor berpengalaman internasional</li>
-               <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Strategi tembus skor target</li>
-               <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Pendampingan pendaftaran kampus</li>
-            </ul>
+    <div class="container mx-auto px-4 relative z-10 flex-grow flex flex-col justify-center">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+            {/* LEFT COLUMN (Content + Form) */}
+            <div class="w-full lg:w-[55%] flex flex-col space-y-10 relative z-20">
+                {/* Headline & Subheadline */}
+                <div class="space-y-6 text-center lg:text-left">
+                    <h1 class="text-white text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-heading leading-[1.15] tracking-tight">Kursus Persiapan IELTS, SAT, GRE, GMAT & TOEFL untuk Kuliah ke Luar Negeri</h1>
+                    <p class="text-gray-200 text-lg lg:text-xl font-body leading-relaxed max-w-2xl mx-auto lg:mx-0 opacity-90">
+                        Program intensif dengan mentor berpengalaman untuk bantu kamu tembus skor target dan lolos kampus impian di luar negeri.
+                    </p>
 
-            {/* Micro Trust */}
-            <div class="flex items-center justify-center lg:justify-start gap-2 pt-2">
-               <div class="flex -space-x-2">
-                  <img src="https://placehold.co/32x32" class="w-8 h-8 rounded-full border-2 border-primary" alt="Student" />
-                  <img src="https://placehold.co/32x32" class="w-8 h-8 rounded-full border-2 border-primary" alt="Student" />
-                  <img src="https://placehold.co/32x32" class="w-8 h-8 rounded-full border-2 border-primary" alt="Student" />
-               </div>
-               <span class="text-white text-sm font-semibold">⭐ 1.200+ siswa telah belajar bersama kami</span>
-            </div>
-        </div>
+                    {/* Value Bullets */}
+                    <ul class="flex flex-wrap gap-4 justify-center lg:justify-start text-white/90 text-sm font-medium">
+                        <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Kelas online & offline</li>
+                        <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Mentor berpengalaman internasional</li>
+                        <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Strategi tembus skor target</li>
+                        <li class="flex items-center gap-2"><span class="text-accent-yellow">✓</span> Pendampingan pendaftaran kampus</li>
+                    </ul>
 
-        {/* Lead Capture Form - Exact Match to Screenshot */}
-        <div class="w-full max-w-[600px] bg-white rounded-xl shadow-xl p-6 lg:p-8 animate-fade-in-up mx-auto lg:mx-0">
-            <h3 class="text-xl font-bold text-gray-900 font-heading text-center mb-6">Konsultasi Gratis Sekarang</h3>
-            
-            <form class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Whatsapp Input */}
-                    <div class="space-y-1.5">
-                        <label for="whatsapp" class="block text-sm font-bold text-gray-700 font-heading">Nomor Whatsapp*</label>
-                        <div class="flex shadow-sm">
-                            <span class="inline-flex items-center px-4 py-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 font-medium text-base">
-                                +62
-                            </span>
-                            <input 
-                                type="tel" 
-                                id="whatsapp" 
-                                class="flex-1 min-w-0 block w-full px-4 py-3 rounded-r-md border border-gray-300 focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 placeholder-gray-400 text-base" 
-                                placeholder="8123456789" 
-                            />
+                    {/* Micro Trust */}
+                    <div class="flex items-center justify-center lg:justify-start gap-2 pt-2">
+                        <div class="flex -space-x-2">
+                            <img src="https://placehold.co/32x32" class="w-8 h-8 rounded-full border-2 border-primary" alt="Student" />
+                            <img src="https://placehold.co/32x32" class="w-8 h-8 rounded-full border-2 border-primary" alt="Student" />
+                            <img src="https://placehold.co/32x32" class="w-8 h-8 rounded-full border-2 border-primary" alt="Student" />
                         </div>
-                    </div>
-                    
-                    {/* Program Select */}
-                    <div class="space-y-1.5">
-                        <label for="program" class="block text-sm font-bold text-gray-700 font-heading">Program Pilihan*</label>
-                        <div class="relative">
-                            <select id="program" class="appearance-none block w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 bg-white text-base cursor-pointer shadow-sm">
-                                <option value="" disabled selected>Pilih program...</option>
-                                <option value="ielts">IELTS Preparation</option>
-                                <option value="sat">SAT Prep</option>
-                                <option value="gmat">GMAT Prep</option>
-                                <option value="gre">GRE Prep</option>
-                                <option value="toefl">TOEFL</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                            </div>
-                        </div>
+                        <span class="text-white text-sm font-semibold">⭐ 1.200+ siswa telah belajar bersama kami</span>
                     </div>
                 </div>
-                
-                <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-md shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition-all mt-2 font-heading">
-                    <span>🚀</span> 
-                    <span>Dapatkan Penawaran!</span>
-                </button>
-            </form>
+
+                {/* Lead Capture Form - Exact Match to Screenshot */}
+                <div class="w-full max-w-[600px] bg-white rounded-xl shadow-xl p-6 lg:p-8 animate-fade-in-up mx-auto lg:mx-0 relative z-50">
+                    <h3 class="text-xl font-bold text-gray-900 font-heading text-center mb-6">Konsultasi Gratis Sekarang</h3>
+
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Whatsapp Input */}
+                            <div class="space-y-1.5">
+                                <label for="whatsapp" class="block text-sm font-bold text-gray-700 font-heading">Nomor Whatsapp*</label>
+                                <div class="flex shadow-sm">
+                                    <span class="inline-flex items-center px-4 py-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 font-medium text-base"> +62 </span>
+                                    <input
+                                        type="tel"
+                                        id="whatsapp"
+                                        class="flex-1 min-w-0 block w-full px-4 py-3 rounded-r-md border border-gray-300 focus:ring-1 focus:ring-primary focus:border-primary text-gray-900 placeholder-gray-400 text-base"
+                                        placeholder="8123456789"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Program Selection - Replaced Dropdown with Button Grid to fix overflow/clipping issues */}
+                            <div class="space-y-1.5">
+                                <label class="block text-sm font-bold text-gray-700 font-heading">Program Pilihan*</label>
+                                <input type="hidden" id="program-input" name="program" value="" />
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                    {
+                                        ["IELTS", "SAT", "GMAT", "GRE", "TOEFL"].map((prog) => (
+                                            <button
+                                                type="button"
+                                                class="program-btn px-3 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:border-primary hover:text-primary hover:bg-blue-50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                                onclick={`document.getElementById('program-input').value = '${prog}'; document.querySelectorAll('.program-btn').forEach(b => b.classList.remove('bg-primary', 'text-white', 'border-primary')); this.classList.add('bg-primary', 'text-white', 'border-primary'); this.classList.remove('text-gray-600', 'bg-blue-50');`}
+                                            >
+                                                {prog}
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-md shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition-all mt-2 font-heading">
+                            <span>🚀</span>
+                            <span>Dapatkan Penawaran!</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {/* RIGHT COLUMN (Visual Hook) */}
+            <div class="w-full lg:w-[45%] relative lg:h-[600px] flex items-center justify-center lg:justify-end pointer-events-none mt-12 lg:mt-0">
+                <div
+                    class="relative lg:absolute lg:right-[-40px] lg:top-[50%] lg:-translate-y-[60%] w-64 h-64 lg:w-[450px] lg:h-[450px] bg-accent-yellow rounded-full flex items-center justify-center shadow-2xl z-10 overflow-hidden ring-8 ring-white/10"
+                >
+                    <div class="text-center text-ue-dark font-heading p-6 lg:p-10 transform lg:rotate-3 transition-transform duration-700 ease-out hover:rotate-0">
+                        <p class="text-base lg:text-xl font-medium leading-snug mb-1 opacity-90">Bareng Ultimate Education,</p>
+                        <h2 class="text-2xl lg:text-4xl font-extrabold leading-tight mb-2 tracking-tight">
+                            Kuliah di<br />Kampus Top Dunia
+                        </h2>
+                        <div class="w-16 h-1 bg-ue-dark mx-auto my-3 rounded-full opacity-20"></div>
+                        <p class="text-lg lg:text-2xl font-bold uppercase tracking-wide">Bukan Cuma Mimpi!</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      {/* RIGHT COLUMN (Visual Hook) */}
-      <div class="w-full lg:w-[45%] relative lg:h-[600px] flex items-center justify-center lg:justify-end pointer-events-none mt-12 lg:mt-0">
-         <div class="relative lg:absolute lg:right-[-40px] lg:top-[50%] lg:-translate-y-[60%] w-64 h-64 lg:w-[450px] lg:h-[450px] bg-accent-yellow rounded-full flex items-center justify-center shadow-2xl z-10 overflow-hidden ring-8 ring-white/10">
-             <div class="text-center text-ue-dark font-heading p-6 lg:p-10 transform lg:rotate-3 transition-transform duration-700 ease-out hover:rotate-0">
-                 <p class="text-base lg:text-xl font-medium leading-snug mb-1 opacity-90">Bareng Ultimate Education,</p>
-                 <h2 class="text-2xl lg:text-4xl font-extrabold leading-tight mb-2 tracking-tight">
-                    Kuliah di<br/>Kampus Top Dunia
-                 </h2>
-                 <div class="w-16 h-1 bg-ue-dark mx-auto my-3 rounded-full opacity-20"></div>
-                 <p class="text-lg lg:text-2xl font-bold uppercase tracking-wide">Bukan Cuma Mimpi!</p>
-             </div>
-         </div>
-      </div>
-
     </div>
-  </div>
 
-  {/* TRUST SIGNALS (Logo Strip) - Marquee Desktop, Scroll Pill Mobile */}
-  <div class="container mx-auto px-4 mt-16 relative z-10 animate-fade-in-up delay-300 pb-12 lg:pb-0">
-      <div class="bg-white rounded-full py-5 px-10 shadow-lg w-full mx-auto overflow-hidden">
-           
-           {/* Mobile: Horizontal Loop/Scroll manually if needed, but Marquee is often requested. 
+    {/* TRUST SIGNALS (Logo Strip) - Marquee Desktop, Scroll Pill Mobile */}
+    <div class="container mx-auto px-4 mt-16 relative z-10 animate-fade-in-up delay-300 pb-12 lg:pb-0">
+        <div class="bg-white rounded-full py-5 px-10 shadow-lg w-full mx-auto overflow-hidden">
+            {
+                /* Mobile: Horizontal Loop/Scroll manually if needed, but Marquee is often requested. 
                User said: "mobile its still one line and like a phill".
                I will enable Marquee for Desktop and ensure Mobile handles it or scrolls.
                Let's try a pure CSS Marquee that works on both but is distinct? 
                Actually user specific "running text" [Desktop], "pill" [Mobile].
                I will stick to overflow-x-auto for mobile to be safe with "pill" interaction.
-           */}
-           <div class="flex lg:hidden overflow-x-auto space-x-8 items-center scrollbar-hide">
-                {partners.map((partner) => (
-                    <img src={partner.logo} alt={partner.name} class="h-8 w-auto object-contain flex-shrink-0 grayscale opacity-70" />
-                ))}
-           </div>
+           */
+            }
+            <div class="flex lg:hidden overflow-x-auto space-x-8 items-center scrollbar-hide">
+                {partners.map((partner) => <img src={partner.logo} alt={partner.name} class="h-8 w-auto object-contain flex-shrink-0 grayscale opacity-70" />)}
+            </div>
 
-           {/* Desktop: Marquee Animation */}
-           <div class="hidden lg:flex relative overflow-hidden group">
-               <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full items-center">
-                   {[...partners, ...partners, ...partners].map((partner) => (
-                       <img src={partner.logo} alt={partner.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
-                   ))}
-               </div>
-               <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full items-center absolute top-0 left-0 translate-x-[100%]">
-                   {[...partners, ...partners, ...partners].map((partner) => (
-                       <img src={partner.logo} alt={partner.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />
-                   ))}
-               </div>
-           </div>
-           
-      </div>
-  </div>
+            {/* Desktop: Marquee Animation */}
+            <div class="hidden lg:flex relative overflow-hidden group">
+                <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full items-center">
+                    {[...partners, ...partners, ...partners].map((partner) => <img src={partner.logo} alt={partner.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />)}
+                </div>
+                <div class="flex gap-12 animate-marquee whitespace-nowrap min-w-full items-center absolute top-0 left-0 translate-x-[100%]">
+                    {[...partners, ...partners, ...partners].map((partner) => <img src={partner.logo} alt={partner.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100" />)}
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <style>
-  /* Custom clip setup if needed for "off-canvas" look, 
+    /* Custom clip setup if needed for "off-canvas" look, 
      but standard overflow-hidden on section handles right-edge clipping naturally */
 </style>

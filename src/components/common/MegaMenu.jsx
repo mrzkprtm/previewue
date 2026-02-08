@@ -120,3 +120,4 @@ export default function MegaMenu({ isOpen, onClose }) {
     </div>
   );
 }
+

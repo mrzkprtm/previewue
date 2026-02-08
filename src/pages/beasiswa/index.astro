@@ -1,0 +1,286 @@
+---
+/**
+ * OWNER: DYNAMIC (Dev B)
+ * Scholarship listing page with Advanced Filtering.
+ */
+import Layout from "../../layouts/Layout.astro";
+import Pagination from "../../components/blog/Pagination.astro";
+import ScholarshipCard from "../../components/scholarship/ScholarshipCard.astro";
+import type { WPScholarship } from "../../types/wp";
+
+// Setup SEO
+const title = "Info Beasiswa Luar Negeri Terbaru | Ultimate Education";
+const description = "Temukan informasi lengkap beasiswa S1, S2, S3 ke luar negeri. Gunakan filter untuk mencari berdasarkan negara, jenjang, dan jenis beasiswa.";
+
+// Fetch Data (Fetch more items to allow filtering)
+let allScholarships: WPScholarship[] = [];
+let error: string | null = null;
+let filteredScholarships: WPScholarship[] = [];
+
+// Get Filter Params from URL
+const degreeFilter = Astro.url.searchParams.get("degree") || "";
+const countryFilter = Astro.url.searchParams.get("country") || "";
+const typeFilter = Astro.url.searchParams.get("type") || "";
+const searchFilter = Astro.url.searchParams.get("q") || "";
+const page = parseInt(Astro.url.searchParams.get("page") || "1");
+const perPage = 10;
+
+try {
+    const { getScholarships } = await import("../../lib/api/endpoints");
+    // Fetch up to 100 items to enable effective filtering
+    const response = await getScholarships(1, 100);
+    allScholarships = response.scholarships;
+} catch (e) {
+    console.warn("Failed to fetch scholarships, using fallback data:", e);
+    // error = "Gagal memuat data beasiswa. Menampilkan data contoh."; // Optional msg
+
+    // Fallback Dummy Data to match Design
+    allScholarships = [
+        {
+            id: 1,
+            slug: "master-program-in-international-law-and-chinese-law-scholarship",
+            title: "Master Program in International Law and Chinese Law Scholarship",
+            content: "",
+            excerpt: "",
+            date: "2024-01-01",
+            featuredImage: { src: "https://placehold.co/600x400/0F4C81/white?text=China+Scholarship", alt: "China" },
+            country: "China",
+            degree: "S2",
+            deadline: "2025-06-30",
+            startDate: "June 1, 2025",
+            university: "Berbagai universitas yang ada di China",
+            type: "Full Scholarship",
+        },
+        {
+            id: 2,
+            slug: "posco-asia-fellowship",
+            title: "POSCO Asia Fellowship",
+            content: "",
+            excerpt: "",
+            date: "2024-01-01",
+            featuredImage: { src: "https://placehold.co/600x400/2c3e50/white?text=POSCO", alt: "Korea" },
+            country: "Korea Selatan",
+            degree: "S2, S3",
+            deadline: "2025-05-31",
+            startDate: "May 1, 2025",
+            university: "Berbagai universitas di Korea Selatan",
+            type: "Fellowship",
+        },
+    ];
+}
+
+// Extract Unique Options for Filters
+const countries = [
+    ...new Set(
+        allScholarships
+            .map((s) => s.country)
+            .filter(Boolean)
+            .flatMap((c) => c?.split(",").map((i) => i.trim())),
+    ),
+].sort();
+const degrees = [
+    ...new Set(
+        allScholarships
+            .map((s) => s.degree)
+            .filter(Boolean)
+            .flatMap((c) => c?.split(",").map((i) => i.trim())),
+    ),
+].sort();
+const types = [...new Set(allScholarships.map((s) => s.type).filter(Boolean))].sort();
+
+// Apply Filters Logic
+filteredScholarships = allScholarships.filter((s) => {
+    const matchDegree = degreeFilter ? s.degree?.toLowerCase().includes(degreeFilter.toLowerCase()) : true;
+    const matchCountry = countryFilter ? s.country?.toLowerCase().includes(countryFilter.toLowerCase()) : true;
+    const matchType = typeFilter ? s.type?.toLowerCase().includes(typeFilter.toLowerCase()) : true;
+    const matchSearch = searchFilter ? s.title.toLowerCase().includes(searchFilter.toLowerCase()) || (s.university && s.university.toLowerCase().includes(searchFilter.toLowerCase())) : true;
+
+    return matchDegree && matchCountry && matchType && matchSearch;
+});
+
+// Calculate Pagination
+const totalPages = Math.ceil(filteredScholarships.length / perPage);
+const currentPage = page;
+const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, page * perPage);
+---
+
+<Layout title={title} description={description}>
+    <div class="bg-slate-50 min-h-screen">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-primary to-blue-900 text-white py-16 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('/pattern-grid.svg')] opacity-10"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <h1 class="text-3xl lg:text-5xl font-bold font-heading mb-6">Temukan Beasiswa Impianmu</h1>
+                <p class="text-xl text-blue-100 max-w-2xl mx-auto">Akses ribuan informasi beasiswa S1, S2, dan S3 dari seluruh dunia.</p>
+
+                <!-- Search Bar -->
+                <div class="mt-8 max-w-xl mx-auto">
+                    <form action="/beasiswa" method="GET" class="relative">
+                        <input
+                            type="text"
+                            name="q"
+                            value={searchFilter}
+                            placeholder="Cari beasiswa, universitas, atau negara..."
+                            class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-full py-4 pl-6 pr-14 text-white placeholder-blue-100 focus:outline-none focus:bg-white focus:text-gray-900 focus:placeholder-gray-400 transition-all shadow-lg"
+                        />
+                        <button type="submit" class="absolute right-2 top-2 p-2 bg-white rounded-full text-primary hover:bg-blue-50 transition-colors">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                        <!-- Preserve other filters -->
+                        {degreeFilter && <input type="hidden" name="degree" value={degreeFilter} />}
+                        {countryFilter && <input type="hidden" name="country" value={countryFilter} />}
+                        {typeFilter && <input type="hidden" name="type" value={typeFilter} />}
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transform -translate-y-8">
+            <!-- Filter Bar -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 mb-8 relative z-20">
+                <form action="/beasiswa" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4" id="filterForm">
+                    <!-- Preserve search -->
+                    {searchFilter && <input type="hidden" name="q" value={searchFilter} />}
+
+                    <!-- Degree Filter -->
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">Jenjang</label>
+                        <select
+                            name="degree"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                            onchange="this.form.submit()"
+                        >
+                            <option value="">Semua Jenjang</option>
+                            {
+                                degrees.map((d) => (
+                                    <option value={d} selected={degreeFilter === d}>
+                                        {d}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <div class="absolute right-4 bottom-3 pointer-events-none text-slate-500">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Country Filter -->
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">Negara</label>
+                        <select
+                            name="country"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                            onchange="this.form.submit()"
+                        >
+                            <option value="">Semua Negara</option>
+                            {
+                                countries.map((c) => (
+                                    <option value={c} selected={countryFilter === c}>
+                                        {c}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <div class="absolute right-4 bottom-3 pointer-events-none text-slate-500">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Type Filter -->
+                    <div class="relative">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1 ml-1">Jenis Beasiswa</label>
+                        <select
+                            name="type"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                            onchange="this.form.submit()"
+                        >
+                            <option value="">Semua Jenis</option>
+                            {
+                                types.map((t) => (
+                                    <option value={t} selected={typeFilter === t}>
+                                        {t}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <div class="absolute right-4 bottom-3 pointer-events-none text-slate-500">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <div class="flex items-end">
+                        <a href="/beasiswa" class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-2.5 rounded-xl transition-colors">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Reset Filter
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            {error && <div class="mb-6 px-4 py-3 bg-red-50 border border-red-200 text-red-800 rounded-xl text-sm">{error}</div>}
+
+            <!-- Result Count -->
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="text-lg font-bold text-gray-800">
+                    {filteredScholarships.length} Beasiswa Ditemukan
+                </h2>
+            </div>
+
+            <!-- Scholarship Grid (Single Column) -->
+            {
+                paginatedScholarships.length > 0 ? (
+                    <div class="flex flex-col gap-6">
+                        {paginatedScholarships.map((scholarship) => (
+                            <ScholarshipCard scholarship={scholarship} />
+                        ))}
+                    </div>
+                ) : (
+                    <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-slate-100">
+                        <div class="text-slate-400 mb-4 bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto">
+                            <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Tidak ada data ditemukan</h3>
+                        <p class="text-slate-500 mb-6">Coba ubah kata kunci atau filter pencarian Anda.</p>
+                        <a href="/beasiswa" class="text-primary font-bold hover:underline">
+                            Lihat Semua Beasiswa
+                        </a>
+                    </div>
+                )
+            }
+
+            <!-- Pagination -->
+            {
+                totalPages > 1 && (
+                    <div class="mt-12 flex justify-center">
+                        <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/beasiswa" queryParams={`q=${searchFilter}&degree=${degreeFilter}&country=${countryFilter}&type=${typeFilter}`} />
+                    </div>
+                )
+            }
+        </main>
+
+        <!-- CTA -->
+        <section class="bg-white py-16 border-t border-slate-100 mt-12">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold font-heading text-gray-900 mb-6">Butuh Bimbingan Meraih Beasiswa?</h2>
+                <p class="text-slate-600 mb-8 text-lg">Konsultan kami siap membantu review essay, persiapan interview, dan strategi aplikasi beasiswa impianmu.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/kontak" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg shadow-primary/30"> Konsultasi Gratis </a>
+                    <a href="/program" class="bg-white hover:bg-slate-50 text-slate-700 font-bold py-3 px-8 rounded-full border border-slate-200 transition-colors"> Lihat Program </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>

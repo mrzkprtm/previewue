@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProgramCard from "../../components/program/ProgramCard.astro";
+import { programs } from "../../data/programData";
+
+const title = "Program Bimbingan Belajar & Persiapan Kuliah | Ultimate Education";
+const description = "Pilih program terbaik untuk persiapan kuliah ke luar negeri. Mulai dari IELTS, TOEFL, SAT, hingga GMAT dengan tutor berpengalaman.";
+
+// Get unique categories for tabs
+const categories = ["Semua Program", ...new Set(programs.map((p) => p.category))];
+---
+
+<Layout title={title} description={description}>
+    <div class="bg-slate-50 min-h-screen pb-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold font-heading text-slate-800 mb-8">Semua Program Ultimate Education</h1>
+
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4" id="programTabs">
+                    {
+                        categories.map((category, index) => (
+                            <button
+                                class={`px-6 py-2.5 rounded-full text-sm md:text-base font-bold transition-all border ${
+                                    index === 0 ? "bg-[#007aff] text-white border-[#007aff] shadow-lg shadow-blue-500/30" : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                                }`}
+                                data-category={category}
+                            >
+                                {category}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Program List -->
+            <div class="space-y-6" id="programList">
+                {
+                    programs.map((program) => (
+                        <div class="program-item" data-category={program.category}>
+                            <ProgramCard program={program} />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    // Simple Tab Filtering Logic
+    const tabs = document.querySelectorAll("#programTabs button");
+    const items = document.querySelectorAll(".program-item");
+
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+            const selectedCategory = tab.getAttribute("data-category");
+
+            // Update Active State
+            tabs.forEach((t) => {
+                t.className = "px-6 py-2.5 rounded-full text-sm md:text-base font-bold transition-all border bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50";
+            });
+            tab.className = "px-6 py-2.5 rounded-full text-sm md:text-base font-bold transition-all border bg-[#007aff] text-white border-[#007aff] shadow-lg shadow-blue-500/30";
+
+            // Filter Items
+            items.forEach((item) => {
+                const itemCategory = item.getAttribute("data-category");
+                if (selectedCategory === "Semua Program" || itemCategory === selectedCategory) {
+                    (item as HTMLElement).style.display = "block";
+                    // Add small fade in animation
+                    item.animate(
+                        [
+                            { opacity: 0, transform: "translateY(10px)" },
+                            { opacity: 1, transform: "translateY(0)" },
+                        ],
+                        {
+                            duration: 300,
+                            easing: "ease-out",
+                        },
+                    );
+                } else {
+                    (item as HTMLElement).style.display = "none";
+                }
+            });
+        });
+    });
+</script>

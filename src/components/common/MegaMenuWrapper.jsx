@@ -26,17 +26,15 @@ export default function MegaMenuWrapper() {
 
   return (
     <nav
-      className={`fixed w-full z-[999] transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md py-2' : 'bg-transparent py-4'
-      }`}
+      className="relative w-full z-[999] bg-white shadow-sm py-3"
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 group">
             <div className="relative w-48 h-14 bg-gray-200 rounded overflow-hidden">
-               {/* Placeholder for actual logo */}
-               <img src="https://placehold.co/200x56" alt="Ultimate Education Logo" className="w-full h-full object-cover" />
+              {/* Placeholder for actual logo */}
+              <img src="https://placehold.co/200x56" alt="Ultimate Education Logo" className="w-full h-full object-cover" />
             </div>
           </a>
 
@@ -51,11 +49,7 @@ export default function MegaMenuWrapper() {
               >
                 <a
                   href={item.href}
-                  className={`text-base font-medium font-heading transition-colors py-3 block ${
-                    isScrolled 
-                      ? 'text-gray-800 hover:text-primary' 
-                      : 'text-white hover:text-yellow-400'
-                  }`}
+                  className="text-base font-medium font-heading transition-colors py-3 block text-gray-800 hover:text-primary"
                   onClick={(e) => {
                     if (item.hasDropdown) {
                       e.preventDefault();
@@ -70,9 +64,7 @@ export default function MegaMenuWrapper() {
                 </a>
 
                 {/* Dropdown Indicator Line */}
-                <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
-                  isScrolled ? 'bg-primary' : 'bg-yellow-400'
-                }`}></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary"></span>
 
                 {/* Mega Menu Dropdown */}
                 {item.hasDropdown && isMenuOpen && (
@@ -119,30 +111,30 @@ export default function MegaMenuWrapper() {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`lg:hidden fixed inset-0 z-40 bg-white transform transition-transform duration-300 ease-in-out ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`lg:hidden fixed inset-0 z-40 bg-white transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
         style={{ top: '80px' }}
       >
         <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
           {navItems.map((item) => (
-             <div key={item.label}>
-                <a
-                  href={item.href}
-                  className="text-lg font-medium text-gray-800 hover:text-primary block py-2"
-                  onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-                {item.hasDropdown && (
-                    <div className="pl-4 mt-2 border-l-2 border-gray-100">
-                        <MegaMenu mobile={true} />
-                    </div>
-                )}
-             </div>
+            <div key={item.label}>
+              <a
+                href={item.href}
+                className="text-lg font-medium text-gray-800 hover:text-primary block py-2"
+                onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+              {item.hasDropdown && (
+                <div className="pl-4 mt-2 border-l-2 border-gray-100">
+                  <MegaMenu mobile={true} />
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </div>
     </nav>
   );
 }
+
