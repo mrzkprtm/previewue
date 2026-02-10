@@ -6,7 +6,7 @@ const scholarships = [
     country: "Worldwide",
     university: "Top 100 QS World",
     deadline: "12 Februari 2026",
-    image: "https://placehold.co/400x200/061f35/ffffff?text=LPDP"
+    image: "https://placehold.co/400x200/061f35/ffffff?text=LPDP",
   },
   {
     title: "Chevening Scholarship",
@@ -14,8 +14,8 @@ const scholarships = [
     country: "United Kingdom",
     university: "All UK Universities",
     deadline: "5 November 2025",
-    image: "https://placehold.co/400x200/b91c1c/ffffff?text=Great+Britain"
-  }
+    image: "https://placehold.co/400x200/b91c1c/ffffff?text=Great+Britain",
+  },
 ];
 ---
 
@@ -23,64 +23,59 @@ const scholarships = [
   <div class="container mx-auto px-4">
     <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
       <div class="max-w-3xl">
-         <h2 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4 leading-tight">
-           Bukan Hanya Skor Tes — <br/>
-           <span class="text-primary">Kami Bantu Arahkan ke Beasiswa & Kampus Tujuan</span>
-         </h2>
-         <p class="text-gray-600 text-lg leading-relaxed">
-           Banyak siswa kami melanjutkan studi ke UK, Australia, Amerika, Jepang, dan Eropa melalui jalur beasiswa seperti LPDP, Chevening, Australia Awards, dan MEXT.
-         </p>
+        <h2 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4 leading-tight">
+          Bukan Hanya Skor Tes — <br />
+          <span class="text-primary">Kami Bantu Arahkan ke Beasiswa & Kampus Tujuan</span>
+        </h2>
+        <p class="text-gray-600 text-lg leading-relaxed">Banyak siswa kami melanjutkan studi ke UK, Australia, Amerika, Jepang, dan Eropa melalui jalur beasiswa seperti LPDP, Chevening, Australia Awards, dan MEXT.</p>
       </div>
       <a href="/beasiswa" class="hidden md:inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors whitespace-nowrap">
         Lihat Semua Beasiswa
-        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
       </a>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {scholarships.map((item) => (
-        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col sm:flex-row border border-gray-100 group">
-           {/* Visual Stub (Ticket Style) */}
-           <div class="sm:w-1/3 bg-gray-200 relative">
-               <img src={item.image} alt={item.title} class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-               <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded text-gray-800 shadow-sm sm:hidden">
-                   {item.country}
-               </div>
-           </div>
-           
-           {/* Details */}
-           <div class="p-6 sm:w-2/3 flex flex-col justify-between">
-               <div>
-                  <div class="flex justify-between items-start mb-2">
-                      <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wide">{item.level}</span>
-                      <span class="hidden sm:inline-block text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">{item.country}</span>
+      {
+        scholarships.map((item) => (
+          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col sm:flex-row border border-gray-100 group">
+            {/* Visual Stub (Ticket Style) */}
+            <div class="sm:w-1/3 bg-gray-200 relative">
+              <img src={item.image} alt={item.title} class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+              <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded text-gray-800 shadow-sm sm:hidden">{item.country}</div>
+            </div>
+
+            {/* Details */}
+            <div class="p-6 sm:w-2/3 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-2">
+                  <span class="text-base font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wide">{item.level}</span>
+                  <span class="hidden sm:inline-block text-base font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">{item.country}</span>
+                </div>
+                <h3 class="text-xl font-bold font-heading text-gray-900 mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                <div class="space-y-2 text-base text-gray-600 mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 text-center">🏛️</span>
+                    <span>{item.university}</span>
                   </div>
-                  <h3 class="text-xl font-bold font-heading text-gray-900 mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
-                  <div class="space-y-2 text-sm text-gray-600 mb-4">
-                      <div class="flex items-center gap-2">
-                          <span class="w-4 text-center">🏛️</span>
-                          <span>{item.university}</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                          <span class="w-4 text-center">📅</span>
-                          <span class="text-red-500 font-medium">Deadline: {item.deadline}</span>
-                      </div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 text-center">📅</span>
+                    <span class="text-red-500 font-medium">Deadline: {item.deadline}</span>
                   </div>
-               </div>
-               
-               <a href="#" class="inline-block w-full text-center sm:text-left text-sm font-bold text-primary hover:underline mt-2">
-                   Lihat Detail Program &rarr;
-               </a>
-           </div>
-        </div>
-      ))}
+                </div>
+              </div>
+
+              <a href="#" class="inline-block w-full text-center sm:text-left text-sm font-bold text-primary hover:underline mt-2">
+                Lihat Detail Program &rarr;
+              </a>
+            </div>
+          </div>
+        ))
+      }
     </div>
 
     <div class="mt-8 text-center md:hidden">
-        <a href="/beasiswa" class="inline-block bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-full hover:bg-gray-50 transition-colors shadow-sm">
-            Lihat Semua Beasiswa
-        </a>
+      <a href="/beasiswa" class="inline-block bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-8 rounded-full hover:bg-gray-50 transition-colors shadow-sm"> Lihat Semua Beasiswa </a>
     </div>
-
   </div>
 </section>

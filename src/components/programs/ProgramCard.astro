@@ -20,11 +20,11 @@ const { title, description, image, rating, reviews, category, target, duration, 
         <img alt={title} class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" src={image} />
         <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
             <span class="material-symbols-outlined text-ultimate-yellow text-sm fill-1">star</span>
-            <span class="text-xs font-bold text-ultimate-navy">{rating}</span>
-            <span class="text-[10px] text-slate-500">({reviews})</span>
+            <span class="text-base font-bold text-ultimate-navy">{rating}</span>
+            <span class="text-base text-slate-500">({reviews})</span>
         </div>
         <div class="absolute top-4 left-4">
-            <span class={`${categoryColor} text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wide`}>
+            <span class={`${categoryColor} text-white text-base font-bold px-2 py-1 rounded shadow-lg uppercase tracking-wide`}>
                 {category}
             </span>
         </div>
@@ -33,15 +33,15 @@ const { title, description, image, rating, reviews, category, target, duration, 
         <h3 class="font-bold text-lg text-ultimate-navy mb-2 line-clamp-1 group-hover:text-ultimate-blue transition-colors">
             {title}
         </h3>
-        <p class="text-slate-500 text-sm mb-4 line-clamp-2 h-10">
+        <p class="text-slate-500 text-base mb-4 line-clamp-2 h-10">
             {description}
         </p>
         <div class="space-y-3 mb-6">
             <div class="flex items-start gap-2.5">
                 <span class="material-symbols-outlined text-slate-400 text-[18px] mt-0.5">groups</span>
                 <div>
-                    <p class="text-xs text-slate-500">Target Audience</p>
-                    <p class="text-xs font-semibold text-ultimate-navy">
+                    <p class="text-base text-slate-500">Target Audience</p>
+                    <p class="text-base font-semibold text-ultimate-navy">
                         {target}
                     </p>
                 </div>
@@ -49,8 +49,8 @@ const { title, description, image, rating, reviews, category, target, duration, 
             <div class="flex items-start gap-2.5">
                 <span class="material-symbols-outlined text-slate-400 text-[18px] mt-0.5">schedule</span>
                 <div>
-                    <p class="text-xs text-slate-500">Durasi</p>
-                    <p class="text-xs font-semibold text-ultimate-navy">
+                    <p class="text-base text-slate-500">Durasi</p>
+                    <p class="text-base font-semibold text-ultimate-navy">
                         {duration}
                     </p>
                 </div>
@@ -58,16 +58,16 @@ const { title, description, image, rating, reviews, category, target, duration, 
             <div class="flex items-start gap-2.5">
                 <span class="material-symbols-outlined text-slate-400 text-[18px] mt-0.5">verified</span>
                 <div>
-                    <p class="text-xs text-slate-500">Includes</p>
-                    <p class="text-xs font-semibold text-ultimate-navy">
+                    <p class="text-base text-slate-500">Includes</p>
+                    <p class="text-base font-semibold text-ultimate-navy">
                         {includes}
                     </p>
                 </div>
             </div>
         </div>
         <div class="mt-auto flex flex-col gap-2">
-            <button class="w-full py-2.5 rounded-lg bg-ultimate-blue hover:bg-blue-700 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg"> Daftar Sekarang </button>
-            <button class="w-full py-2.5 rounded-lg border border-ultimate-blue text-ultimate-blue hover:bg-slate-50 font-semibold text-sm transition-all"> Lihat Detail </button>
+            <button class="w-full py-2.5 rounded-lg bg-ultimate-blue hover:bg-blue-700 text-white font-semibold text-base transition-all shadow-md hover:shadow-lg"> Daftar Sekarang </button>
+            <button class="w-full py-2.5 rounded-lg border border-ultimate-blue text-ultimate-blue hover:bg-slate-50 font-semibold text-base transition-all"> Lihat Detail </button>
         </div>
     </div>
 </div>

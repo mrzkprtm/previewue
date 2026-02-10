@@ -22,7 +22,7 @@ const categories = ["Semua Program", ...new Set(programs.map((p) => p.category))
                     {
                         categories.map((category, index) => (
                             <button
-                                class={`px-6 py-2.5 rounded-full text-sm md:text-base font-bold transition-all border ${
+                                class={`px-6 py-2.5 rounded-full text-base font-bold transition-all border ${
                                     index === 0 ? "bg-[#007aff] text-white border-[#007aff] shadow-lg shadow-blue-500/30" : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                                 }`}
                                 data-category={category}
@@ -59,9 +59,9 @@ const categories = ["Semua Program", ...new Set(programs.map((p) => p.category))
 
             // Update Active State
             tabs.forEach((t) => {
-                t.className = "px-6 py-2.5 rounded-full text-sm md:text-base font-bold transition-all border bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50";
+                t.className = "px-6 py-2.5 rounded-full text-base font-bold transition-all border bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50";
             });
-            tab.className = "px-6 py-2.5 rounded-full text-sm md:text-base font-bold transition-all border bg-[#007aff] text-white border-[#007aff] shadow-lg shadow-blue-500/30";
+            tab.className = "px-6 py-2.5 rounded-full text-base font-bold transition-all border bg-[#007aff] text-white border-[#007aff] shadow-lg shadow-blue-500/30";
 
             // Filter Items
             items.forEach((item) => {

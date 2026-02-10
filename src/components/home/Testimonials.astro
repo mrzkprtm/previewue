@@ -29,41 +29,39 @@ const {
       role: "Accepted at Monash University",
       image: "https://placehold.co/100x100",
       quote: "Konsultasi pendidikannya sangat membantu saya memilih jurusan yang tepat. Terima kasih Ultimate Education.",
-    }
-  ]
+    },
+  ],
 } = Astro.props;
 ---
 
-<section class="py-20 bg-white">
+<section class="py-16 bg-white">
   <div class="container mx-auto px-4">
     <div class="text-center mb-16">
       <h2 class="text-3xl lg:text-4xl font-bold font-heading text-ue-dark mb-4">
         Mereka Berhasil Tembus <span class="text-primary">Kampus & Beasiswa Impian</span>
       </h2>
-      <p class="text-gray-600 font-body text-lg">
-        Lihat apa kata alumni kami tentang pengalaman belajar di Ultimate Education.
-      </p>
+      <p class="text-gray-600 font-body text-lg">Lihat apa kata alumni kami tentang pengalaman belajar di Ultimate Education.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {testimonials.map((testi) => (
-        <div class="bg-gray-50 rounded-2xl p-8 relative hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100">
-          {/* Quote Icon */}
-          <div class="absolute top-6 right-8 text-6xl text-primary/10 font-serif">"</div>
-          
-          <div class="flex items-center gap-4 mb-6">
-            <img src={testi.image} alt={testi.name} class="w-16 h-16 rounded-full object-cover border-2 border-primary" />
-            <div>
-              <h4 class="font-bold text-gray-900 font-heading">{testi.name}</h4>
-              <p class="text-xs text-primary font-medium">{testi.role}</p>
+      {
+        testimonials.map((testi) => (
+          <div class="bg-gray-50 rounded-2xl p-8 relative hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100">
+            {/* Quote Icon */}
+            <div class="absolute top-6 right-8 text-6xl text-primary/10 font-serif">"</div>
+
+            <div class="flex items-center gap-4 mb-6">
+              <img src={testi.image} alt={testi.name} class="w-16 h-16 rounded-full object-cover border-2 border-primary" />
+              <div>
+                <h4 class="font-bold text-gray-900 font-heading">{testi.name}</h4>
+                <p class="text-base text-primary font-medium">{testi.role}</p>
+              </div>
             </div>
+
+            <p class="text-gray-600 italic relative z-10 font-body">"{testi.quote}"</p>
           </div>
-          
-          <p class="text-gray-600 italic relative z-10 font-body">
-            "{testi.quote}"
-          </p>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>

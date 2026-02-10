@@ -36,7 +36,7 @@ export default function BlogSection() {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        
+
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4">
             Artikel & <span className="text-[#145da0]">Wawasan</span>
@@ -44,58 +44,57 @@ export default function BlogSection() {
           <p className="text-gray-600 max-w-2xl mx-auto mb-8">
             Update informasi terbaru seputar pendidikan, karir, dan persiapan tes internasional.
           </p>
-          
+
           {/* Scrollable Tabs */}
           <div className="flex justify-center">
-             <div className="inline-flex bg-gray-100 p-1.5 rounded-full overflow-x-auto max-w-full">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveTab(cat.id)}
-                    className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ${
-                      activeTab === cat.id
-                        ? 'bg-[#145da0] text-white shadow-md'
-                        : 'text-gray-600 hover:bg-gray-200'
+            <div className="inline-flex bg-gray-100 p-1.5 rounded-full overflow-x-auto max-w-full">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveTab(cat.id)}
+                  className={`px-6 py-2.5 rounded-full text-base font-semibold transition-all duration-300 whitespace-nowrap ${activeTab === cat.id
+                      ? 'bg-[#145da0] text-white shadow-md'
+                      : 'text-gray-600 hover:bg-gray-200'
                     }`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-             </div>
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-500 key={activeTab}">
-           {postsData[activeTab].map((post, index) => (
-             <article key={index} className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
-                <div className="h-48 overflow-hidden relative">
-                   <img src={post.image} alt={post.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-xs font-bold text-gray-800 shadow-sm">
-                      {post.date}
-                   </div>
+          {postsData[activeTab].map((post, index) => (
+            <article key={index} className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
+              <div className="h-48 overflow-hidden relative">
+                <img src={post.image} alt={post.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-base font-bold text-gray-800 shadow-sm">
+                  {post.date}
                 </div>
-                <div className="p-6">
-                   <h3 className="text-xl font-bold font-heading text-gray-900 mb-3 group-hover:text-[#145da0] transition-colors line-clamp-2">
-                     {post.title}
-                   </h3>
-                   <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3">
-                     {post.excerpt}
-                   </p>
-                   <a href="#" className="inline-flex items-center text-[#145da0] font-semibold text-sm hover:underline">
-                     Baca Selengkapnya
-                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                   </a>
-                </div>
-             </article>
-           ))}
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold font-heading text-gray-900 mb-3 group-hover:text-[#145da0] transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3">
+                  {post.excerpt}
+                </p>
+                <a href="#" className="inline-flex items-center text-[#145da0] font-semibold text-sm hover:underline">
+                  Baca Selengkapnya
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
 
         {/* See All Button */}
         <div className="text-center">
-           <a href="/artikel" className="inline-block border-2 border-[#145da0] text-[#145da0] font-bold py-3 px-8 rounded-full hover:bg-[#145da0] hover:text-white transition-colors duration-300">
-             Lihat Semua Artikel
-           </a>
+          <a href="/artikel" className="inline-block border-2 border-[#145da0] text-[#145da0] font-bold py-3 px-8 rounded-full hover:bg-[#145da0] hover:text-white transition-colors duration-300">
+            Lihat Semua Artikel
+          </a>
         </div>
 
       </div>

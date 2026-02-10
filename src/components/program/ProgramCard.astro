@@ -31,13 +31,13 @@ const { program } = Astro.props;
             <h3 class="text-2xl font-bold font-heading text-slate-800 mb-2 group-hover:text-primary transition-colors">
                 {program.title}
             </h3>
-            <p class="text-slate-600 mb-6 text-sm md:text-base leading-relaxed">
+            <p class="text-slate-600 mb-6 text-base leading-relaxed">
                 {program.subtitle}
             </p>
 
             <!-- Meta Info -->
             <div class="space-y-3 mb-8">
-                <div class="flex items-center gap-3 text-slate-600 text-sm">
+                <div class="flex items-center gap-3 text-slate-600 text-base">
                     <div class="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center text-red-500 shrink-0">
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -46,7 +46,7 @@ const { program } = Astro.props;
                     <span>{program.targetAudience}</span>
                 </div>
 
-                <div class="flex items-center gap-3 text-slate-600 text-sm">
+                <div class="flex items-center gap-3 text-slate-600 text-base">
                     <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -55,7 +55,7 @@ const { program } = Astro.props;
                     <span>{program.duration}</span>
                 </div>
 
-                <div class="flex items-center gap-3 text-slate-600 text-sm">
+                <div class="flex items-center gap-3 text-slate-600 text-base">
                     <div class="w-6 h-6 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -74,7 +74,7 @@ const { program } = Astro.props;
         <div class="flex justify-end">
             <a
                 href={`/program/${program.slug}`}
-                class="inline-flex items-center justify-center px-6 py-2.5 bg-[#007aff] hover:bg-[#0063cf] text-white font-bold rounded-full transition-all text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                class="inline-flex items-center justify-center px-6 py-2.5 bg-[#007aff] hover:bg-[#0063cf] text-white font-bold rounded-full transition-all text-base shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
                 Pelajari lebih lanjut
             </a>

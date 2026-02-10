@@ -18,13 +18,13 @@ import { programsData as programCategories } from "../data/programs";
   />
 
   <!-- Main Content -->
-  <div class="container mx-auto px-6 py-20 space-y-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-24">
     {
       programCategories.map((category) => (
         <section>
           <div class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-12 border-b border-gray-100 pb-6">
             <div class="h-12 w-2 bg-ultimate-yellow rounded-full hidden md:block" />
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy">{category.title}</h2>
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-ultimate-navy">{category.title}</h2>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -32,30 +32,30 @@ import { programsData as programCategories } from "../data/programs";
               <Card class="flex flex-col h-full hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-t-ultimate-blue group relative bg-white">
                 <div class="p-8 flex flex-col h-full relative z-10">
                   <div class="mb-8">
-                    <h3 class="text-2xl font-bold font-heading text-ultimate-blue mb-4 group-hover:text-ultimate-navy transition-colors">{program.name}</h3>
-                    <p class="text-gray-600 leading-relaxed font-sans text-base min-h-[4.5rem]">{program.description}</p>
+                    <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-ultimate-blue mb-4 group-hover:text-ultimate-navy transition-colors">{program.name}</h3>
+                    <p class="text-ultimate-navy leading-relaxed font-sans text-base md:text-lg lg:text-xl min-h-[4.5rem]">{program.description}</p>
                   </div>
 
                   <div class="space-y-4 mb-8 flex-grow bg-slate-50 p-6 rounded-xl border border-slate-100 group-hover:bg-blue-50/50 group-hover:border-blue-100 transition-colors">
                     <div class="flex items-start gap-4">
                       <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🎯</span>
                       <div>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Target</span>
-                        <span class="text-sm font-medium text-gray-800 leading-snug">{program.target.replace("🎯 ", "")}</span>
+                        <span class="text-base font-bold text-ultimate-navy uppercase tracking-wider block mb-1">Target</span>
+                        <span class="text-base font-medium text-ultimate-navy leading-snug">{program.target.replace("🎯 ", "")}</span>
                       </div>
                     </div>
                     <div class="flex items-start gap-4">
                       <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🕒</span>
                       <div>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Durasi</span>
-                        <span class="text-sm font-medium text-gray-800 leading-snug">{program.duration.replace("🕒 ", "")}</span>
+                        <span class="text-base font-bold text-ultimate-navy uppercase tracking-wider block mb-1">Durasi</span>
+                        <span class="text-base font-medium text-ultimate-navy leading-snug">{program.duration.replace("🕒 ", "")}</span>
                       </div>
                     </div>
                     <div class="flex items-start gap-4">
                       <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🎁</span>
                       <div>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Fasilitas</span>
-                        <span class="text-sm font-medium text-gray-800 leading-snug">{program.includes.replace("🎁 ", "")}</span>
+                        <span class="text-base font-bold text-ultimate-navy uppercase tracking-wider block mb-1">Fasilitas</span>
+                        <span class="text-base font-medium text-ultimate-navy leading-snug">{program.includes.replace("🎁 ", "")}</span>
                       </div>
                     </div>
                   </div>
@@ -79,7 +79,7 @@ import { programsData as programCategories } from "../data/programs";
 
   <!-- CTA Section -->
   <section class="bg-slate-50 py-24 px-6">
-    <div class="container mx-auto max-w-5xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="bg-hero-gradient rounded-[2.5rem] p-12 md:p-20 text-center text-white shadow-2xl relative overflow-hidden ring-8 ring-white">
         <!-- Abstract Decoration -->
         <div class="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"></div>

@@ -54,7 +54,7 @@ function stripHtml(html: string): string {
     
     <!-- Category Badge -->
     {post.categories.length > 0 && (
-      <span class="absolute top-4 left-4 bg-white/95 text-primary px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm backdrop-blur-sm">
+      <span class="absolute top-4 left-4 bg-white/95 text-primary px-3 py-1.5 rounded-lg text-base font-bold shadow-sm backdrop-blur-sm">
         {post.categories[0].name}
       </span>
     )}
@@ -75,17 +75,17 @@ function stripHtml(html: string): string {
             />
           ) : (
             <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <span class="text-primary font-bold text-sm">{post.author.name.charAt(0)}</span>
+              <span class="text-primary font-bold text-base">{post.author.name.charAt(0)}</span>
             </div>
           )}
           <div class="flex flex-col">
-            <span class="text-sm font-medium text-gray-700">{post.author.name}</span>
-            <span class="text-xs text-slate-400">{getRelativeTime(post.date)}</span>
+            <span class="text-base font-medium text-gray-700">{post.author.name}</span>
+            <span class="text-base text-slate-400">{getRelativeTime(post.date)}</span>
           </div>
         </>
       )}
       {!post.author && (
-        <span class="text-xs text-slate-400">{getRelativeTime(post.date)}</span>
+        <span class="text-base text-slate-400">{getRelativeTime(post.date)}</span>
       )}
     </div>
     
@@ -97,14 +97,14 @@ function stripHtml(html: string): string {
     </h3>
     
     <!-- Excerpt -->
-    <p class="text-slate-500 text-sm line-clamp-2 leading-relaxed flex-grow">
+    <p class="text-slate-500 text-base line-clamp-2 leading-relaxed flex-grow">
       {stripHtml(post.excerpt)}
     </p>
     
     <!-- Read More -->
     <a 
       href={`/artikel/${post.slug}`}
-      class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5 transition-all"
+      class="mt-4 inline-flex items-center gap-1.5 text-base font-semibold text-primary hover:gap-2.5 transition-all"
     >
       Baca Selengkapnya
       <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

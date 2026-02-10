@@ -2,14 +2,12 @@
 const scholarships = [
     {
         title: "Hyundai Motor Chung Mong-Koo Global Scholarship",
-        description:
-            "Program beasiswa penuh bagi mahasiswa berprestasi yang dikelola oleh Hyundai Motor Foundation.",
+        description: "Program beasiswa penuh bagi mahasiswa berprestasi yang dikelola oleh Hyundai Motor Foundation.",
         image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYq1zaflMjoNthlG3RAB60rjYst3cU86O9PPK-Jal4SRYW7MERsSFnyqxRJQIu78MB_oRvNAVE6sJ6jha0Rcz-a5a_TIJYspCPLopXTeePvNLF3GDkuCWD7piIRlwZIFcJQ1cPxBfMrEcPE63Gv1OkGsbs-5_jq6PDn61hlnZ0ZUW9M903IkCsG5YsWNYGWgXGCfmuukx4BtV-OBeRe9_rVo9YJLeK8Ig44722yTmQ3SPCO2Yfz10d-8wpV0V-I-T-5uO5jzRrJTE",
     },
     {
         title: "Diritto Allo Studio Universitario (DSU) Italy",
-        description:
-            "Beasiswa pemerintah daerah di Italia untuk mahasiswa internasional yang memiliki kendala ekonomi.",
+        description: "Beasiswa pemerintah daerah di Italia untuk mahasiswa internasional yang memiliki kendala ekonomi.",
         image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD3LOfJFMPsboIicJfAlsrl6hFDGoEj12GGTlzridCtKy43507p9FXB-CMn-JerITBdia4BNk6UehpkuJDPUt_7UN7YJ4DNYoCyEFPDNejrAyJecR0jGBXZTVh8l2ucdm3K4ecI-YSzBwgdse3P23Y2CUJ0klMKBCK2hW9V6GPswTfWq2EQlGxh41jIHntyoDCGxHyKAJbvRy3a9cmeB8xLsxLxb3iUpRE9kT0MbdXeZhVoRNpq0Ak-tAm7i68eBBGpUZK4HEQR1h8",
     },
 ];
@@ -17,30 +15,18 @@ const scholarships = [
 
 <section class="py-16 md:py-24 bg-hero-gradient">
     <div class="max-w-7xl mx-auto px-4">
-        <h2
-            class="font-heading font-bold text-3xl md:text-4xl text-white text-center mb-12"
-        >
-            Raih Beasiswa Terbaik untuk Kuliah di Luar Negeri
-        </h2>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-white text-center mb-12">Raih Beasiswa Terbaik untuk Kuliah di Luar Negeri</h2>
         <div class="grid md:grid-cols-2 gap-8">
             {
                 scholarships.map((s) => (
                     <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 flex flex-col lg:flex-row gap-8 shadow-2xl items-center lg:items-start text-center lg:text-left">
                         <div class="w-32 h-32 flex-shrink-0 bg-slate-50 dark:bg-slate-700 rounded-[2rem] flex items-center justify-center p-6 shadow-sm">
-                            <img
-                                alt={s.title}
-                                class="w-full h-auto"
-                                src={s.image}
-                            />
+                            <img alt={s.title} class="w-full h-auto" src={s.image} />
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold mb-4 text-ultimate-navy dark:text-white leading-tight">
-                                {s.title}
-                            </h3>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-8 leading-relaxed">
-                                {s.description}
-                            </p>
-                            <button class="w-full lg:w-fit border-2 border-ultimate-blue text-ultimate-blue font-bold py-3 px-8 rounded-xl hover:bg-ultimate-blue hover:text-white transition-all uppercase text-xs tracking-wider">
+                            <h3 class="text-2xl font-bold mb-4 text-ultimate-navy dark:text-white leading-tight">{s.title}</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-base mb-8 leading-relaxed">{s.description}</p>
+                            <button class="w-full lg:w-fit border-2 border-ultimate-blue text-ultimate-blue font-bold py-3 px-8 rounded-xl hover:bg-ultimate-blue hover:text-white transition-all uppercase text-base tracking-wider">
                                 Informasi Lebih Lanjut
                             </button>
                         </div>
@@ -49,10 +35,7 @@ const scholarships = [
             }
         </div>
         <div class="text-center mt-16">
-            <button
-                class="border-2 border-white text-white px-12 py-4 rounded-full font-bold hover:bg-white hover:text-ultimate-blue transition-all uppercase tracking-widest text-sm"
-                >Lihat Semua Beasiswa</button
-            >
+            <button class="border-2 border-white text-white px-12 py-4 rounded-full font-bold hover:bg-white hover:text-ultimate-blue transition-all uppercase tracking-widest text-base">Lihat Semua Beasiswa</button>
         </div>
     </div>
 </section>

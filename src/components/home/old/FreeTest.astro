@@ -16,19 +16,19 @@ const testPrograms = [
 
     <div class="container mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
-            <span class="inline-block py-1 px-3 rounded-full bg-white/10 text-ultimate-yellow text-sm font-bold uppercase tracking-wider mb-4 border border-white/20"> Free Test </span>
+            <span class="inline-block py-1 px-3 rounded-full bg-white/10 text-ultimate-yellow text-base font-bold uppercase tracking-wider mb-4 border border-white/20"> Free Test </span>
             <h2 class="text-3xl md:text-4xl font-bold font-heading text-white mb-4">Yakin Dengan Kemampuan Bahasa Inggrismu?</h2>
             <p class="text-blue-100 text-lg">Coba Tes Gratis di Ultimate Education</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {
                 testPrograms.map((test) => (
                     <a href={test.link} target="_blank" rel="noopener noreferrer" class="group bg-white rounded-xl p-6 hover:-translate-y-2 transition-all duration-300 shadow-xl hover:shadow-2xl">
                         <div class={`w-12 h-12 rounded-lg ${test.color} flex items-center justify-center text-white text-xl font-bold mb-4 shadow-lg group-hover:scale-110 transition-transform`}>{test.name.charAt(0)}</div>
                         <h4 class="text-xl font-bold text-gray-900 mb-2">{test.name}</h4>
-                        <p class="text-gray-500 text-sm mb-6 min-h-[40px]">{test.desc}</p>
-                        <div class="flex items-center text-ultimate-blue font-bold text-sm group-hover:gap-2 transition-all">
+                        <p class="text-gray-500 text-base mb-6 min-h-[40px]">{test.desc}</p>
+                        <div class="flex items-center text-ultimate-blue font-bold text-base group-hover:gap-2 transition-all">
                             Mulai Tes
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

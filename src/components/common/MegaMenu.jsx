@@ -73,7 +73,7 @@ export default function MegaMenu({ isOpen, onClose }) {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               onMouseEnter={() => setActiveTab(tab.id)}
-              className={`flex-1 lg:flex-initial py-3 px-5 text-xs font-bold font-heading uppercase tracking-wider text-left transition-all duration-200 border-b lg:border-b-0 lg:border-l-4 ${activeTab === tab.id
+              className={`flex-1 lg:flex-initial py-3 px-5 text-base font-bold font-heading uppercase tracking-wider text-left transition-all duration-200 border-b lg:border-b-0 lg:border-l-4 ${activeTab === tab.id
                 ? 'bg-white text-ultimate-blue border-ultimate-blue'
                 : 'text-slate-500 hover:text-ultimate-blue hover:bg-white/50 border-transparent'
                 }`}
@@ -109,10 +109,10 @@ export default function MegaMenu({ isOpen, onClose }) {
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-slate-800 group-hover:text-ultimate-blue mb-0.5 transition-colors font-heading text-xs uppercase tracking-wide truncate">
+                      <h3 class="font-bold text-slate-800 group-hover:text-ultimate-blue mb-0.5 transition-colors font-heading text-base uppercase tracking-wide truncate">
                         {item.name}
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-2 font-sans">
+                      <p className="text-base text-slate-500 leading-relaxed line-clamp-2 font-sans">
                         {item.desc}
                       </p>
                     </div>
@@ -124,7 +124,7 @@ export default function MegaMenu({ isOpen, onClose }) {
               <div className="flex justify-center pt-3 border-t border-slate-100">
                 <a
                   href="/program"
-                  className="group inline-flex items-center gap-2 px-5 py-2 text-ultimate-blue hover:text-white bg-white hover:bg-ultimate-blue border-2 border-ultimate-blue font-bold font-heading text-xs uppercase tracking-wider rounded-lg transition-all duration-300"
+                  className="group inline-flex items-center gap-2 px-5 py-2 text-ultimate-blue hover:text-white bg-white hover:bg-ultimate-blue border-2 border-ultimate-blue font-bold font-heading text-base uppercase tracking-wider rounded-lg transition-all duration-300"
                 >
                   <span>Lihat Semua Program</span>
                   <svg className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

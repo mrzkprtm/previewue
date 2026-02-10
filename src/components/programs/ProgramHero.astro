@@ -2,54 +2,25 @@
 
 ---
 
-<section class="relative pt-32 pb-20 bg-hero-gradient overflow-hidden">
+<section class="relative pb-20 bg-hero-gradient overflow-hidden">
     <!-- Semi-circle detail at the top right -->
     <!-- Hero Decoration (Image & Semi-circle) -->
-    <div
-        class="absolute inset-y-0 right-0 hidden lg:flex flex-col items-center justify-end h-full w-[40%] pointer-events-none z-10 pr-0 xl:pr-10"
-    >
+    <div class="absolute inset-y-0 right-0 hidden lg:flex flex-col items-center justify-end h-full w-[40%] pointer-events-none z-10 pr-0 xl:pr-10">
         <!-- Semi-circle background -->
-        <div
-            class="absolute bottom-0 w-[48%] h-auto aspect-[2/1] bg-ultimate-yellow rounded-t-full left-1/2 -translate-x-1/2 z-0"
-        >
-        </div>
+        <div class="absolute bottom-0 w-[48%] h-auto aspect-[2/1] bg-ultimate-yellow rounded-t-full left-1/2 -translate-x-1/2 z-0"></div>
         <!-- Hero Image Overlay -->
-        <img
-            src="/images/hero_img.png"
-            alt="Hero Decoration"
-            class="relative z-10 h-[60%] w-auto object-contain object-bottom"
-        />
+        <img src="/images/hero_img.png" alt="Hero Decoration" class="relative z-10 h-[60%] w-auto object-contain object-bottom" />
     </div>
 
     <!-- Background Patterns -->
-    <div
-        class="absolute inset-0 opacity-20 pointer-events-none z-0"
-        style="background-image: url('/images/pattern_2.svg'); background-size: 100% 100%; background-position: left center;"
-    >
-    </div>
-    <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center"
-    >
-        <div
-            class="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-ultimate-yellow text-sm font-semibold mb-6 animate-float"
-        >
-            Program Bimbingan Terbaik
-        </div>
-        <h1 class="font-heading font-bold text-white text-3xl md:text-5xl mb-6">
-            Temukan Program Persiapan Terbaikmu
-        </h1>
-        <p class="text-slate-300 text-lg max-w-2xl mx-auto mb-10">
-            Jelajahi berbagai program bimbingan belajar intensif untuk IELTS,
-            TOEFL, SAT, GRE, dan GMAT dengan mentor berpengalaman.
-        </p>
-        <div
-            class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-center"
-        >
+    <div class="absolute inset-0 opacity-20 pointer-events-none z-0" style="background-image: url('/images/pattern_2.svg'); background-size: 100% 100%; background-position: left center;"></div>
+    <div class="container mx-auto px-6 relative z-20 text-center">
+        <div class="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-ultimate-yellow text-base font-semibold mb-6 animate-float">Program Bimbingan Terbaik</div>
+        <h1 class="font-heading font-bold text-white text-3xl md:text-5xl mb-6">Temukan Program Persiapan Terbaikmu</h1>
+        <p class="text-slate-300 text-lg max-w-2xl mx-auto mb-10">Jelajahi berbagai program bimbingan belajar intensif untuk IELTS, TOEFL, SAT, GRE, dan GMAT dengan mentor berpengalaman.</p>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-center">
             <div class="flex-1 w-full relative">
-                <span
-                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                    >search</span
-                >
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
                 <input
                     class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none"
                     placeholder="Cari nama program..."
@@ -57,9 +28,7 @@
                 />
             </div>
             <div class="w-full md:w-48">
-                <select
-                    class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer"
-                >
+                <select class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer">
                     <option value="">Kategori</option>
                     <option value="test-prep">Test Prep</option>
                     <option value="language">Language</option>
@@ -67,18 +36,14 @@
                 </select>
             </div>
             <div class="w-full md:w-48">
-                <select
-                    class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer"
-                >
+                <select class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer">
                     <option value="">Format Kelas</option>
                     <option value="intensive">Intensive</option>
                     <option value="regular">Regular</option>
                     <option value="private">Private 1-on-1</option>
                 </select>
             </div>
-            <button
-                class="w-full md:w-auto px-8 py-3 bg-ultimate-yellow text-ultimate-navy font-bold rounded-xl hover:bg-yellow-500 transition-colors flex items-center justify-center gap-2"
-            >
+            <button class="w-full md:w-auto px-8 py-3 bg-ultimate-yellow text-ultimate-navy font-bold rounded-xl hover:bg-yellow-500 transition-colors flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined">filter_list</span>
                 Filter
             </button>

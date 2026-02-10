@@ -11,56 +11,37 @@ interface Props {
 const { title, provider, location, level, image, type } = Astro.props;
 ---
 
-<div
-    class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group text-left"
->
+<div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group text-left">
     <div class="p-6 flex-1">
         <div class="flex justify-between items-start mb-4 text-left">
-            <div
-                class="w-14 h-14 bg-slate-50 dark:bg-slate-700 rounded-xl flex items-center justify-center p-2 border border-slate-100 dark:border-slate-600"
-            >
-                <img
-                    alt={title}
-                    class="w-full h-full object-contain"
-                    src={image}
-                />
+            <div class="w-14 h-14 bg-slate-50 dark:bg-slate-700 rounded-xl flex items-center justify-center p-2 border border-slate-100 dark:border-slate-600">
+                <img alt={title} class="w-full h-full object-contain" src={image} />
             </div>
             <span
                 class:list={[
-                    "text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide",
-                    type === "Full"
-                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                        : "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+                    "text-base font-bold px-2 py-1 rounded uppercase tracking-wide",
+                    type === "Full" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
                 ]}
             >
                 {type}
             </span>
         </div>
-        <h3
-            class="font-bold text-lg text-ultimate-navy dark:text-white mb-2 group-hover:text-ultimate-blue transition-colors"
-        >
+        <h3 class="font-bold text-lg text-ultimate-navy dark:text-white mb-2 group-hover:text-ultimate-blue transition-colors">
             {title}
         </h3>
-        <p class="text-slate-500 text-xs mb-4">{provider}</p>
-        <div class="space-y-2 text-sm text-slate-600 dark:text-slate-400 mb-4">
+        <p class="text-slate-500 text-base mb-4">{provider}</p>
+        <div class="space-y-2 text-base text-slate-600 dark:text-slate-400 mb-4">
             <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-[16px]"
-                    >location_on</span
-                >
-                <span class="text-xs">{location}</span>
+                <span class="material-symbols-outlined text-[16px]">location_on</span>
+                <span class="text-base">{location}</span>
             </div>
             <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-[16px]">school</span
-                >
-                <span class="text-xs">{level}</span>
+                <span class="material-symbols-outlined text-[16px]">school</span>
+                <span class="text-base">{level}</span>
             </div>
         </div>
     </div>
     <div class="p-4 border-t border-slate-100 dark:border-slate-700">
-        <button
-            class="w-full py-2.5 rounded-lg border border-ultimate-blue text-ultimate-blue hover:bg-ultimate-blue hover:text-white font-semibold text-sm transition-all"
-        >
-            Lihat Detail
-        </button>
+        <button class="w-full py-2.5 rounded-lg border border-ultimate-blue text-ultimate-blue hover:bg-ultimate-blue hover:text-white font-semibold text-base transition-all"> Lihat Detail </button>
     </div>
 </div>

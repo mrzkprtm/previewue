@@ -14,80 +14,75 @@ const {
       title: "IELTS Preparation",
       description: "Persiapkan diri untuk skor IELTS terbaik dengan materi komprehensif dan bimbingan ahli.",
       icon: "📘",
-      link: "/program/ielts"
+      link: "/program/ielts",
     },
     {
       title: "SAT Prep Class",
       description: "Raih skor SAT tinggi untuk masuk universitas top di Amerika Serikat.",
       icon: "🎓",
-      link: "/program/sat"
+      link: "/program/sat",
     },
     {
       title: "GMAT & GRE",
       description: "Program intensif untuk persiapan pascasarjana bisnis dan umum di luar negeri.",
       icon: "📊",
-      link: "/program/gmat-gre"
+      link: "/program/gmat-gre",
     },
     {
       title: "TOEFL IBT/ITP",
       description: "Tingkatkan kemampuan bahasa Inggris akademikmu untuk studi internasional.",
       icon: "🌍",
-      link: "/program/toefl"
-    }
-  ]
+      link: "/program/toefl",
+    },
+  ],
 } = Astro.props;
 ---
 
-<section class="py-20 bg-ue-blue-light relative overflow-hidden">
+<section class="py-16 bg-ue-blue-light relative overflow-hidden">
   <div class="container mx-auto px-4">
     <div class="text-center mb-16">
       <h2 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4">
         Program Unggulan <span class="text-primary">Ultimate Education</span>
       </h2>
-      <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-        Pilih program persiapan terbaik yang dirancang khusus untuk membantumu meraih impian kuliah di luar negeri.
-      </p>
+      <p class="text-gray-600 max-w-2xl mx-auto text-lg">Pilih program persiapan terbaik yang dirancang khusus untuk membantumu meraih impian kuliah di luar negeri.</p>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-y-12">
-      {programs.map((program, index) => (
-        <div class={`bg-white rounded-xl shadow-card hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden flex flex-col md:flex-row items-stretch group ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-          
-          {/* Image/Visual Side - Yellow Background Pattern */}
-          <div class="w-full h-40 md:h-auto md:w-[40%] bg-accent-yellow relative flex items-center justify-center overflow-hidden">
-             {/* Decorative Pattern Background */}
-             <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-             
-             {/* Text/Logo Overlay */}
-             <div class="relative z-10 text-center p-4 md:p-6">
-                <span class="block text-ue-dark font-heading font-medium text-xs md:text-sm tracking-widest uppercase mb-1">Ultimate</span>
-                <span class="block text-ue-dark font-heading font-extrabold text-2xl md:text-4xl leading-none">
-                  {program.title.split(' ')[0]}
-                </span>
+      {
+        programs.map((program, index) => (
+          <div class={`bg-white rounded-xl shadow-card hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden flex flex-col md:flex-row items-stretch group ${index % 2 === 1 ? "md:flex-row-reverse" : ""}`}>
+            {/* Image/Visual Side - Yellow Background Pattern */}
+            <div class="w-full h-40 md:h-auto md:w-[40%] bg-accent-yellow relative flex items-center justify-center overflow-hidden">
+              {/* Decorative Pattern Background */}
+              <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+
+              {/* Text/Logo Overlay */}
+              <div class="relative z-10 text-center p-4 md:p-6">
+                <span class="block text-ue-dark font-heading font-medium text-base tracking-widest uppercase mb-1">Ultimate</span>
+                <span class="block text-ue-dark font-heading font-extrabold text-2xl md:text-4xl leading-none">{program.title.split(" ")[0]}</span>
                 <span class="block text-ue-dark font-heading font-bold text-lg md:text-xl opacity-80 mt-1">Prep</span>
-             </div>
+              </div>
 
-             {/* Hover Effect */}
-             <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300"></div>
-          </div>
+              {/* Hover Effect */}
+              <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
+            </div>
 
-          {/* Content Side */}
-          <div class="p-5 md:p-10 flex-1 flex flex-col justify-center">
-            <h3 class="text-lg md:text-3xl font-bold font-heading text-gray-900 mb-2 md:mb-4 leading-tight group-hover:text-primary transition-colors">
-              {program.title}
-            </h3>
-            <p class="text-gray-600 mb-4 md:mb-8 leading-relaxed text-sm md:text-lg max-w-2xl line-clamp-3 md:line-clamp-none">
-              {program.description}
-            </p>
-            <div>
-              <a href={program.link} class="inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 rounded-full bg-[#145da0] text-white font-semibold text-sm md:text-base font-heading hover:bg-[#0f4b82] transition-colors shadow-md hover:shadow-lg w-full md:w-auto">
-                {program.title.includes('IELTS') ? 'Cek Detail' : 'Pelajari lebih lanjut'}
-              </a>
+            {/* Content Side */}
+            <div class="p-5 md:p-10 flex-1 flex flex-col justify-center">
+              <h3 class="text-lg md:text-3xl font-bold font-heading text-gray-900 mb-2 md:mb-4 leading-tight group-hover:text-primary transition-colors">{program.title}</h3>
+              <p class="text-gray-600 mb-4 md:mb-8 leading-relaxed text-base md:text-lg max-w-2xl line-clamp-3 md:line-clamp-none">{program.description}</p>
+              <div>
+                <a
+                  href={program.link}
+                  class="inline-flex items-center justify-center px-4 py-2 md:px-6 md:py-3 rounded-full bg-[#145da0] text-white font-semibold text-base font-heading hover:bg-[#0f4b82] transition-colors shadow-md hover:shadow-lg w-full md:w-auto"
+                >
+                  {program.title.includes("IELTS") ? "Cek Detail" : "Pelajari lebih lanjut"}
+                </a>
+              </div>
             </div>
           </div>
-
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
