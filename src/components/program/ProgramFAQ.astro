@@ -1,0 +1,54 @@
+---
+const defaultFaqs = [
+    {
+        question: "Apakah materi diajarkan dari dasar?",
+        answer: "Ya, kami menggunakan metode yang menyesuaikan dengan kemampuan awal siswa (Placement Test).",
+    },
+    {
+        question: "Bagaimana jika saya berhalangan hadir?",
+        answer: "Tersedia rekaman kelas (untuk online) dan jadwal pengganti (make-up class) sesuai ketentuan.",
+    },
+    {
+        question: "Apakah ada garansi skor?",
+        answer: "Ya, terdapat program garansi mengulang kelas GRATIS jika target belum tercapai (S&K berlaku).",
+    },
+    {
+        question: "Berapa lama durasi program?",
+        answer: "Durasi bervariasi mulai dari 1 bulan (Intensive) hingga 6 bulan (Regular/Long-term).",
+    },
+];
+
+interface Props {
+    faqs?: { question: string; answer: string }[];
+}
+
+const { faqs = defaultFaqs } = Astro.props;
+---
+
+<div class="py-8">
+    <div class="mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold font-heading text-ultimate-navy mb-2">Pertanyaan Umum</h2>
+        <p class="text-slate-500 text-sm">Hal yang sering ditanyakan calon siswa.</p>
+    </div>
+
+    <div class="space-y-4">
+        {
+            faqs.map((faq) => (
+                <details class="group bg-slate-50 rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden open:bg-white open:shadow-md open:ring-1 open:ring-slate-100 transition-all duration-300">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 text-ultimate-navy font-bold text-base select-none">
+                        <h3 class="group-hover:text-ultimate-blue transition-colors leading-snug">{faq.question}</h3>
+                        <span class="shrink-0 rounded-full bg-white p-1.5 text-slate-900 sm:p-2 shadow-sm group-open:rotate-45 transition-transform duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                    </summary>
+
+                    <div class="mt-3 leading-relaxed text-slate-600 group-open:animate-fade-in text-sm">
+                        <p>{faq.answer}</p>
+                    </div>
+                </details>
+            ))
+        }
+    </div>
+</div>

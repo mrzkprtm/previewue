@@ -1,0 +1,56 @@
+---
+interface Props {
+    curriculum: string[] | undefined;
+}
+
+const { curriculum } = Astro.props;
+---
+
+<div class="py-8 relative overflow-hidden bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100">
+    <!-- Decorator -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-ultimate-blue opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-ultimate-yellow opacity-5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    
+    <div class="relative z-10">
+        <div class="text-center mb-8">
+            <span class="text-ultimate-blue font-bold tracking-widest uppercase text-sm mb-2 block">Curriculum</span>
+            <h2 class="text-2xl md:text-3xl font-bold font-heading text-ultimate-navy">Apa Yang Akan Kamu Pelajari?</h2>
+        </div>
+
+        {
+            curriculum && curriculum.length > 0 ? (
+                <div class="relative">
+                    <!-- Vertical Line -->
+                    <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-0.5 bg-slate-200" />
+
+                    <div class="space-y-8">
+                        {curriculum.map((item, index) => {
+                            const isEven = index % 2 === 0;
+                            const arrowClass = isEven 
+                                ? "-right-2 border-t border-r border-b-0 border-l-0" 
+                                : "-left-2 border-b border-l border-t-0 border-r-0";
+                            
+                            return (
+                                <div class={`flex flex-col md:flex-row items-center justify-between w-full ${isEven ? "md:flex-row-reverse" : ""}`}>
+                                    <div class="w-full md:w-5/12 order-1" />
+                                    <div class="z-20 flex items-center order-1 bg-ultimate-blue shadow-xl w-8 h-8 rounded-full border-4 border-white justify-center font-bold text-white shrink-0 mb-4 md:mb-0 text-sm">
+                                        {index + 1}
+                                    </div>
+                                    <div class="w-full md:w-5/12 order-1 text-center md:text-left">
+                                        <div class="bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-slate-100 hover:border-ultimate-blue transition-colors relative group">
+                                            <div class={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white border-t border-r border-slate-100 rotate-45 hidden md:block group-hover:border-ultimate-blue transition-colors ${arrowClass}`}></div>
+                                            <h3 class="font-bold text-base text-ultimate-navy mb-1">Modul {index + 1}</h3>
+                                            <p class="text-slate-600 text-sm leading-relaxed">{item}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            ) : (
+                <div class="text-center text-slate-500 italic">Materi belajar akan disesuaikan dengan kebutuhan siswa.</div>
+            )
+        }
+    </div>
+</div>
