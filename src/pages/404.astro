@@ -11,7 +11,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="text-center max-w-2xl mx-auto">
             <!-- Animated 404 Number -->
             <div class="relative mb-8">
-                <div class="text-[150px] sm:text-[200px] lg:text-[280px] font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-dark to-primary leading-none select-none animate-gradient-x">404</div>
+                <div class="text-[100px] sm:text-[200px] lg:text-[280px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-dark to-primary leading-none select-none animate-gradient-x">404</div>
 
                 <!-- Floating elements -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
@@ -37,8 +37,8 @@ import Layout from "../layouts/Layout.astro";
             </div>
 
             <!-- Message -->
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4">Oops! Halaman Tidak Ditemukan</h1>
-            <p class="text-slate-500 text-base sm:text-lg mb-8 max-w-md mx-auto leading-relaxed">Sepertinya halaman yang kamu cari sudah dipindahkan, dihapus, atau mungkin tidak pernah ada.</p>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold font-heading text-gray-900 mb-4">Oops! Halaman Tidak Ditemukan</h1>
+            <p class="text-slate-500 text-sm sm:text-lg mb-8 max-w-md mx-auto leading-relaxed">Sepertinya halaman yang kamu cari sudah dipindahkan, dihapus, atau mungkin tidak pernah ada.</p>
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -66,7 +66,7 @@ import Layout from "../layouts/Layout.astro";
 
             <!-- Search suggestion -->
             <div class="mt-12">
-                <p class="text-base text-slate-400 mb-4">Atau coba cari yang kamu butuhkan:</p>
+                <p class="text-xs md:text-sm text-slate-400 mb-4">Atau coba cari yang kamu butuhkan:</p>
                 <div class="relative max-w-md mx-auto">
                     <input
                         type="search"
@@ -82,13 +82,13 @@ import Layout from "../layouts/Layout.astro";
 
             <!-- Quick Links -->
             <div class="mt-12 pt-8 border-t border-slate-100">
-                <p class="text-base text-slate-400 mb-4">Halaman populer:</p>
+                <p class="text-xs md:text-sm text-slate-400 mb-4">Halaman populer:</p>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <a href="/programs/ielts" class="text-base text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">IELTS</a>
-                    <a href="/programs/toefl" class="text-base text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">TOEFL</a>
-                    <a href="/artikel" class="text-base text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">Blog</a>
-                    <a href="/about" class="text-base text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">Tentang Kami</a>
-                    <a href="/contact" class="text-base text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">Kontak</a>
+                    <a href="/programs/ielts" class="text-sm text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">IELTS</a>
+                    <a href="/programs/toefl" class="text-sm text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">TOEFL</a>
+                    <a href="/artikel" class="text-sm text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">Blog</a>
+                    <a href="/about" class="text-sm text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">Tentang Kami</a>
+                    <a href="/contact" class="text-sm text-slate-600 hover:text-primary bg-slate-100 hover:bg-primary/10 px-4 py-2 rounded-full transition-colors">Kontak</a>
                 </div>
             </div>
         </div>

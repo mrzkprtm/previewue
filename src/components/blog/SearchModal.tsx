@@ -144,7 +144,7 @@ export default function SearchModal({ isOpen, onClose }: Props) {
                     )}
 
                     {!isLoading && query.length < 2 && (
-                        <div className="p-8 text-center text-slate-400 text-sm">
+                        <div className="p-8 text-center text-slate-500 text-base">
                             Ketik minimal 2 karakter untuk mencari
                         </div>
                     )}

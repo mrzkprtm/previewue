@@ -4,16 +4,23 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: '1.5rem',
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem',
+        xl: '0',
+      },
       screens: {
         sm: '100%',
         md: '100%',
-        lg: '1320px',
-        xl: '1320px',
-        '2xl': '1320px',
+        lg: '1200px',
+        xl: '1200px',
+        '2xl': '1200px',
       },
     },
     extend: {
+      maxWidth: {
+        '7xl': '1200px',
+      },
       colors: {
         primary: '#145da0', // Main Color & Button Background
         'primary-dark': '#0f4b82', // Darker shade for hover
@@ -46,11 +53,11 @@ export default {
         'contact-text-muted-dark': '#9CA3AF',
       },
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'], // Default Body Font
-        heading: ['Poppins', 'sans-serif'], // Headings
-        body: ['Roboto', 'sans-serif'], // Alias
-        poppins: ['Poppins', 'sans-serif'],
-        open: ['Poppins', 'sans-serif'],
+        sans: ['Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'], // Default Body Font
+        heading: ['Poppins', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'], // Headings
+        body: ['Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'], // Alias
+        poppins: ['Poppins', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'], // Restoration
+        open: ['Open Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'], // Restoration
       },
       backgroundImage: {
         'hero-gradient': 'linear-gradient(135deg, #061f35 0%, #145da0 100%)',

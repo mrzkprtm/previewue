@@ -46,7 +46,7 @@ const socials = [
 
 <div class="space-y-12">
     <div>
-        <h2 class="text-3xl font-heading font-bold text-ultimate-navy mb-6">Informasi Kontak</h2>
+        <h2 class="text-3xl font-heading font-semibold text-ultimate-navy mb-6">Informasi Kontak</h2>
         <p class="text-slate-600 mb-8 leading-relaxed">Kunjungi kantor kami atau hubungi kami melalui kontak di bawah ini untuk konsultasi gratis mengenai program persiapan kuliah ke luar negeri.</p>
 
         <div class="space-y-8">
@@ -57,7 +57,7 @@ const socials = [
                             <span class="material-symbols-outlined text-2xl">{office.icon}</span>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg text-ultimate-navy mb-1">{office.name}</h3>
+                            <h3 class="font-semibold text-lg text-ultimate-navy mb-1">{office.name}</h3>
                             <p class="text-slate-600 text-sm leading-relaxed max-w-xs" set:html={office.address.replace(/, /g, ",<br/>")} />
                         </div>
                     </div>
@@ -71,7 +71,7 @@ const socials = [
                             <span class="material-symbols-outlined text-2xl">{contact.icon}</span>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg text-ultimate-navy mb-1">{contact.label}</h3>
+                            <h3 class="font-semibold text-lg text-ultimate-navy mb-1">{contact.label}</h3>
                             {contact.items.map((item) => (
                                 <p class="text-slate-600 text-sm mb-0.5">{item}</p>
                             ))}
@@ -83,7 +83,7 @@ const socials = [
     </div>
 
     <div>
-        <h3 class="font-bold text-lg text-ultimate-navy mb-4">Ikuti Kami</h3>
+        <h3 class="font-semibold text-lg text-ultimate-navy mb-4">Ikuti Kami</h3>
         <div class="flex gap-4">
             {
                 socials.map((social) => (

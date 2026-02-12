@@ -94,10 +94,10 @@ function formatDate(dateString: string) {
     <div class="bg-gray-50 min-h-screen pb-20">
         <!-- Hero Header -->
         <header class="bg-white border-b border-gray-200 relative">
-            <div class="container mx-auto px-6 py-8 md:py-12">
+            <div class="container mx-auto py-8 md:py-12">
                 <!-- Breadcrumb -->
                 <nav class="mb-6">
-                    <ol class="flex items-center gap-2 text-base text-slate-500 overflow-x-auto whitespace-nowrap">
+                    <ol class="flex items-center gap-2 text-sm text-slate-500 overflow-x-auto whitespace-nowrap">
                         <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
                         <li><span class="mx-1 text-slate-300">/</span></li>
                         <li><a href="/beasiswa" class="hover:text-primary transition-colors">Beasiswa</a></li>
@@ -110,14 +110,14 @@ function formatDate(dateString: string) {
                     <!-- Title & Main Info -->
                     <div class="lg:col-span-2">
                         <div class="flex flex-wrap gap-2 mb-4">
-                            {scholarship.type && <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-base font-semibold border border-blue-100">{scholarship.type}</span>}
-                            {scholarship.degree && <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-base font-semibold border border-indigo-100">{scholarship.degree}</span>}
+                            {scholarship.type && <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-xs md:text-sm font-semibold border border-blue-100">{scholarship.type}</span>}
+                            {scholarship.degree && <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs md:text-sm font-semibold border border-indigo-100">{scholarship.degree}</span>}
                         </div>
-                        <h1 class="text-3xl md:text-5xl font-bold font-heading text-slate-900 leading-tight mb-6">
+                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold font-heading text-slate-900 leading-tight mb-6">
                             {scholarship.title}
                         </h1>
 
-                        <div class="flex flex-wrap gap-6 text-base text-slate-600">
+                        <div class="flex flex-wrap gap-6 text-sm text-slate-600">
                             {
                                 scholarship.university && (
                                     <div class="flex items-center gap-2">
@@ -169,7 +169,7 @@ function formatDate(dateString: string) {
                                 {
                                     scholarship.deadline ? (
                                         <>
-                                            <div class="text-3xl font-bold mb-1">{formatDate(scholarship.deadline)}</div>
+                                            <div class="text-3xl font-semibold mb-1">{formatDate(scholarship.deadline)}</div>
                                             <div class="text-amber-400 text-base font-medium flex items-center gap-1">
                                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path
@@ -183,7 +183,7 @@ function formatDate(dateString: string) {
                                             </div>
                                         </>
                                     ) : (
-                                        <div class="text-3xl font-bold text-emerald-400">Open Recruitment</div>
+                                        <div class="text-3xl font-semibold text-emerald-400">Open Recruitment</div>
                                     )
                                 }
 
@@ -202,7 +202,7 @@ function formatDate(dateString: string) {
             </div>
         </header>
 
-        <main class="container mx-auto px-6 py-10">
+        <main class="container mx-auto py-10">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <!-- Left Content: Description & Details -->
                 <div class="lg:col-span-2 space-y-10">
@@ -216,7 +216,7 @@ function formatDate(dateString: string) {
 
                     <!-- About / Description -->
                     <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                        <h2 class="text-2xl font-bold font-heading text-slate-900 mb-6 flex items-center gap-3">
+                        <h2 class="text-2xl font-semibold font-heading text-slate-900 mb-6 flex items-center gap-3">
                             <span class="w-10 h-1 rounded-full bg-primary block"></span>
                             Tentang Beasiswa
                         </h2>
@@ -229,7 +229,7 @@ function formatDate(dateString: string) {
                     {
                         scholarship.benefits && (
                             <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                                <h2 class="text-2xl font-bold font-heading text-slate-900 mb-6 flex items-center gap-3">
+                                <h2 class="text-2xl font-semibold font-heading text-slate-900 mb-6 flex items-center gap-3">
                                     <span class="w-10 h-1 rounded-full bg-emerald-500 block" />
                                     Cakupan Beasiswa
                                 </h2>
@@ -244,7 +244,7 @@ function formatDate(dateString: string) {
                     {
                         scholarship.documents && (
                             <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                                <h2 class="text-2xl font-bold font-heading text-slate-900 mb-6 flex items-center gap-3">
+                                <h2 class="text-2xl font-semibold font-heading text-slate-900 mb-6 flex items-center gap-3">
                                     <span class="w-10 h-1 rounded-full bg-amber-500 block" />
                                     Dokumen Persyaratan
                                 </h2>
@@ -259,7 +259,7 @@ function formatDate(dateString: string) {
                     {
                         scholarship.howToApply && (
                             <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                                <h2 class="text-2xl font-bold font-heading text-slate-900 mb-6 flex items-center gap-3">
+                                <h2 class="text-2xl font-semibold font-heading text-slate-900 mb-6 flex items-center gap-3">
                                     <span class="w-10 h-1 rounded-full bg-blue-500 block" />
                                     Cara Mendaftar
                                 </h2>
@@ -273,7 +273,7 @@ function formatDate(dateString: string) {
                     {
                         scholarship.others && (
                             <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                                <h2 class="text-xl font-bold font-heading text-slate-900 mb-4">Informasi Tambahan</h2>
+                                <h2 class="text-xl font-semibold font-heading text-slate-900 mb-4">Informasi Tambahan</h2>
                                 <div class="prose prose-slate max-w-none">
                                     <Fragment set:html={scholarship.others} />
                                 </div>
@@ -287,7 +287,7 @@ function formatDate(dateString: string) {
                     <!-- Requirements Card -->
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden sticky top-28">
                         <div class="bg-slate-50 px-6 py-4 border-b border-slate-100">
-                            <h3 class="font-bold text-slate-900 text-lg">Persyaratan Minimum</h3>
+                            <h3 class="font-semibold text-slate-900 text-lg">Persyaratan Minimum</h3>
                         </div>
                         <div class="p-6 space-y-6">
                             {/* GPA */}
@@ -298,7 +298,7 @@ function formatDate(dateString: string) {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-base text-slate-500 uppercase font-bold tracking-wider mb-1">Minimum IPK</p>
+                                    <p class="text-sm text-slate-500 uppercase font-semibold tracking-wider mb-1">Minimum IPK</p>
                                     <p class="font-semibold text-slate-900">{scholarship.gpaRequirement || "Tidak disebutkan"}</p>
                                 </div>
                             </div>
@@ -311,7 +311,7 @@ function formatDate(dateString: string) {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-base text-slate-500 uppercase font-bold tracking-wider mb-1">Batasan Umur</p>
+                                    <p class="text-sm text-slate-500 uppercase font-semibold tracking-wider mb-1">Batasan Umur</p>
                                     <p class="font-semibold text-slate-900">{scholarship.ageLimit || "Lihat detail"}</p>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@ function formatDate(dateString: string) {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-base text-slate-500 uppercase font-bold tracking-wider mb-1">Bahasa Inggris</p>
+                                    <p class="text-sm text-slate-500 uppercase font-semibold tracking-wider mb-1">Bahasa Inggris</p>
                                     <div class="font-semibold text-slate-900 prose prose-sm prose-p:my-0">
                                         <Fragment set:html={scholarship.englishTest || "Lihat detail"} />
                                     </div>
@@ -347,8 +347,8 @@ function formatDate(dateString: string) {
                                             </svg>
                                         </div>
                                         <div>
-                                            <p class="text-base text-slate-500 uppercase font-bold tracking-wider mb-1">Bidang Studi</p>
-                                            <div class="font-semibold text-slate-900 text-base prose prose-base prose-p:my-0">
+                                            <p class="text-sm text-slate-500 uppercase font-semibold tracking-wider mb-1">Bidang Studi</p>
+                                            <div class="font-semibold text-slate-900 text-sm prose prose-sm prose-p:my-0">
                                                 <Fragment set:html={scholarship.fieldOfStudy} />
                                             </div>
                                         </div>
@@ -357,8 +357,8 @@ function formatDate(dateString: string) {
                             }
                         </div>
                         <div class="p-6 bg-slate-50 border-t border-slate-100 text-center">
-                            <p class="text-base text-slate-500 mb-4">Butuh bantuan persiapan dokumen & essay?</p>
-                            <a href="/kontak" class="block w-full bg-slate-900 hover:bg-black text-white py-3 rounded-xl font-bold transition-colors"> Konsultasi Gratis </a>
+                            <p class="text-sm text-slate-500 mb-4">Butuh bantuan persiapan dokumen & essay?</p>
+                            <a href="/kontak" class="block w-full bg-slate-900 hover:bg-black text-white py-3 rounded-xl font-medium transition-colors"> Konsultasi Gratis </a>
                         </div>
                     </div>
                 </aside>

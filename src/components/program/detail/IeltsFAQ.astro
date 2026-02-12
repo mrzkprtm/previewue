@@ -1,0 +1,63 @@
+---
+const faqs = [
+    {
+        q: "Apa Itu IELTS?",
+        a: "IELTS (International English Language Testing System) adalah tes kemampuan bahasa Inggris internasional yang diakui secara global. Tes ini mengukur empat keterampilan utama: Listening, Reading, Writing, Speaking. Diselenggarakan oleh British Council, IDP Australia, dan Cambridge English, IELTS digunakan sebagai syarat masuk ke universitas luar negeri, imigrasi, atau keperluan kerja di negara berbahasa Inggris. Tes ini tersedia di lebih dari 140 negara dan hasilnya keluar dalam waktu 5-13 hari. IELTS menjadi pilihan utama bagi mereka yang ingin studi, bekerja, atau pindah ke luar negeri.",
+    },
+    { q: "Berapa biaya tes IELTS?", a: "Biaya tes IELTS resmi bervariasi tergantung lokasi dan jenis tes (Paper-based atau Computer-delivered), namun umumnya berkisar antara Rp 3.150.000 hingga Rp 3.500.000." },
+    {
+        q: "Kenapa Memilih Kursus IELTS di Ultimate Education?",
+        a: "Ultimate Education menawarkan tutor berpengalaman, kurikulum yang disesuaikan dengan target skor, jadwal fleksibel, dan fasilitas lengkap seperti pre-test dan simulasi ujian.",
+    },
+    { q: "Mengapa Memilih Kursus Ini?", a: "Kursus ini dirancang secara komprehensif dengan fokus pada keempat skill IELTS, didukung oleh tutor tersertifikasi dan materi terkini sesuai format ujian terbaru." },
+    { q: "Tes IELTS di mana?", a: "Anda dapat mengambil tes IELTS resmi di pusat tes berlisensi yang dikelola oleh British Council, IDP, atau penyedia resmi lainnya di kota-kota besar Indonesia." },
+    { q: "Kapan jadwal tes IELTS?", a: "Jadwal tes tersedia hampir setiap minggu sepanjang tahun. Untuk tes berbasis komputer, tersedia setiap hari di beberapa lokasi." },
+    { q: "Skor IELTS valid berapa lama?", a: "Sertifikat IELTS berlaku selama 2 tahun sejak tanggal ujian." },
+    { q: "Apakah ada jenis tes IELTS yang berbeda?", a: "Ya, ada IELTS Academic (untuk studi S1/S2/S3) dan IELTS General Training (untuk imigrasi, kerja, atau pelatihan non-akademis)." },
+    {
+        q: "Jadwal kursus IELTS di Ultimate Education kapan? Berapa biayanya?",
+        a: "Jadwal kursus tersedia setiap hari Minggu, Selasa, Kamis, dan Sabtu. Untuk biaya, silakan cek bagian Topik di halaman ini atau hubungi tim kami untuk informasi detail.",
+    },
+    { q: "Manfaat punya skor IELTS?", a: "Membuka peluang beasiswa kuliah di luar negeri, mempermudah proses visa ke negara berbahasa Inggris, dan meningkatkan nilai jual di pasar kerja global." },
+    { q: "Bisa kasih contoh soal IELTS?", a: "Tentu, kami menyediakan akses ke bank soal dan materi latihan eksklusif selama masa bimbingan." },
+    { q: "Media apa saja yang digunakan dalam proses bimbingan di Ultimate Education?", a: "Kami menggunakan platform video conference (Zoom), Learning Management System (LMS), bank soal digital, dan modul eksklusif Ultimate Education." },
+    { q: "Apakah saya dapat memilih tutor sendiri di Ultimate Education?", a: "Ya, untuk kelas private Anda dapat mengajukan preferensi tutor sesuai dengan profil yang tersedia." },
+];
+---
+
+<section class="py-12 md:py-16 bg-white">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row gap-10 md:gap-12">
+            <div class="md:w-[50%] lg:w-2/5">
+                <h2 class="text-2xl md:text-3xl font-heading font-bold text-ultimate-blue mb-4">Seputar<br />Ultimate Education</h2>
+                <p class="text-slate-500 text-sm">Punya pertanyaan lain? Jangan ragu untuk menghubungi konsultan kami.</p>
+            </div>
+
+            <div class="md:w-[50%] lg:w-3/5 space-y-0">
+                {
+                    faqs.map((item) => (
+                        <details class="group border-b border-slate-100 last:border-0">
+                            <summary class="flex items-center justify-between cursor-pointer py-4 list-none text-slate-800 font-semibold hover:text-ultimate-blue transition-colors text-sm md:text-[15px]">
+                                <span class="pr-4">{item.q}</span>
+                                <div class="w-7 h-7 shrink-0 rounded-full bg-slate-50 flex items-center justify-center group-open:bg-ultimate-blue group-open:text-white transition-all duration-200">
+                                    <svg
+                                        class="w-3.5 h-3.5 transform group-open:rotate-180 transition-transform duration-200"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <div class="pb-5 text-slate-600 leading-relaxed text-sm">{item.a}</div>
+                        </details>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>

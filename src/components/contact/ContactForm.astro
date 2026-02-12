@@ -5,11 +5,11 @@
 <div class="relative h-full">
     <div class="absolute inset-0 bg-gradient-to-br from-ultimate-blue/5 to-ultimate-yellow/5 rounded-3xl transform rotate-1 h-full"></div>
     <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-slate-100 relative h-full">
-        <h3 class="text-2xl font-heading font-bold text-ultimate-navy mb-6">Kirim Pesan</h3>
+        <h3 class="text-2xl font-heading font-semibold text-ultimate-navy mb-6">Kirim Pesan</h3>
         <form class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-slate-700">Nama Lengkap</label>
+                    <label class="block text-xs md:text-sm font-semibold text-slate-700">Nama Lengkap</label>
                     <input
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-ultimate-blue focus:ring-ultimate-blue transition-colors outline-none"
                         placeholder="Masukkan nama Anda"
@@ -17,16 +17,16 @@
                     />
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-slate-700">Nomor Telepon</label>
+                    <label class="block text-xs md:text-sm font-semibold text-slate-700">Nomor Telepon</label>
                     <input class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-ultimate-blue focus:ring-ultimate-blue transition-colors outline-none" placeholder="0812..." type="tel" />
                 </div>
             </div>
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-slate-700">Email</label>
+                <label class="block text-xs md:text-sm font-semibold text-slate-700">Email</label>
                 <input class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-ultimate-blue focus:ring-ultimate-blue transition-colors outline-none" placeholder="nama@email.com" type="email" />
             </div>
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-slate-700">Topik</label>
+                <label class="block text-xs md:text-sm font-semibold text-slate-700">Topik</label>
                 <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-ultimate-blue focus:ring-ultimate-blue transition-colors outline-none cursor-pointer">
                     <option>Pilih topik pertanyaan</option>
                     <option>Program Persiapan IELTS/TOEFL</option>
@@ -36,13 +36,16 @@
                 </select>
             </div>
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-slate-700">Pesan</label>
+                <label class="block text-xs md:text-sm font-semibold text-slate-700">Pesan</label>
                 <textarea
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-ultimate-blue focus:ring-ultimate-blue transition-colors outline-none resize-none"
                     placeholder="Tulis pesan Anda di sini..."
                     rows="4"></textarea>
             </div>
-            <button class="w-full bg-ultimate-blue text-white font-bold py-4 rounded-xl hover:bg-ultimate-navy transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2" type="button">
+            <button
+                class="w-full bg-ultimate-blue text-white font-semibold py-4 rounded-xl hover:bg-ultimate-navy transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                type="button"
+            >
                 <span class="material-symbols-outlined">send</span>
                 Kirim Pesan
             </button>

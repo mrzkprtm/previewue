@@ -10,7 +10,11 @@ import Scholarships from "../components/home/old/Scholarships.astro";
 import Alumni from "../components/home/old/Alumni.astro";
 import HighlightedArticles from "../components/home/old/HighlightedArticles.astro";
 import FAQ from "../components/home/old/FAQ.astro";
-
+import HomePlacementTest from "../components/home/HomePlacementTest.astro";
+import ScholarshipFeed from "../components/home/ScholarshipFeed.astro";
+import WhyChooseUs from "../components/home/WhyChooseUs.astro";
+import FinalCTA from "@/components/home/FinalCTA.astro";
+import HomeSuccessCTA from "@/components/home/HomeSuccessCTA.astro";
 const title = "Ultimate Education - Solusi Terbaik Persiapan Studi Luar Negeri & Beasiswa";
 const description = "Pusat bimbingan persiapan beasiswa, IELTS, SAT, GMAT, GRE, dan bahasa asing terpercaya di Indonesia.";
 ---
@@ -19,27 +23,23 @@ const description = "Pusat bimbingan persiapan beasiswa, IELTS, SAT, GMAT, GRE, 
   <!-- 1. Hero (New, Modified) -->
   <HomeHero />
 
-  <!-- 2. Program Unggulan (Old) -->
-  <FeaturedPrograms />
-
   <!-- 3. Pilih Jalur (New) -->
   <HomePaths />
 
   <!-- 4. Promo (New) -->
   <HomePromos />
-
+  <!-- 6. Free Test (Old) -->
+  <HomePlacementTest />
+  <HomeSuccessCTA />
   <!-- 5. Mentor Kami (Old) -->
   <Mentors />
 
-  <!-- 6. Free Test (Old) -->
-  <FreeTest />
-
   <!-- 7. Beasiswa (Old) -->
   <Scholarships />
-
   <!-- 8. Alumni (Old) -->
   <Alumni />
-
+  <WhyChooseUs />
+  <HighlightedArticles />
   <!-- 9. FAQ (Old) -->
   <FAQ />
 </Layout>

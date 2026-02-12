@@ -5,19 +5,19 @@ const testimonials = {
             name: "YUDISTIRA YUDADISASTRA",
             position: "Assistant Vice President MANDIRI SEKURITAS",
             text: "Great course with professional teachers. The extra lessons really helped us improve our English skills.",
-            image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face",
+            image: "/images/alumni/YUDISTIRA-YUDADISASTRA-1.webp",
         },
         {
             name: "SATRIYO BHAWIKO ADHI",
             position: "Assurances Services Advisory Deloitte",
             text: "Taught by experts. We even got free grammar classes to help us get better results.",
-            image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face",
+            image: "/images/alumni/SATRIYO-BHAWIKO-ADHI-1.webp",
         },
         {
             name: "ASTRID GLORIA PEPITA",
             position: "Assistant Manager Grab",
             text: "The right choice. I understood the test better and achieved an 8.0 score. Thank you!",
-            image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80&h=80&fit=crop&crop=face",
+            image: "/images/alumni/astrid-gloria-pepita-2.webp",
         },
     ],
     // Other categories can be added if needed, focusing on IELTS for now as main display or use client-side logic for tabs
@@ -27,11 +27,11 @@ const testimonials = {
 const displayTestimonials = testimonials.ielts;
 ---
 
-<section class="py-20 bg-slate-50 overflow-hidden">
-    <div class="container mx-auto px-6">
+<section class="py-12 lg:py-20 bg-slate-50 overflow-hidden">
+    <div class="container mx-auto">
         <div class="text-center mb-16">
-            <span class="inline-block py-1 px-3 rounded-full bg-white border border-slate-200 text-ultimate-blue text-base font-bold uppercase tracking-wider mb-4 shadow-sm"> Testimonials </span>
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy mb-4">Cerita Alumni Tentang Ultimate Education</h2>
+            <span class="inline-block py-1 px-3 rounded-full bg-white border border-slate-200 text-ultimate-blue text-xs md:text-sm font-semibold uppercase tracking-wider mb-4 shadow-sm"> Testimonials </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-semibold font-heading text-ultimate-navy mb-4">Cerita Alumni Tentang Ultimate Education</h2>
             <p class="text-gray-600">Apa kata mereka yang telah sukses meraih impian?</p>
         </div>
 
@@ -50,7 +50,7 @@ const displayTestimonials = testimonials.ielts;
                         <div class="flex items-center gap-4 mt-auto">
                             <img src={t.image} alt={t.name} class="w-12 h-12 rounded-full border-2 border-ultimate-blue/20" loading="lazy" />
                             <div>
-                                <h4 class="font-bold text-ultimate-navy text-base">{t.name}</h4>
+                                <h4 class="font-semibold text-ultimate-navy text-sm">{t.name}</h4>
                                 <p class="text-base text-ultimate-blue font-medium mt-0.5">{t.position}</p>
                             </div>
                         </div>

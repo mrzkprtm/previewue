@@ -44,61 +44,29 @@ const avatars = [
 ];
 ---
 
-<div
-    class="absolute inset-0 z-5 overflow-visible pointer-events-none"
-    aria-hidden="true"
->
+<div class="absolute inset-0 z-5 overflow-visible pointer-events-none" aria-hidden="true">
     <!-- SVG Background Lines (Right to Left, Full Width) -->
-    <svg
-        class="absolute w-full h-full opacity-30"
-        viewBox="0 0 100 100"
-        fill="none"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg class="absolute w-full h-full opacity-30" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Path 1: Top curve -->
-        <path
-            d="M 110 20 Q 70 15, 50 30 T -10 40"
-            stroke="url(#grad1)"
-            stroke-width="0.3"
-            fill="none"
-            class="animate-pulse-slow"
-            vector-effect="non-scaling-stroke"></path>
+        <path d="M 110 20 Q 70 15, 50 30 T -10 40" stroke="url(#grad1)" stroke-width="0.3" fill="none" class="animate-pulse-slow" vector-effect="non-scaling-stroke"></path>
 
         <!-- Path 2: Middle curve -->
-        <path
-            d="M 110 50 Q 60 45, 40 55 T -10 60"
-            stroke="url(#grad2)"
-            stroke-width="0.3"
-            fill="none"
-            class="animate-pulse-slow delay-1000"
-            vector-effect="non-scaling-stroke"></path>
+        <path d="M 110 50 Q 60 45, 40 55 T -10 60" stroke="url(#grad2)" stroke-width="0.3" fill="none" class="animate-pulse-slow delay-1000" vector-effect="non-scaling-stroke"></path>
 
         <!-- Path 3: Bottom curve -->
-        <path
-            d="M 110 70 Q 65 80, 35 70 T -10 75"
-            stroke="url(#grad3)"
-            stroke-width="0.3"
-            fill="none"
-            class="animate-pulse-slow delay-2000"
-            vector-effect="non-scaling-stroke"></path>
+        <path d="M 110 70 Q 65 80, 35 70 T -10 75" stroke="url(#grad3)" stroke-width="0.3" fill="none" class="animate-pulse-slow delay-2000" vector-effect="non-scaling-stroke"></path>
 
         <defs>
             <linearGradient id="grad1" x1="100%" y1="0%" x2="0%" y2="0%">
                 <stop offset="0%" style="stop-color:rgba(255,255,255,0)"></stop>
-                <stop offset="30%" style="stop-color:rgba(255,255,255,0.5)"
-                ></stop>
-                <stop offset="70%" style="stop-color:rgba(255,255,255,0.3)"
-                ></stop>
-                <stop offset="100%" style="stop-color:rgba(255,255,255,0)"
-                ></stop>
+                <stop offset="30%" style="stop-color:rgba(255,255,255,0.5)"></stop>
+                <stop offset="70%" style="stop-color:rgba(255,255,255,0.3)"></stop>
+                <stop offset="100%" style="stop-color:rgba(255,255,255,0)"></stop>
             </linearGradient>
             <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="0%">
                 <stop offset="0%" style="stop-color:rgba(255,187,0,0)"></stop>
-                <stop offset="30%" style="stop-color:rgba(255,187,0,0.5)"
-                ></stop>
-                <stop offset="70%" style="stop-color:rgba(255,187,0,0.3)"
-                ></stop>
+                <stop offset="30%" style="stop-color:rgba(255,187,0,0.5)"></stop>
+                <stop offset="70%" style="stop-color:rgba(255,187,0,0.3)"></stop>
                 <stop offset="100%" style="stop-color:rgba(255,187,0,0)"></stop>
             </linearGradient>
             <linearGradient id="grad3" x1="100%" y1="0%" x2="0%" y2="0%">
@@ -121,21 +89,13 @@ const avatars = [
                 }}
             >
                 <div class="relative group">
-                    <img
-                        src={avatar.img}
-                        alt="Student"
-                        class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/80 shadow-lg object-cover"
-                    />
+                    <img src={avatar.img} alt="Student" class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/80 shadow-lg object-cover" />
 
                     {/* Auto Popup Balloon */}
                     <div class="absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 popup-balloon">
-                        <div
-                            class={`${avatar.color} ${avatar.textCol || "text-white"} px-3 py-1.5 rounded-lg shadow-xl text-xs font-bold relative`}
-                        >
+                        <div class={`${avatar.color} ${avatar.textCol || "text-white"} px-3 py-1.5 rounded-lg shadow-xl text-base font-bold relative`}>
                             {avatar.text}
-                            <div
-                                class={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 ${avatar.color} rotate-45`}
-                            />
+                            <div class={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 ${avatar.color} rotate-45`} />
                         </div>
                     </div>
                 </div>

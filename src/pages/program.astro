@@ -1,106 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/ui/Card.astro";
 import Button from "../components/ui/Button.astro";
-import UnifiedHero from "../components/common/UnifiedHero.astro";
-
-import { programsData as programCategories } from "../data/programs";
+import ProgramTabs from "../components/program/ProgramTabs.jsx";
+import ProgramHero from "../components/program/ProgramHero.astro";
+import { programsData } from "../data/programs";
+import HomeSuccessCTA from "../components/home/HomeSuccessCTA.astro";
 ---
 
 <Layout title="Semua Program - Ultimate Education" description="Jelajahi program persiapan tes internasional (IELTS, TOEFL, SAT), kursus bahasa asing, dan bimbingan beasiswa kami.">
-  <!-- Hero Section -->
-  <!-- Hero Section -->
-  <UnifiedHero
-    title='Pilih Program <span class="text-ultimate-yellow">Masa Depanmu</span>'
-    subtitle="Kami menyediakan solusi pendidikan terlengkap untuk membantu Anda meraih impian studi dan karir global."
-    pillText="Daftar Program"
-    image="/images/hero_img.png"
-  />
+  <main class="flex-grow bg-white">
+    <!-- Hero Section -->
+    <ProgramHero />
 
-  <!-- Main Content -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-24">
-    {
-      programCategories.map((category) => (
-        <section>
-          <div class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-12 border-b border-gray-100 pb-6">
-            <div class="h-12 w-2 bg-ultimate-yellow rounded-full hidden md:block" />
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-ultimate-navy">{category.title}</h2>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {category.programs.map((program) => (
-              <Card class="flex flex-col h-full hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-t-ultimate-blue group relative bg-white">
-                <div class="p-8 flex flex-col h-full relative z-10">
-                  <div class="mb-8">
-                    <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-ultimate-blue mb-4 group-hover:text-ultimate-navy transition-colors">{program.name}</h3>
-                    <p class="text-ultimate-navy leading-relaxed font-sans text-base md:text-lg lg:text-xl min-h-[4.5rem]">{program.description}</p>
-                  </div>
-
-                  <div class="space-y-4 mb-8 flex-grow bg-slate-50 p-6 rounded-xl border border-slate-100 group-hover:bg-blue-50/50 group-hover:border-blue-100 transition-colors">
-                    <div class="flex items-start gap-4">
-                      <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🎯</span>
-                      <div>
-                        <span class="text-base font-bold text-ultimate-navy uppercase tracking-wider block mb-1">Target</span>
-                        <span class="text-base font-medium text-ultimate-navy leading-snug">{program.target.replace("🎯 ", "")}</span>
-                      </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                      <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🕒</span>
-                      <div>
-                        <span class="text-base font-bold text-ultimate-navy uppercase tracking-wider block mb-1">Durasi</span>
-                        <span class="text-base font-medium text-ultimate-navy leading-snug">{program.duration.replace("🕒 ", "")}</span>
-                      </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                      <span class="text-xl bg-white p-2 rounded-lg shadow-sm">🎁</span>
-                      <div>
-                        <span class="text-base font-bold text-ultimate-navy uppercase tracking-wider block mb-1">Fasilitas</span>
-                        <span class="text-base font-medium text-ultimate-navy leading-snug">{program.includes.replace("🎁 ", "")}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Button href={`/program/${program.slug}`} variant="primary" class="w-full justify-between items-center group/btn shadow-md hover:shadow-lg bg-ultimate-blue hover:bg-ultimate-navy border-none py-3">
-                    <span class="font-bold tracking-wide">Lihat Detail</span>
-                    <div class="bg-white/20 rounded-full p-1 group-hover/btn:translate-x-1 transition-transform">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </section>
-      ))
-    }
-  </div>
+    <!-- Content Section -->
+    <section class="py-16 md:py-24">
+      <div class="container mx-auto">
+        <ProgramTabs allPrograms={programsData} client:load />
+      </div>
+    </section>
+  </main>
 
   <!-- CTA Section -->
-  <section class="bg-slate-50 py-24 px-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-hero-gradient rounded-[2.5rem] p-12 md:p-20 text-center text-white shadow-2xl relative overflow-hidden ring-8 ring-white">
-        <!-- Abstract Decoration -->
-        <div class="absolute top-0 right-0 -mr-32 -mt-32 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 -ml-32 -mb-32 w-80 h-80 bg-ultimate-yellow/20 rounded-full blur-3xl"></div>
-
-        <div class="relative z-10">
-          <h2 class="text-3xl md:text-5xl font-bold font-heading mb-8 leading-tight">Masih Bingung Memilih Program?</h2>
-          <p class="text-lg md:text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Konsultasikan kebutuhan belajarmu dengan tim ahli kami. Kami siap memberikan rekomendasi program terbaik yang disesuaikan dengan target masa depanmu.
-          </p>
-          <div class="flex flex-col sm:flex-row justify-center gap-6">
-            <Button
-              href="https://api.whatsapp.com/send/?phone=6283812310368"
-              class="bg-ultimate-yellow text-ultimate-navy hover:bg-white hover:text-ultimate-blue font-bold px-10 py-4 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all rounded-xl border-none"
-            >
-              Konsultasi Gratis
-            </Button>
-            <Button href="/kontak" class="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 font-bold px-10 py-4 text-lg rounded-xl backdrop-blur-sm transition-all"> Hubungi Kami </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <HomeSuccessCTA />
 </Layout>

@@ -22,7 +22,7 @@ export default function MegaMenuWrapper() {
 
   return (
     <nav className="w-full py-3">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
           <a href="/" className="flex items-center gap-2 group transition-transform hover:scale-105 duration-300">
@@ -45,7 +45,7 @@ export default function MegaMenuWrapper() {
                   <div>
                     <a
                       href={item.href}
-                      className={`text-base font-bold font-heading uppercase tracking-wide transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-1 ${isActive ? 'text-ultimate-yellow' : 'text-[#145da0] hover:text-ultimate-yellow'
+                      className={`text-base font-normal font-heading capitalize tracking-wide transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-1 ${isActive ? 'text-black' : 'text-[#145da0] hover:text-ultimate-yellow'
                         }`}
                       onClick={(e) => {
                         // Only open dropdown on hover, not click
@@ -127,7 +127,7 @@ export default function MegaMenuWrapper() {
                 <div key={item.label}>
                   <a
                     href={item.href}
-                    className={`text-lg font-bold font-heading py-3 flex items-center justify-between group ${isActive ? 'text-ultimate-yellow' : 'text-slate-300'
+                    className={`text-lg font-normal font-heading py-3 flex items-center justify-between group ${isActive ? 'text-ultimate-yellow' : 'text-slate-300'
                       }`}
                     onClick={() => !item.hasDropdown && setIsMobileMenuOpen(false)}
                   >

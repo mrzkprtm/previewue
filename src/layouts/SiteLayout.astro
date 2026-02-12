@@ -3,7 +3,7 @@
  * OWNER: STATIC (Dev A)
  * Global layout wrapper.
  */
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ interface Props {
 const { title, description = "A modern Astro + WordPress site" } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
@@ -25,7 +25,7 @@ const { title, description = "A modern Astro + WordPress site" } = Astro.props;
   </head>
   <body class="min-h-screen flex flex-col">
     <header class="bg-white border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-4 md:px-6 xl:px-0 h-16 flex items-center justify-between">
         <a href="/" class="text-xl font-bold text-blue-600">MySite</a>
         <nav class="flex gap-4">
           <a href="/" class="text-gray-600 hover:text-gray-900">Home</a>
@@ -39,10 +39,9 @@ const { title, description = "A modern Astro + WordPress site" } = Astro.props;
     </main>
 
     <footer class="bg-gray-50 border-t border-gray-200 mt-12">
-      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+      <div class="max-w-7xl mx-auto px-4 md:px-6 xl:px-0 py-12 text-center text-gray-400 text-sm md:text-base">
         &copy; {new Date().getFullYear()} MySite. Built with Astro & WordPress.
       </div>
     </footer>
   </body>
 </html>
-

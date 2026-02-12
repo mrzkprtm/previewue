@@ -14,21 +14,21 @@ const displayBenefits = benefits && benefits.length > 0 ? benefits : defaultBene
     <div class="flex flex-col gap-8 lg:gap-12">
         <!-- Left: Text Content -->
         <div class="w-full">
-            <span class="text-ultimate-blue font-bold tracking-widest uppercase text-sm mb-2 block">Why Choose Us</span>
-            <h2 class="text-2xl md:text-3xl font-bold font-heading text-ultimate-navy mb-6">Kenapa Harus Ultimate Academy?</h2>
+            <span class="text-ultimate-blue font-semibold tracking-widest uppercase text-xs md:text-sm mb-2 block">Why Choose Us</span>
+            <h2 class="text-2xl md:text-2xl md:text-3xl lg:text-4xl font-semibold font-heading text-ultimate-navy mb-6">Kenapa Harus Ultimate Academy?</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {
                     displayBenefits.map((benefit) => (
                         <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="w-8 h-8 rounded-lg bg-blue-100 text-ultimate-blue flex items-center justify-center text-lg font-bold shrink-0">
+                            <div class="w-8 h-8 rounded-lg bg-blue-100 text-ultimate-blue flex items-center justify-center text-lg font-semibold shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="font-bold text-ultimate-navy text-base">{benefit}</h4>
-                                <p class="text-slate-500 text-xs mt-1">Standar kualitas terbaik.</p>
+                                <h4 class="font-semibold text-ultimate-navy text-sm">{benefit}</h4>
+                                <p class="text-slate-500 text-sm mt-1">Standar kualitas terbaik.</p>
                             </div>
                         </div>
                     ))
@@ -41,13 +41,13 @@ const displayBenefits = benefits && benefits.length > 0 ? benefits : defaultBene
             <div class="bg-ultimate-navy rounded-3xl p-6 md:p-8 text-white relative overflow-hidden">
                 <div class="relative z-10 flex justify-between items-center">
                     <div class="text-center">
-                        <span class="text-3xl md:text-4xl font-black block mb-1">94%</span>
-                        <span class="text-xs uppercase tracking-wider opacity-80">Kelulusan</span>
+                        <span class="text-3xl md:text-4xl font-semibold block mb-1">94%</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider opacity-80">Kelulusan</span>
                     </div>
                     <div class="w-px h-12 bg-white/20"></div>
                     <div class="text-center">
-                        <span class="text-3xl md:text-4xl font-black block mb-1 text-ultimate-yellow">4.8</span>
-                        <span class="text-xs uppercase tracking-wider opacity-80">Rating</span>
+                        <span class="text-3xl md:text-4xl font-semibold block mb-1 text-ultimate-yellow">4.8</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider opacity-80">Rating</span>
                     </div>
                 </div>
                 <!-- bg pattern -->

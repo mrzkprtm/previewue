@@ -7,21 +7,21 @@ interface Props {
 const { programName, price = "Hubungi Kami" } = Astro.props;
 ---
 
-<section class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto px-6">
+<section class="py-12 lg:py-20 bg-white">
+    <div class="container mx-auto px-4 md:px-6 xl:px-0">
         <div class="text-center mb-16">
-            <span class="text-ultimate-blue font-bold tracking-widest uppercase text-sm mb-2 block">Investment</span>
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy">Pilihan Paket Belajar</h2>
+            <span class="text-ultimate-blue font-semibold tracking-widest uppercase text-xs md:text-sm mb-2 block">Investment</span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-semibold font-heading text-ultimate-navy">Pilihan Paket Belajar</h2>
             <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Pilih paket yang paling sesuai dengan target dan kebutuhan belajarmu.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+        <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto items-center">
             <!-- Regular -->
             <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:shadow-xl transition-all duration-300 relative group">
-                <h3 class="text-xl font-bold text-ultimate-navy mb-2">Regular</h3>
+                <h3 class="text-xl font-semibold text-ultimate-navy mb-2">Regular</h3>
                 <p class="text-slate-500 text-sm mb-6">Untuk pemahaman dasar yang kuat.</p>
                 <div class="mb-6">
-                    <span class="text-3xl font-black text-slate-800">Basic</span>
+                    <span class="text-3xl font-semibold text-slate-800">Basic</span>
                 </div>
                 <ul class="space-y-4 mb-8 text-sm text-slate-600">
                     <li class="flex items-center gap-3">
@@ -34,16 +34,16 @@ const { programName, price = "Hubungi Kami" } = Astro.props;
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>Bank Soal Terbatas
                     </li>
                 </ul>
-                <a href="#" class="block w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-center hover:border-ultimate-navy hover:text-ultimate-navy transition-colors">Pilih Regular</a>
+                <a href="#" class="block w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold text-center hover:border-ultimate-navy hover:text-ultimate-navy transition-colors">Pilih Regular</a>
             </div>
 
             <!-- Intensive (Highlighted) -->
             <div class="bg-ultimate-navy p-8 rounded-3xl border border-ultimate-navy shadow-2xl relative transform md:-translate-y-4 z-10">
-                <div class="absolute top-0 right-0 bg-ultimate-yellow text-ultimate-navy text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-xl uppercase tracking-wider">Most Popular</div>
-                <h3 class="text-xl font-bold text-white mb-2">{programName} Intensive</h3>
+                <div class="absolute top-0 right-0 bg-ultimate-yellow text-ultimate-navy text-xs md:text-sm font-semibold px-3 py-1 rounded-bl-xl rounded-tr-xl uppercase tracking-wider">Most Popular</div>
+                <h3 class="text-xl font-semibold text-white mb-2">{programName} Intensive</h3>
                 <p class="text-blue-200 text-sm mb-6">Persiapan total dengan Live Mentoring.</p>
                 <div class="mb-6">
-                    <span class="text-4xl font-black text-white">{price}</span>
+                    <span class="text-3xl md:text-4xl font-semibold text-white">{price}</span>
                 </div>
                 <ul class="space-y-4 mb-8 text-sm text-blue-50">
                     <li class="flex items-center gap-3">
@@ -64,16 +64,16 @@ const { programName, price = "Hubungi Kami" } = Astro.props;
                 <a
                     href="https://api.whatsapp.com/send/?phone=6283812310368"
                     target="_blank"
-                    class="block w-full py-4 rounded-xl bg-ultimate-blue text-white font-bold text-center hover:bg-white hover:text-ultimate-navy transition-colors shadow-lg">Pilih Intensive</a
+                    class="block w-full py-4 rounded-xl bg-ultimate-blue text-white font-semibold text-center hover:bg-white hover:text-ultimate-navy transition-colors shadow-lg">Pilih Intensive</a
                 >
             </div>
 
             <!-- Elite -->
             <div class="bg-white p-8 rounded-3xl border border-slate-200 hover:shadow-xl transition-all duration-300 relative group">
-                <h3 class="text-xl font-bold text-ultimate-navy mb-2">Elite Private</h3>
+                <h3 class="text-xl font-semibold text-ultimate-navy mb-2">Elite Private</h3>
                 <p class="text-slate-500 text-sm mb-6">Bimbingan eksklusif 1-on-1.</p>
                 <div class="mb-6">
-                    <span class="text-3xl font-black text-slate-800">Custom</span>
+                    <span class="text-3xl font-semibold text-slate-800">Custom</span>
                 </div>
                 <ul class="space-y-4 mb-8 text-sm text-slate-600">
                     <li class="flex items-center gap-3">
@@ -89,7 +89,7 @@ const { programName, price = "Hubungi Kami" } = Astro.props;
                         <svg class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Jaminan Lolouse/Skor*
                     </li>
                 </ul>
-                <a href="#" class="block w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-center hover:border-ultimate-navy hover:text-ultimate-navy transition-colors">Pilih Elite</a>
+                <a href="#" class="block w-full py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-semibold text-center hover:border-ultimate-navy hover:text-ultimate-navy transition-colors">Pilih Elite</a>
             </div>
         </div>
     </div>

@@ -5,8 +5,8 @@
  * SSR mode for dynamic slug handling.
  */
 import Layout from "../../layouts/Layout.astro";
-import UnifiedHero from "../../components/common/UnifiedHero.astro";
 import type { WPPost } from "../../types/wp";
+import ArticleHero from "../../components/blog/ArticleHero.astro";
 
 // SSR for dynamic routing
 export const prerender = false;
@@ -169,34 +169,13 @@ const breadcrumbStructuredData = {
   </Fragment>
 
   <div class="bg-slate-50 min-h-screen">
-    <main class="container mx-auto px-6">
+    <main class="w-full">
       <!-- Hero Section -->
-      <UnifiedHero title={post.title} subtitle={post.excerpt.replace(/<[^>]*>/g, "").substring(0, 160)} pillText={post.categories[0]?.name || "Artikel"} image={post.featuredImage?.src} showPatterns={true}>
-        <div class="mt-8 flex flex-wrap items-center gap-4 text-base text-blue-100">
-          {
-            post.author && (
-              <div class="flex items-center gap-2">
-                {post.author.avatar ? (
-                  <img src={post.author.avatar} alt={post.author.name} class="w-8 h-8 rounded-full object-cover border-2 border-white/20" loading="lazy" />
-                ) : (
-                  <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <span class="text-white font-bold text-base">{post.author.name.charAt(0)}</span>
-                  </div>
-                )}
-                <span class="font-medium">{post.author.name}</span>
-              </div>
-            )
-          }
-          <span class="opacity-50">•</span>
-          <time datetime={post.date}>{formatDate(post.date)}</time>
-          <span class="opacity-50">•</span>
-          <span>{readingTime} menit baca</span>
-        </div>
-      </UnifiedHero>
+      <ArticleHero title={post.title} category={post.categories[0]?.name || "Artikel"} image={post.featuredImage?.src} />
 
       <!-- Breadcrumb -->
-      <nav class="pt-6 pb-4 px-6 container mx-auto" aria-label="Breadcrumb">
-        <ol class="flex items-center gap-2 text-base text-slate-500">
+      <nav class="pt-6 pb-4 container mx-auto" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-sm md:text-sm text-slate-500">
           <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
           <li><span class="mx-1">/</span></li>
           <li><a href="/artikel" class="hover:text-primary transition-colors">Artikel</a></li>
@@ -219,7 +198,7 @@ const breadcrumbStructuredData = {
         </ol>
       </nav>
 
-      <article class="pb-12 lg:pb-16 container mx-auto px-6">
+      <article class="pb-12 lg:pb-16 container mx-auto">
         <!-- Article Header (Removed original header) -->
         <header class="mb-8 sr-only">
           <h1>{post.title}</h1>
@@ -230,23 +209,23 @@ const breadcrumbStructuredData = {
           post.featuredImage && (
             <figure class="mb-10">
               <img src={post.featuredImage.src} alt={post.featuredImage.alt} class="w-full h-auto max-h-[500px] object-cover rounded-2xl shadow-lg" loading="eager" />
-              {post.featuredImage.alt && <figcaption class="text-center text-base text-slate-400 mt-3">{post.featuredImage.alt}</figcaption>}
+              {post.featuredImage.alt && <figcaption class="text-center text-xs md:text-sm text-slate-400 mt-3">{post.featuredImage.alt}</figcaption>}
             </figure>
           )
         }
 
         <!-- Article Content -->
         <div class="bg-white rounded-2xl shadow-card p-6 lg:p-10 mb-10">
-          <div class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-a:text-primary prose-a:no-underline hover:prose-a:underline" set:html={post.content} />
+          <div class="prose md:prose-lg max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-a:text-primary prose-a:no-underline hover:prose-a:underline" set:html={post.content} />
         </div>
 
         <!-- Share & Tags -->
         <div class="flex flex-wrap items-center justify-between gap-4 py-6 border-t border-b border-slate-200 mb-10">
           <div class="flex items-center gap-2">
-            <span class="text-base font-medium text-slate-600">Tags:</span>
+            <span class="text-sm md:text-base font-medium text-slate-600">Tags:</span>
             {
               post.categories.map((cat) => (
-                <a href={`/artikel/category/${cat.slug}`} class="text-base bg-slate-100 text-slate-600 px-3 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">
+                <a href={`/artikel/category/${cat.slug}`} class="text-sm md:text-base bg-slate-100 text-slate-600 px-3 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">
                   {cat.name}
                 </a>
               ))
@@ -254,7 +233,7 @@ const breadcrumbStructuredData = {
           </div>
 
           <div class="flex items-center gap-3">
-            <span class="text-base font-medium text-slate-600">Share:</span>
+            <span class="text-sm md:text-base font-medium text-slate-600">Share:</span>
             <a
               href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonicalUrl)}&text=${encodeURIComponent(post.title)}`}
               target="_blank"
@@ -300,17 +279,17 @@ const breadcrumbStructuredData = {
                   <img src={post.author.avatar} alt={post.author.name} class="w-16 h-16 rounded-full object-cover flex-shrink-0" loading="lazy" />
                 ) : (
                   <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span class="text-primary font-bold text-3xl">{post.author.name.charAt(0)}</span>
+                    <span class="text-primary font-semibold text-3xl">{post.author.name.charAt(0)}</span>
                   </div>
                 )}
                 <div>
-                  <h3 class="font-bold text-lg text-gray-900 mb-1">
+                  <h3 class="font-semibold text-lg text-gray-900 mb-1">
                     <a href={`/artikel/author/${post.author.name.toLowerCase().replace(/\s+/g, "-")}`} class="hover:text-primary transition-colors">
                       {post.author.name}
                     </a>
                   </h3>
-                  <p class="text-slate-500 text-base mb-3">Penulis di Ultimate Education</p>
-                  <a href={`/artikel/author/${post.author.name.toLowerCase().replace(/\s+/g, "-")}`} class="text-base text-primary font-medium hover:underline">
+                  <p class="text-slate-500 text-sm md:text-base mb-3">Penulis di Ultimate Education</p>
+                  <a href={`/artikel/author/${post.author.name.toLowerCase().replace(/\s+/g, "-")}`} class="text-sm md:text-base text-primary font-medium hover:underline">
                     Lihat semua artikel →
                   </a>
                 </div>
@@ -323,7 +302,7 @@ const breadcrumbStructuredData = {
         {
           relatedPosts.length > 0 && (
             <section>
-              <h2 class="text-2xl font-bold font-heading text-gray-900 mb-6">Artikel Terkait</h2>
+              <h2 class="text-2xl font-semibold font-heading text-gray-900 mb-6">Artikel Terkait</h2>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {relatedPosts.map((relatedPost) => (
                   <a href={`/artikel/${relatedPost.slug}`} class="bg-white rounded-xl overflow-hidden shadow-card group hover:shadow-lg transition-shadow">
@@ -333,7 +312,7 @@ const breadcrumbStructuredData = {
                       </div>
                     )}
                     <div class="p-4">
-                      <h3 class="font-bold text-gray-900 line-clamp-2 group-hover:text-primary transition-colors">{relatedPost.title}</h3>
+                      <h3 class="font-semibold text-gray-900 line-clamp-2 group-hover:text-primary transition-colors">{relatedPost.title}</h3>
                     </div>
                   </a>
                 ))}

@@ -113,10 +113,10 @@ const breadcrumbData = {
     </Fragment>
 
     <div class="bg-slate-50 min-h-screen">
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <main class="max-w-7xl mx-auto px-4 md:px-6 xl:px-0">
             <!-- Breadcrumb -->
             <nav class="pt-6 pb-4" aria-label="Breadcrumb">
-                <ol class="flex items-center gap-2 text-base text-slate-500">
+                <ol class="flex items-center gap-2 text-sm text-slate-500">
                     <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
                     <li><span class="mx-1">/</span></li>
                     <li><a href="/artikel" class="hover:text-primary transition-colors">Artikel</a></li>
@@ -127,8 +127,8 @@ const breadcrumbData = {
 
             <!-- Header -->
             <div class="pt-4 pb-8">
-                <div class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-base font-semibold mb-4">Kategori</div>
-                <h1 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-2">{category.name}</h1>
+                <div class="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-4">Kategori</div>
+                <h1 class="text-3xl lg:text-4xl font-semibold font-heading text-gray-900 mb-2">{category.name}</h1>
                 <p class="text-slate-500">{category.count} artikel dalam kategori ini</p>
             </div>
 

@@ -19,15 +19,15 @@ const scholarships = [
 ];
 ---
 
-<section class="py-20 bg-gray-50">
-  <div class="container mx-auto px-4">
+<section class="py-12 lg:py-20 bg-gray-50">
+  <div class="container mx-auto">
     <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
       <div class="max-w-3xl">
-        <h2 class="text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4 leading-tight">
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-gray-900 mb-4 leading-tight">
           Bukan Hanya Skor Tes — <br />
           <span class="text-primary">Kami Bantu Arahkan ke Beasiswa & Kampus Tujuan</span>
         </h2>
-        <p class="text-gray-600 text-lg leading-relaxed">Banyak siswa kami melanjutkan studi ke UK, Australia, Amerika, Jepang, dan Eropa melalui jalur beasiswa seperti LPDP, Chevening, Australia Awards, dan MEXT.</p>
+        <p class="text-gray-600 text-[15px] md:text-base lg:text-lg leading-relaxed">Banyak siswa kami melanjutkan studi ke UK, Australia, Amerika, Jepang, dan Eropa melalui jalur beasiswa seperti LPDP, Chevening, Australia Awards, dan MEXT.</p>
       </div>
       <a href="/beasiswa" class="hidden md:inline-flex items-center text-primary font-semibold hover:text-primary-dark transition-colors whitespace-nowrap">
         Lihat Semua Beasiswa
@@ -42,7 +42,7 @@ const scholarships = [
             {/* Visual Stub (Ticket Style) */}
             <div class="sm:w-1/3 bg-gray-200 relative">
               <img src={item.image} alt={item.title} class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-              <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded text-gray-800 shadow-sm sm:hidden">{item.country}</div>
+              <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-xs md:text-sm font-bold px-2 py-1 rounded text-gray-800 shadow-sm sm:hidden">{item.country}</div>
             </div>
 
             {/* Details */}
@@ -50,7 +50,7 @@ const scholarships = [
               <div>
                 <div class="flex justify-between items-start mb-2">
                   <span class="text-base font-bold text-primary bg-primary/10 px-2 py-1 rounded uppercase tracking-wide">{item.level}</span>
-                  <span class="hidden sm:inline-block text-base font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">{item.country}</span>
+                  <span class="hidden sm:inline-block text-xs md:text-sm font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">{item.country}</span>
                 </div>
                 <h3 class="text-xl font-bold font-heading text-gray-900 mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
                 <div class="space-y-2 text-base text-gray-600 mb-4">
@@ -65,7 +65,7 @@ const scholarships = [
                 </div>
               </div>
 
-              <a href="#" class="inline-block w-full text-center sm:text-left text-sm font-bold text-primary hover:underline mt-2">
+              <a href="#" class="inline-block w-full text-center sm:text-left text-base font-bold text-primary hover:underline mt-2">
                 Lihat Detail Program &rarr;
               </a>
             </div>

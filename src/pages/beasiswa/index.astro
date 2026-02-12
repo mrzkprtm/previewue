@@ -133,7 +133,7 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
             </div>
         </UnifiedHero>
 
-        <main class="container mx-auto px-6 py-8 transform -translate-y-8">
+        <main class="container mx-auto py-8 transform -translate-y-8">
             <!-- Filter Bar -->
             <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 mb-8 relative z-20">
                 <form action="/beasiswa" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4" id="filterForm">
@@ -142,7 +142,7 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
 
                     <!-- Degree Filter -->
                     <div class="relative">
-                        <label class="block text-base font-bold text-slate-500 uppercase mb-1 ml-1">Jenjang</label>
+                        <label class="block text-xs md:text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Jenjang</label>
                         <select
                             name="degree"
                             class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
@@ -166,7 +166,7 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
 
                     <!-- Country Filter -->
                     <div class="relative">
-                        <label class="block text-base font-bold text-slate-500 uppercase mb-1 ml-1">Negara</label>
+                        <label class="block text-xs md:text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Negara</label>
                         <select
                             name="country"
                             class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
@@ -190,7 +190,7 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
 
                     <!-- Type Filter -->
                     <div class="relative">
-                        <label class="block text-base font-bold text-slate-500 uppercase mb-1 ml-1">Jenis Beasiswa</label>
+                        <label class="block text-xs md:text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Jenis Beasiswa</label>
                         <select
                             name="type"
                             class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
@@ -228,7 +228,7 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
 
             <!-- Result Count -->
             <div class="mb-6 flex items-center justify-between">
-                <h2 class="text-lg font-bold text-gray-800">
+                <h2 class="text-lg font-semibold text-gray-800">
                     {filteredScholarships.length} Beasiswa Ditemukan
                 </h2>
             </div>
@@ -248,9 +248,9 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Tidak ada data ditemukan</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Tidak ada data ditemukan</h3>
                         <p class="text-slate-500 mb-6">Coba ubah kata kunci atau filter pencarian Anda.</p>
-                        <a href="/beasiswa" class="text-primary font-bold hover:underline">
+                        <a href="/beasiswa" class="text-primary font-medium hover:underline">
                             Lihat Semua Beasiswa
                         </a>
                     </div>
@@ -270,11 +270,11 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
         <!-- CTA -->
         <section class="bg-white py-16 border-t border-slate-100 mt-12">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold font-heading text-gray-900 mb-6">Butuh Bimbingan Meraih Beasiswa?</h2>
+                <h2 class="text-3xl font-semibold font-heading text-gray-900 mb-6">Butuh Bimbingan Meraih Beasiswa?</h2>
                 <p class="text-slate-600 mb-8 text-lg">Konsultan kami siap membantu review essay, persiapan interview, dan strategi aplikasi beasiswa impianmu.</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="/kontak" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-full transition-colors shadow-lg shadow-primary/30"> Konsultasi Gratis </a>
-                    <a href="/program" class="bg-white hover:bg-slate-50 text-slate-700 font-bold py-3 px-8 rounded-full border border-slate-200 transition-colors"> Lihat Program </a>
+                    <a href="/kontak" class="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-8 rounded-full transition-colors shadow-lg shadow-primary/30"> Konsultasi Gratis </a>
+                    <a href="/program" class="bg-white hover:bg-slate-50 text-slate-700 font-medium py-3 px-8 rounded-full border border-slate-200 transition-colors"> Lihat Program </a>
                 </div>
             </div>
         </section>

@@ -35,11 +35,11 @@ const programs = [
 ];
 ---
 
-<section class="py-20 bg-white">
-    <div class="container mx-auto px-6">
+<section class="py-12 lg:py-20 bg-white">
+    <div class="container mx-auto">
         <div class="text-center mb-16">
-            <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-ultimate-blue text-base font-bold uppercase tracking-wider mb-4"> Program Terbaik </span>
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy">Program Unggulan Ultimate Education</h2>
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-ultimate-blue text-xs md:text-sm font-semibold uppercase tracking-wider mb-4"> Program Terbaik </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-semibold font-heading text-ultimate-navy">Program Unggulan Ultimate Education</h2>
         </div>
 
         <div class="space-y-12">
@@ -53,10 +53,10 @@ const programs = [
                             </div>
                         </div>
                         <div class="w-full md:w-1/2 space-y-6">
-                            <span class="inline-block py-1 px-3 rounded-md bg-ultimate-yellow/20 text-ultimate-navy text-base font-bold uppercase tracking-wider">{program.badge}</span>
-                            <h3 class="text-2xl md:text-3xl font-bold font-heading text-ultimate-navy leading-tight">{program.title}</h3>
+                            <span class="inline-block py-1 px-3 rounded-md bg-ultimate-yellow/20 text-ultimate-navy text-xs md:text-sm font-semibold uppercase tracking-wider">{program.badge}</span>
+                            <h3 class="text-2xl md:text-3xl font-semibold font-heading text-ultimate-navy leading-tight">{program.title}</h3>
                             <p class="text-gray-600 text-lg leading-relaxed">{program.description}</p>
-                            <a href={program.link} class="inline-flex items-center gap-2 text-ultimate-blue font-bold hover:text-ultimate-navy transition-colors group/link">
+                            <a href={program.link} class="inline-flex items-center gap-2 text-ultimate-blue font-medium hover:text-ultimate-navy transition-colors group/link">
                                 {program.cta}
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

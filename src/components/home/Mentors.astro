@@ -18,59 +18,59 @@ const {
       name: "David Wijaya",
       role: "IELTS Expert (Band 8.5)",
       image: "https://placehold.co/150x150",
-      university: "Master at University of Melbourne"
+      university: "Master at University of Melbourne",
     },
     {
       name: "Clara Sinta",
       role: "SAT Math Specialist",
       image: "https://placehold.co/150x150",
-      university: "Bachelor at NTU Singapore"
+      university: "Bachelor at NTU Singapore",
     },
     {
       name: "Budi Santoso",
       role: "GMAT Verbal Tutor",
       image: "https://placehold.co/150x150",
-      university: "MBA at Wharton"
+      university: "MBA at Wharton",
     },
     {
       name: "Grace Natalie",
       role: "Essay Consultant",
       image: "https://placehold.co/150x150",
-      university: "Master at Columbia University"
-    }
-  ]
+      university: "Master at Columbia University",
+    },
+  ],
 } = Astro.props;
 ---
 
-<section class="py-20 bg-gray-50">
-  <div class="container mx-auto px-4">
+<section class="py-12 lg:py-20 bg-gray-50">
+  <div class="container mx-auto">
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-3xl lg:text-4xl font-bold font-heading text-ue-dark mb-4">
+      <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold font-heading text-ue-dark mb-4">
         Belajar dari <span class="text-primary">Mentor Berpengalaman Internasional</span>
       </h2>
-      <p class="text-gray-600 text-lg font-body leading-relaxed">
-        Semua mentor kami memiliki pengalaman mengajar tes internasional dan memahami strategi terbaru untuk membantu siswa mencapai skor terbaik.
-      </p>
+      <p class="text-gray-600 text-[15px] md:text-base lg:text-lg font-body leading-relaxed">Semua mentor kami memiliki pengalaman mengajar tes internasional dan memahami strategi terbaru untuk membantu siswa mencapai skor terbaik.</p>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-      {mentors.map((mentor) => (
-        <div class="bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300">
-          <div class="relative h-48 overflow-hidden">
-            <img src={mentor.image} alt={mentor.name} class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-            <div class="absolute bottom-4 left-4 text-white">
-              <p class="text-xs font-semibold uppercase tracking-wider bg-primary px-2 py-1 rounded-sm inline-block mb-1">{mentor.role}</p>
+      {
+        mentors.map((mentor) => (
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300">
+            <div class="relative h-48 overflow-hidden">
+              <img src={mentor.image} alt={mentor.name} class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div class="absolute bottom-4 left-4 text-white">
+                <p class="text-xs md:text-sm font-semibold uppercase tracking-wider bg-primary px-2 py-1 rounded-sm inline-block mb-1">{mentor.role}</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1 font-heading">{mentor.name}</h3>
+              <p class="text-sm text-gray-500 mb-3">{mentor.university}</p>
+              <div class="w-full h-px bg-gray-100 my-4" />
+              <button class="text-primary text-xs md:text-sm font-semibold hover:underline">Lihat Profil</button>
             </div>
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-1 font-heading">{mentor.name}</h3>
-            <p class="text-sm text-gray-500 mb-3">{mentor.university}</p>
-            <div class="w-full h-px bg-gray-100 my-4"></div>
-            <button class="text-primary text-sm font-semibold hover:underline">Lihat Profil</button>
-          </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>

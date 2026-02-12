@@ -31,9 +31,9 @@ const mentors = [
 ];
 ---
 
-<section class="py-16 md:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy text-center mb-12">Mentor Terbaik Ultimate Education</h2>
+<section class="py-12 lg:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 xl:px-0">
+        <h2 class="font-heading font-semibold text-2xl md:text-3xl lg:text-4xl text-ultimate-navy text-center mb-12">Mentor Terbaik Ultimate Education</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {
                 mentors.map((mentor) => (
@@ -42,9 +42,9 @@ const mentors = [
                             <img alt={mentor.name} class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" src={mentor.image} />
                         </div>
                         <div class="p-6">
-                            <span class="bg-ultimate-blue/10 text-ultimate-blue text-base font-bold px-3 py-1 rounded-full uppercase">{mentor.title}</span>
-                            <h4 class="font-bold text-lg mt-3 text-ultimate-navy">{mentor.name}</h4>
-                            <p class="text-slate-500 text-base mb-4">{mentor.university}</p>
+                            <span class="bg-ultimate-blue/10 text-ultimate-blue text-sm font-medium px-3 py-1 rounded-full uppercase">{mentor.title}</span>
+                            <h4 class="font-semibold text-lg mt-3 text-ultimate-navy">{mentor.name}</h4>
+                            <p class="text-slate-500 text-sm mb-4">{mentor.university}</p>
                             <ul class="text-base space-y-2 border-t pt-4 border-slate-100">
                                 {mentor.qualifications.map((q) => (
                                     <li class="flex items-center gap-2">

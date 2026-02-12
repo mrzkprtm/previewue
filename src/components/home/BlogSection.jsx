@@ -53,8 +53,8 @@ export default function BlogSection() {
                   key={cat.id}
                   onClick={() => setActiveTab(cat.id)}
                   className={`px-6 py-2.5 rounded-full text-base font-semibold transition-all duration-300 whitespace-nowrap ${activeTab === cat.id
-                      ? 'bg-[#145da0] text-white shadow-md'
-                      : 'text-gray-600 hover:bg-gray-200'
+                    ? 'bg-[#145da0] text-white shadow-md'
+                    : 'text-gray-600 hover:bg-gray-200'
                     }`}
                 >
                   {cat.label}
@@ -78,10 +78,10 @@ export default function BlogSection() {
                 <h3 className="text-xl font-bold font-heading text-gray-900 mb-3 group-hover:text-[#145da0] transition-colors line-clamp-2">
                   {post.title}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-gray-500 text-base leading-relaxed mb-4 line-clamp-3">
                   {post.excerpt}
                 </p>
-                <a href="#" className="inline-flex items-center text-[#145da0] font-semibold text-sm hover:underline">
+                <a href="#" className="inline-flex items-center text-[#145da0] font-semibold text-base hover:underline">
                   Baca Selengkapnya
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                 </a>

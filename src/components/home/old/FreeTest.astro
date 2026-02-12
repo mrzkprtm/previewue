@@ -7,17 +7,17 @@ const testPrograms = [
 ];
 ---
 
-<section class="py-20 bg-hero-gradient relative overflow-hidden">
+<section class="py-12 lg:py-20 bg-hero-gradient relative overflow-hidden">
     <!-- Abstract Background -->
     <div class="absolute inset-0 opacity-10">
         <div class="absolute -top-20 -left-20 w-96 h-96 bg-ultimate-blue rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 right-0 w-80 h-80 bg-ultimate-yellow rounded-full blur-3xl"></div>
     </div>
 
-    <div class="container mx-auto px-6 relative z-10">
+    <div class="container mx-auto relative z-10">
         <div class="text-center mb-16">
-            <span class="inline-block py-1 px-3 rounded-full bg-white/10 text-ultimate-yellow text-base font-bold uppercase tracking-wider mb-4 border border-white/20"> Free Test </span>
-            <h2 class="text-3xl md:text-4xl font-bold font-heading text-white mb-4">Cek Kemampuan Bahasa Inggrismu</h2>
+            <span class="inline-block py-1 px-3 rounded-full bg-white/10 text-ultimate-yellow text-xs md:text-sm font-semibold uppercase tracking-wider mb-4 border border-white/20"> Free Test </span>
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-semibold font-heading text-white mb-4">Cek Kemampuan Bahasa Inggrismu</h2>
             <p class="text-blue-100 text-lg">Ikuti Tes Gratis Sekarang</p>
         </div>
 
@@ -25,10 +25,10 @@ const testPrograms = [
             {
                 testPrograms.map((test) => (
                     <a href={test.link} target="_blank" rel="noopener noreferrer" class="group bg-white rounded-xl p-6 hover:-translate-y-2 transition-all duration-300 shadow-xl hover:shadow-2xl">
-                        <div class={`w-12 h-12 rounded-lg ${test.color} flex items-center justify-center text-white text-xl font-bold mb-4 shadow-lg group-hover:scale-110 transition-transform`}>{test.name.charAt(0)}</div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">{test.name}</h4>
-                        <p class="text-gray-500 text-base mb-6 min-h-[40px]">{test.desc}</p>
-                        <div class="flex items-center text-ultimate-blue font-bold text-base group-hover:gap-2 transition-all">
+                        <div class={`w-12 h-12 rounded-lg ${test.color} flex items-center justify-center text-white text-xl font-semibold mb-4 shadow-lg group-hover:scale-110 transition-transform`}>{test.name.charAt(0)}</div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">{test.name}</h4>
+                        <p class="text-gray-500 text-sm mb-6 min-h-[40px]">{test.desc}</p>
+                        <div class="flex items-center text-ultimate-blue font-medium text-base group-hover:gap-2 transition-all">
                             Ambil Tes
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

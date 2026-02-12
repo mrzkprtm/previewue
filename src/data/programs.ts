@@ -6,188 +6,311 @@ export interface ProgramProgram {
     target: string;
     duration: string;
     includes: string;
-    image?: string;
+    image: string;
+    categories: string[];
     benefits?: string[];
     curriculum?: string[];
     price?: string;
     priceNote?: string;
     scheduleImage?: string;
-    testimonials?: any[];
-    faqs?: any[];
 }
 
-export interface ProgramCategory {
-    title: string;
-    programs: ProgramProgram[];
-}
+export const programsData: ProgramProgram[] = [
+    // --- PERSIAPAN TES ---
+    {
+        name: "Ultimate IELTS",
+        slug: "ielts",
+        description: "Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja di luar negeri.",
+        target: "Mahasiswa & profesional muda",
+        duration: "4–8 Minggu",
+        includes: "Simulasi, soal, sertifikat",
+        image: "/program/ielts.png",
+        categories: ["Persiapan TES", "Bahasa Inggris"]
+    },
+    {
+        name: "Ultimate IELTS WHV",
+        slug: "ielts-whv",
+        description: "Persiapan IELTS General Training khusus untuk pengajuan Working Holiday Visa Australia.",
+        target: "Calon peserta WHV Australia",
+        duration: "4–6 Minggu",
+        includes: "Simulasi IELTS, bimbingan dokumen, komunitas",
+        image: "/program/ielts.png",
+        categories: ["Bahasa Inggris"]
+    },
+    {
+        name: "Ultimate TOEFL iBT",
+        slug: "toefl-ibt",
+        description: "Strategi dan latihan TOEFL iBT untuk skor tinggi guna pendaftaran universitas global.",
+        target: "Calon mahasiswa (USA/Canada)",
+        duration: "4–8 Minggu",
+        includes: "Simulasi, bank soal, sertifikat",
+        image: "/program/toefl.png",
+        categories: ["Persiapan TES", "Bahasa Inggris"]
+    },
+    {
+        name: "Ultimate TOEFL ITP",
+        slug: "toefl-itp",
+        description: "Bimbingan TOEFL ITP untuk kebutuhan beasiswa dalam negeri dan syarat kelulusan.",
+        target: "Mahasiswa & pencari kerja lokal",
+        duration: "4–6 Minggu",
+        includes: "Simulasi, tips & trik, sertifikat",
+        image: "/program/toefl.png",
+        categories: ["Persiapan TES", "Bahasa Inggris"]
+    },
+    {
+        name: "Ultimate TOEIC",
+        slug: "toeic",
+        description: "Persiapan tes TOEIC untuk mengukur kemampuan bahasa Inggris dalam lingkungan kerja.",
+        target: "Profesional & karyawan perusahaan",
+        duration: "4–6 Minggu",
+        includes: "Fokus Listening & Reading, simulasi",
+        image: "/program/toeic.png",
+        categories: ["Persiapan TES", "Bahasa Inggris"]
+    },
+    {
+        name: "Ultimate PTE",
+        slug: "pte",
+        description: "Bimbingan Pearson Test of English (PTE) Academic untuk studi dan migrasi.",
+        target: "Calon mahasiswa (Aussie/UK/NZ)",
+        duration: "4–8 Minggu",
+        includes: "AI scoring simulation, feedback",
+        image: "/program/pte.png",
+        categories: ["Persiapan TES", "Bahasa Inggris"]
+    },
+    {
+        name: "Ultimate GMAT",
+        slug: "gmat",
+        description: "Persiapan GMAT intensif untuk pendaftaran sekolah bisnis dan program MBA.",
+        target: "Calon mahasiswa MBA/Bisnis",
+        duration: "6–10 Minggu",
+        includes: "Quant & Verbal prep, simulasi CAT",
+        image: "/program/gmat.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate GRE",
+        slug: "gre",
+        description: "Bimbingan tes GRE untuk pendaftaran program Master dan PhD di luar negeri.",
+        target: "Calon mahasiswa Pascasarjana",
+        duration: "6–10 Minggu",
+        includes: "Vocab building, Math prep, mock test",
+        image: "/program/gre.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate SAT",
+        slug: "sat",
+        description: "Persiapan Digital SAT untuk pendaftaran kuliah S1 di universitas Amerika Serikat.",
+        target: "Pelajar SMA (Undergraduate USA)",
+        duration: "8–12 Minggu",
+        includes: "Simulasi Digital SAT, bank soal",
+        image: "/program/sat.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate ACT",
+        slug: "act",
+        description: "Alternatif tes SAT untuk pendaftaran kuliah di Amerika Serikat dan Kanada.",
+        target: "Pelajar SMA (Undergraduate USA)",
+        duration: "8–12 Minggu",
+        includes: "Science section prep, simulasi",
+        image: "/program/sat.png", // Fallback to SAT image
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate GED",
+        slug: "ged",
+        description: "Persiapan ujian kesetaraan SMA internasional untuk melanjutkan studi ke luar negeri.",
+        target: "Siswa tanpa ijazah SMA formal",
+        duration: "3–6 Bulan",
+        includes: "Materi 4 subjek, ujian resmi",
+        image: "/program/ged.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate IGCSE",
+        slug: "igcse",
+        description: "Bimbingan kurikulum internasional Cambridge untuk siswa menengah pertama.",
+        target: "Siswa Grade 9-10",
+        duration: "Program Pendampingan",
+        includes: "Past papers, subject tutoring",
+        image: "/program/caie.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate A-LEVEL",
+        slug: "alevel",
+        description: "Persiapan ujian standar emas internasional untuk masuk universitas top dunia.",
+        target: "Siswa Grade 11-12",
+        duration: "1–2 Tahun",
+        includes: "AS & A2 level prep, materi lengkap",
+        image: "/program/alevel.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate O-LEVEL",
+        slug: "olevel",
+        description: "Bimbingan persiapan ujian Ordinary Level untuk kualifikasi pendidikan menengah.",
+        target: "Siswa Grade 9-10",
+        duration: "1–2 Tahun",
+        includes: "Materi Cambridge/Pearson, latihan soal",
+        image: "/program/olevel.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate LSAT",
+        slug: "lsat",
+        description: "Persiapan tes masuk sekolah hukum terkemuka di Amerika Serikat dan Kanada.",
+        target: "Calon mahasiswa hukum",
+        duration: "8–12 Minggu",
+        includes: "Logic games prep, reading comp",
+        image: "/program/lsat.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate AS-Level",
+        slug: "aslevel",
+        description: "Bimbingan tahun pertama kualifikasi A-Level untuk akses pendidikan tinggi.",
+        target: "Siswa Grade 11",
+        duration: "1 Tahun",
+        includes: "Materi AS subjek, latihan ujian",
+        image: "/program/alevel.png", // Use alevel.png
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate IB",
+        slug: "ib",
+        description: "Pendampingan kurikulum International Baccalaureate untuk meraih Diploma Program.",
+        target: "Siswa sekolah IB",
+        duration: "1–2 Tahun",
+        includes: "IA & EE mentoring, subject tutoring",
+        image: "/program/ib.png",
+        categories: ["Persiapan TES"]
+    },
 
-export const programsData: ProgramCategory[] = [
+    // --- PROGRAM BAHASA ---
     {
-        title: "Persiapan Tes Internasional",
-        programs: [
-            {
-                name: "Ultimate IELTS",
-                slug: "ielts",
-                description: "Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja",
-                target: "🎯 Mahasiswa & profesional muda",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&q=80",
-                benefits: [
-                    "Guaranteed Score Improvement (Garansi Peningkatan Skor)",
-                    "Native Speaker & Expert Tutors (Pengajar Ahli & Penutur Asli)",
-                    "Comprehensive Study Material (Materi Belajar Lengkap)",
-                    "Unlimited Practice Tests (Latihan Soal Tanpa Batas)",
-                    "Personalized Feedback (Umpan Balik Personal)"
-                ],
-                price: "Rp 2.225.000",
-                priceNote: "per level / 20 pertemuan",
-                curriculum: [
-                    "Listening Strategies & Practice",
-                    "Reading Techniques (Skimming & Scanning)",
-                    "Writing Task 1 & 2 In-depth Analysis",
-                    "Speaking Coherence & Fluency Drill",
-                    "Full Mock Tests & Review"
-                ]
-            },
-            {
-                name: "Ultimate TOEFL",
-                slug: "toefl",
-                description: "Persiapan TOEFL intensif untuk kuliah dan beasiswa keluar negeri",
-                target: "🎯 Calon mahasiswa MBA",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1499750310159-5254f4121c6d?w=800&q=80"
-            },
-            {
-                name: "Ultimate GMAT",
-                slug: "gmat",
-                description: "Persiapan GMAT intensif untuk lanjut kuliah S2 bisnis di luar negeri",
-                target: "🎯 Calon mahasiswa MBA",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
-            },
-            {
-                name: "Ultimate GRE",
-                slug: "gre",
-                description: "Persiapan GRE intensif untuk lanjut kuliah S2 ke luar negeri",
-                target: "🎯 Mahasiswa tingkat akhir & lulusan S1",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80"
-            },
-            {
-                name: "Ultimate SAT",
-                slug: "sat",
-                description: "Bimbingan intensif tes SAT untuk persiapan kuliah keluar negeri",
-                target: "🎯 Pelajar SMA & calon mahasiswa",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1510531704581-5b2870972060?w=800&q=80"
-            },
-            {
-                name: "Ultimate PTE",
-                slug: "pte",
-                description: "Bimbingan PTE intensif untuk kuliah dan kerja di luar negeri",
-                target: "🎯 Calon Mahasiswa",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80"
-            },
-        ],
+        name: "Ultimate BIPA",
+        slug: "bipa",
+        description: "Kursus Bahasa Indonesia bagi penutur asing untuk kebutuhan profesional dan harian.",
+        target: "Warga asing & ekspatriat",
+        duration: "4–8 Minggu",
+        includes: "Percakapan, budaya, sertifikat",
+        image: "/program/bipa.png",
+        categories: ["Program Bahasa"]
     },
     {
-        title: "Program Bahasa Asing",
-        programs: [
-            {
-                name: "Ultimate JLPT",
-                slug: "jlpt",
-                description: "Bimbingan JLPT intensif untuk lulus ujian dan raih peluang studi atau kerja di Jepang",
-                target: "🎯 Pelajar, pencari kerja & peminat studi ke Jepang",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1524485369048-b572059369a9?w=800&q=80"
-            },
-            {
-                name: "Ultimate HSK",
-                slug: "hsk",
-                description: "Bimbingan HSK intensif untuk lulus ujian dan lanjut studi atau kerja di Tiongkok",
-                target: "🎯 Pelajar, mahasiswa & profesional",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1548625361-9876aa45c111?w=800&q=80"
-            },
-            {
-                name: "Ultimate TOPIK",
-                slug: "topik",
-                description: "Bimbingan TOPIK intensif untuk lulus ujian dan lanjut studi atau kerja di Korea Selatan",
-                target: "🎯 Mahasiswa & profesional muda",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1517650862287-d5377f0295d8?w=800&q=80"
-            },
-            {
-                name: "Ultimate DELF",
-                slug: "delf",
-                description: "Bimbingan DELF intensif untuk lulus ujian dan lanjut studi atau kerja di negara berbahasa Prancis",
-                target: "🎯 Pelajar, mahasiswa & profesional",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1534570122623-99e8378a9aa7?w=800&q=80"
-            },
-            {
-                name: "Ultimate TestDaF",
-                slug: "testdaf",
-                description: "Bimbingan TestDaF intensif untuk lulus ujian dan lanjut kuliah di Jerman",
-                target: "🎯 Pelajar & mahasiswa yang ingin kuliah di Jerman",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80"
-            },
-        ],
+        name: "Ultimate DELF",
+        slug: "delf",
+        description: "Persiapan ujian sertifikat bahasa Prancis tingkat internasional (A1-B2).",
+        target: "Peminat studi/kerja di Prancis",
+        duration: "4–8 Minggu",
+        includes: "Penutur asli, simulasi ujian",
+        image: "/program/delf.png",
+        categories: ["Program Bahasa"]
     },
     {
-        title: "Program Khusus",
-        programs: [
-            {
-                name: "Ultimate Scholarship",
-                slug: "beasiswa",
-                description: "Bimbingan Persiapan Beasiswa untuk Masuk Perguruan Tinggi Negeri",
-                target: "🎯 Pelajar dan Mahasiswa",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80"
-            },
-            {
-                name: "General English",
-                slug: "general-english",
-                description: "Kelas General English intensif untuk mahir berkomunikasi dalam bahasa Inggris sehari-hari",
-                target: "🎯 Pemula yang ingin lancar berbahasa Inggris",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
-            },
-            {
-                name: "Business English",
-                slug: "business-english",
-                description: "Kelas Business English intensif untuk lancar komunikasi profesional di dunia kerja",
-                target: "🎯 Karyawan, pebisnis, & profesional muda",
-                duration: "🕒 Durasi 4–8 minggu",
-                includes: "🎁 Simulasi, soal, sertifikat",
-                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80"
-            },
-            {
-                name: "Ultimate BIPA",
-                slug: "bipa",
-                description: "Intensive BIPA class for fluency in Indonesian for daily life & work",
-                target: "🎯 Students, expatriates, & foreign professionals",
-                duration: "🕒 Duration: 4–8 weeks",
-                includes: "🎁 Simulations, exercises, certificate",
-                image: "https://images.unsplash.com/photo-1572911229712-b9b2eb853ce2?w=800&q=80"
-            },
-        ],
+        name: "Ultimate HSK",
+        slug: "hsk",
+        description: "Bimbingan intensif bahasa Mandarin untuk persiapan ujian HSK level 1-6.",
+        target: "Peminat studi/kerja di Tiongkok",
+        duration: "6–12 Minggu",
+        includes: "Karakter Hanzi, bank soal",
+        image: "/program/hsk.png",
+        categories: ["Program Bahasa"]
     },
+    {
+        name: "Ultimate JLPT",
+        slug: "jlpt",
+        description: "Persiapan ujian kemampuan bahasa Jepang (JLPT) level N5 hingga N1.",
+        target: "Peminat studi/kerja di Jepang",
+        duration: "6–12 Minggu",
+        includes: "Kanji & Grammar, latihan soal",
+        image: "/program/jlpt.png",
+        categories: ["Program Bahasa"]
+    },
+    {
+        name: "Ultimate TesDAF",
+        slug: "testdaf",
+        description: "Persiapan bahasa Jerman tingkat lanjut untuk syarat masuk perguruan tinggi di Jerman.",
+        target: "Mahasiswa ke Jerman",
+        duration: "8–16 Minggu",
+        includes: "Level B2-C1, simulasi ujian",
+        image: "/program/testdaf.png",
+        categories: ["Program Bahasa"]
+    },
+    {
+        name: "Ultimate TOPIK",
+        slug: "topik",
+        description: "Bimbingan bahasa Korea untuk persiapan ujian TOPIK I dan TOPIK II.",
+        target: "Mahasiswa & pekerja ke Korea",
+        duration: "6–12 Minggu",
+        includes: "Latihan soal, kosa kata intensif",
+        image: "/program/topik.png",
+        categories: ["Program Bahasa"]
+    },
+
+    // --- KHUSUS / LAINNYA ---
+    {
+        name: "Ultimate Scholarship",
+        slug: "beasiswa",
+        description: "Mentoring komprehensif untuk persiapan aplikasi beasiswa luar negeri.",
+        target: "Pencari beasiswa",
+        duration: "3–6 Bulan",
+        includes: "Mentoring esai, CV, interview",
+        image: "/program/Scholarship.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate General English",
+        slug: "general-english",
+        description: "Kursus bahasa Inggris umum untuk meningkatkan kepercayaan diri dalam berkomunikasi.",
+        target: "Pelajar & karyawan",
+        duration: "4–12 Minggu",
+        includes: "Speaking focus, grammar",
+        image: "/program/ge.png",
+        categories: ["Bahasa Inggris", "Program Bahasa"]
+    },
+    {
+        name: "Ultimate Business English",
+        slug: "business-english",
+        description: "Keterampilan bahasa Inggris praktis untuk presentasi, negosiasi, dan email bisnis.",
+        target: "Profesional & eksekutif",
+        duration: "4–8 Minggu",
+        includes: "Presentation skills, meeting skills",
+        image: "/program/be.png",
+        categories: ["Bahasa Inggris", "Program Bahasa"]
+    },
+    {
+        name: "Ultimate UTBK",
+        slug: "utbk",
+        description: "Persiapan intensif UTBK SNBT untuk masuk perguruan tinggi negeri di Indonesia.",
+        target: "Lulusan SMA (SNBT)",
+        duration: "6–12 Minggu",
+        includes: "TPS & TKA, Try out, analisis",
+        image: "/program/utbk.png",
+        categories: ["Persiapan TES"]
+    },
+    {
+        name: "Ultimate Ausbildung",
+        slug: "ausbildung",
+        description: "Program persiapan vokasi ke Jerman yang menggabungkan belajar dan bekerja.",
+        target: "Lulusan SMA/SMK",
+        duration: "6–12 Bulan",
+        includes: "Bahasa Jerman B1, kontrak, visa",
+        image: "/program/ausbildung.png",
+        categories: ["Program Bahasa"]
+    },
+    {
+        name: "Ultimate TPA",
+        slug: "tpa",
+        description: "Bimbingan Tes Potensi Akademik untuk pendaftaran S2/S3 dan seleksi kerja.",
+        target: "Calon mahasiswa pascasarjana",
+        duration: "4–6 Minggu",
+        includes: "Logika, Numerik, Verbal prep",
+        image: "/program/utbk.png", // Fallback
+        categories: ["Persiapan TES"]
+    }
 ];
 
-export const allPrograms = programsData.flatMap(category => category.programs);
+export const allPrograms = programsData;

@@ -3,54 +3,82 @@ import React, { useState } from 'react';
 const megaMenuData = [
   {
     id: 'terfavorit',
-    label: 'Program Terfavorit',
+    label: 'Program terfavorit',
+    type: 'featured',
     items: [
       { name: 'Ultimate IELTS', href: '/program/ielts', image: '/program/ielts.png', desc: 'Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja' },
       { name: 'Ultimate SAT', href: '/program/sat', image: '/program/sat.png', desc: 'Bimbingan intensif tes SAT untuk persiapan kuliah ke luar negeri' },
       { name: 'Ultimate GRE', href: '/program/gre', image: '/program/gre.png', desc: 'Persiapan lengkap GRE untuk program Master di luar negeri' },
-      { name: 'Ultimate TOEFL', href: '/program/toefl', image: '/program/toefl.png', desc: 'Strategi dan latihan TOEFL iBT untuk skor tinggi' }
     ]
   },
   {
     id: 'kuliah-luar-negeri',
-    label: 'Kuliah di Luar Negeri',
-    items: [
-      { name: 'Persiapan Beasiswa', href: '/program/beasiswa', image: '/program/ausbildung.png', desc: 'Panduan lengkap mendapatkan beasiswa kuliah di luar negeri' },
-      { name: 'Study in USA', href: '/study-usa', image: '/program/sat.png', desc: 'Konsultasi kuliah di Amerika Serikat' },
-      { name: 'Study in UK', href: '/study-uk', image: '/program/ielts.png', desc: 'Konsultasi kuliah di Inggris' },
-      { name: 'Study in Australia', href: '/study-australia', image: '/program/pte.png', desc: 'Konsultasi kuliah di Australia' }
-    ]
+    label: 'Kuliah Luar Negeri',
+    type: 'split',
+    title: 'Kuliah di Luar Negeri',
+    desc: 'Layanan konsultasi, bimbingan, dan persiapan dokumen untuk kuliah ke luar negeri melalui jalur beasiswa maupun mandiri. Untuk S1, S2, hingga S3, semua lengkap!',
+    featured: {
+      name: 'Ultimate Scholarship',
+      href: '/program/scholarship',
+      image: '/program/Scholarship.png',
+      desc: 'Bimbingan persiapan beasiswa luar negeri dari hulu ke hilir.'
+    }
   },
   {
     id: 'persiapan-tes',
-    label: 'Persiapan Tes',
+    label: 'Persiapan tes',
+    type: 'list-split',
+    title: 'Persiapan Tes',
+    desc: 'Layanan bimbingan dan pendaftaran tes masuk kuliah luar negeri, seperti SAT, GMAT, GRE, ACT, dan lainnya',
     items: [
-      { name: 'IELTS', href: '/program/ielts', image: '/program/ielts.png', desc: 'International English Language Testing System' },
-      { name: 'TOEFL', href: '/program/toefl', image: '/program/toefl.png', desc: 'Test of English as a Foreign Language' },
-      { name: 'SAT', href: '/program/sat', image: '/program/sat.png', desc: 'Scholastic Assessment Test' },
-      { name: 'GRE', href: '/program/gre', image: '/program/gre.png', desc: 'Graduate Record Examination' },
-      { name: 'GMAT', href: '/program/gmat', image: '/program/gmat.png', desc: 'Graduate Management Admission Test' },
-      { name: 'PTE', href: '/program/pte', image: '/program/pte.png', desc: 'Pearson Test of English' }
+      { name: 'Ultimate IELTS', href: '/program/ielts' },
+      { name: 'Ultimate SAT', href: '/program/sat' },
+      { name: 'Ultimate GMAT', href: '/program/gmat' },
+      { name: 'Ultimate GRE', href: '/program/gre' },
+      { name: 'Ultimate TOEFL', href: '/program/toefl' },
+      { name: 'Ultimate A-LEVEL', href: '/program/alevel' },
+      { name: 'Ultimate IB', href: '/program/ib' },
+      { name: 'Ultimate Scholarship', href: '/program/scholarship' },
+      { name: 'Ultimate IGCSE', href: '/program/caie' },
+      { name: 'Ultimate GED', href: '/program/ged' },
+      { name: 'Ultimate ACT', href: '/program/act' },
+      { name: 'Ultimate PTE', href: '/program/pte' },
+      { name: 'Ultimate TOEIC', href: '/program/toeic' },
+      { name: 'Ultimate O-LEVEL', href: '/program/olevel' },
+      { name: 'Ultimate LSAT', href: '/program/lsat' },
+      { name: 'Ultimate AS-Level', href: '/program/alevel' },
     ]
   },
   {
     id: 'kelas-bahasa',
-    label: 'Kelas Bahasa',
+    label: 'Kelas bahasa',
+    type: 'list-split',
+    title: 'Kelas Bahasa',
+    desc: 'Layanan bimbingan bahasa hingga pendaftaran tes proficiency untuk bahasa inggris dan bahasa asing lainnya',
     items: [
-      { name: 'JLPT - Bahasa Jepang', href: '/program/jlpt', image: '/program/jlpt.png', desc: 'Japanese Language Proficiency Test' },
-      { name: 'HSK - Bahasa Mandarin', href: '/program/hsk', image: '/program/hsk.png', desc: 'Hanyu Shuiping Kaoshi (Chinese Proficiency)' },
-      { name: 'TOPIK - Bahasa Korea', href: '/program/topik', image: '/program/topik.png', desc: 'Test of Proficiency in Korean' },
-      { name: 'DELF - Bahasa Prancis', href: '/program/delf', image: '/program/delf.png', desc: 'Diplome d Etudes en Langue Francaise' }
+      { name: 'Ultimate BIPA', href: '/program/bipa' },
+      { name: 'Ultimate HSK', href: '/program/hsk' },
+      { name: 'Ultimate JLPT', href: '/program/jlpt' },
+      { name: 'Ultimate TOPIK', href: '/program/topik' },
+      { name: 'Ultimate DELF', href: '/program/delf' },
+      { name: 'Ultimate TesDAF', href: '/program/testdaf' },
+      { name: 'Business English', href: '/program/be' },
+      { name: 'General English', href: '/program/ge' },
     ]
   },
   {
     id: 'lainnya',
     label: 'Lainnya',
+    type: 'list-split',
+    title: 'Lainnya',
+    desc: 'Beragam kelas bimbingan lain yang berguna untuk menunjang studi kamu',
     items: [
-      { name: 'General English', href: '/program/general-english', image: '/program/ge.png', desc: 'Kursus Bahasa Inggris untuk semua level' },
-      { name: 'Business English', href: '/program/business-english', image: '/program/be.png', desc: 'Bahasa Inggris untuk profesional' },
-      { name: 'BIPA', href: '/program/bipa', image: '/program/bipa.png', desc: 'Bahasa Indonesia bagi Penutur Asing' },
-      { name: 'Corporate Training', href: '/corporate', image: '/program/be.png', desc: 'Program pelatihan khusus perusahaan' }
+      { name: 'Ultimate UTBK', href: '/program/utbk' },
+      { name: 'Ultimate Ausbildung', href: '/program/ausbildung' },
+      { name: 'Ultimate Webinar', href: '/webinar' },
+      { name: 'IELTS Calculator', href: '/tools/ielts-calculator' },
+      { name: 'SAT Calculator', href: '/tools/sat-calculator' },
+      { name: 'Rasionalisasi SNBP', href: '/tools/snbp' },
     ]
   }
 ];
@@ -65,17 +93,17 @@ export default function MegaMenu({ isOpen, onClose }) {
       className="absolute top-full left-1/2 -translate-x-1/2 w-full bg-white rounded-2xl shadow-2xl z-50 animate-in fade-in slide-in-from-top-4 duration-300 overflow-hidden"
       onMouseLeave={onClose}
     >
-      <div className="flex flex-col lg:flex-row">
-        {/* Tabs Sidebar/Header */}
-        <div className="flex lg:flex-col bg-slate-50 lg:w-56 border-r border-slate-100">
+      <div className="flex flex-col lg:flex-row min-h-[400px]">
+        {/* Tabs Sidebar */}
+        <div className="flex lg:flex-col bg-slate-50 lg:w-64 border-r border-slate-100">
           {megaMenuData.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               onMouseEnter={() => setActiveTab(tab.id)}
-              className={`flex-1 lg:flex-initial py-3 px-5 text-base font-bold font-heading uppercase tracking-wider text-left transition-all duration-200 border-b lg:border-b-0 lg:border-l-4 ${activeTab === tab.id
+              className={`flex-1 lg:flex-initial py-4 px-6 text-base font-normal capitalize text-left transition-all duration-200 border-b lg:border-b-0 lg:border-l-4 ${activeTab === tab.id
                 ? 'bg-white text-ultimate-blue border-ultimate-blue'
-                : 'text-slate-500 hover:text-ultimate-blue hover:bg-white/50 border-transparent'
+                : 'text-slate-700 hover:text-ultimate-blue hover:bg-white/50 border-transparent'
                 }`}
             >
               {tab.label}
@@ -84,56 +112,96 @@ export default function MegaMenu({ isOpen, onClose }) {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 p-6 max-h-[60vh] overflow-y-auto">
-          {megaMenuData.map((tab) => (
-            <div
-              key={tab.id}
-              className={`${activeTab === tab.id ? 'block' : 'hidden'}`}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-4">
-                {tab.items.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.href}
-                    className="group relative flex items-center gap-3 p-2 rounded-xl overflow-hidden border border-slate-100 hover:border-ultimate-blue transition-all duration-300 hover:shadow-md bg-white"
-                  >
-                    {/* Square image */}
-                    <div className="w-16 h-16 shrink-0 overflow-hidden rounded-lg bg-slate-50">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
+        <div className="flex-1 p-8 overflow-y-auto">
+          <div className="max-w-6xl">
+            {megaMenuData.map((tab) => (
+              <div
+                key={tab.id}
+                className={`${activeTab === tab.id ? 'block animate-in fade-in duration-300' : 'hidden'}`}
+              >
+                {tab.type === 'featured' && (
+                  <div className="flex flex-col h-full">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                      {tab.items.map((item, index) => (
+                        <a key={index} href={item.href} className="group block max-w-[340px]">
+                          <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 mb-4 border border-slate-100 group-hover:border-ultimate-blue/30 transition-all">
+                            <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          </div>
+                          <h4 className="font-heading font-semibold text-slate-900 group-hover:text-ultimate-blue text-lg mb-2 transition-colors">
+                            {item.name}
+                          </h4>
+                          <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed font-sans">
+                            {item.desc}
+                          </p>
+                        </a>
+                      ))}
                     </div>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <h3 class="font-bold text-slate-800 group-hover:text-ultimate-blue mb-0.5 transition-colors font-heading text-base uppercase tracking-wide truncate">
-                        {item.name}
-                      </h3>
-                      <p className="text-base text-slate-500 leading-relaxed line-clamp-2 font-sans">
-                        {item.desc}
-                      </p>
+                    <div className="flex justify-center pt-4 border-t border-slate-100 mt-auto">
+                      <a href="/program" className="inline-flex items-center gap-2 px-6 py-2.5 bg-ultimate-blue text-white rounded-full font-semibold hover:bg-ultimate-blue/90 transition-all transform hover:scale-105 shadow-md">
+                        <span>Lihat Semua Program</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </a>
                     </div>
-                  </a>
-                ))}
-              </div>
+                  </div>
+                )}
 
-              {/* View All Programs Link */}
-              <div className="flex justify-center pt-3 border-t border-slate-100">
-                <a
-                  href="/program"
-                  className="group inline-flex items-center gap-2 px-5 py-2 text-ultimate-blue hover:text-white bg-white hover:bg-ultimate-blue border-2 border-ultimate-blue font-bold font-heading text-base uppercase tracking-wider rounded-lg transition-all duration-300"
-                >
-                  <span>Lihat Semua Program</span>
-                  <svg className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </a>
+                {tab.type === 'split' && (
+                  <div className="flex flex-col h-full">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-8 items-start">
+                      <div className="md:col-span-3 flex flex-col pt-2">
+                        <h3 className="font-heading font-semibold text-2xl text-slate-900 mb-4">{tab.title}</h3>
+                        <p className="text-slate-500 leading-relaxed mb-8 text-base">
+                          {tab.desc}
+                        </p>
+                        <a href="/program" className="w-fit inline-flex items-center gap-2 px-6 py-2.5 bg-ultimate-blue text-white rounded-full font-semibold hover:bg-ultimate-blue/90 transition-all shadow-md">
+                          <span>Lihat Semua Program</span>
+                        </a>
+                      </div>
+                      <div className="md:col-span-2">
+                        <a href={tab.featured.href} className="group block">
+                          <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100 mb-4 border border-slate-100 group-hover:border-ultimate-blue/30 transition-all">
+                            <img src={tab.featured.image} alt={tab.featured.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          </div>
+                          <h4 className="font-heading font-semibold text-slate-900 group-hover:text-ultimate-blue text-lg mb-2 transition-colors">
+                            {tab.featured.name}
+                          </h4>
+                          <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed font-sans">
+                            {tab.featured.desc}
+                          </p>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {tab.type === 'list-split' && (
+                  <div className="flex flex-col h-full">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-8 items-start">
+                      <div className="md:col-span-2">
+                        <h3 className="font-heading font-semibold text-2xl text-slate-900 mb-4">{tab.title}</h3>
+                        <p className="text-slate-500 leading-relaxed mb-6 text-base">
+                          {tab.desc}
+                        </p>
+                        <a href="/program" className="inline-flex items-center gap-2 px-6 py-2.5 bg-ultimate-blue text-white rounded-full font-semibold hover:bg-ultimate-blue/90 transition-all shadow-md">
+                          <span>Lihat Semua Program</span>
+                        </a>
+                      </div>
+                      <div className="md:col-span-3 grid grid-cols-2 gap-x-8 gap-y-3">
+                        {tab.items.map((item, idx) => (
+                          <a key={idx} href={item.href} className="text-slate-600 hover:text-ultimate-blue transition-colors flex items-center gap-2 group text-[15px]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-ultimate-blue transition-colors shrink-0"></span>
+                            <span className="truncate">{item.name}</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

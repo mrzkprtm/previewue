@@ -18,14 +18,14 @@ const testimonials = [
 ];
 ---
 
-<section class="py-16 md:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ultimate-navy text-center mb-12">Cerita Alumni Tentang Ultimate Education</h2>
+<section class="py-12 lg:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 xl:px-0">
+        <h2 class="font-heading font-semibold text-2xl md:text-3xl lg:text-4xl text-ultimate-navy text-center mb-12">Cerita Alumni Tentang Ultimate Education</h2>
         <div class="flex flex-wrap justify-center gap-3 mb-16">
-            <button class="bg-ultimate-blue text-white px-8 py-3 rounded-xl font-bold shadow-lg text-base">Ultimate IELTS</button>
-            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-base">Program Beasiswa</button>
-            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-base">Program Bahasa</button>
-            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all text-base">Program Persiapan</button>
+            <button class="bg-ultimate-blue text-white px-8 py-3 rounded-xl font-medium shadow-lg text-sm">Ultimate IELTS</button>
+            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-medium hover:bg-slate-200 transition-all text-sm">Program Beasiswa</button>
+            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-medium hover:bg-slate-200 transition-all text-sm">Program Bahasa</button>
+            <button class="bg-slate-100 text-slate-600 px-8 py-3 rounded-xl font-medium hover:bg-slate-200 transition-all text-sm">Program Persiapan</button>
         </div>
         <div class="grid md:grid-cols-3 gap-8">
             {
@@ -34,9 +34,9 @@ const testimonials = [
                         <div class="absolute -top-4 left-10 text-ultimate-blue/10">
                             <span class="material-symbols-outlined text-6xl">format_quote</span>
                         </div>
-                        <h4 class="font-bold text-lg mb-1">{t.name}</h4>
-                        <p class="text-ultimate-blue text-base font-bold mb-6 uppercase tracking-wider">{t.program}</p>
-                        <p class="text-slate-600 text-base leading-relaxed italic">"{t.text}"</p>
+                        <h4 class="font-semibold text-lg mb-1">{t.name}</h4>
+                        <p class="text-ultimate-blue text-xs md:text-sm font-semibold mb-6 uppercase tracking-wider">{t.program}</p>
+                        <p class="text-slate-600 text-sm leading-relaxed italic">"{t.text}"</p>
                     </div>
                 ))
             }

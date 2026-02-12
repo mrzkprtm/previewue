@@ -11,3 +11,12 @@ export const fetchWP = async (query: string, variables: Record<string, any> = {}
     throw error;
   }
 };
+export const WP_BASE = import.meta.env.PUBLIC_WP_BASE_URL; 
+// contoh: https://staging-u.ultimateducation.co.id
+
+export async function wpGet<T>(path: string): Promise<T> {
+  const url = `${WP_BASE}${path}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`WP REST error ${res.status}: ${url}`);
+  return res.json() as Promise<T>;
+}
