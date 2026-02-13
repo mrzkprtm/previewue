@@ -36,17 +36,17 @@ const megaMenuData = [
       { name: 'Ultimate GMAT', href: '/program/gmat' },
       { name: 'Ultimate GRE', href: '/program/gre' },
       { name: 'Ultimate TOEFL', href: '/program/toefl' },
-      { name: 'Ultimate A-LEVEL', href: '/program/alevel' },
+      { name: 'Ultimate A-LEVEL', href: '/program/a-level' },
       { name: 'Ultimate IB', href: '/program/ib' },
       { name: 'Ultimate Scholarship', href: '/program/scholarship' },
-      { name: 'Ultimate IGCSE', href: '/program/caie' },
+      { name: 'Ultimate IGCSE', href: '/program/igcse' },
       { name: 'Ultimate GED', href: '/program/ged' },
       { name: 'Ultimate ACT', href: '/program/act' },
       { name: 'Ultimate PTE', href: '/program/pte' },
       { name: 'Ultimate TOEIC', href: '/program/toeic' },
-      { name: 'Ultimate O-LEVEL', href: '/program/olevel' },
+      { name: 'Ultimate O-LEVEL', href: '/program/o-level' },
       { name: 'Ultimate LSAT', href: '/program/lsat' },
-      { name: 'Ultimate AS-Level', href: '/program/alevel' },
+      { name: 'Ultimate AS-Level', href: '/program/as-level' },
     ]
   },
   {
@@ -62,8 +62,8 @@ const megaMenuData = [
       { name: 'Ultimate TOPIK', href: '/program/topik' },
       { name: 'Ultimate DELF', href: '/program/delf' },
       { name: 'Ultimate TesDAF', href: '/program/testdaf' },
-      { name: 'Business English', href: '/program/be' },
-      { name: 'General English', href: '/program/ge' },
+      { name: 'Business English', href: '/program/business-english' },
+      { name: 'General English', href: '/program/general-english' },
     ]
   },
   {
