@@ -5,6 +5,7 @@ export interface ProgramData {
     subtitle: string;
     category: 'Persiapan TES' | 'Bahasa Inggris' | 'Program Bahasa';
     image: string;
+    programCardPic?: string;
     logoText?: string; // HTML string for the graphic logo
     themeColor?: string; // Tailwind class
     duration: string;
@@ -32,10 +33,11 @@ export const programs: ProgramData[] = [
     {
         id: 'ielts',
         slug: 'ielts',
+        programCardPic: '/program/ielts.png',
         title: 'Ultimate IELTS',
         subtitle: 'Bimbingan intensif tes IELTS untuk persiapan kuliah dan kerja',
         category: 'Persiapan TES',
-        image: 'https://placehold.co/600x400/F59E0B/white?text=IELTS',
+        image: '/program/hero_img.png',
         logoText: '<span class="text-slate-800 text-sm block mb-1">Ultimate</span><span class="text-red-600 text-3xl md:text-5xl font-extrabold tracking-tighter">IELTS</span><span class="text-red-600 text-lg align-top font-bold">™</span>',
         themeColor: 'bg-[#FFC107]',
         duration: 'Durasi 4–8 minggu',
@@ -90,10 +92,11 @@ export const programs: ProgramData[] = [
     {
         id: 'sat',
         slug: 'sat',
+        programCardPic: '/program/sat.png',
         title: 'Ultimate SAT',
         subtitle: 'Bimbingan intensif tes SAT untuk persiapan kuliah ke luar negeri',
         category: 'Persiapan TES',
-        image: 'https://placehold.co/600x400/0F4C81/white?text=SAT+Prep',
+        image: '/program/hero_img.png',
         logoText: '<span class="text-slate-800 text-sm block mb-1">Ultimate</span><span class="text--[#007aff] text-3xl md:text-5xl font-extrabold tracking-tighter">SAT</span><span class="text-[#007aff] text-lg align-top font-bold">®</span>',
         themeColor: 'bg-[#FFC107]',
         duration: 'Durasi 4–8 minggu',
@@ -113,10 +116,11 @@ export const programs: ProgramData[] = [
     {
         id: 'gmat',
         slug: 'gmat',
+        programCardPic: '/program/gmat.png',
         title: 'Ultimate GMAT',
         subtitle: 'Persiapan GMAT intensif untuk lanjut kuliah S2 bisnis di luar negeri',
         category: 'Persiapan TES',
-        image: 'https://placehold.co/600x400/F59E0B/white?text=GMAT+Prep',
+        image: '/program/hero_img.png',
         logoText: '<span class="text-slate-800 text-sm block mb-1">Ultimate</span><span class="text-slate-900 text-3xl md:text-5xl font-extrabold tracking-tighter">GMAT</span><span class="text-slate-900 text-lg align-top font-bold">™</span>',
         themeColor: 'bg-[#FFC107]',
         duration: 'Durasi 6-8 minggu',

@@ -1,98 +1,56 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Button from "../../components/ui/Button.astro";
-import ProgramTabs from "../../components/program/ProgramTabs.astro";
-import ProgramPainPoints from "../../components/program/ProgramPainPoints.astro";
-import ProgramWhyUs from "../../components/program/ProgramWhyUs.astro";
-import ProgramTarget from "../../components/program/ProgramTarget.astro";
-import ProgramCurriculum from "../../components/program/ProgramCurriculum.astro";
-import ProgramProcess from "../../components/program/ProgramProcess.astro";
-import ProgramFAQ from "../../components/program/ProgramFAQ.astro";
+import UnifiedHero from "../../components/common/UnifiedHero.astro";
+import ProgramOverview from "../../components/program/detail/ProgramOverview.astro";
+import ProgramPricingTabs from "../../components/program/detail/ProgramPricingTabs.jsx";
+import InteractiveCalendar from "../../components/program/detail/InteractiveCalendar.jsx";
+import HomeSuccessCTA from "../../components/home/HomeSuccessCTA.astro";
+import PaymentRoadmap from "../../components/program/detail/PaymentRoadmap.jsx";
+import ProgramWhyUs from "../../components/program/detail/ProgramWhyUs.astro";
+import ProgramAlumni from "../../components/program/detail/ProgramAlumni.astro";
+import ProgramFAQ from "../../components/program/detail/ProgramFAQ.astro";
+import WhyChooseUs from "@/components/home/WhyChooseUs.astro";
+import { programs } from "../../data/programs";
 
 export async function getStaticPaths() {
-  const WP_BASE = (import.meta.env.PUBLIC_WP_BASE_URL || "").replace(/\/$/, "");
-  if (!WP_BASE) throw new Error("PUBLIC_WP_BASE_URL is not set");
-
-  const url = `${WP_BASE}/wp-json/wp/v2/program?per_page=100&_fields=slug`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`WP REST error ${res.status}: ${url}`);
-
-  const programs = await res.json();
-
-  return programs.map((p) => ({
-    params: { slug: p.slug },
+  return programs.map((program) => ({
+    params: { slug: program.slug },
+    props: { program },
   }));
 }
 
-// Page data fetch (inline)
-const WP_BASE = (import.meta.env.PUBLIC_WP_BASE_URL || "").replace(/\/$/, "");
-if (!WP_BASE) throw new Error("PUBLIC_WP_BASE_URL is not set");
-
-const { slug } = Astro.params;
-
-const detailUrl = `${WP_BASE}/wp-json/wp/v2/program?slug=${encodeURIComponent(slug)}` + `&_fields=slug,title,program_description,program_type_tabs`;
-
-const detailRes = await fetch(detailUrl);
-if (!detailRes.ok) throw new Error(`WP REST error ${detailRes.status}: ${detailUrl}`);
-
-const arr = await detailRes.json();
-const program = arr?.[0];
-
-if (!program) throw new Error("Program not found");
-
-const title = program.title?.rendered ?? "Program";
-const descriptionHtml = program.program_description ?? "";
-const programTypeTabs = program.program_type_tabs ?? "";
+const { program } = Astro.props;
 ---
 
-<Layout title={title}>
+<Layout title={program.meta.title} description={program.meta.description}>
   <main>
-    {/* HERO SECTION */}
-    <section class="relative pt-32 pb-12 bg-hero-gradient overflow-hidden lg:max-h-[300px] lg:flex lg:items-center mb-10">
-      <!-- Decorative element -->
-      <div class="absolute inset-0 hidden lg:flex pointer-events-none z-10">
-        <div class="container mx-auto w-full flex items-end justify-end">
-          <div class="relative w-[35%] h-full flex flex-col items-center justify-end">
-            <!-- Semi-circle background -->
-            <div class="absolute top-0 w-[360px] h-[180px] bg-ultimate-yellow rounded-b-full left-1/3 -translate-y-[54px] z-0"></div>
-            <!-- Hero Image Overlay -->
-            <img src="/images/hero_img.png" alt="Ilustrasi siswa belajar" class="absolute z-10 h-[85%] w-auto object-contain object-bottom left-[73%] -translate-x-1/2" />
-          </div>
-        </div>
-      </div>
-      <!-- Background Patterns -->
+    <!-- 1. Hero -->
+    <UnifiedHero title={program.hero.title} subtitle={program.hero.subtitle} pillText={program.hero.pillText} image={program.hero.image} />
 
-      <div class="w-full relative z-20 text-left">
-        <div class="container mx-auto pt-8 lg:pt-10">
-          <div class="lg:w-1/2 max-w-2xl">
-            <h1 class="font-heading font-semibold text-white text-3xl md:text-4xl lg:text-5xl mb-4 leading-snug" set:html={title} />
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- 2. Gambaran Kursus -->
+    <ProgramOverview title={program.overview.title} content={program.overview.content} />
 
-    {/* TABS SECTION */}
-    {
-      programTypeTabs && (
-        <section class="container mx-auto max-w-7xl mb-12">
-          <ProgramTabs content={programTypeTabs} />
-        </section>
-      )
-    }
+    <!-- 3. Topik & Pricing Tabs -->
+    <ProgramPricingTabs client:load data={program.pricing} programSlug={program.slug} />
 
-    {/* CONTENT SECTIONS */}
-    <section class="container mx-auto max-w-7xl space-y-10">
-      <ProgramPainPoints />
-      <ProgramWhyUs />
-      <ProgramTarget />
-      <ProgramCurriculum />
-      <ProgramProcess />
-      <ProgramFAQ />
-    </section>
+    <!-- 4. Jadwal Kelas -->
+    {['ielts','gre','gmat','sat'].includes(program.slug) && (
+      <InteractiveCalendar programSlug={program.slug} />
+    )}
 
-    {/* CTA SECTION */}
-    <section class="container mx-auto max-w-7xl mt-16 flex justify-center">
-      <Button href="/contact" class="bg-blue-900 text-white hover:bg-yellow-300 hover:text-blue-900 font-medium py-4 px-8 rounded-xl shadow-lg transition-all text-lg">Konsultasi Gratis</Button>
-    </section>
+    <!-- 6. Alur Pembayaran -->
+    <PaymentRoadmap client:load />
+
+    <!-- 7. Kenapa Kami? (Generic for all programs, or specific if needed) -->
+    <!-- Note: WhyChooseUs is the global homepage component. ProgramWhyUs is the specific one. -->
+    <WhyChooseUs />
+
+    <!-- 5. Success CTA -->
+    <HomeSuccessCTA />
+    <!-- 8. Cerita Alumni -->
+    <ProgramAlumni title={program.alumni.title} subtitle={program.alumni.subtitle} items={program.alumni.items} />
+
+    <!-- 9. FAQ -->
+    <ProgramFAQ items={program.faq.items} />
   </main>
 </Layout>

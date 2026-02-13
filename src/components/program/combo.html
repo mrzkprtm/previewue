@@ -1,0 +1,566 @@
+<div id="uecombo">
+  <style>
+    /* ===== Scope aman di WordPress ===== */
+    #uecombo{
+      --brand:#145da0; --brand-600:#134b83;
+      --ink:#0f172a; --muted:#475569;
+      --bg:#f6f8fc; --card:#fff; --ring:#e2e8f0;
+      --accent:#e8efff; --success:#10b981;
+      --radius:12px; --gap:16px;
+      --f12:clamp(11px,2.3vw,12px);
+      --f14:clamp(12px,2.6vw,14px);
+      --f16:clamp(13px,3vw,15px);
+      --f18:clamp(14px,3.4vw,17px);
+      color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      font-size:var(--f16); background:var(--bg);
+    }
+    #uecombo *{box-sizing:border-box}
+
+    /* ===== Layout utama: intro full width; desktop -> 2 kolom ===== */
+    #uecombo .wrap{
+      max-width:1100px; margin:24px auto; padding:0 12px 20px;
+      display:grid; grid-template-columns: minmax(0,1fr); gap:20px;
+      align-items:start; /* jangan stretch tinggi card */
+      grid-auto-rows:auto; /* tinggi ikut konten */
+    }
+    #uecombo .wrap.show-summary{ grid-template-columns: minmax(0,1fr) 360px; }
+
+    /* Intro */
+    #uecombo .intro{
+      grid-column:1 / -1;
+      background:linear-gradient(0deg,#ffffff, #f8fbff);
+      border:1px solid var(--ring);
+      border-radius:var(--radius);
+      padding:16px 18px 10px;
+      box-shadow:0 6px 18px rgba(20,93,160,.08);
+    }
+    #uecombo .intro h1{margin:0 0 6px; color:var(--brand); font-weight:900; font-size:1.35rem}
+    #uecombo .intro p{margin:4px 0 8px; color:var(--muted); font-size:var(--f14); line-height:1.55}
+    #uecombo .badges{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 0}
+    #uecombo .badge{
+      font-size:var(--f12); background:#eef4ff; color:#19498b; padding:6px 8px; border-radius:999px; border:1px solid #dbe7ff;
+      display:inline-flex; align-items:center; gap:6px; font-weight:600;
+    }
+
+    /* Cards — tinggi AUTO (tidak dipaksa) */
+    #uecombo .card{
+      background:var(--card); border:1px solid var(--ring); border-radius:var(--radius);
+      box-shadow:0 8px 24px rgba(0,0,0,.06);
+      height:auto; /* pastikan tidak ada sisa ruang */
+    }
+    #uecombo .form{
+      grid-column:1; padding:18px; position:relative; z-index:5;
+      display:flex; flex-direction:column; gap:0;
+    }
+    #uecombo .receipt{
+      grid-column:1; position:sticky; top:20px; padding:14px; z-index:1;
+      display:flex; flex-direction:column;
+      height:auto;
+    }
+    /* Saat summary tampil, receipt pindah ke kolom kanan */
+    #uecombo .wrap.show-summary .receipt{ grid-column:2; }
+
+    #uecombo h2{margin:0 0 10px; color:var(--brand); font-weight:800; font-size:1.1rem}
+    #uecombo .subhead{margin:-4px 0 12px; color:var(--muted); font-size:var(--f14)}
+
+    /* Form controls */
+    #uecombo .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    #uecombo .field{margin:0 0 12px 0; position:relative}
+    #uecombo label{display:block; margin:0 0 6px; color:var(--muted); font-size:var(--f12); font-weight:600}
+
+    #uecombo select,#uecombo input[type="number"]{
+      width:100%; border:1px solid var(--ring); background:#fff; border-radius:10px; padding:10px 12px; font-size:var(--f16);
+      -webkit-appearance:none; appearance:none; position:relative; z-index:2; pointer-events:auto;
+      transition:border-color .15s, box-shadow .15s;
+    }
+    #uecombo select:focus,#uecombo input[type="number"]:focus{outline:none; box-shadow:0 0 0 3px rgba(20,93,160,.12); border-color:var(--brand)}
+    #uecombo .hint{margin-top:6px; font-size:var(--f12); color:#3b4151}
+    #uecombo .muted{color:var(--muted); font-size:var(--f12)}
+    #uecombo .hidden{display:none !important}
+
+    /* Counter */
+    #uecombo .ctr{display:flex; align-items:center; gap:10px}
+    #uecombo .ctr input{width:96px; text-align:center; font-weight:700}
+    #uecombo .btn{
+      display:grid; place-items:center; width:36px; height:36px; border-radius:9px; border:0; cursor:pointer;
+      background:var(--brand); color:#fff; font-size:18px; z-index:2; transition:transform .05s ease, background .15s;
+    }
+    #uecombo .btn:hover{background:var(--brand-600)}
+    #uecombo .btn:active{transform:scale(.98)}
+
+    /* Receipt - Enhanced UI */
+    #uecombo .receipt h3{
+      margin:0 0 16px; color:var(--brand); font-size:1.1rem; font-weight:800;
+      padding-bottom:12px; border-bottom:2px solid var(--brand);
+    }
+    #uecombo .line{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+      padding:10px 0; border-bottom:1px dashed #e2e8f0;
+      font-size:var(--f14);
+    }
+    #uecombo .line:last-of-type{border-bottom:0}
+    #uecombo .line span:first-child{
+      color:var(--muted); font-weight:500; flex-shrink:0; max-width:45%;
+    }
+    #uecombo .line span:last-child{
+      color:var(--ink); font-weight:600; text-align:right; word-break:break-word;
+    }
+    #uecombo .line.section-break{
+      margin-top:8px; padding-top:12px; border-top:1px solid var(--ring);
+    }
+    /* Discount line - special styling */
+    #uecombo .line.discount span:first-child{color:#059669; font-weight:600}
+    #uecombo .line.discount span:last-child{color:#059669; font-weight:700}
+    
+    /* Total box */
+    #uecombo .total{
+      background:linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
+      border:none; border-radius:12px; padding:16px 18px;
+      display:flex; justify-content:space-between; align-items:center;
+      margin-top:16px; box-shadow:0 4px 12px rgba(20,93,160,.25);
+    }
+    #uecombo .total b{color:#fff}
+    #uecombo .total span:first-child b{font-size:var(--f14); font-weight:600}
+    #uecombo .total span:last-child b{font-size:1.15rem; font-weight:800}
+    
+    /* WhatsApp button */
+    #uecombo .wa{
+      width:100%; margin-top:14px; background:var(--success); color:#fff; border:0;
+      padding:14px 16px; border-radius:12px; font-weight:700; cursor:pointer;
+      font-size:var(--f16); display:flex; align-items:center; justify-content:center; gap:8px;
+      box-shadow:0 4px 14px rgba(16,185,129,.3); transition:transform .1s ease, box-shadow .15s;
+    }
+    #uecombo .wa:hover{box-shadow:0 6px 20px rgba(16,185,129,.4); transform:translateY(-1px)}
+    #uecombo .wa:active{transform:translateY(1px)}
+
+    /* ===== Mobile tweaks ===== */
+    @media (max-width:900px){
+      #uecombo .wrap{ grid-template-columns:1fr; }
+      #uecombo .wrap.show-summary{ grid-template-columns:1fr; }
+      #uecombo .receipt{ position:static; /* non-sticky di mobile */ }
+      #uecombo .grid-2{ grid-template-columns:1fr; } /* stack field */
+      #uecombo .ctr input{ width:100%; max-width:140px; } /* mudah disentuh */
+      #uecombo .btn{ width:40px; height:40px; } /* area tap lebih besar */
+      #uecombo .intro{ padding:14px; }
+    }
+  </style>
+
+  <div class="wrap" id="uc-wrap">
+    <!-- INTRO -->
+    <div class="intro">
+      <h1>Course Enrollment</h1>
+      <p>
+        Pilih <b>Primary Program</b> dan <b>Level</b> untuk menampilkan ringkasan pembayaran.
+        Kamu bisa menambahkan <i>Additional Classes</i> atau opsi <i>Bundling Test</i> bila tersedia.
+      </p>
+      <div class="badges">
+        <span class="badge">Flexible Schedule</span>
+        <span class="badge">Personalized Path</span>
+        <span class="badge">Group & Private</span>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="card form" id="uc-formCard" aria-label="Enrollment Form">
+      <h2>Program Selection</h2>
+      <div class="subhead">Lengkapi pilihan di bawah ini. Ringkasan akan muncul di sisi kanan (desktop) / di bawah (mobile).</div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="uc-p1">Primary Program</label>
+          <select id="uc-p1" aria-label="Primary Program"></select>
+          <div class="hint">Wajib diisi untuk menampilkan summary.</div>
+        </div>
+        <div class="field">
+          <label for="uc-p1lvl">Primary Level</label>
+          <select id="uc-p1lvl" aria-label="Primary Level"></select>
+          <div class="muted" id="uc-p1ses"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="uc-p2">Secondary Program (optional)</label>
+          <select id="uc-p2" aria-label="Secondary Program"></select>
+          <div class="hint">Opsional. Biarkan kosong jika tidak diperlukan.</div>
+        </div>
+        <div class="field">
+          <label for="uc-p2lvl">Secondary Level</label>
+          <select id="uc-p2lvl" aria-label="Secondary Level"></select>
+          <div class="muted" id="uc-p2ses"></div>
+        </div>
+      </div>
+
+      <h2>Additional Classes</h2>
+      <div class="subhead">Tambahkan kelas per sesi (biaya mengikuti tarif per sesi program terkait).</div>
+      <div class="grid-2">
+        <div class="field">
+          <label for="uc-c1">Primary Additional Classes</label>
+          <div class="ctr">
+            <button class="btn" type="button" data-target="uc-c1" data-step="-1" aria-label="Decrease Primary Classes">-</button>
+            <input id="uc-c1" type="number" value="0" min="0" step="1" />
+            <button class="btn" type="button" data-target="uc-c1" data-step="1" aria-label="Increase Primary Classes">+</button>
+          </div>
+          <div class="hint">Tarif per sesi mengikuti Primary Program terpilih.</div>
+        </div>
+        <div class="field">
+          <label for="uc-c2">Secondary Additional Classes</label>
+          <div class="ctr">
+            <button class="btn" type="button" data-target="uc-c2" data-step="-1" aria-label="Decrease Secondary Classes">-</button>
+            <input id="uc-c2" type="number" value="0" min="0" step="1" />
+            <button class="btn" type="button" data-target="uc-c2" data-step="1" aria-label="Increase Secondary Classes">+</button>
+          </div>
+          <div class="hint">Aktif jika Secondary Program dipilih.</div>
+        </div>
+      </div>
+
+      <div class="field hidden" id="uc-bundleWrap">
+        <label for="uc-bundle">Bundling Test Option</label>
+        <select id="uc-bundle" aria-label="Bundling Test Option"></select>
+        <div class="hint">Jika tertulis <b>TBI</b> (To be Informed), biaya akan diinformasikan kemudian.</div>
+      </div>
+
+      <div class="muted" id="uc-hint" style="margin-top:10px"></div>
+    </div>
+
+    <!-- RECEIPT -->
+    <div class="card receipt hidden" id="uc-receipt" aria-live="polite">
+      <h3>Payment Summary</h3>
+
+      <div class="line"><span>Primary Program</span><span id="uc-r-p1">0</span></div>
+      <div class="line"><span>Secondary Program</span><span id="uc-r-p2">0</span></div>
+
+      <div class="line"><span>Primary Classes</span><span id="uc-r-c1">Rp0</span></div>
+      <div class="line"><span>Secondary Classes</span><span id="uc-r-c2">Rp0</span></div>
+
+      <div class="line hidden" id="uc-r-b1-wrap"><span>Bundling Test (Primary)</span><span id="uc-r-b1">0</span></div>
+      <div class="line hidden" id="uc-r-b2-wrap"><span>Bundling Test (Secondary)</span><span id="uc-r-b2">0</span></div>
+
+      <div class="line section-break" id="uc-r-reg-wrap"><span>Biaya Pendaftaran</span><span id="uc-r-reg">Rp350.000</span></div>
+      <div class="line"><span>Subtotal</span><span id="uc-r-subtot">Rp0</span></div>
+      <div class="line discount hidden" id="uc-r-disc-wrap"><span>Discount</span><span id="uc-r-disc">Rp0</span></div>
+
+      <div class="total"><span><b>Total Amount</b></span><span><b id="uc-r-total">Rp0</b></span></div>
+      <button class="wa" id="uc-wa" aria-label="Register via WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Register via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    /* ===== CONFIG ===== */
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1V4FCqLd08TiFKMf078u8f7YJxICIa9QVZHOoDCI2W15J31z6iyWj1XrulzrdFxD1i84gDRrUvanj/pub?output=csv";
+    const WA_NUMBER = "6283812310368";
+
+    /* ===== UTIL ===== */
+    const $ = id => document.getElementById(id);
+    const fmt = n => "Rp" + Number(n||0).toLocaleString("id-ID");
+    const num = v => { const n=Number((v||"").toString().replace(/[^\d.-]/g,"")); return isNaN(n)?0:n; };
+    const isTBI = v => (String(v||"").trim().toLowerCase()==="to be informed" || String(v||"").trim().toLowerCase()==="tbi");
+
+    function parseCSV(text){
+      const rows=[]; let f='', r=[], q=false;
+      for(let i=0;i<text.length;i++){
+        const c=text[i];
+        if(q){ if(c==='\"'){ if(text[i+1]==='\"'){f+='\"'; i++;} else q=false; } else f+=c; }
+        else { if(c==='\"') q=true; else if(c===','){ r.push(f); f=''; }
+               else if(c==='\n'){ r.push(f); rows.push(r); r=[]; f=''; }
+               else if(c!=='\r') f+=c; }
+      }
+      if(f.length||r.length){ r.push(f); rows.push(r); }
+      return rows;
+    }
+    const headerMap = {
+      program:['program','group'],
+      bronzeg:['bronzeg','bronze_g','group_bronze','bronze'],
+      silverg:['silverg','silver_g','group_silver','silverg'],
+      silver:['silver','private silver'],
+      gold:['gold'],
+      premium:['premium'],
+      persesi:['persesi','per_sesi','per sesi'],
+      bundling:['bundling','bundle','bundling_test']
+    };
+    const toKey = s => (s||'').toString().trim().toLowerCase();
+    function mapHeaders(hdr){
+      const H=hdr.map(toKey), m={};
+      for(const k in headerMap){
+        const ix = H.findIndex(x=> headerMap[k].includes(x));
+        if(ix!==-1) m[k]=ix;
+      }
+      return m;
+    }
+    function rowsToObjects(rows){
+      const m=mapHeaders(rows[0]); const out=[];
+      for(let i=1;i<rows.length;i++){
+        const o={}; for(const k in m) o[k]=(rows[i][m[k]]||'').toString().trim(); out.push(o);
+      }
+      return out.filter(x=>x.program);
+    }
+
+    /* ===== DATA ===== */
+    let TABLE=[];
+
+    const LEVELS = [
+      {value:'bronzeg', label:'Group - Bronze'},
+      {value:'silverg', label:'Group - Silver'},
+      {value:'silver',  label:'Private - Silver'},
+      {value:'gold',    label:'Private - Gold'},
+      {value:'premium', label:'Private - Premium'},
+    ];
+
+    function findRow(name){
+      return TABLE.find(r=> (r.program||'').replace(/\s+/g,'').toLowerCase() === (name||'').replace(/\s+/g,'').toLowerCase());
+    }
+
+    function fillPrograms(){
+      const names = TABLE.map(r=>r.program).filter(Boolean);
+      const sel1=$('uc-p1'), sel2=$('uc-p2');
+      const set = (el, exclude)=>{
+        const keep = el.value;
+        el.innerHTML = '<option value="">Select Program</option>';
+        names.forEach(n=>{
+          if(n!==exclude){
+            const o=document.createElement('option'); o.value=n; o.textContent=n; el.appendChild(o);
+          }
+        });
+        if(Array.from(el.options).some(o=>o.value===keep)) el.value=keep;
+      };
+      set(sel1, sel2.value); set(sel2, sel1.value);
+    }
+
+    function fillLevels(selectId, programName, sesId){
+      const sel=$(selectId); const keep = sel.value;
+      sel.innerHTML = '<option value="">Select Level</option>';
+      const row = findRow(programName);
+      LEVELS.forEach(L=>{
+        const price = row ? num(row[L.value]) : 0;
+        const opt = document.createElement('option');
+        opt.value = L.value;
+        opt.textContent = L.label + (price>0?` - ${fmt(price)}`:'');
+        opt.disabled = !(price>0);
+        sel.appendChild(opt);
+      });
+      if(Array.from(sel.options).some(o=>o.value===keep && !o.disabled)) sel.value=keep; else sel.value='';
+      $(sesId).textContent = '';
+    }
+
+    function getBase(programName, levelKey){
+      const row=findRow(programName); if(!row) return 0;
+      return num(row[levelKey]);
+    }
+    function getPerSesi(programName){
+      const row=findRow(programName); if(!row) return 0;
+      return num(row.persesi);
+    }
+    function getBundInfo(programName){
+      const row=findRow(programName); if(!row) return {mode:'none', price:0, name:programName||''};
+      const raw = (row.bundling||'').toString().trim();
+      if(isTBI(raw)) return {mode:'tbi', price:0, name:row.program};
+      const v=num(raw); if(v>0) return {mode:'fixed', price:v, name:row.program};
+      return {mode:'none', price:0, name:row.program};
+    }
+
+    function updateBundlingOptions(){
+      const p1=$('uc-p1').value, p2=$('uc-p2').value;
+      const b1=getBundInfo(p1), b2=getBundInfo(p2);
+      const wrap=$('uc-bundleWrap'), s=$('uc-bundle');
+
+      const any = (b1.mode!=='none' || b2.mode!=='none');
+      wrap.classList.toggle('hidden', !any);
+      if(!any){ s.innerHTML=''; return; }
+
+      const keep=s.value;
+      s.innerHTML='';
+      const add=(v,t)=>{ const o=document.createElement('option'); o.value=v; o.textContent=t; s.appendChild(o); };
+      add('0','No Bundling Test');
+      if(b1.mode!=='none') add('P1', `${b1.name} Only`);
+      if(b2.mode!=='none') add('P2', `${b2.name} Only`);
+      if(b1.mode!=='none' && b2.mode!=='none') add('Both','Both');
+
+      s.value = Array.from(s.options).some(o=>o.value===keep) ? keep : '0';
+    }
+
+    function readLevelLabel(val){
+      const L = LEVELS.find(l=>l.value===val); return L?L.label:'';
+    }
+
+    /* ===== RECEIPT CALC ===== */
+    function calcAndRender(){
+      const p1=$('uc-p1').value, p1lvl=$('uc-p1lvl').value;
+      const wrap=$('uc-wrap'), rc=$('uc-receipt');
+      if(!p1 || !p1lvl){
+        rc.classList.add('hidden'); wrap.classList.remove('show-summary');
+        $('uc-hint').textContent = 'Choose Primary program and level to see the summary.';
+        return;
+      }
+      rc.classList.remove('hidden'); wrap.classList.add('show-summary');
+
+      const p2=$('uc-p2').value, p2lvl=$('uc-p2lvl').value;
+      const c1 = Math.max(0, parseInt(($('uc-c1').value||'0'),10));
+      const c2 = Math.max(0, parseInt(($('uc-c2').value||'0'),10));
+      const per1 = getPerSesi(p1), per2 = getPerSesi(p2);
+
+      const base1 = getBase(p1,p1lvl);
+      const base2 = (p2 && p2lvl)? getBase(p2,p2lvl):0;
+
+      const c1tot = per1 * c1;
+      const c2tot = per2 * c2;
+
+      // bundling
+      const choice=$('uc-bundle').value;
+      const b1=getBundInfo(p1), b2=getBundInfo(p2);
+      let bundTot=0;
+      $('uc-r-b1-wrap').classList.add('hidden');
+      $('uc-r-b2-wrap').classList.add('hidden');
+
+      const label = b => (b.mode==='fixed'? fmt(b.price) : (b.mode==='tbi'?'To be Informed':'0'));
+
+      if(choice==='P1' && b1.mode!=='none'){
+        $('uc-r-b1-wrap').classList.remove('hidden');
+        $('uc-r-b1').textContent = `${b1.name} Test: ${label(b1)}`;
+        bundTot += (b1.mode==='fixed'? b1.price:0);
+      }else if(choice==='P2' && b2.mode!=='none'){
+        $('uc-r-b2-wrap').classList.remove('hidden');
+        $('uc-r-b2').textContent = `${b2.name} Test: ${label(b2)}`;
+        bundTot += (b2.mode==='fixed'? b2.price:0);
+      }else if(choice==='Both' && b1.mode!=='none' && b2.mode!=='none'){
+        $('uc-r-b1-wrap').classList.remove('hidden');
+        $('uc-r-b2-wrap').classList.remove('hidden');
+        $('uc-r-b1').textContent = `${b1.name} Test: ${label(b1)}`;
+        $('uc-r-b2').textContent = `${b2.name} Test: ${label(b2)}`;
+        bundTot += (b1.mode==='fixed'? b1.price:0) + (b2.mode==='fixed'? b2.price:0);
+      }
+
+      // subtotal & discount with registration fee logic
+      const REGFEE = 350000; // Biaya pendaftaran
+      const programCost = base1 + base2; // Total biaya program (A + B)
+      const disbase = programCost + c1tot + c2tot; // Base untuk perhitungan (tanpa bundling)
+      const subtotalBeforeReg = disbase + bundTot; // Total sebelum biaya pendaftaran
+      const subtotal = subtotalBeforeReg + REGFEE; // Subtotal termasuk biaya pendaftaran
+      
+      // New discount logic based on TOTAL cost (programs + sessions + bundling)
+      let discAmt = 0;
+      let discLabel = '';
+      if(subtotalBeforeReg >= 17000000) {
+        // Above 17jt: waive registration (350k) + discount 1jt = 1.35jt total
+        discAmt = REGFEE + 1000000;
+        discLabel = `Potongan Pendaftaran + Rp1.000.000`;
+      } else if(subtotalBeforeReg >= 14000000 && subtotalBeforeReg < 17000000) {
+        // Range 14-16jt: waive registration (350k) + discount 300k = 650k total
+        discAmt = REGFEE + 300000;
+        discLabel = `Potongan Pendaftaran + Rp300.000`;
+      }
+      const total = subtotal - discAmt;
+
+      $('uc-r-p1').textContent = `${p1} (${readLevelLabel(p1lvl)}): ${fmt(base1)}`;
+      $('uc-r-p2').textContent = (base2>0) ? `${p2} (${readLevelLabel(p2lvl)}): ${fmt(base2)}` : '0';
+      $('uc-r-c1').textContent = c1>0 ? `${c1} x ${fmt(per1)} = ${fmt(c1tot)}` : 'Rp0';
+      $('uc-r-c2').textContent = (p2 && c2>0) ? `${c2} x ${fmt(per2)} = ${fmt(c2tot)}` : 'Rp0';
+      $('uc-r-reg').textContent = fmt(REGFEE);
+      $('uc-r-subtot').textContent = fmt(subtotal);
+
+      if(discAmt>0){
+        $('uc-r-disc-wrap').classList.remove('hidden');
+        $('uc-r-disc').textContent = `${discLabel} = ${fmt(discAmt)}`;
+      }else{
+        $('uc-r-disc-wrap').classList.add('hidden');
+      }
+      $('uc-r-total').textContent = fmt(total);
+      $('uc-hint').textContent = 'Summary updated. Review details, lalu lanjut via WhatsApp.';
+    }
+
+    /* ===== EVENTS ===== */
+    document.addEventListener('click', e=>{
+      const b=e.target.closest('.btn'); if(!b) return;
+      const id=b.dataset.target, step=parseInt(b.dataset.step,10);
+      const el=$(id); let v=parseInt(el.value||'0',10); v=Math.max(0, v+step);
+      el.value=v; calcAndRender();
+    });
+
+    ['uc-p1','uc-p2'].forEach(id=>{
+      $(id).addEventListener('change', ()=>{
+        fillPrograms();
+        fillLevels('uc-p1lvl',$('uc-p1').value,'uc-p1ses');
+        fillLevels('uc-p2lvl',$('uc-p2').value,'uc-p2ses');
+        updateBundlingOptions();
+        calcAndRender();
+      });
+    });
+
+    ['uc-p1lvl','uc-p2lvl','uc-c1','uc-c2','uc-bundle'].forEach(id=>{
+      $(id).addEventListener('change', calcAndRender);
+      $(id).addEventListener('input',  calcAndRender);
+    });
+
+    $('uc-wa').addEventListener('click', ()=>{
+      const p1=$('uc-p1').value, p1lvl=$('uc-p1lvl').value;
+      if(!p1 || !p1lvl){ alert('Please select Primary Program and Level first.'); return; }
+
+      const p2=$('uc-p2').value, p2lvl=$('uc-p2lvl').value;
+      const c1=parseInt($('uc-c1').value||'0',10), c2=parseInt($('uc-c2').value||'0',10);
+      const per1=getPerSesi(p1), per2=getPerSesi(p2);
+      const base1=getBase(p1,p1lvl), base2=(p2 && p2lvl)?getBase(p2,p2lvl):0;
+
+      const choice=$('uc-bundle').value;
+      const b1=getBundInfo(p1), b2=getBundInfo(p2);
+      const bundTot = (choice==='P1'?(b1.mode==='fixed'?b1.price:0): choice==='P2'?(b2.mode==='fixed'?b2.price:0): (choice==='Both'? (b1.mode==='fixed'?b1.price:0)+(b2.mode==='fixed'?b2.price:0):0));
+
+      const REGFEE = 350000;
+      const programCost = base1 + base2;
+      const disbase = programCost + (per1*c1) + (per2*c2);
+      const subtotalBeforeReg = disbase + bundTot;
+      const subtotal = subtotalBeforeReg + REGFEE;
+      
+      let discAmt = 0;
+      if(subtotalBeforeReg >= 17000000) {
+        discAmt = REGFEE + 1000000;
+      } else if(subtotalBeforeReg >= 14000000 && subtotalBeforeReg < 17000000) {
+        discAmt = REGFEE + 300000;
+      }
+      const total = subtotal - discAmt;
+
+      const label = l => ({bronzeg:'Group - Bronze',silverg:'Group - Silver',silver:'Private - Silver',gold:'Private - Gold',premium:'Private - Premium'}[l]||l);
+      let msg = `Hello Ultimate Education,\nI would like to register:\n\n`;
+      msg += `Primary: ${p1} (${label(p1lvl)}) - ${fmt(base1)}\n`;
+      if(p2 && p2lvl) msg += `Secondary: ${p2} (${label(p2lvl)}) - ${fmt(base2)}\n`;
+      if(c1>0) msg += `Primary Classes: ${c1} x ${fmt(per1)} = ${fmt(per1*c1)}\n`;
+      if(p2 && c2>0) msg += `Secondary Classes: ${c2} x ${fmt(per2)} = ${fmt(per2*c2)}\n`;
+      if(choice==='P1' && b1.mode!=='none') msg += `Bundling Test (${b1.name}): ${b1.mode==='fixed'?fmt(b1.price):'To be Informed'}\n`;
+      if(choice==='P2' && b2.mode!=='none') msg += `Bundling Test (${b2.name}): ${b2.mode==='fixed'?fmt(b2.price):'To be Informed'}\n`;
+      if(choice==='Both' && b1.mode!=='none' && b2.mode!=='none'){
+        msg += `Bundling Test (${b1.name}): ${b1.mode==='fixed'?fmt(b1.price):'To be Informed'}\n`;
+        msg += `Bundling Test (${b2.name}): ${b2.mode==='fixed'?fmt(b2.price):'To be Informed'}\n`;
+      }
+      msg += `Biaya Pendaftaran: ${fmt(REGFEE)}\n`;
+      if(discAmt > 0) {
+        msg += `Discount: ${fmt(discAmt)}\n`;
+      }
+      msg += `\nTotal: *${fmt(total)}*`;
+
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+    });
+
+    /* ===== INIT ===== */
+    (async function init(){
+      try{
+        const res = await fetch(CSV_URL,{cache:'no-store'});
+        const rows=parseCSV(await res.text());
+        TABLE = rowsToObjects(rows);
+
+        fillPrograms();
+        fillLevels('uc-p1lvl','', 'uc-p1ses');
+        fillLevels('uc-p2lvl','', 'uc-p2ses');
+        updateBundlingOptions();
+        calcAndRender();
+        $('uc-hint').textContent = 'Choose Primary program and level to see the summary.';
+      }catch(err){
+        console.error(err);
+        $('uc-hint').textContent = 'Failed to load data. Please refresh the page.';
+      }
+    })();
+
+  })();
+  </script>
+</div>

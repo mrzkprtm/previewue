@@ -1,0 +1,469 @@
+<div id="uep">
+  <style>
+    #uep{
+      --brand:#145da0; --ink:#0b1220; --muted:#1f2937;
+      --ring:#e5e7eb; --card:#fff;
+      --f12:clamp(12px,2.6vw,13px);
+      --f14:clamp(13px,3.0vw,15px);
+      --f16:clamp(14px,3.4vw,16.5px);
+      --f18:clamp(15px,3.8vw,19px);
+      color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif; font-size:var(--f16);
+    }
+    #uep *{box-sizing:border-box}
+    #uep .is-hide{display:none !important;}
+
+    .uep-shell{max-width:clamp(320px,92vw,560px);margin:0 auto;padding:12px}
+    .uep-card{background:#fff;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.06);overflow:hidden}
+    .uep-body{padding:12px}
+    .uep-alert{display:none;margin:12px;padding:10px;border-radius:10px;background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-size:var(--f14)}
+    .uep-field{margin-bottom:10px}
+    .uep-label{display:block;color:var(--ink);font-size:var(--f12);margin:0 0 6px}
+
+    .uep-plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    @media (max-width:380px){.uep-plans{grid-template-columns:1fr}}
+    .uep-plan{position:relative;background:#fff;border:1.5px solid var(--ring);border-radius:10px;padding:10px;cursor:pointer;user-select:none;transition:box-shadow .15s, transform .15s}
+    .uep-plan:hover{transform:translateY(-1px)}
+    .uep-plan input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .uep-pname{font-weight:700;font-size:var(--f14);color:var(--ink)}
+    .uep-pprice{font-weight:800;font-size:var(--f18);margin-top:2px;color:var(--ink)}
+    .uep-psub{color:var(--ink);opacity:.9;font-size:var(--f12);margin-top:2px}
+    .uep-plan.uep-active{box-shadow:0 0 0 2px var(--brand) inset;border-color:#0b4f93}
+
+    .uep-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+    .uep-qty{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+    .uep-btn-qty{flex:0 0 34px;height:34px;border-radius:9px;background:#145da0;color:#fff;border:0;cursor:pointer;font-size:18px;display:grid;place-items:center;line-height:1}
+    .uep-btn-qty[disabled]{opacity:.45;cursor:not-allowed}
+    .uep-qty input{width:64px;height:34px;text-align:center;border:1px solid var(--ring);border-radius:9px;font-size:var(--f14);color:var(--ink)}
+    #uep input[type=number]{-moz-appearance:textfield}
+    #uep input::-webkit-outer-spin-button,#uep input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+    @media (max-width:340px){.uep-btn-qty{flex-basis:30px;height:30px;font-size:16px}.uep-qty input{height:30px;width:54px}}
+
+    .uep-select{height:34px;border:1px solid var(--ring);border-radius:9px;padding:0 8px;background:#fff;font-size:var(--f14);max-width:260px;color:var(--ink)}
+    .uep-subjects{display:grid;gap:8px}
+
+    .uep-seg{display:flex;border:1px solid var(--ring);border-radius:9px;overflow:hidden}
+    .uep-seg button{flex:1;padding:8px 10px;border:0;background:#fff;color:var(--ink);font-size:var(--f14);cursor:pointer}
+    .uep-seg button.uep-on{background:#145da0;color:#fff}
+
+    .uep-receipt{margin-top:8px;padding:10px 12px;border:1px solid var(--ring);border-radius:10px;background:#fafafa}
+    .uep-receipt h3{margin:0 0 6px;font-size:var(--f16);color:var(--ink)}
+    .uep-line{display:flex;justify-content:space-between;gap:10px;padding:4px 0;color:var(--ink)}
+    .uep-line strong{font-size:clamp(17px,3.8vw,19px)}
+    .uep-btn{width:100%;border:0;border-radius:10px;padding:12px;background:#145da0;color:#fff;font-weight:700;font-size:var(--f16);cursor:pointer;transition:.15s}
+    .uep-btn:active{transform:translateY(1px)}
+    .uep-warn{display:none;margin-top:6px;padding:8px;border:1px solid #fde68a;background:#fffbeb;color:#92400e;border-radius:8px;font-size:var(--f12)}
+    .uep-warn.show{display:block}
+  </style>
+
+  <div class="uep-shell">
+    <div id="uep-err" class="uep-alert" role="alert"></div>
+
+    <div class="uep-card">
+      <form class="uep-body" id="uep-form" novalidate>
+
+        <!-- SUBJECT (IGCSE/ALEVEL/OLEVEL) -->
+        <div class="uep-field" id="uep-subjectWrap" hidden>
+          <label class="uep-label" style="margin-bottom:6px">Pilih Subject</label>
+          <div id="uep-subjects" class="uep-subjects"></div>
+          <div id="uep-subjHelp" class="uep-label" style="margin-top:4px;color:#475569"></div>
+        </div>
+
+        <!-- PILIHAN PRIVATE -->
+        <div class="uep-field"><div class="uep-plans" id="uep-plans"></div></div>
+
+        <div id="uep-sesiInfo" class="uep-label" style="margin-top:-6px"></div>
+
+        <!-- Garansi (Premium, jika ada harga) -->
+        <div class="uep-field" id="uep-garansiWrap" hidden>
+          <label class="uep-label" style="margin-bottom:6px">Garansi Skor</label>
+          <div class="uep-seg">
+            <button type="button" id="uep-garansiNo" class="uep-on">Tidak</button>
+            <button type="button" id="uep-garansiYes">Ya</button>
+          </div>
+        </div>
+
+        <div class="uep-warn" id="uep-allocWarn">Total sesi harus <b id="uep-targetSesi">0</b>.</div>
+
+        <div class="uep-field" id="uep-jmlKelasWrap" hidden>
+          <div class="uep-row">
+            <label class="uep-label" for="uep-jmlKelas" style="margin:0">Jumlah Kelas</label>
+            <div class="uep-qty">
+              <button class="uep-btn-qty" type="button" data-target="uep-jmlKelas" data-act="dec">-</button>
+              <input id="uep-jmlKelas" type="number" inputmode="numeric" value="12" min="12" />
+              <button class="uep-btn-qty" type="button" data-target="uep-jmlKelas" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="uep-field" id="uep-konsulWrap" hidden>
+          <div class="uep-row">
+            <label class="uep-label" for="uep-konsul" style="margin:0">Konsultasi Beasiswa</label>
+            <div class="uep-qty">
+              <button class="uep-btn-qty" type="button" data-target="uep-konsul" data-act="dec">-</button>
+              <input id="uep-konsul" type="number" inputmode="numeric" value="5" min="5" />
+              <button class="uep-btn-qty" type="button" data-target="uep-konsul" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tambah kelas per sesi -->
+        <div class="uep-field" id="uep-extraWrap" hidden>
+          <div class="uep-row">
+            <label class="uep-label" for="uep-extra" style="margin:0">Tambah Kelas (per sesi)</label>
+            <div class="uep-qty">
+              <button class="uep-btn-qty" type="button" data-target="uep-extra" data-act="dec">-</button>
+              <input id="uep-extra" type="number" inputmode="numeric" value="0" min="0" />
+              <button class="uep-btn-qty" type="button" data-target="uep-extra" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bundling test -->
+        <div class="uep-field" id="uep-bundleWrap" hidden>
+          <div class="uep-row">
+            <label class="uep-label" for="uep-bundle" style="margin:0">Bundling Test (opsional)</label>
+            <div class="uep-qty">
+              <button class="uep-btn-qty" type="button" data-target="uep-bundle" data-act="dec">-</button>
+              <input id="uep-bundle" type="number" inputmode="numeric" value="0" min="0" max="1" />
+              <button class="uep-btn-qty" type="button" data-target="uep-bundle" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ringkasan -->
+        <div class="uep-receipt" aria-live="polite">
+          <h3>Detail Harga</h3>
+          <div class="uep-line is-hide" id="uep-subjectLine"><span>Subject</span><span id="uep-subjectValue">-</span></div>
+          <div class="uep-line"><span>Harga Dasar</span><span>Rp <b id="uep-basePrice">0</b></span></div>
+          <div class="uep-line is-hide" id="uep-extraLine"><span>Harga Tambah Kelas</span><span>Rp <b id="uep-extraPrice">0</b></span></div>
+          <div class="uep-line is-hide" id="uep-bundleLine"><span>Harga Bundling Test</span><span id="uep-bundleValue">0</span></div>
+          <hr/>
+          <div class="uep-line"><strong>Total</strong><strong>Rp <span id="uep-totalAll">0</span></strong></div>
+        </div>
+
+        <div style="margin-top:10px">
+          <button id="uep-submit" class="uep-btn" type="submit">Daftar Sekarang</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vR1V4FCqLd08TiFKMf078u8f7YJxICIa9QVZHOoDCI2W15J31z6iyWj1XrulzrdFxD1i84gDRrUvanj/pub?output=csv";
+    const WA_NUMBER="6283812310368";
+
+    // fallback subject jika kolom CSV kosong
+    const SUBJECTS_FALLBACK={
+      igcse:["Math","Physics","Chemistry","Biology","Combined Science","Economy","Accounting","Business English","English"],
+      alevel:["Science","Humanities","Social Sciences","Languages","Arts and Design"],
+      olevel:["Languages","Math","Science","Social Sciences","Computer Sciences","Business","Arts and Design"]
+    };
+
+    const $=id=>document.getElementById(id);
+    const fmt=n=>new Intl.NumberFormat("id-ID").format(Number(n||0));
+    const num=v=>{const n=Number((v||'').toString().replace(/[^\d.-]/g,''));return isNaN(n)?0:n;};
+    const isTBI=v=>(typeof v==='string'&&v.trim().toLowerCase()==='to be informed')||String(v).trim().toLowerCase()==='tbi';
+    const showErr=m=>{const e=$('uep-err');e.textContent=m||'';e.style.display=m?'block':'none';};
+    const hideEl=el=>{if(el)el.classList.add('is-hide');};
+    const showEl=el=>{if(el)el.classList.remove('is-hide');};
+    const getProgram=()=>{const qs=new URLSearchParams(location.search);return qs.get('program')||qs.get('group')||'';};
+
+    // CSV helpers
+    function parseCSV(text){
+      const rows=[];let f='',r=[],q=false;
+      for(let i=0;i<text.length;i++){
+        const c=text[i];
+        if(q){ if(c==='\"'){ if(text[i+1]==='\"'){f+='\"';i++;} else q=false; } else f+=c; }
+        else { if(c==='\"') q=true; else if(c===','){r.push(f);f='';}
+               else if(c==='\n'){r.push(f);rows.push(r);r=[];f='';}
+               else if(c!=='\r') f+=c; }
+      }
+      if(f.length||r.length){r.push(f);rows.push(r);} return rows;
+    }
+    const headerMap={
+      program:['program','group'],
+      silver:['silver','p_silver','private silver','privatesilver'],
+      gold:['gold','p_gold'],
+      premium:['premium','p_premium'],
+      persesi:['persesi','per_sesi','per sesi','per-session','per_session'],
+      bundling:['bundling','bundle','bundling_test','bundlingtes'],
+      sesisilver:['sesisilver','sesi_silver','sesi silver'],
+      sesigold:['sesigold','sesi_gold','sesi gold'],
+      sesipremium:['sesipremium','sesi_premium','sesi premium'],
+      garansi:['garansi','garansi_skor','guarantee'],
+      igcse:['igcse'], alevel:['alevel','a-level','a level'], olevel:['olevel','o-level','o level']
+    };
+    const toKey=s=>(s||'').toString().trim().toLowerCase();
+    function mapHeaders(h){const H=h.map(toKey),m={};for(const k in headerMap){const i=H.findIndex(x=>headerMap[k].includes(x));if(i!==-1)m[k]=i;}return m;}
+    function rowsToObjects(rows){const m=mapHeaders(rows[0]);const out=[];for(let i=1;i<rows.length;i++){const o={};for(const k in m)o[k]=(rows[i][m[k]]||'').toString().trim();out.push(o);}return out;}
+    function splitSubjects(text){ if(!text) return []; return text.split(/[,;|/]/).map(s=>s.trim()).filter(Boolean); }
+
+    // state
+    let ROW=null;
+    const S={
+      program:'', plan:'silver', base:0,
+      target:0, minKelas:12, minKonsul:5, jmlKelas:12, konsul:5,
+      perSesi:0, extraQty:0,
+      bundMode:'none', bundPrice:0, bundQty:0,
+      garansiAvailable:false, garansiOn:false, garansiPrice:0,
+      subjects:[], // multiple
+    };
+
+    function programNeedsSubject(){
+      const p=S.program.replace(/\s+/g,'').toLowerCase();
+      return p==='igcse'||p==='alevel'||p==='olevel';
+    }
+    function subjectCountByPlan(){
+      if(S.plan==='silver') return 1;
+      if(S.plan==='gold') return 2;
+      if(S.plan==='premium') return 3;
+      return 0;
+    }
+    function getSubjectListFromRow(){
+      const key=S.program.replace(/\s+/g,'').toLowerCase();
+      let list=[];
+      if(key==='igcse') list=splitSubjects(ROW.igcse);
+      else if(key==='alevel') list=splitSubjects(ROW.alevel);
+      else if(key==='olevel') list=splitSubjects(ROW.olevel);
+      if(list.length===0){ list = SUBJECTS_FALLBACK[key]||[]; }
+      return list;
+    }
+    function renderSubjectSelectors(){
+      const wrap=$('uep-subjectWrap');
+      const host=$('uep-subjects');
+      const cnt = programNeedsSubject()?subjectCountByPlan():0;
+      if(cnt<=0){ wrap.hidden=true; S.subjects=[]; hideEl($('uep-subjectLine')); $('uep-subjectValue').textContent='-'; return; }
+      const options = getSubjectListFromRow();
+      if(options.length===0){ wrap.hidden=true; S.subjects=[]; hideEl($('uep-subjectLine')); return; }
+
+      wrap.hidden=false;
+      host.innerHTML='';
+      S.subjects = Array(cnt).fill('');
+      for(let i=0;i<cnt;i++){
+        const sel=document.createElement('select');
+        sel.className='uep-select';
+        sel.innerHTML = `<option value="">Pilih Subject ${i+1}</option>` + options.map(s=>`<option value="${s}">${s}</option>`).join('');
+        sel.addEventListener('change', ()=>{
+          // no duplicate
+          const chosen=[...host.querySelectorAll('select')].map(x=>x.value).filter(Boolean);
+          const last=sel.value;
+          if(last && chosen.filter(v=>v===last).length>1){ sel.value=''; return; }
+          S.subjects=[...host.querySelectorAll('select')].map(x=>x.value).filter(Boolean);
+          updateSubjectReceipt();
+        });
+        host.appendChild(sel);
+      }
+      $('uep-subjHelp').textContent=`Pilih ${cnt} subject.`;
+      updateSubjectReceipt();
+    }
+    function updateSubjectReceipt(){
+      const has = programNeedsSubject() && S.subjects.length>0;
+      (has?showEl:hideEl)($('uep-subjectLine'));
+      $('uep-subjectValue').textContent = has ? S.subjects.join(', ') : '-';
+    }
+
+    function setQtyButtonsDisabled(targetId, disabled){
+      document.querySelectorAll(`#uep .uep-btn-qty[data-target="${targetId}"]`).forEach(b=>{ b.disabled=disabled; });
+    }
+
+    function buildPlans(){
+      const host=$('uep-plans'); host.innerHTML='';
+      const opts=[];
+      if(num(ROW.silver)>0)  opts.push({key:'silver',label:'Silver',  price:num(ROW.silver),  sesi:num(ROW.sesisilver)});
+      if(num(ROW.gold)>0)    opts.push({key:'gold',  label:'Gold',    price:num(ROW.gold),    sesi:num(ROW.sesigold)});
+      if(num(ROW.premium)>0) opts.push({key:'premium',label:'Premium',price:num(ROW.premium),sesi:num(ROW.sesipremium)});
+      if(!opts.length){ showErr('Paket Private tidak tersedia.'); return; }
+
+      opts.forEach((o,idx)=>{
+        const el=document.createElement('label');
+        el.className='uep-plan'+(idx===0?' uep-active':'');
+        el.innerHTML=`<input type="radio" name="uep_plan" value="${o.key}" ${idx===0?'checked':''}/>
+          <div class="uep-pname">${o.label}</div>
+          <div class="uep-pprice">Rp ${fmt(o.price)}</div>
+          <div class="uep-psub">Paket Private</div>`;
+        host.appendChild(el);
+      });
+
+      const first=opts[0]; S.plan=first.key; S.base=first.price; S.target=first.sesi||0; updatePlanUI(); updateTotals();
+
+      host.addEventListener('change', e=>{
+        if(e.target.name!=='uep_plan') return;
+        host.querySelectorAll('.uep-plan').forEach(c=>c.classList.remove('uep-active'));
+        e.target.closest('.uep-plan').classList.add('uep-active');
+        const pick = opts.find(x=>x.key===e.target.value);
+        S.plan=pick.key; S.base=pick.price; S.target=pick.sesi||0;
+        S.garansiOn=false; updatePlanUI(); updateTotals();
+      });
+    }
+
+    function updatePlanUI(){
+      $('uep-sesiInfo').textContent = S.target?`Termasuk ${S.target} sesi`:''; $('uep-targetSesi').textContent=S.target||0;
+
+      S.minKelas=(S.plan==='premium')?20:12; S.minKonsul=5;
+      $('uep-jmlKelas').min=S.minKelas; $('uep-konsul').min=S.minKonsul;
+
+      const showAlloc=(S.plan==='gold'||S.plan==='premium');
+      $('uep-jmlKelasWrap').hidden=!showAlloc; $('uep-konsulWrap').hidden=!showAlloc;
+
+      S.garansiAvailable=(S.plan==='premium' && num(ROW.garansi)>0);
+      S.garansiPrice=num(ROW.garansi)||0;
+      $('uep-garansiWrap').hidden=!S.garansiAvailable;
+      $('uep-garansiNo').classList.toggle('uep-on',!S.garansiOn);
+      $('uep-garansiYes').classList.toggle('uep-on',S.garansiOn);
+
+      if(S.plan==='premium' && S.garansiOn){
+        S.jmlKelas=30; S.konsul=5;
+        $('uep-jmlKelas').value=30; $('uep-konsul').value=5;
+        $('uep-jmlKelas').disabled=true; $('uep-konsul').disabled=true;
+        setQtyButtonsDisabled('uep-jmlKelas', true); setQtyButtonsDisabled('uep-konsul', true);
+        S.base=S.garansiPrice||S.base;
+      }else{
+        $('uep-jmlKelas').disabled=false; $('uep-konsul').disabled=false;
+        setQtyButtonsDisabled('uep-jmlKelas', false); setQtyButtonsDisabled('uep-konsul', false);
+        if(S.jmlKelas<S.minKelas){S.jmlKelas=S.minKelas; $('uep-jmlKelas').value=S.jmlKelas;}
+        if(S.konsul<S.minKonsul){S.konsul=S.minKonsul; $('uep-konsul').value=S.konsul;}
+        if(S.plan==='silver') S.base=num(ROW.silver);
+        if(S.plan==='gold')   S.base=num(ROW.gold);
+        if(S.plan==='premium')S.base=num(ROW.premium);
+      }
+
+      S.perSesi=num(ROW.persesi); $('uep-extra').value=0; S.extraQty=0;
+      $('uep-extraWrap').hidden=!(S.perSesi>0);
+
+      const bundRaw=(ROW.bundling||'').toString().trim();
+      if(isTBI(bundRaw)){ S.bundMode='tbi'; S.bundPrice=0; $('uep-bundle').value=0; $('uep-bundleWrap').hidden=false; }
+      else if(num(bundRaw)>0){ S.bundMode='fixed'; S.bundPrice=num(bundRaw); $('uep-bundle').value=0; $('uep-bundleWrap').hidden=false; }
+      else { S.bundMode='none'; S.bundPrice=0; $('uep-bundle').value=0; $('uep-bundleWrap').hidden=true; }
+
+      // SUBJECTS (jumlah mengikuti plan)
+      renderSubjectSelectors();
+
+      validateAllocation();
+    }
+
+    function toggleSubmit(on){ $('uep-submit').disabled=!on; $('uep-submit').style.opacity=on?1:.6; }
+    function validateAllocation(){
+      const need=(S.plan==='gold'||S.plan==='premium');
+      if(!need){ $('uep-allocWarn').classList.remove('show'); toggleSubmit(true); return true; }
+      if(S.plan==='premium'&&S.garansiOn){ $('uep-allocWarn').classList.remove('show'); toggleSubmit(true); return true; }
+
+      S.jmlKelas=Math.max(S.minKelas, parseInt($('uep-jmlKelas').value||S.minKelas,10));
+      S.konsul  =Math.max(S.minKonsul, parseInt($('uep-konsul').value||S.minKonsul,10));
+      const sum=S.jmlKelas+S.konsul;
+
+      if(sum>S.target){
+        const excess=sum-S.target;
+        let newKonsul=Math.max(S.minKonsul, S.konsul-excess);
+        if(newKonsul+S.jmlKelas>S.target){
+          let rest=(newKonsul+S.jmlKelas)-S.target;
+          S.jmlKelas=Math.max(S.minKelas, S.jmlKelas-rest);
+        }
+        S.konsul=newKonsul;
+        $('uep-jmlKelas').value=S.jmlKelas; $('uep-konsul').value=S.konsul;
+      }
+      const ok=(S.jmlKelas+S.konsul)===S.target;
+      $('uep-allocWarn').classList.toggle('show',!ok);
+      toggleSubmit(ok);
+      return ok;
+    }
+
+    function updateTotals(){
+      S.extraQty=S.perSesi>0 ? Math.max(0, parseInt($('uep-extra').value||'0',10)) : 0;
+      S.bundQty =(S.bundMode!=='none') ? Math.max(0, Math.min(1, parseInt($('uep-bundle').value||'0',10))) : 0;
+
+      const extraTotal=(S.perSesi||0)*S.extraQty;
+      (S.perSesi>0 && S.extraQty>0 ? showEl : hideEl)($('uep-extraLine'));
+      $('uep-extraPrice').textContent=fmt(extraTotal);
+
+      let bundText='0', bundTotal=0, showBundleLine=false;
+      if(S.bundMode==='fixed'){
+        bundTotal=(S.bundPrice||0)*S.bundQty;
+        showBundleLine = S.bundQty>0;
+        bundText = showBundleLine ? `Rp ${fmt(bundTotal)}` : '0';
+      }else if(S.bundMode==='tbi'){
+        showBundleLine = S.bundQty>0;
+        bundText = showBundleLine ? 'To be Informed' : '0';
+      }
+      (showBundleLine?showEl:hideEl)($('uep-bundleLine'));
+      $('uep-bundleValue').textContent=bundText;
+
+      $('uep-basePrice').textContent=fmt(S.base||0);
+
+      // subject line (receipt) hanya untuk igcse/alevel/olevel
+      updateSubjectReceipt();
+
+      const total=(S.base||0)+extraTotal+(S.bundMode==='fixed'?bundTotal:0);
+      $('uep-totalAll').textContent=fmt(total);
+    }
+
+    // qty buttons
+    document.addEventListener('click', e=>{
+      const b=e.target.closest('.uep-btn-qty'); if(!b) return;
+      if(b.disabled) return;
+      const id=b.dataset.target, act=b.dataset.act; const inp=$(id); if(!inp) return;
+      if((id==='uep-jmlKelas'||id==='uep-konsul') && S.plan==='premium' && S.garansiOn) return;
+      let v=parseInt(inp.value||'0',10); const min=parseInt(inp.min||'0',10); const max=(id==='uep-bundle')?1:undefined;
+      if(act==='inc'){ v = max!==undefined ? Math.min(max, v+1) : v+1; } else { v=Math.max(min, v-1); }
+      inp.value=v;
+      if(id==='uep-jmlKelas'||id==='uep-konsul') validateAllocation();
+      updateTotals();
+    });
+    $('uep-jmlKelas').addEventListener('input', ()=>{ if(!(S.plan==='premium'&&S.garansiOn)){ validateAllocation(); updateTotals(); } });
+    $('uep-konsul').addEventListener('input',   ()=>{ if(!(S.plan==='premium'&&S.garansiOn)){ validateAllocation(); updateTotals(); } });
+    $('uep-extra').addEventListener('input', updateTotals);
+    $('uep-bundle').addEventListener('input', ()=>{ let v=Math.max(0,Math.min(1,parseInt($('uep-bundle').value||'0',10))); $('uep-bundle').value=v; updateTotals(); });
+
+    // garansi toggle
+    $('uep-garansiNo').addEventListener('click', ()=>{ S.garansiOn=false; $('uep-garansiNo').classList.add('uep-on'); $('uep-garansiYes').classList.remove('uep-on'); updatePlanUI(); updateTotals(); });
+    $('uep-garansiYes').addEventListener('click', ()=>{ S.garansiOn=true;  $('uep-garansiYes').classList.add('uep-on'); $('uep-garansiNo').classList.remove('uep-on'); updatePlanUI(); updateTotals(); });
+
+    // submit
+    $('uep-form').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      if(!S.program||!S.plan||!S.base){ showErr('Pilih paket terlebih dahulu.'); return; }
+      if((S.plan==='gold'||S.plan==='premium') && !(S.plan==='premium'&&S.garansiOn)){
+        if(!validateAllocation()){ showErr('Total sesi belum sesuai.'); return; }
+      }
+      const planCap=S.plan.charAt(0).toUpperCase()+S.plan.slice(1);
+      let msg=`Halo Ultimate Education,
+
+Saya ingin mendaftar *${S.program}* (Private - ${planCap})`;
+      if(programNeedsSubject() && S.subjects.length){ msg+=`\n- Subject: ${S.subjects.join(', ')}`; }
+      if(S.plan==='gold'||S.plan==='premium'){
+        msg+=`\n- Alokasi Sesi: Kelas ${S.jmlKelas} + Konsultasi ${S.konsul} = ${S.target} sesi`;
+      }
+      if(S.plan==='premium' && S.garansiAvailable){
+        msg+=`\n- Garansi Skor: ${S.garansiOn?'Ya':'Tidak'}`;
+      }
+      msg+=`\n- Harga Dasar: Rp ${fmt(S.base)}`;
+      if(S.perSesi>0 && S.extraQty>0) msg+=`\n- Tambah Kelas: ${S.extraQty} sesi @ Rp ${fmt(S.perSesi)}`;
+      if(S.bundMode!=='none' && S.bundQty>0){
+        msg+= (S.bundMode==='fixed') ? `\n- Bundling Test: ${S.bundQty}x @ Rp ${fmt(S.bundPrice)}`
+                                     : `\n- Bundling Test: To be Informed`;
+      }
+      msg+=`\n\nTotal: *Rp ${$('uep-totalAll').textContent}*`;
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+    });
+
+    // init
+    (async function init(){
+      try{
+        S.program=(getProgram()||'').trim();
+        if(!S.program){ showErr('Parameter ?program=.. (atau ?group=..) belum diisi.'); return; }
+        const res=await fetch(CSV_URL,{cache:'no-store'}); if(!res.ok){ showErr('Gagal mengambil CSV.'); return; }
+        const rows=parseCSV(await res.text()); if(!rows.length){ showErr('CSV kosong.'); return; }
+        const table=rowsToObjects(rows);
+        if(!table.length||!table[0].program){ showErr('Header wajib: program, silver, gold, premium, persesi, bundling, sesisilver, sesigold, sesipremium, (opsional) garansi, igcse, alevel, olevel.'); return; }
+        ROW = table.find(r=> (r.program||'').replace(/\s+/g,'').toLowerCase() === S.program.replace(/\s+/g,'').toLowerCase() );
+        if(!ROW){ showErr('Program tidak ditemukan di CSV.'); return; }
+
+        // plans & totals
+        buildPlans();
+        updateTotals();
+        showErr('');
+      }catch(err){ console.error(err); showErr('Terjadi kesalahan saat memuat data.'); }
+    })();
+  })();
+  </script>
+</div>

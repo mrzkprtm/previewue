@@ -1,25 +1,71 @@
 import React, { useState, useMemo } from 'react';
 
+const getCategories = (p) => {
+    const s = p.slug.toLowerCase();
+    const t = p.hero.title.toLowerCase();
+
+    if (['ielts', 'toefl', 'sat', 'gmat', 'gre', 'ged', 'act', 'pte', 'toeic', 'utbk', 'lsat', 'caie', 'igcse'].some(k => s.includes(k))) return ['Persiapan TES'];
+    if (['english', 'conversation'].some(k => s.includes(k) || t.includes(k))) return ['Bahasa Inggris'];
+    if (['topik', 'jlpt', 'hsk', 'delf', 'testdaf', 'bipa', 'korean', 'japanese', 'chinese', 'french', 'german', 'indonesian', 'korea', 'jepang', 'mandarin', 'prancis', 'jerman'].some(k => s.includes(k) || t.includes(k))) return ['Program Bahasa'];
+    if (['scholarship', 'ausbildung', 'g3sa'].some(k => s.includes(k))) return ['Bimbingan Beasiswa'];
+    return ['Persiapan TES']; // Fallback
+};
+
+// Map program slug -> image filename in /public/program
+const getProgramImagePath = (slug) => {
+    const s = (slug || '').toLowerCase();
+    const map = {
+        'business-english': 'be',
+        'general-english': 'ge',
+        'igcse': 'caie',
+        'a-level': 'alevel',
+        'as-level': 'alevel',
+        'o-level': 'olevel',
+        'scholarship': 'Scholarship', // file uses capital S
+    };
+    const base = map[s] || s.replace(/[^a-z0-9]/g, ''); // remove hyphens and non-alnum
+    return `/program/${base}.png`;
+};
+
 export default function ProgramTabs({ allPrograms }) {
-    const tabs = ["Semua Program", "Persiapan TES", "Bahasa Inggris", "Program Bahasa"];
+    const tabs = ["Semua Program", "Persiapan TES", "Bahasa Inggris", "Program Bahasa", "Bimbingan Beasiswa"];
     const [activeTab, setActiveTab] = useState("Semua Program");
 
+    // Map new data structure to UI requirements
+    const mappedPrograms = useMemo(() => {
+        return (allPrograms || []).map(p => {
+            const categories = getCategories(p);
+            // Try to extract duration/target from meta or description if possible, or use defaults
+            return {
+                ...p,
+                name: p.hero.title.replace(/<\/?[^>]+(>|$)/g, ""), // strip tags
+                image: getProgramImagePath(p.slug),
+                description: p.hero.subtitle || p.meta.description,
+                categories,
+                target: "Pelajar / Umum", // Default
+                duration: "Fleksibel", // Default
+                includes: "Sertifikat & Materi", // Default
+                slug: p.slug
+            };
+        });
+    }, [allPrograms]);
+
     const filteredPrograms = useMemo(() => {
-        if (activeTab === "Semua Program") return allPrograms;
-        return allPrograms.filter(program => program.categories.includes(activeTab));
-    }, [activeTab, allPrograms]);
+        if (activeTab === "Semua Program") return mappedPrograms;
+        return mappedPrograms.filter(program => program.categories.includes(activeTab));
+    }, [activeTab, mappedPrograms]);
 
     return (
         <div className="w-full">
             {/* Tab Navigation - Centered */}
-            <div className="flex flex-wrap justify-center gap-4 mb-16">
+            <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 md:mb-16">
                 {tabs.map((tab) => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`px-8 py-3.5 rounded-xl font-heading font-semibold text-base transition-all duration-300 shadow-md ${activeTab === tab
-                            ? 'bg-ultimate-blue text-white scale-105 shadow-blue-200'
-                            : 'bg-white text-slate-700 hover:bg-slate-50 hover:shadow-lg'
+                        className={`px-6 py-2.5 md:px-8 md:py-3.5 rounded-full font-heading font-semibold text-sm md:text-base transition-all duration-300 shadow-sm border ${activeTab === tab
+                            ? 'bg-ultimate-blue text-white shadow-blue-200 border-ultimate-blue'
+                            : 'bg-white text-slate-700 border-slate-200 hover:border-ultimate-blue hover:text-ultimate-blue'
                             }`}
                     >
                         {tab}
@@ -32,7 +78,7 @@ export default function ProgramTabs({ allPrograms }) {
                 {filteredPrograms.map((program, idx) => (
                     <div
                         key={program.slug + idx}
-                        className="bg-white rounded-[1.5rem] shadow-lg border border-slate-100 overflow-hidden flex flex-col md:flex-row group hover:shadow-xl transition-all duration-500 animate-in fade-in slide-in-from-bottom-2"
+                        className="bg-white rounded-[1.5rem] shadow-lg border border-slate-100 overflow-hidden flex flex-col md:flex-row group hover:shadow-xl transition-all duration-500"
                     >
                         {/* Image Section - Compact 3:2 aspect */}
                         <div className="md:w-[35%] bg-slate-50 relative overflow-hidden group-hover:bg-slate-100 transition-colors shrink-0">
@@ -41,6 +87,7 @@ export default function ProgramTabs({ allPrograms }) {
                                     src={program.image}
                                     alt={program.name}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    onError={(e) => { e.target.src = 'https://placehold.co/600x400?text=No+Image'; }}
                                 />
                             </div>
                         </div>
@@ -66,7 +113,7 @@ export default function ProgramTabs({ allPrograms }) {
                                     </div>
                                     <div className="flex items-center gap-3 text-slate-600">
                                         <span className="text-base shrink-0">🕒</span>
-                                        <span className="text-xs md:text-sm font-medium line-clamp-1">Durasi {program.duration}</span>
+                                        <span className="text-xs md:text-sm font-medium line-clamp-1">{program.duration}</span>
                                     </div>
                                     <div className="flex items-center gap-3 text-slate-600 sm:col-span-2">
                                         <span className="text-base shrink-0">🎁</span>

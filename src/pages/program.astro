@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Button from "../components/ui/Button.astro";
 import ProgramTabs from "../components/program/ProgramTabs.jsx";
 import ProgramHero from "../components/program/ProgramHero.astro";
-import { programsData } from "../data/programs";
+import { programs } from "../data/programs";
 import HomeSuccessCTA from "../components/home/HomeSuccessCTA.astro";
 ---
 
@@ -15,7 +15,7 @@ import HomeSuccessCTA from "../components/home/HomeSuccessCTA.astro";
     <!-- Content Section -->
     <section class="py-16 md:py-24">
       <div class="container mx-auto">
-        <ProgramTabs allPrograms={programsData} client:load />
+        <ProgramTabs allPrograms={programs} client:load />
       </div>
     </section>
   </main>

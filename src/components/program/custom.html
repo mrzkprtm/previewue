@@ -1,0 +1,304 @@
+<div id="uec">
+  <style>
+    /* ==== Scoped ke #uec agar aman di WordPress ==== */
+    #uec{
+      --brand:#145da0; --ink:#0f172a; --ring:#e5e7eb; --card:#fff;
+      --f12:clamp(11px,2.3vw,12px);
+      --f14:clamp(12px,2.6vw,13.5px);
+      --f16:clamp(13px,3vw,15px);
+      --f18:clamp(14px,3.4vw,17px);
+      color:var(--ink);
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+      font-size:var(--f16);
+    }
+    #uec *{box-sizing:border-box}
+
+    .uec-shell{max-width:clamp(340px,92vw,560px);margin:0 auto;padding:12px}
+    .uec-card{background:#fff;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.06);overflow:hidden}
+    .uec-body{padding:12px}
+    .uec-alert{display:none;margin:12px;padding:10px;border-radius:10px;background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-size:var(--f14)}
+    .uec-field{margin-bottom:10px}
+    .uec-label{display:block;color:var(--ink);font-weight:600;font-size:var(--f14);margin:0 0 6px}
+
+    /* Row inline: label kiri, kontrol kanan */
+    .uec-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+    .uec-note{color:var(--ink);opacity:.9;font-size:var(--f12);margin-top:2px}
+
+    /* Qty controls */
+    .uec-qty{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+    .uec-btn-qty{
+      flex:0 0 32px;height:32px;border-radius:9px;background:var(--brand);color:#fff;border:0;cursor:pointer;
+      font-size:16px;display:grid;place-items:center;line-height:1
+    }
+    .uec-qty input{
+      width:72px;height:32px;text-align:center;border:1px solid var(--ring);border-radius:9px;font-size:var(--f14);padding:0 6px
+    }
+    #uec input[type=number]{-moz-appearance:textfield}
+    #uec input::-webkit-outer-spin-button,#uec input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+    @media (max-width:360px){.uec-btn-qty{flex-basis:28px;height:28px;font-size:14px}.uec-qty input{height:28px;width:58px}}
+
+    /* Receipt */
+    .uec-receipt{margin-top:8px;padding:10px 12px;border:1px solid var(--ring);border-radius:10px;background:#fafafa}
+    .uec-receipt h3{margin:0 0 6px;font-size:var(--f16);color:var(--ink)}
+    .uec-line{display:flex;justify-content:space-between;gap:10px;padding:4px 0;color:var(--ink)}
+    .uec-line strong{font-size:clamp(16px,3.6vw,18px)}
+    .uec-btn{width:100%;border:0;border-radius:10px;padding:10px;background:var(--brand);color:#fff;font-weight:700;font-size:var(--f16);cursor:pointer;transition:.15s}
+    .uec-btn:active{transform:translateY(1px)}
+  </style>
+
+  <div class="uec-shell">
+    <div id="uec-err" class="uec-alert" role="alert"></div>
+
+    <div class="uec-card">
+      <form class="uec-body" id="uec-form" novalidate>
+
+        <!-- Local Teacher (per 3 sesi) -->
+        <div class="uec-field" id="uec-localWrap" hidden>
+          <div class="uec-row">
+            <div>
+              <label class="uec-label" for="uec-local">Local Teacher</label>
+              <div class="uec-note">Harga per 3 sesi: Rp <span id="uec-localUnit">0</span></div>
+            </div>
+            <div class="uec-qty">
+              <button class="uec-btn-qty" type="button" data-target="uec-local" data-act="dec">-</button>
+              <input id="uec-local" type="number" inputmode="numeric" value="0" min="0" step="3" />
+              <button class="uec-btn-qty" type="button" data-target="uec-local" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Native Teacher (per 3 sesi) -->
+        <div class="uec-field" id="uec-nativeWrap" hidden>
+          <div class="uec-row">
+            <div>
+              <label class="uec-label" for="uec-native">Native Teacher</label>
+              <div class="uec-note">Harga per 3 sesi: Rp <span id="uec-nativeUnit">0</span></div>
+            </div>
+            <div class="uec-qty">
+              <button class="uec-btn-qty" type="button" data-target="uec-native" data-act="dec">-</button>
+              <input id="uec-native" type="number" inputmode="numeric" value="0" min="0" step="3" />
+              <button class="uec-btn-qty" type="button" data-target="uec-native" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Konsultasi Beasiswa (per sesi) -->
+        <div class="uec-field" id="uec-konsulWrap" hidden>
+          <div class="uec-row">
+            <div>
+              <label class="uec-label" for="uec-konsul">Konsultasi Beasiswa</label>
+              <div class="uec-note">Harga per sesi: Rp <span id="uec-konsulUnit">0</span> (input kelipatan 3 sesi)</div>
+            </div>
+            <div class="uec-qty">
+              <button class="uec-btn-qty" type="button" data-target="uec-konsul" data-act="dec">-</button>
+              <input id="uec-konsul" type="number" inputmode="numeric" value="0" min="0" step="3" />
+              <button class="uec-btn-qty" type="button" data-target="uec-konsul" data-act="inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ringkasan -->
+        <div class="uec-receipt" aria-live="polite">
+          <h3>Detail Harga</h3>
+          <div class="uec-line" id="uec-localLine" hidden>
+            <span>Local Teacher</span>
+            <span id="uec-localText">0</span>
+          </div>
+          <div class="uec-line" id="uec-nativeLine" hidden>
+            <span>Native Teacher</span>
+            <span id="uec-nativeText">0</span>
+          </div>
+          <div class="uec-line" id="uec-konsulLine" hidden>
+            <span>Konsultasi Beasiswa</span>
+            <span id="uec-konsulText">0</span>
+          </div>
+          <hr/>
+          <div class="uec-line"><strong>Total</strong><strong>Rp <span id="uec-totalAll">0</span></strong></div>
+        </div>
+
+        <div style="margin-top:10px">
+          <button id="uec-submit" class="uec-btn" type="submit">Daftar Sekarang</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    /* ===== KONFIG ===== */
+    const CSV_URL   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1V4FCqLd08TiFKMf078u8f7YJxICIa9QVZHOoDCI2W15J31z6iyWj1XrulzrdFxD1i84gDRrUvanj/pub?output=csv";
+    const WA_NUMBER = "6283812310368";
+
+    /* ===== UTIL ===== */
+    const $ = id => document.getElementById(id);
+    const fmt = n => new Intl.NumberFormat("id-ID").format(Number(n||0));
+    const num = v => { const n = Number((v||'').toString().replace(/[^\d.-]/g,'')); return isNaN(n)?0:n; };
+    const showErr = m => { const e=$('uec-err'); e.textContent=m||''; e.style.display=m?'block':'none'; };
+    function getProgram(){ const qs=new URLSearchParams(location.search); return (qs.get('program')||qs.get('group')||'').trim(); }
+    const pKey = s => (s||'').replace(/\s+/g,'').toLowerCase();
+
+    /* ===== CSV mini ===== */
+    function parseCSV(text){
+      const rows=[]; let f='', r=[], q=false;
+      for(let i=0;i<text.length;i++){
+        const c=text[i];
+        if(q){ if(c==='\"'){ if(text[i+1]==='\"'){f+='\"'; i++;} else q=false; } else f+=c; }
+        else { if(c==='\"') q=true;
+               else if(c===','){ r.push(f); f=''; }
+               else if(c==='\n'){ r.push(f); rows.push(r); r=[]; f=''; }
+               else if(c!=='\r') f+=c; }
+      }
+      if(f.length||r.length){ r.push(f); rows.push(r); }
+      return rows;
+    }
+    const headerMap={
+      program:['program','group'],
+      tigasesil:['tigasesil','tiga_sesi_l','3sesi_local','local3'],
+      tigasesin:['tigasesin','tiga_sesi_n','3sesi_native','native3'],
+      persesi:['persesi','per_sesi','per sesi','per-session']
+    };
+    const toKey=s=>(s||'').toString().trim().toLowerCase();
+    function mapHeaders(h){const H=h.map(toKey),m={};for(const k in headerMap){const i=H.findIndex(x=>headerMap[k].includes(x));if(i!==-1)m[k]=i;}return m;}
+    function rowsToObjects(rows){const m=mapHeaders(rows[0]);const out=[];for(let i=1;i<rows.length;i++){const o={};for(const k in m)o[k]=(rows[i][m[k]]||'').toString().trim();out.push(o);}return out;}
+
+    /* ===== STATE ===== */
+    const S = {
+      program:'',
+      priceLocal3:0, priceNative3:0, priceKonsulPerSesi:0,
+      local:0, native:0, konsul:0
+    };
+
+    function ensureStep3(v){
+      let n = Math.max(0, parseInt(v||'0',10));
+      if (isNaN(n)) n = 0;
+      return n - (n % 3);
+    }
+
+    function updateTotals(){
+      // hitung paket
+      const packsLocal  = (S.local/3);
+      const packsNative = (S.native/3);
+
+      const localTotal  = packsLocal  * (S.priceLocal3||0);
+      const nativeTotal = packsNative * (S.priceNative3||0);
+      const konsulTotal = S.konsul    * (S.priceKonsulPerSesi||0);
+
+      // label unit
+      $('uec-localUnit').textContent  = fmt(S.priceLocal3||0);
+      $('uec-nativeUnit').textContent = fmt(S.priceNative3||0);
+      $('uec-konsulUnit').textContent = fmt(S.priceKonsulPerSesi||0);
+
+      // tampil/hidden
+      const showLocal  = (S.priceLocal3>0);
+      const showNative = (S.priceNative3>0);
+      const showKonsul = (S.priceKonsulPerSesi>0);
+
+      $('uec-localWrap').hidden  = !showLocal;
+      $('uec-nativeWrap').hidden = !showNative;
+      $('uec-konsulWrap').hidden = !showKonsul;
+
+      $('uec-localLine').hidden  = !(showLocal  && S.local  > 0);
+      $('uec-nativeLine').hidden = !(showNative && S.native > 0);
+      $('uec-konsulLine').hidden = !(showKonsul && S.konsul > 0);
+
+      if(showLocal){
+        $('uec-localText').textContent =
+          S.local>0 ? `Rp ${fmt(localTotal)} ( ${S.local} sesi = ${packsLocal} x Rp ${fmt(S.priceLocal3)} )` : '0';
+      }
+      if(showNative){
+        $('uec-nativeText').textContent =
+          S.native>0 ? `Rp ${fmt(nativeTotal)} ( ${S.native} sesi = ${packsNative} x Rp ${fmt(S.priceNative3)} )` : '0';
+      }
+      if(showKonsul){
+        $('uec-konsulText').textContent =
+          S.konsul>0 ? `Rp ${fmt(konsulTotal)} ( ${S.konsul} sesi @ Rp ${fmt(S.priceKonsulPerSesi)} )` : '0';
+      }
+
+      const total = (localTotal||0) + (nativeTotal||0) + (konsulTotal||0);
+      $('uec-totalAll').textContent = fmt(total);
+    }
+
+    /* ==== EVENTS ==== */
+    document.addEventListener('click', (e)=>{
+      const b=e.target.closest('.uec-btn-qty'); if(!b) return;
+      const id=b.dataset.target, act=b.dataset.act;
+      const inp=$(id); let val=ensureStep3(inp.value||'0');
+      val = (act==='inc') ? val+3 : Math.max(0, val-3);
+      inp.value=val;
+
+      if(id==='uec-local')  S.local  = val;
+      if(id==='uec-native') S.native = val;
+      if(id==='uec-konsul') S.konsul = val;
+
+      updateTotals();
+    });
+
+    $('uec-local').addEventListener('input', ()=>{
+      const v=ensureStep3($('uec-local').value); $('uec-local').value=v; S.local=v; updateTotals();
+    });
+    $('uec-native').addEventListener('input', ()=>{
+      const v=ensureStep3($('uec-native').value); $('uec-native').value=v; S.native=v; updateTotals();
+    });
+    $('uec-konsul').addEventListener('input', ()=>{
+      const v=ensureStep3($('uec-konsul').value); $('uec-konsul').value=v; S.konsul=v; updateTotals();
+    });
+
+    // submit
+    $('uec-form').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      if(!S.program){ showErr('Parameter ?program=.. (atau ?group=..) belum diisi.'); return; }
+
+      const packsLocal  = (S.local/3), packsNative=(S.native/3);
+      const localLine   = (S.priceLocal3>0  && S.local>0)  ? `\n- Local Teacher: ${S.local} sesi (${packsLocal} x 3) @ Rp ${fmt(S.priceLocal3)} per 3 sesi` : '';
+      const nativeLine  = (S.priceNative3>0 && S.native>0) ? `\n- Native Teacher: ${S.native} sesi (${packsNative} x 3) @ Rp ${fmt(S.priceNative3)} per 3 sesi` : '';
+      const konsulLine  = (S.priceKonsulPerSesi>0 && S.konsul>0) ? `\n- Konsultasi Beasiswa: ${S.konsul} sesi @ Rp ${fmt(S.priceKonsulPerSesi)} per sesi` : '';
+
+      const total = $('uec-totalAll').textContent;
+
+      let msg = `Halo Ultimate Education,
+
+Saya ingin mendaftar *Custom Class ${S.program}* dengan rincian:${localLine}${nativeLine}${konsulLine}
+
+Total: *Rp ${total}*`;
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+    });
+
+    /* ===== INIT ===== */
+    (async function init(){
+      try{
+        S.program = getProgram();
+        if(!S.program){ showErr('Parameter ?program=.. (atau ?group=..) belum diisi.'); return; }
+        if(!CSV_URL){ showErr('CSV_URL belum diatur.'); return; }
+
+        const res=await fetch(CSV_URL,{cache:'no-store'});
+        if(!res.ok){ showErr('Gagal mengambil CSV.'); return; }
+        const rows=parseCSV(await res.text());
+        if(!rows.length){ showErr('CSV kosong.'); return; }
+        const table=rowsToObjects(rows);
+        if(!table.length || !table[0].program){ showErr('Header wajib: program, tigasesil, tigasesin, persesi'); return; }
+
+        const row = table.find(r => pKey(r.program)===pKey(S.program));
+        if(!row){ showErr('Program tidak ditemukan di CSV.'); return; }
+
+        S.priceLocal3        = num(row.tigasesil);
+        S.priceNative3       = num(row.tigasesin);
+        S.priceKonsulPerSesi = num(row.persesi);
+
+        // Show/hide rows sesuai ketersediaan harga
+        $('uec-localWrap').hidden  = !(S.priceLocal3>0);
+        $('uec-nativeWrap').hidden = !(S.priceNative3>0);
+        $('uec-konsulWrap').hidden = !(S.priceKonsulPerSesi>0);
+
+        // Reset nilai awal 0 (kelipatan 3)
+        ['uec-local','uec-native','uec-konsul'].forEach(id=>$(id).value=0);
+
+        updateTotals();
+        showErr('');
+      }catch(err){
+        console.error(err);
+        showErr('Terjadi kesalahan saat memuat data.');
+      }
+    })();
+  })();
+  </script>
+</div>

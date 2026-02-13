@@ -1,0 +1,458 @@
+<div id="ue3">
+  <style>
+    /* ==== Scoped ke #ue3 supaya tidak bentrok tema/plug-in WP ==== */
+    #ue3{
+      --brand:#145da0;
+      /* teks lebih gelap */
+      --ink:#0b1220; 
+      --muted:#1f2937;
+      --bg:#f4f6fb; --card:#fff; --ring:#e5e7eb;
+      --radius:14px; --gap:10px; --pad:clamp(8px,2vw,12px);
+      /* font sedikit lebih besar */
+      --f12:clamp(12px,2.6vw,13px);
+      --f14:clamp(13px,3.0vw,15px);
+      --f16:clamp(14px,3.4vw,16.5px);
+      --f18:clamp(15px,3.8vw,19px);
+      color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+      font-size:var(--f16); background:var(--bg);
+    }
+    #ue3 *{box-sizing:border-box}
+
+    #ue3 .ue3-shell{max-width:720px;margin-inline:auto;padding:clamp(6px,2vw,14px)}
+    #ue3 .ue3-card{background:var(--card);border-radius:var(--radius);box-shadow:0 8px 28px rgba(0,0,0,.06);overflow:hidden}
+    #ue3 .ue3-hero{background:linear-gradient(135deg,#e8f1ff 0%,#ffffff 60%);padding:10px 12px;border-bottom:1px solid var(--ring)}
+    #ue3 .ue3-title{font-weight:700;letter-spacing:.3px}
+    #ue3 .ue3-body{padding:var(--pad)}
+    #ue3 .ue3-alert{display:none;margin-bottom:var(--gap);padding:10px;border-radius:10px;background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-size:var(--f14)}
+    #ue3 .ue3-field{margin-bottom:var(--gap)}
+    /* label dibuat lebih gelap */
+    #ue3 .ue3-label{display:block;color:var(--ink);font-size:var(--f12);margin:0 0 6px}
+
+    /* PLAN CARDS */
+    #ue3 .ue3-plans{display:grid;grid-template-columns:1fr;gap:8px}
+    @media (min-width:420px){#ue3 .ue3-plans{grid-template-columns:1fr 1fr}}
+    #ue3 .ue3-plan{
+      position:relative;border:1px solid var(--ring);border-radius:10px;padding:10px;cursor:pointer;
+      transition:.2s ease; user-select:none; background:#fff;
+    }
+    #ue3 .ue3-plan:hover{transform:translateY(-1px)}
+    #ue3 .ue3-plan input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    #ue3 .ue3-name{font-weight:700;font-size:var(--f14);color:var(--ink)}
+    /* harga sedikit lebih besar */
+    #ue3 .ue3-price{font-size:var(--f18);font-weight:800;color:var(--ink)}
+    /* sub tidak lagi abu-abu samar */
+    #ue3 .ue3-sub{color:var(--ink);opacity:.9;font-size:var(--f12)}
+    #ue3 .ue3-plan.ue3-active{box-shadow:0 0 0 2px var(--brand) inset}
+
+    /* qty (INLINE label + kontrol) */
+    #ue3 #ue3-kelasWrap,
+    #ue3 #ue3-bundlingWrap{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    #ue3 #ue3-kelasWrap .ue3-label,
+    #ue3 #ue3-bundlingWrap .ue3-label{margin:0;font-size:var(--f14);color:var(--ink)}
+
+    #ue3 .ue3-qty{display:flex;align-items:center;gap:6px}
+    /* tombol qty sedikit lebih besar */
+    #ue3 .ue3-btn-qty{
+      flex:0 0 34px;height:34px;border-radius:9px;background:var(--brand);color:#fff;border:0;cursor:pointer;font-size:18px;display:grid;place-items:center
+    }
+    #ue3 .ue3-qty input{
+      flex:0 0 auto;width:90px;height:34px;text-align:center;
+      border:1px solid var(--ring);border-radius:9px;font-size:var(--f14);padding:0 8px;color:var(--ink)
+    }
+    #ue3 input[type=number]{-moz-appearance:textfield}
+    #ue3 input::-webkit-outer-spin-button,#ue3 input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+    /* receipt */
+    #ue3 .ue3-receipt{margin-top:10px;padding:10px 12px;border:1px solid var(--ring);border-radius:10px;background:#fafafa}
+    #ue3 .ue3-receipt h3{margin:0 0 6px;font-size:var(--f16);color:var(--ink)}
+    #ue3 .ue3-line{display:flex;justify-content:space-between;gap:10px;padding:4px 0;color:var(--ink)}
+    #ue3 .ue3-line strong{font-size:clamp(17px,3.8vw,19px)}
+    #ue3 .ue3-btn{width:100%;border:0;border-radius:10px;padding:12px;background:var(--brand);color:#fff;font-weight:700;font-size:var(--f16);cursor:pointer;transition:.2s}
+    #ue3 .ue3-btn:active{transform:translateY(1px)}
+
+    /* CLASS TYPE SELECTOR (inline, compact) */
+    #ue3 .ue3-classType-wrap{display:flex;gap:10px;margin-bottom:10px}
+    #ue3 .ue3-classType-option{
+      position:relative;flex:1;border:1px solid var(--ring);border-radius:8px;padding:8px 10px;cursor:pointer;
+      transition:.2s ease; user-select:none; background:#fff; display:flex;align-items:center;gap:6px;
+    }
+    #ue3 .ue3-classType-option:hover{background:rgba(20,93,160,.02)}
+    #ue3 .ue3-classType-option input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    #ue3 .ue3-classType-icon{flex:0 0 16px;width:16px;height:16px;opacity:.6;transition:.2s;fill:currentColor}
+    #ue3 .ue3-classType-label{font-weight:600;font-size:var(--f12);color:var(--ink)}
+    #ue3 .ue3-classType-option.ue3-active{border-color:var(--brand);background:rgba(20,93,160,.08)}
+    #ue3 .ue3-classType-option.ue3-active .ue3-classType-icon{opacity:1}
+    #ue3 .ue3-classType-option.ue3-active .ue3-classType-label{color:var(--brand)}
+
+    @media (max-width:340px){
+      #ue3 .ue3-btn-qty{flex-basis:30px;height:30px;font-size:16px}
+      #ue3 .ue3-qty input{height:30px;width:78px}
+    }
+  </style>
+
+  <div class="ue3-shell">
+    <div id="ue3-err" class="ue3-alert" role="alert"></div>
+
+    <div class="ue3-card" id="ue3-app">
+      <div class="ue3-hero">
+      </div>
+
+      <form class="ue3-body" id="ue3-form" novalidate>
+        <!-- Tipe Kelas (Offline/Online) -->
+        <div class="ue3-field" id="ue3-classTypeWrap" hidden>
+          <label class="ue3-label">Pilih Tipe Kelas</label>
+          <div class="ue3-classType-wrap">
+            <label class="ue3-classType-option ue3-active">
+              <input type="radio" name="ue3-classType" value="offline" checked />
+              <svg class="ue3-classType-icon" viewBox="0 0 24 24" style="color:var(--brand)">
+                <path d="M12 2L2 8v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-10-6z" fill="currentColor"/>
+                <rect x="9" y="12" width="6" height="8" fill="currentColor"/>
+              </svg>
+              <span class="ue3-classType-label">Offline</span>
+            </label>
+            <label class="ue3-classType-option">
+              <input type="radio" name="ue3-classType" value="online" />
+              <svg class="ue3-classType-icon" viewBox="0 0 24 24" style="color:var(--brand)">
+                <rect x="2" y="3" width="20" height="14" fill="currentColor"/>
+                <rect x="8" y="19" width="8" height="2" fill="currentColor"/>
+                <rect x="11" y="21" width="2" height="1" fill="currentColor"/>
+              </svg>
+              <span class="ue3-classType-label">Online</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- plans -->
+        <div class="ue3-field">
+          <div class="ue3-plans" id="ue3-plans"><!-- injected Bronze/Silver --></div>
+          <div id="ue3-planHelp" style="color:var(--ink);opacity:.9;font-size:var(--f12);margin-top:6px"></div>
+        </div>
+
+        <!-- Tambah Kelas (inline) -->
+        <div class="ue3-field" id="ue3-kelasWrap" hidden>
+          <label class="ue3-label" for="ue3-kelas">Tambah Kelas (per sesi)</label>
+          <div class="ue3-qty">
+            <button class="ue3-btn-qty" type="button" data-target="ue3-kelas" data-act="dec" aria-label="Kurangi sesi">-</button>
+            <input id="ue3-kelas" type="number" inputmode="numeric" value="0" min="0" />
+            <button class="ue3-btn-qty" type="button" data-target="ue3-kelas" data-act="inc" aria-label="Tambah sesi">+</button>
+          </div>
+        </div>
+
+        <!-- Bundling (inline) -->
+        <div class="ue3-field" id="ue3-bundlingWrap" hidden>
+          <label class="ue3-label" for="ue3-bundling">Bundling Test (opsional)</label>
+          <div class="ue3-qty">
+            <button class="ue3-btn-qty" type="button" data-target="ue3-bundling" data-act="dec" aria-label="Kurangi bundling">-</button>
+            <input id="ue3-bundling" type="number" inputmode="numeric" value="0" min="0" max="1" />
+            <button class="ue3-btn-qty" type="button" data-target="ue3-bundling" data-act="inc" aria-label="Tambah bundling">+</button>
+          </div>
+        </div>
+
+        <!-- receipt -->
+        <div class="ue3-receipt" aria-live="polite">
+          <h3>Detail Harga</h3>
+          <div class="ue3-line"><span>Harga Dasar</span><span>Rp <b id="ue3-basePrice">0</b></span></div>
+          <div class="ue3-line" id="ue3-kelasLine" hidden><span>Harga Tambah Kelas</span><span>Rp <b id="ue3-kelasPrice">0</b></span></div>
+          <div class="ue3-line" id="ue3-bundlingLine" hidden><span>Harga Bundling Test</span><span id="ue3-bundlingValue">0</span></div>
+          <hr/>
+          <div class="ue3-line"><strong>Total</strong><strong>Rp <span id="ue3-totalAll">0</span></strong></div>
+        </div>
+
+        <div style="margin-top:var(--gap)">
+          <button id="ue3-submitBtn" class="ue3-btn" type="submit">Daftar Sekarang</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    /* ====== KONFIG (ganti CSV_URL) — tertutup di scope IIFE ====== */
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR1V4FCqLd08TiFKMf078u8f7YJxICIa9QVZHOoDCI2W15J31z6iyWj1XrulzrdFxD1i84gDRrUvanj/pub?output=csv";
+    const WA_NUMBER = "6283812310368";
+
+    /* ====== DATA ONLINE STATIS (untuk IELTS, SAT, GMAT, GRE) ====== */
+    const ONLINE_PRICES = {
+      'ielts': { bronzeg: 1990000, silverg: 2300000 },
+      'sat': { bronzeg: 4600000, silverg: 5000000 },
+      'gmat': { bronzeg: 4600000, silverg: 5000000 },
+      'gre': { bronzeg: 4600000, silverg: 5000000 },
+    };
+
+    /* ====== UTIL (scoped, tidak bentrok $ jQuery WP) ====== */
+    const $ = (id) => document.getElementById(id);
+    const fmt = n => new Intl.NumberFormat("id-ID").format(Number(n||0));
+    const num = v => { const n = Number((v||'').toString().replace(/[^\d.-]/g,'')); return isNaN(n)?0:n; };
+    const isTBI = v => (typeof v === 'string' && v.trim().toLowerCase()==='to be informed') || String(v).trim().toLowerCase()==='tbi';
+    const showErr = msg => { const e=$('ue3-err'); e.textContent=msg||''; e.style.display=msg?'block':'none'; };
+    function getGroup(){
+      const qs=new URLSearchParams(location.search);
+      if(qs.get('group')) return qs.get('group');
+      return (!location.search && location.href.includes('=')) ? decodeURIComponent(location.href.split('=').pop()) : '';
+    }
+
+    /* ====== CSV PARSER mini ====== */
+    function parseCSV(text){
+      const rows=[]; let f='', r=[], q=false;
+      for(let i=0;i<text.length;i++){
+        const c=text[i];
+        if(q){ if(c==='\"'){ if(text[i+1]==='\"'){f+='\"'; i++;} else q=false; } else f+=c; }
+        else { if(c==='\"') q=true; else if(c===','){ r.push(f); f=''; }
+               else if(c==='\n'){ r.push(f); rows.push(r); r=[]; f=''; }
+               else if(c!=='\r') f+=c; }
+      }
+      if(f.length||r.length){ r.push(f); rows.push(r); }
+      return rows;
+    }
+
+    /* ====== HEADER MAP ====== */
+    const headerMap = {
+      program: ['program','group'],
+      bronzeg: ['bronzeg','bronze_g','group_bronze','bronze'],
+      silverg: ['silverg','silver_g','group_silver','silverg'],
+      persesi: ['persesi','per_sesi','per sesi','per-session'],
+      bundling:['bundling','bundle','bundling_test','bundlingtes']
+    };
+    const toKey = s => (s||'').toString().trim().toLowerCase();
+    function mapHeaders(hdr){
+      const H = hdr.map(toKey), m={};
+      for(const k in headerMap){
+        const ix = H.findIndex(x => headerMap[k].includes(x));
+        if(ix!==-1) m[k]=ix;
+      }
+      return m;
+    }
+    function rowsToObjects(rows){
+      const map = mapHeaders(rows[0]); const out=[];
+      for(let i=1;i<rows.length;i++){
+        const o={}; for(const k in map) o[k]=(rows[i][map[k]]||'').toString().trim(); out.push(o);
+      }
+      return out;
+    }
+
+    /* ====== STATE (scoped) ====== */
+    let TABLE=[];
+    const SELECTED={ group:'', plan:'', base:0, perSesi:0, bundlingMode:'none', bundlingPrice:0, classType:'offline', hasClassType:false };
+
+    /* ====== UI BUILD ====== */
+    function buildPlans(row){
+      const host=$('ue3-plans'); host.innerHTML='';
+      
+      // Tentukan harga berdasarkan classType
+      let bronze, silver;
+      if(SELECTED.hasClassType && SELECTED.classType==='online'){
+        const onlineData = ONLINE_PRICES[SELECTED.group.toLowerCase().replace(/\s+/g,'')];
+        if(onlineData){
+          bronze = onlineData.bronzeg;
+          silver = onlineData.silverg;
+        } else {
+          bronze = num(row.bronzeg);
+          silver = num(row.silverg);
+        }
+      } else {
+        bronze = num(row.bronzeg);
+        silver = num(row.silverg);
+      }
+
+      const plans=[];
+      if(bronze>0) plans.push({key:'bronzeg',name:'Bronze',price:bronze});
+      if(silver>0) plans.push({key:'silverg',name:'Silver',price:silver});
+
+      if(!plans.length){
+        $('ue3-planHelp').textContent='Paket Group tidak tersedia untuk program ini.'; 
+        return;
+      } else $('ue3-planHelp').textContent='';
+
+      plans.forEach((p,idx)=>{
+        const el=document.createElement('label');
+        el.className='ue3-plan'; el.tabIndex=0;
+        el.innerHTML = `
+          <input type="radio" name="ue3-plan" value="${p.key}" ${idx===0?'checked':''} />
+          <div class="ue3-name">${p.name}</div>
+          <div class="ue3-price">Rp ${fmt(p.price)}</div>
+          <div class="ue3-sub">Paket Group</div>
+        `;
+        host.appendChild(el);
+      });
+
+      markActive();
+      const first=host.querySelector('input[type=radio]');
+      if(first){ first.checked=true; SELECTED.plan=first.value; SELECTED.base=plans[0].price; }
+      host.addEventListener('change', (e)=>{
+        if(e.target.name==='ue3-plan'){
+          const data = plans.find(x=>x.key===e.target.value);
+          SELECTED.plan = data.key; SELECTED.base=data.price;
+          markActive(); updateTotals();
+        }
+      });
+
+      function markActive(){
+        host.querySelectorAll('.ue3-plan').forEach(w=>{
+          const input=w.querySelector('input'); w.classList.toggle('ue3-active', input.checked);
+        });
+      }
+    }
+
+    function toggle(id,on){ $(id).hidden=!on; }
+
+    /* ====== TOTALS ====== */
+    function updateTotals(){
+      const kelasQty = SELECTED.perSesi>0 ? Math.max(0, parseInt($('ue3-kelas').value||'0',10)) : 0;
+      const bundQty  = (SELECTED.bundlingMode!=='none') ? Math.max(0, Math.min(1, parseInt($('ue3-bundling').value||'0',10))) : 0;
+
+      const kelasTotal = SELECTED.perSesi*kelasQty;
+
+      let bundText='0', bundTotal=0;
+      if(SELECTED.bundlingMode==='fixed'){
+        bundTotal = SELECTED.bundlingPrice * bundQty;
+        bundText = bundQty ? `Rp ${fmt(bundTotal)}` : '0';
+      } else if(SELECTED.bundlingMode==='tbi'){
+        bundText = bundQty ? 'To be Informed' : '0';
+      }
+      $('ue3-bundlingValue').textContent=bundText;
+
+      toggle('ue3-kelasLine', SELECTED.perSesi>0);
+      toggle('ue3-bundlingLine', SELECTED.bundlingMode!=='none');
+
+      $('ue3-basePrice').textContent = fmt(SELECTED.base||0);
+      $('ue3-kelasPrice').textContent = fmt(kelasTotal);
+
+      const total = (SELECTED.base||0) + kelasTotal + (SELECTED.bundlingMode==='fixed'?bundTotal:0);
+      $('ue3-totalAll').textContent = fmt(total);
+    }
+
+    /* qty buttons */
+    document.addEventListener('click', (e)=>{
+      const b=e.target.closest('.ue3-btn-qty'); if(!b) return;
+      const id=b.dataset.target, act=b.dataset.act;
+      const inp=$(id); let v=parseInt(inp.value||'0',10);
+      v = (act==='inc') ? v+1 : Math.max(0, v-1);
+      if(id==='ue3-bundling') v=Math.min(1, v);
+      inp.value=v; updateTotals();
+    });
+    $('ue3-kelas').addEventListener('input', updateTotals);
+    $('ue3-bundling').addEventListener('input', ()=>{
+      const v=Math.min(1, Math.max(0, parseInt($('ue3-bundling').value||'0',10)));
+      $('ue3-bundling').value=v; updateTotals();
+    });
+
+    /* submit */
+    $('ue3-form').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if(!SELECTED.group || !SELECTED.plan || !SELECTED.base){ showErr('Pilih paket terlebih dahulu.'); return; }
+      const labelMap={bronzeg:'Bronze', silverg:'Silver'};
+      const kelasQty = SELECTED.perSesi>0 ? parseInt($('ue3-kelas').value||'0',10) : 0;
+      const bundQty  = (SELECTED.bundlingMode!=='none') ? parseInt($('ue3-bundling').value||'0',10) : 0;
+      const bundLine = SELECTED.bundlingMode==='fixed'
+        ? `\n- Bundling Test: ${bundQty}x @ Rp ${fmt(SELECTED.bundlingPrice)}`
+        : (SELECTED.bundlingMode==='tbi' ? `\n- Bundling Test: ${bundQty>0 ? 'To be Informed' : 'Tidak'}` : '');
+
+      let msg = `Halo Ultimate Education,
+
+Saya ingin mendaftar *${SELECTED.group}* (Group — ${labelMap[SELECTED.plan]})`;
+      
+      // Tambah info tipe kelas jika ada
+      if(SELECTED.hasClassType){
+        const classTypeLabel = SELECTED.classType==='online' ? 'Online' : 'Offline';
+        msg += ` - ${classTypeLabel}`;
+      }
+      
+      msg += `, rincian:\n- Harga Dasar: Rp ${fmt(SELECTED.base)}`;
+      
+      if(SELECTED.perSesi>0) msg += `\n- Tambah Kelas: ${kelasQty} sesi @ Rp ${fmt(SELECTED.perSesi)}`;
+      if(SELECTED.bundlingMode!=='none') msg += bundLine;
+      msg += `\n\nTotal: *Rp ${$('ue3-totalAll').textContent}*`;
+
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+    });
+
+    /* ====== INIT ====== */
+    (async function init(){
+      try{
+        const group = getGroup();
+        if(!group){ showErr('Parameter ?group=.. belum diisi.'); return; }
+        SELECTED.group = group;
+
+        // Check if group has online pricing option
+        const groupKey = group.toLowerCase().replace(/\s+/g,'');
+        SELECTED.hasClassType = ['ielts','sat','gmat','gre'].includes(groupKey);
+        $('ue3-classTypeWrap').hidden = !SELECTED.hasClassType;
+
+        if(!CSV_URL){ showErr('CSV_URL belum diatur.'); return; }
+        const res = await fetch(CSV_URL,{cache:'no-store'});
+        if(!res.ok){ showErr('Gagal mengambil CSV.'); return; }
+
+        const rows = parseCSV(await res.text());
+        if(!rows.length){ showErr('CSV kosong.'); return; }
+        const table = rowsToObjects(rows);
+        if(!table.length || !table[0].program){ showErr('Header harus: program, bronzeg, silverg, persesi, bundling'); return; }
+
+        const row = table.find(r=>{
+          const a=(r.program||'').replace(/\s+/g,'').toLowerCase();
+          const b=SELECTED.group.replace(/\s+/g,'').toLowerCase();
+          return a===b;
+        });
+        if(!row){ showErr('Program tidak ditemukan di CSV.'); return; }
+
+        // Build plan cards (bronze/silver)
+        buildPlans(row);
+
+        // Add listener untuk class type radio buttons
+        if(SELECTED.hasClassType){
+          document.querySelectorAll('input[name="ue3-classType"]').forEach(radio=>{
+            radio.addEventListener('change', (e)=>{
+              SELECTED.classType = e.target.value;
+              // Update active state
+              document.querySelectorAll('.ue3-classType-option').forEach(opt=>{
+                const inp = opt.querySelector('input');
+                opt.classList.toggle('ue3-active', inp.checked);
+              });
+              buildPlans(row); // Rebuild plans dengan harga yang berbeda
+              updateTotals();
+            });
+          });
+          // Initial active state
+          document.querySelectorAll('.ue3-classType-option').forEach(opt=>{
+            const inp = opt.querySelector('input');
+            opt.classList.toggle('ue3-active', inp.checked);
+          });
+        }
+
+        // per sesi
+        SELECTED.perSesi = num(row.persesi);
+        $('ue3-kelas').value = 0;
+        $('ue3-kelasWrap').hidden = !(SELECTED.perSesi>0);
+
+        // bundling
+        const bundRaw = (row.bundling||'').toString().trim();
+        if(isTBI(bundRaw)){
+          SELECTED.bundlingMode='tbi'; SELECTED.bundlingPrice=0;
+          $('ue3-bundling').value=0; $('ue3-bundlingWrap').hidden=false;
+        } else if(num(bundRaw)>0){
+          SELECTED.bundlingMode='fixed'; SELECTED.bundlingPrice=num(bundRaw);
+          $('ue3-bundling').value=0; $('ue3-bundlingWrap').hidden=false;
+        } else {
+          SELECTED.bundlingMode='none'; SELECTED.bundlingPrice=0;
+          $('ue3-bundling').value=0; $('ue3-bundlingWrap').hidden=true;
+        }
+
+        // default pilih plan pertama
+        const firstRadio = document.querySelector('#ue3-plans input[type=radio]');
+        if(firstRadio){ firstRadio.checked=true; firstRadio.dispatchEvent(new Event('change')); }
+
+        updateTotals();
+        showErr('');
+      }catch(err){
+        console.error(err);
+        showErr('Terjadi kesalahan saat memuat data.');
+      }
+    })();
+  })();
+  </script>
+</div>

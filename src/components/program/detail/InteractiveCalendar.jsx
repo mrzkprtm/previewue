@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 const MONTH_NAMES = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
@@ -6,9 +6,7 @@ const MONTH_NAMES = [
 ];
 const DAY_HEADERS = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
 
-// IELTS class days: Minggu(0), Selasa(2), Kamis(4), Sabtu(6)
-const IELTS_WEEKDAY = new Set([2, 4]);   // Selasa, Kamis
-const IELTS_WEEKEND = new Set([0, 6]);   // Minggu, Sabtu
+const PROGRAMS = ['ielts', 'gmat', 'gre', 'sat'];
 
 function getDaysInMonth(year, month) {
     return new Date(year, month + 1, 0).getDate();
@@ -17,11 +15,127 @@ function getFirstDayOfWeek(year, month) {
     return new Date(year, month, 1).getDay();
 }
 
-const InteractiveCalendar = () => {
+function getUrlParam(name) {
+    if (typeof window === 'undefined') return null;
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+
+function parseCSV(text) {
+    if (!text) return [];
+    const rows = text.split(/\r?\n/).map(r => r.trim()).filter(r => r.length > 0);
+    return rows.map(r => {
+        const out = []; let cur = ""; let q = false;
+        for (let i = 0; i < r.length; i++) {
+            const c = r[i];
+            if (c === '"') q = !q;
+            else if (c === ',' && !q) { out.push(cur.trim()); cur = ""; }
+            else cur += c;
+        }
+        out.push(cur.trim());
+        return out;
+    });
+}
+
+function normalizeMonth(m) {
+    const s = m.toLowerCase().replace(/\s+/g,"");
+    const map = {
+        "januari":1,"january":1,"januar":1,
+        "februari":2,"february":2,
+        "maret":3,"march":3,
+        "april":4,
+        "mei":5,"may":5,
+        "juni":6,"june":6,
+        "juli":7,"july":7,
+        "agustus":8,"august":8,
+        "september":9,
+        "oktober":10,"october":10,
+        "november":11,
+        "desember":12,"december":12
+    };
+    return map[s] || null;
+}
+
+function parseDateLabel(label, year) {
+    if (!label) return null;
+    let t = label.replace(/\(.*?\)/g, "").trim();
+    t = t.replace(/^(senin|selasa|rabu|kamis|jumat|sabtu|minggu|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s*,?/i, "").trim();
+    t = t.replace(/^[,-\s]+|[,-\s]+$/g, "");
+    const mWord = (t.match(/(januari|january|januar|februari|february|maret|march|april|mei|may|juni|june|juli|july|agustus|august|september|oktober|october|november|desember|december)/i) || [])[0];
+    if (!mWord) return null;
+    const m = normalizeMonth(mWord);
+    const dMatch = t.match(/(\d{1,2})/);
+    const d = dMatch ? parseInt(dMatch[1]) : null;
+    if (!m || !d) return null;
+    const dt = new Date(year, m - 1, d);
+    return dt;
+}
+
+function extractEventsFromCSV(rows, year, programId) {
+    if (!rows || rows.length < 3) return [];
+    let headers = rows[1];
+    let batches = rows[2];
+    let startRow = 3;
+    const events = [];
+    for (let r = startRow; r < rows.length; r++) {
+        const row = rows[r];
+        for (let c = 0; c < headers.length; c++) {
+            const progName = headers[c];
+            const batch = batches[c];
+            if (!progName || !batch) continue;
+            const short = progName.split(" ")[0].toLowerCase();
+            if (short !== programId) continue;
+            const date = parseDateLabel(row[0], year);
+            if (!date) continue;
+            events.push({
+                date: date,
+                day: date.getDate(),
+                month: date.getMonth(),
+                year: date.getFullYear(),
+                programId,
+                batch,
+            });
+        }
+    }
+    return events;
+}
+
+
+const SHEET_URL_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEJ_iHnHRZAY40HtvBvGjHK2fL5XNgigtlUwKcz6CSzRbct6s8L-EwNE9tcm_lPUtAadtFbzi3WZB9";
+const SHEET_GID = {
+    general: '0',
+    ramadhan: '889451535'
+};
+
+
+const InteractiveCalendar = ({ programSlug }) => {
     const today = new Date();
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth());
     const [hoveredDate, setHoveredDate] = useState(null);
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const programId = programSlug && PROGRAMS.includes(programSlug) ? programSlug : null;
+
+    useEffect(() => {
+        if (!programId) return;
+        setLoading(true);
+        const urls = [
+            `${SHEET_URL_BASE}/pub?gid=${SHEET_GID.general}&single=true&output=csv`,
+            `${SHEET_URL_BASE}/pub?gid=${SHEET_GID.ramadhan}&single=true&output=csv`
+        ];
+        Promise.all(
+            urls.map(url => fetch(url).then(r => r.ok ? r.text() : null).catch(() => null))
+        ).then(([generalCsv, ramadhanCsv]) => {
+            const rowsG = parseCSV(generalCsv);
+            const rowsR = parseCSV(ramadhanCsv);
+            const evG = extractEventsFromCSV(rowsG, year, programId);
+            const evR = extractEventsFromCSV(rowsR, year, programId);
+            setEvents([...evG, ...evR]);
+            setLoading(false);
+        });
+    }, [year, programId]);
 
     const totalDays = getDaysInMonth(year, month);
     const startOffset = getFirstDayOfWeek(year, month);
@@ -38,6 +152,12 @@ const InteractiveCalendar = () => {
         year === today.getFullYear() &&
         month === today.getMonth() &&
         d === today.getDate();
+
+    if (!programId) return null;
+
+    const eventDays = events
+        .filter(ev => ev.year === year && ev.month === month)
+        .map(ev => ev.day);
 
     const prevMonth = () => {
         if (month === 0) { setMonth(11); setYear(y => y - 1); }
@@ -58,7 +178,7 @@ const InteractiveCalendar = () => {
 
                     <div className="relative z-10">
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-heading font-bold text-white mb-8 text-center">
-                            Jadwal Kelas IELTS di Ultimate Education
+                            Jadwal Kelas {programId.toUpperCase()} di Ultimate Education
                         </h2>
 
                         <div className="bg-white rounded-2xl md:rounded-[2rem] p-4 md:p-8 shadow-inner flex flex-col md:flex-row gap-6 md:gap-8">
@@ -83,11 +203,7 @@ const InteractiveCalendar = () => {
                                     <div className="space-y-2 mb-5">
                                         <div className="flex items-center gap-2.5">
                                             <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                                            <span className="text-xs font-medium text-slate-600">Weekday (Selasa, Kamis)</span>
-                                        </div>
-                                        <div className="flex items-center gap-2.5">
-                                            <div className="w-3 h-3 rounded-full bg-red-400" />
-                                            <span className="text-xs font-medium text-slate-600">Weekend (Minggu, Sabtu)</span>
+                                            <span className="text-xs font-medium text-slate-600">Hari kelas</span>
                                         </div>
                                         <div className="flex items-center gap-2.5">
                                             <div className="w-3 h-3 rounded-full bg-slate-200" />
@@ -96,13 +212,13 @@ const InteractiveCalendar = () => {
                                     </div>
 
                                     <p className="text-xs text-slate-500 leading-relaxed">
-                                        Kelas tersedia setiap <strong>Minggu, Selasa, Kamis, Sabtu</strong>. Pilih jadwal sesuai aktivitasmu.
+                                        Jadwal kelas diambil dari spreadsheet Ultimate Education.
                                     </p>
                                 </div>
 
                                 {/* Info banner */}
                                 <div className="mt-4 bg-blue-50 rounded-xl p-3 border border-blue-100">
-                                    <div className="text-[11px] font-bold text-ultimate-blue mb-0.5">IELTS Preparation</div>
+                                    <div className="text-[11px] font-bold text-ultimate-blue mb-0.5">{programId.toUpperCase()} Preparation</div>
                                     <div className="text-[12px] text-slate-600">Online &amp; Offline — fleksibel</div>
                                 </div>
                             </div>
@@ -123,35 +239,28 @@ const InteractiveCalendar = () => {
                                         if (date === null) {
                                             return <div key={`blank-${idx}`} className="aspect-square" />;
                                         }
-                                        const dow = idx % 7;
-                                        const isWeekdayClass = IELTS_WEEKDAY.has(dow);
-                                        const isWeekendClass = IELTS_WEEKEND.has(dow);
-                                        const isClassDay = isWeekdayClass || isWeekendClass;
+                                        const isEventDay = eventDays.includes(date);
                                         const isTodayCell = isToday(date);
                                         const isHovered = hoveredDate === date;
 
                                         let cellClass =
                                             'aspect-square flex items-center justify-center rounded-lg md:rounded-xl text-xs md:text-sm font-semibold transition-all duration-150 select-none relative';
 
-                                        if (isWeekdayClass) {
+                                        if (isEventDay) {
                                             cellClass += ' bg-emerald-50 text-emerald-600 border border-emerald-200/60 cursor-pointer hover:bg-emerald-500 hover:text-white hover:scale-105 hover:shadow-md';
-                                        } else if (isWeekendClass) {
-                                            cellClass += ' bg-red-50 text-red-500 border border-red-200/60 cursor-pointer hover:bg-red-400 hover:text-white hover:scale-105 hover:shadow-md';
                                         } else {
                                             cellClass += ' text-slate-300';
                                         }
 
-                                        if (isHovered && isClassDay) {
-                                            cellClass += isWeekdayClass
-                                                ? ' bg-emerald-500 text-white scale-105 shadow-md'
-                                                : ' bg-red-400 text-white scale-105 shadow-md';
+                                        if (isHovered && isEventDay) {
+                                            cellClass += ' bg-emerald-500 text-white scale-105 shadow-md';
                                         }
 
                                         return (
                                             <div
                                                 key={date}
                                                 className={cellClass}
-                                                onMouseEnter={() => isClassDay && setHoveredDate(date)}
+                                                onMouseEnter={() => isEventDay && setHoveredDate(date)}
                                                 onMouseLeave={() => setHoveredDate(null)}
                                             >
                                                 {date}
@@ -167,7 +276,7 @@ const InteractiveCalendar = () => {
                                 <div className="mt-4 h-8 flex items-center justify-center">
                                     {hoveredDate ? (
                                         <div className="text-xs text-ultimate-blue font-semibold bg-blue-50 px-3 py-1.5 rounded-full">
-                                            {hoveredDate} {MONTH_NAMES[month]} {year} — Kelas IELTS tersedia
+                                            {hoveredDate} {MONTH_NAMES[month]} {year} — Kelas tersedia
                                         </div>
                                     ) : (
                                         <div className="text-[11px] text-slate-400 italic">

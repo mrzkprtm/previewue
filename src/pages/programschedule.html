@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Class Schedule</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    primary: "#145da0",
+                    "background-light": "#F3F4F6",
+                    "background-dark": "#111827",
+                    "surface-light": "#FFFFFF",
+                    "surface-dark": "#1F2937",
+                    "grid-bg-light": "#E5E7EB",
+                    "grid-bg-dark": "#374151",
+                    /* Event Colors */
+                    "evt-weekday-bg": "#ecfdf5",
+                    "evt-weekday-border": "#6ee7b7",
+                    "evt-weekday-text": "#047857",
+                    "evt-weekend-bg": "#fef2f2",
+                    "evt-weekend-border": "#fca5a5",
+                    "evt-weekend-text": "#dc2626",
+                },
+                fontFamily: {
+                    display: ["Poppins", "sans-serif"],
+                    sans: ["Poppins", "sans-serif"],
+                },
+                borderRadius: {
+                    DEFAULT: "0.5rem",
+                    'xl': '1rem',
+                    '2xl': '1.5rem',
+                    '3xl': '2rem',
+                },
+            },
+        },
+    };
+</script>
+<style>
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+    }
+    
+    /* Event Styles */
+    .day-cell.has-event.weekday {
+        background: #ecfdf5 !important;
+        box-shadow: inset 0 0 0 2px #6ee7b7;
+    }
+    .day-cell.has-event.weekday .day-number {
+        color: #047857 !important;
+        font-weight: 700;
+    }
+    .day-cell.has-event.weekend {
+        background: #fef2f2 !important;
+        box-shadow: inset 0 0 0 2px #fca5a5;
+    }
+    .day-cell.has-event.weekend .day-number {
+        color: #dc2626 !important;
+        font-weight: 700;
+    }
+    
+    .schedule-tooltip {
+        position: fixed;
+        background: transparent;
+        padding: 6px;
+        border-radius: 8px;
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        z-index: 9999;
+        pointer-events: none;
+        box-shadow: none;
+        width: max-content;
+        max-width: 320px;
+        text-align: center;
+    }
+    .schedule-tooltip .tooltip-line {
+        padding: 4px 6px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #fff;
+        white-space: normal;
+    }
+    #schedule-app > div {
+        overflow: visible;
+    }
+    #schedule-app > div > aside {
+        position: relative;
+        z-index: 1;
+    }
+    #schedule-app > div > main {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 767px) {
+        /* Remove body padding on mobile */
+        body {
+            padding: 0 !important;
+        }
+
+        /* Main Card Mobile Radius */
+        #schedule-app > div {
+            border-radius: 5px !important;
+        }
+
+        /* Header adjustments */
+        header.shadow-sm {
+            padding: 0.4rem 0.5rem !important;
+        }
+        header .space-x-4 {
+            gap: 0.25rem !important;
+        }
+        
+        /* Hide year selector on mobile */
+        #year-select,
+        header .space-x-2 {
+            display: none !important;
+        }
+        
+        /* Hide divider on mobile */
+        header .h-6.w-px {
+            display: none !important;
+        }
+        
+        /* Navigation buttons */
+        header button {
+            padding: 0.375rem !important;
+        }
+        header .material-symbols-rounded {
+            font-size: 1rem !important;
+        }
+        
+        /* Month text */
+        #header-month {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            min-width: 70px !important;
+            font-size: 0.875rem !important;
+        }
+        
+        /* Calendar grid container */
+        .flex-1.p-6 {
+            padding: 0.5rem !important;
+        }
+        
+        /* Day headers */
+        .grid.grid-cols-7.gap-3.mb-3 {
+            gap: 0.25rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .grid.grid-cols-7.gap-3.mb-3 > div {
+            font-size: 0.65rem !important;
+        }
+        
+        /* Calendar days grid */
+        #grid-days {
+            gap: 0.25rem !important;
+        }
+        
+        /* Day cells */
+        .day-cell {
+            padding: 0.25rem !important;
+            border-radius: 0.5rem !important;
+        }
+        .day-number {
+            font-size: 0.7rem !important;
+        }
+        
+        /* Today indicator dot */
+        .day-cell .absolute.bottom-2 {
+            bottom: 0.125rem !important;
+            width: 3px !important;
+            height: 3px !important;
+        }
+    }
+</style>
+</head>
+<body class="bg-transparent font-sans text-gray-800 dark:text-gray-100 min-h-screen flex items-start justify-center p-4 transition-colors duration-300">
+
+<div id="schedule-app" class="w-full"></div>
+
+<script>
+(function(targetId){
+    const END_DATE = new Date("2026-05-31T23:59:59"); 
+    const PROGRAMS = [
+        { id: 'all', label: 'All' },
+        { id: 'ielts', label: 'IELTS', days: [0, 2, 4, 6] },
+        { id: 'gmat', label: 'GMAT', days: [0, 6] },
+        { id: 'gre', label: 'GRE', days: [0, 6] },
+        { id: 'sat', label: 'SAT', days: [0, 6] }
+    ];
+
+    const RAMADHAN_DAYS = {
+        ielts: [1, 2, 3]
+    };
+
+    let currentFilter = 'all'; 
+
+    const today = new Date();
+    const state = { 
+        year: today.getFullYear(), 
+        month: today.getMonth() + 1
+    };
+
+    const el = document.getElementById(targetId);
+
+    // Get month navigation items (January to May only)
+    function getMonthNavItems() {
+        const months = [];
+        for (let m = 1; m <= 5; m++) {
+            const monthName = new Date(state.year, m - 1).toLocaleString('en-US', { month: 'long' });
+            months.push({ month: m, name: monthName });
+        }
+        return months;
+    }
+
+    const root = document.createElement("div");
+    root.className = "flex bg-surface-light dark:bg-surface-dark rounded-2xl shadow-xl transition-colors duration-300";
+    root.innerHTML = `
+        <!-- Sidebar -->
+        <aside class="w-64 bg-surface-light dark:bg-surface-dark flex flex-col border-r border-gray-200 dark:border-gray-700 hidden md:flex">
+            <div class="p-6 pb-4">
+                <div class="flex flex-col mb-6">
+                    <span id="sidebar-day" class="text-7xl leading-none font-bold text-primary -ml-1 tracking-tighter">22</span>
+                    <span id="sidebar-month-year" class="text-xl font-bold text-gray-800 dark:text-white mt-1">January 2026</span>
+                </div>
+                <div class="h-px w-full bg-gray-200 dark:bg-gray-700 mb-4"></div>
+                <!-- Month Navigation (hidden) -->
+                <nav id="month-nav" class="hidden flex-1 overflow-y-auto pr-2 space-y-2">
+                </nav>
+                <!-- Program Availability Info -->
+                <div id="program-info" class="mt-4 space-y-2"></div>
+                <!-- Batch Legend -->
+                <div id="batch-legend" class="mt-4 space-y-2"></div>
+            </div>
+            <!-- Legend in Sidebar -->
+            <div class="p-6 pt-0 mt-auto">
+                <div class="h-px w-full bg-gray-200 dark:bg-gray-700 mb-4"></div>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded bg-green-100 border-2 border-green-300"></span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Weekday</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded bg-red-100 border-2 border-red-300"></span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Weekend</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col bg-grid-bg-light dark:bg-black transition-colors duration-300">
+            <!-- Header -->
+            <header class="bg-surface-light dark:bg-surface-dark px-6 py-4 flex justify-between items-center shadow-sm">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+                        <button id="prev" class="p-2 hover:bg-white dark:hover:bg-gray-600 rounded-lg shadow-sm transition-all text-gray-600 dark:text-gray-200">
+                            <span class="material-symbols-rounded text-lg">chevron_left</span>
+                        </button>
+                        <span id="header-month" class="px-4 font-semibold text-gray-700 dark:text-gray-200 min-w-[100px] text-center">January</span>
+                        <button id="next" class="p-2 hover:bg-white dark:hover:bg-gray-600 rounded-lg shadow-sm transition-all text-gray-600 dark:text-gray-200">
+                            <span class="material-symbols-rounded text-lg">chevron_right</span>
+                        </button>
+                    </div>
+                    <div class="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Year:</span>
+                        <select id="year-select" class="bg-transparent font-semibold text-gray-800 dark:text-white border-none focus:ring-0 cursor-pointer text-lg">
+                            <option value="2025">2025</option>
+                            <option value="2026" selected>2026</option>
+                        </select>
+                    </div>
+                    <div class="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Batch:</span>
+                        <select id="batch-filter" class="bg-transparent font-semibold text-gray-800 dark:text-white border-none focus:ring-0 cursor-pointer text-lg">
+                            <option value="all" selected>All Batches</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Calendar Grid -->
+            <div class="flex-1 p-6 overflow-y-auto">
+                <div class="h-full flex flex-col">
+                    <!-- Day Headers -->
+                    <div class="grid grid-cols-7 gap-3 mb-3">
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Sun</div>
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Mon</div>
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Tue</div>
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Wed</div>
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Thu</div>
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Fri</div>
+                        <div class="text-center font-bold text-primary text-sm uppercase tracking-wider">Sat</div>
+                    </div>
+                    <!-- Calendar Days -->
+                    <div id="grid-days" class="grid grid-cols-7 gap-3 flex-1"></div>
+                </div>
+            </div>
+            
+            <!-- Mobile Legend -->
+            <div class="md:hidden border-t border-gray-200 dark:border-gray-700 p-4">
+                <div class="flex justify-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded bg-green-100 border-2 border-green-300"></span>
+                        <span class="text-xs text-gray-600 dark:text-gray-400">Weekday</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded bg-red-100 border-2 border-red-300"></span>
+                        <span class="text-xs text-gray-600 dark:text-gray-400">Weekend</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    `;
+    el.appendChild(root);
+
+    const sidebarDay = root.querySelector("#sidebar-day");
+    const sidebarMonthYear = root.querySelector("#sidebar-month-year");
+    const monthNav = root.querySelector("#month-nav");
+    const programInfo = root.querySelector("#program-info");
+    const batchLegend = root.querySelector("#batch-legend");
+    const headerMonth = root.querySelector("#header-month");
+    const gridEl = root.querySelector("#grid-days");
+    const btnPrev = root.querySelector("#prev");
+    const btnNext = root.querySelector("#next");
+    const yearSelect = root.querySelector("#year-select");
+    const batchFilterSelect = root.querySelector("#batch-filter");
+    const globalTooltip = document.createElement("div");
+    globalTooltip.className = "schedule-tooltip";
+    document.body.appendChild(globalTooltip);
+
+    const DAY_NAMES = ['Sunday', 'Tuesday', 'Thursday', 'Saturday'];
+    const DAY_MAP = {
+        0: 'Sunday',
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday',
+        6: 'Saturday'
+    };
+
+    function renderProgramInfo() {
+        const progsToShow = currentFilter === 'all'
+            ? PROGRAMS.filter(p => p.id !== 'all')
+            : PROGRAMS.filter(p => p.id === currentFilter);
+        
+        let html = '';
+        progsToShow.forEach(prog => {
+            const dayNames = prog.days.map(d => DAY_MAP[d]).join(', ');
+            html += `
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                    <p class="text-xs font-semibold text-primary">${prog.label} Class</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Available on ${dayNames}</p>
+                </div>
+            `;
+            if (prog.id === 'ielts') {
+                const ramadhanDays = RAMADHAN_DAYS.ielts || [];
+                const ramadhanNames = ramadhanDays.map(d => DAY_MAP[d]).join(', ');
+                html += `
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                        <p class="text-xs font-semibold text-primary">${prog.label} Ramadhan Class</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Available on ${ramadhanNames}</p>
+                    </div>
+                `;
+            }
+        });
+        
+        programInfo.innerHTML = html;
+    }
+    function renderBatchLegend() {
+        let batches = Array.from(scheduleState.batches).sort();
+        
+        // Filter legend based on current program filter if active
+        if (currentFilter !== 'all') {
+            // Find batches that belong to the current program
+            const activeBatches = new Set();
+            for (const events of scheduleState.eventsByDate.values()) {
+                for (const ev of events) {
+                    if (ev.programId === currentFilter) {
+                        activeBatches.add(ev.batch);
+                    }
+                }
+            }
+            batches = batches.filter(b => activeBatches.has(b));
+        }
+
+        const batchToColor = new Map();
+        for (const events of scheduleState.eventsByDate.values()) {
+            for (const ev of events) {
+                if (!batchToColor.has(ev.batch)) {
+                    batchToColor.set(ev.batch, ev.color || "#0ea5e9");
+                }
+            }
+        }
+
+        let html = '<p class="text-xs font-bold text-primary">Batch Legend</p>';
+        batches.forEach(b => {
+            const color = batchToColor.get(b) || "#0ea5e9";
+            const label = formatBatchLabel(b);
+            html += `
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded" style="background:${color}; box-shadow:0 1px 2px rgba(0,0,0,.2)"></span>
+                    <span class="text-sm text-gray-700 dark:text-gray-200">${label}</span>
+                </div>
+            `;
+        });
+        batchLegend.innerHTML = html;
+    }
+    function renderBatchFilter() {
+        let batches = Array.from(scheduleState.batches).sort();
+
+        // Filter batch dropdown based on current program filter if active
+        if (currentFilter !== 'all') {
+            const activeBatches = new Set();
+            for (const events of scheduleState.eventsByDate.values()) {
+                for (const ev of events) {
+                    if (ev.programId === currentFilter) {
+                        activeBatches.add(ev.batch);
+                    }
+                }
+            }
+            batches = batches.filter(b => activeBatches.has(b));
+        }
+
+        const current = batchFilterSelect.value || 'all';
+        batchFilterSelect.innerHTML = `<option value="all"${current==='all'?' selected':''}>All Batches</option>` + batches.map(b => `<option value="${b}"${current===b?' selected':''}>${b}</option>`).join('');
+    }
+
+    function getLocalISO(d) {
+        const y = d.getFullYear();
+        const m = (d.getMonth()+1).toString().padStart(2,'0');
+        const day = d.getDate().toString().padStart(2,'0');
+        return `${y}-${m}-${day}`;
+    }
+
+    function getEventsForDate(d) {
+        const key = getLocalISO(d);
+        // console.log("Checking events for", key);
+        const list = scheduleState.eventsByDate.get(key) || [];
+        let filtered = list;
+        if (currentFilter !== 'all') filtered = filtered.filter(e => e.programId === currentFilter);
+        if (scheduleState.batchFilter && scheduleState.batchFilter !== 'all') filtered = filtered.filter(e => e.batch === scheduleState.batchFilter);
+        return filtered;
+    }
+
+    function getMatrix(y, m) {
+        const first = new Date(y, m - 1, 1);
+        const startDow = first.getDay();
+        
+        const start = new Date(first);
+        start.setDate(1 - startDow);
+
+        const arr = [];
+        for (let i = 0; i < 42; i++) {
+            const d = new Date(start);
+            d.setDate(start.getDate() + i);
+            arr.push({ 
+                date: d, 
+                inMonth: d.getMonth() === (m - 1),
+                isToday: d.toDateString() === today.toDateString()
+            });
+        }
+        return arr;
+    }
+
+    function renderMonthNav() {
+        const items = getMonthNavItems();
+        let html = '';
+        
+        items.forEach(item => {
+            const isActive = item.month === state.month;
+            if (isActive) {
+                html += `
+                    <a href="#" data-month="${item.month}" class="flex items-center px-3 py-2 bg-primary text-white shadow-md shadow-blue-200 dark:shadow-none rounded-xl transition-all transform scale-105">
+                        <span class="material-symbols-rounded mr-2 text-sm">calendar_today</span>
+                        <span class="font-bold text-sm">${item.name}</span>
+                    </a>
+                `;
+            } else {
+                html += `
+                    <a href="#" data-month="${item.month}" class="flex items-center px-3 py-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all group">
+                        <span class="material-symbols-rounded mr-2 text-sm text-gray-400 group-hover:text-primary">calendar_month</span>
+                        <span class="font-medium text-sm">${item.name}</span>
+                    </a>
+                `;
+            }
+        });
+        
+        monthNav.innerHTML = html;
+        
+        // Add click handlers
+        monthNav.querySelectorAll('a[data-month]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                state.month = parseInt(link.dataset.month);
+                buildEventsByDate();
+                render();
+            });
+        });
+    }
+
+    function hideTooltip() {
+        globalTooltip.style.display = "none";
+        globalTooltip.innerHTML = "";
+    }
+
+    function showTooltip(dayEl) {
+        const data = dayEl.dataset.tooltipLines;
+        if (!data) return;
+        let lines;
+        try {
+            lines = JSON.parse(data);
+        } catch (_) {
+            return;
+        }
+        if (!lines.length) return;
+        globalTooltip.innerHTML = lines.map(l => `<div class="tooltip-line" style="background:${l.color}">${l.text}</div>`).join("");
+        globalTooltip.style.display = "flex";
+        globalTooltip.style.left = "0px";
+        globalTooltip.style.top = "0px";
+        const rect = dayEl.getBoundingClientRect();
+        const tipRect = globalTooltip.getBoundingClientRect();
+        let left = rect.left + rect.width / 2 - tipRect.width / 2;
+        left = Math.max(8, Math.min(left, window.innerWidth - tipRect.width - 8));
+        let top = rect.top - tipRect.height - 8;
+        if (top < 8) top = rect.bottom + 8;
+        globalTooltip.style.left = `${left}px`;
+        globalTooltip.style.top = `${top}px`;
+    }
+
+    function render() {
+        // Update sidebar
+        sidebarDay.textContent = today.getDate().toString().padStart(2, '0');
+        const sidebarText = new Date(state.year, state.month - 1).toLocaleString('en-US', { month: 'long', year: 'numeric' });
+        sidebarMonthYear.textContent = sidebarText;
+        
+        // Update header
+        const monthName = new Date(state.year, state.month - 1).toLocaleString('en-US', { month: 'long' });
+        headerMonth.textContent = monthName;
+        
+        // Update year select
+        yearSelect.value = state.year.toString();
+
+        // Render month navigation
+        renderMonthNav();
+
+        // Render program availability info
+        renderProgramInfo();
+        
+        // Ensure Batch Legend is rendered
+        renderBatchLegend();
+
+        // Render calendar grid
+        gridEl.innerHTML = '';
+
+        const cells = getMatrix(state.year, state.month);
+        
+        cells.forEach(c => {
+            const dayEl = document.createElement("div");
+            dayEl.className = "day-cell bg-surface-light dark:bg-surface-dark rounded-2xl p-3 flex flex-col items-center justify-center transition-all cursor-pointer relative";
+            
+            const dayNumber = document.createElement("span");
+            dayNumber.className = "day-number text-lg font-bold";
+            dayNumber.textContent = c.date.getDate().toString().padStart(2, '0');
+
+            if (!c.inMonth) {
+                dayEl.classList.add("opacity-40");
+                dayNumber.className = "day-number text-lg font-medium text-gray-400 dark:text-gray-500";
+            } else {
+                dayEl.classList.add("shadow-sm", "hover:shadow-md", "group");
+                dayNumber.classList.add("text-gray-700", "dark:text-gray-200", "group-hover:text-primary", "transition-colors");
+                
+                const events = getEventsForDate(c.date);
+                if (events.length > 0) {
+                    dayEl.classList.add("has-event");
+                    const isWeekend = c.date.getDay() === 0 || c.date.getDay() === 6;
+                    dayEl.classList.add(isWeekend ? "weekend" : "weekday");
+                    dayEl.tabIndex = 0;
+                    const chips = document.createElement("div");
+                    chips.className = "mt-2 flex flex-wrap items-center justify-center gap-1";
+                    
+                    // Deduplicate events for chips and tooltip
+                    const uniqueEvents = [];
+                    const seen = new Set();
+                    events.forEach(ev => {
+                        const key = ev.program + "|" + ev.batch;
+                        if (!seen.has(key)) {
+                            seen.add(key);
+                            uniqueEvents.push(ev);
+                        }
+                    });
+
+                    uniqueEvents.forEach(ev => {
+                        const color = ev.color || "#0ea5e9";
+                        const chip = document.createElement("span");
+                        chip.textContent = ev.short || ev.program;
+                        chip.style.background = color;
+                        chip.style.color = "#ffffff";
+                        chip.style.fontSize = "10px";
+                        chip.style.padding = "2px 6px";
+                        chip.style.borderRadius = "999px";
+                        chip.style.boxShadow = "0 1px 2px rgba(0,0,0,.15)";
+                        chips.appendChild(chip);
+                    });
+                    dayEl.appendChild(chips);
+                    const tooltipLines = uniqueEvents.map(e => {
+                        const label = formatBatchLabel(e.batch);
+                        const time = e.time ? ` • ${e.time}` : "";
+                        return {
+                            color: e.color || "#0ea5e9",
+                            text: `${e.program} • ${label}${time}`
+                        };
+                    });
+                    dayEl.dataset.tooltipLines = JSON.stringify(tooltipLines);
+                    dayEl.setAttribute("aria-label", tooltipLines.map(l => l.text).join("\n"));
+                    dayEl.addEventListener("mouseenter", () => showTooltip(dayEl));
+                    dayEl.addEventListener("mouseleave", hideTooltip);
+                    dayEl.addEventListener("focusin", () => showTooltip(dayEl));
+                    dayEl.addEventListener("focusout", hideTooltip);
+                }
+                
+                if (c.isToday) {
+                    dayEl.classList.add("shadow-lg", "ring-2", "ring-primary");
+                    dayNumber.className = "day-number text-xl font-extrabold text-primary";
+                    
+                    // Add dot indicator
+                    const dot = document.createElement("div");
+                    dot.className = "absolute bottom-2 w-1.5 h-1.5 bg-primary rounded-full";
+                    dayEl.appendChild(dot);
+                }
+            }
+            
+            dayEl.appendChild(dayNumber);
+            gridEl.appendChild(dayEl);
+        });
+    }
+
+    btnPrev.addEventListener("click", () => {
+        state.month--;
+        if(state.month < 1){ state.month = 12; state.year--; }
+        buildEventsByDate();
+        render();
+    });
+
+    btnNext.addEventListener("click", () => {
+        state.month++;
+        if(state.month > 12){ state.month = 1; state.year++; }
+        buildEventsByDate();
+        render();
+    });
+
+    yearSelect.addEventListener("change", () => {
+        state.year = parseInt(yearSelect.value);
+        buildEventsByDate();
+        render();
+    });
+
+    // URL Parameter handling
+    const params = new URLSearchParams(location.search);
+    const groupParam = (params.get("group") || "").toLowerCase().trim();
+    if (groupParam && PROGRAMS.some(p => p.id === groupParam)) {
+        currentFilter = groupParam;
+    }
+
+    const scheduleState = {
+        csv: { general: null, ramadhan: null },
+        eventsByDate: new Map(),
+        batchColors: new Map(),
+        programColorIndex: new Map(),
+        batchPrograms: new Map(),
+        batches: new Set(),
+        batchFilter: 'all',
+        palette: ["#2563eb","#0ea5e9","#22c55e","#f59e0b","#ef4444","#8b5cf6","#14b8a6","#e11d48","#a3e635","#fb7185","#38bdf8","#84cc16"]
+    };
+
+    function parseCSV(text) {
+        const rows = text.split(/\r?\n/).map(r => r.trim()).filter(r => r.length > 0);
+        return rows.map(r => {
+            const out = []; let cur = ""; let q = false;
+            for (let i = 0; i < r.length; i++) {
+                const ch = r[i];
+                if (ch === '"') { q = !q; continue; }
+                if (ch === ',' && !q) { out.push(cur.trim()); cur = ""; } else { cur += ch; }
+            }
+            out.push(cur.trim());
+            return out;
+        });
+    }
+
+    function normalizeMonth(m) {
+        const s = m.toLowerCase().replace(/\s+/g,"");
+        const map = {
+            "januari":1,"january":1,"januar":1,
+            "februari":2,"february":2,
+            "maret":3,"march":3,
+            "april":4,
+            "mei":5,"may":5,
+            "juni":6,"june":6,
+            "juli":7,"july":7,
+            "agustus":8,"august":8,
+            "september":9,
+            "oktober":10,"october":10,
+            "november":11,
+            "desember":12,"december":12
+        };
+        return map[s] || null;
+    }
+
+    function parseDateLabel(label, year) {
+        if (!label) return null;
+        let t = label.replace(/\(.*?\)/g, "").trim();
+        t = t.replace(/^(senin|selasa|rabu|kamis|jumat|sabtu|minggu|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s*,?/i, "").trim();
+        t = t.replace(/^[,-\s]+|[,-\s]+$/g, "");
+        const mWord = (t.match(/(januari|january|januar|februari|february|maret|march|april|mei|may|juni|june|juli|july|agustus|august|september|oktober|october|november|desember|december)/i) || [])[0];
+        if (!mWord) return null;
+        
+        const m = normalizeMonth(mWord);
+        const dMatch = t.match(/(\d{1,2})/);
+        const d = dMatch ? parseInt(dMatch[1]) : null;
+        
+        if (!m || !d) return null;
+        const dt = new Date(year, m - 1, d);
+        return dt;
+    }
+
+    function shortProgramName(name) {
+        const map = {
+            "IElTS Weekdays (19.30 - 21.00)":"IELTS",
+            "IELTS Weekdays (19.00 - 21.00)":"IELTS",
+            "IELTS Weekend (13.0 - 17.00)":"IELTS",
+            "SAT (08.00 - 12.00)":"SAT",
+            "SAT (10.00 - 12.00) ":"SAT",
+            "GRE (13.00 - 17.00)":"GRE",
+            "GRE (13.00 - 15.00)":"GRE",
+            "GMAT (13.00 - 17.00)":"GMAT",
+            "GMAT (13.00 - 15.00)":"GMAT"
+        };
+        return map[name] || name.split(" ")[0];
+    }
+
+    function formatBatchLabel(batch) {
+        const cleaned = batch
+            .replace(/^(IELTS|SAT|GRE|GMAT)\s+/i, "")
+            .replace(/\bINTENSIVE\b/i, "")
+            .replace(/\s{2,}/g, " ")
+            .trim();
+        return cleaned || batch;
+    }
+
+    function hashOffset(str) {
+        let h = 0;
+        for (let i = 0; i < str.length; i++) {
+            h = (h * 31 + str.charCodeAt(i)) % 360;
+        }
+        return h;
+    }
+
+    function getBatchColor(programId, batch) {
+        const key = programId + "|" + batch;
+        if (scheduleState.batchColors.has(key)) return scheduleState.batchColors.get(key);
+        const idx = scheduleState.programColorIndex.get(programId) || 0;
+        const hue = (hashOffset(programId) + idx * 137) % 360;
+        const color = `hsl(${hue}, 70%, 45%)`;
+        scheduleState.programColorIndex.set(programId, idx + 1);
+        scheduleState.batchColors.set(key, color);
+        scheduleState.batches.add(batch);
+        if (!scheduleState.batchPrograms.has(batch)) scheduleState.batchPrograms.set(batch, programId);
+        return color;
+    }
+
+    function getProgramTime(programFull, group) {
+        if (programFull) {
+            const m = programFull.match(/\(([^)]+)\)/);
+            if (m && m[1]) return m[1].trim();
+        }
+        const full = (programFull || "").toLowerCase();
+        if (full.includes("weekday")) {
+            return group === "ramadhan" ? "19.00 - 21.00" : "19.30 - 21.00";
+        }
+        if (full.includes("weekend")) {
+            return "13.0 - 17.00";
+        }
+        const short = shortProgramName(programFull || "");
+        const map = {
+            general: {
+                "SAT": "08.00 - 12.00",
+                "GRE": "13.00 - 17.00",
+                "GMAT": "13.00 - 17.00"
+            },
+            ramadhan: {
+                "SAT": "10.00 - 12.00",
+                "GRE": "13.00 - 15.00",
+                "GMAT": "13.00 - 15.00"
+            }
+        };
+        return (map[group] && map[group][short]) || "";
+    }
+
+    function extractEventsFromCSV(rows, year, group) {
+        if (!rows || rows.length < 3) return [];
+        
+        const events = [];
+        let headers = null;
+        let batches = null;
+        
+        // Detect CSV Type based on content
+        // General: Row 1 = "Nama Program", Row 2 = Program Names, Row 3 = Batch Names
+        // Ramadhan: Row 1 = "PROGRAM SPECIAL...", Row 2 = Program Names, Row 3 = Batch Names
+        
+        // Find header row (Program names)
+        // Usually row 1 (index 1) in General, row 1 (index 1) in Ramadhan (0-indexed)
+        // But let's be flexible
+        
+        let headerRowIndex = -1;
+        
+        for(let i=0; i<Math.min(rows.length, 10); i++) {
+            // Check if row has "IELTS" or "SAT" or "GRE" or "GMAT"
+            // Use stricter check: Must contain at least two of these to be a header row
+            // Or just check if it matches the known header row structure
+            const rowStr = rows[i].join(" ").toUpperCase();
+            
+            // Debug log
+            // console.log("Row " + i, rowStr);
+            
+            if ((rowStr.includes("IELTS") && rowStr.includes("WEEKEND")) || 
+                (rowStr.includes("SAT") && rowStr.includes("12.00")) ||
+                (rowStr.includes("GRE") && rowStr.includes("15.00"))) {
+                
+                // Ensure it's not a batch row (Batch row usually has INTENSIVE)
+                if (!rowStr.includes("INTENSIVE") && !rowStr.includes("BATCH")) {
+                     if (headerRowIndex === -1) {
+                        headerRowIndex = i;
+                     }
+                }
+            }
+        }
+        
+        if (headerRowIndex === -1) return [];
+        
+        // Batch row is usually immediately after Program header
+        let batchRowIndex = headerRowIndex + 1;
+        if (batchRowIndex >= rows.length) return [];
+        
+        // However, in General CSV, there are multiple sections.
+        // We need to scan through the file and update current headers/batches when we find new ones.
+        
+        // Initial set
+        headers = rows[headerRowIndex];
+        batches = rows[batchRowIndex];
+        
+        // Start reading dates from the row after batch
+        let startRow = batchRowIndex + 1;
+        
+        for (let r = startRow; r < rows.length; r++) {
+            const row = rows[r];
+            const firstCell = (row[0] || "").trim();
+            
+            // Check if this is a new Header section (e.g. "IELTS INTENSIVE WEEKEND 61...")
+            // In General CSV, new sections start with a row containing program/batch info again?
+            // Actually, looking at the CSV:
+            // Row 21: IELTS INTENSIVE WEEKEND 61, ... (This looks like Batch Names directly?)
+            // Let's look at General CSV structure:
+            // Row 2: Program Names (IELTS Weekend...)
+            // Row 3: Batch Names (IELTS INTENSIVE WEEKEND 60...)
+            // Row 4-20: Dates
+            // Row 21: Batch Names (IELTS INTENSIVE WEEKEND 61...) - Note: No new Program Names row before this?
+            // Row 22-40: Dates
+            // Row 41: Batch Names (IELTS INTENSIVE WEEKEND 62...)
+            
+            // So logic: If a row contains "INTENSIVE" or "BATCH" or looks like batch names, update 'batches'
+            // and keep using the *same* 'headers' (Program Names) from the top?
+            
+            const rowStr = row.join(" ").toUpperCase();
+            if ((rowStr.includes("INTENSIVE") || rowStr.includes("BATCH")) && !rowStr.match(/\d{1,2}\s+(JAN|FEB|MAR|APR|MAY|MEI|JUN|JUL|AUG|AGU|SEP|OCT|OKT|NOV|DEC|DES)/i)) {
+                // This is likely a new Batch row
+                // But wait, does it map to the original headers?
+                // Yes, columns seem aligned.
+                batches = row;
+                continue; 
+            }
+            
+            // Skip empty rows or purely separator rows
+            if (row.every(c => !c.trim())) continue;
+            
+            for (let c = 0; c < headers.length; c++) {
+                const cell = row[c] || "";
+                if (!cell.trim()) continue;
+                
+                // Parse date
+                const dt = parseDateLabel(cell, year);
+                if (dt) {
+                    const programFull = headers[c];
+                    // If programFull is empty, maybe use previous known header? No, strict mapping.
+                    if (!programFull) continue;
+                    
+                    const batch = batches[c] || "Unknown Batch";
+                    const programShort = shortProgramName(programFull);
+                    const programId = programShort.toLowerCase();
+                    const key = getLocalISO(dt);
+                    const color = getBatchColor(programId, batch);
+                    const time = getProgramTime(programFull, group);
+                    
+                    events.push({
+                        date: key,
+                        program: programShort,
+                        programId,
+                        batch,
+                        short: programShort,
+                        time,
+                        color
+                    });
+                }
+            }
+        }
+        return events;
+    }
+
+    function buildEventsByDate() {
+        scheduleState.eventsByDate = new Map();
+        scheduleState.batchColors = new Map();
+        scheduleState.programColorIndex = new Map();
+        scheduleState.batchPrograms = new Map();
+        scheduleState.batches = new Set();
+        const rowsG = scheduleState.csv.general;
+        const rowsR = scheduleState.csv.ramadhan;
+        if (!rowsG && !rowsR) return;
+        const eventsG = rowsG ? extractEventsFromCSV(rowsG, state.year, "general") : [];
+        const eventsR = rowsR ? extractEventsFromCSV(rowsR, state.year, "ramadhan") : [];
+        const events = eventsG.concat(eventsR);
+        events.forEach(ev => {
+            if (!scheduleState.eventsByDate.has(ev.date)) scheduleState.eventsByDate.set(ev.date, []);
+            scheduleState.eventsByDate.get(ev.date).push(ev);
+        });
+        renderBatchFilter();
+        renderBatchLegend();
+    }
+
+    // Google Sheets Fetching
+    const SHEET_URL_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEJ_iHnHRZAY40HtvBvGjHK2fL5XNgigtlUwKcz6CSzRbct6s8L-EwNE9tcm_lPUtAadtFbzi3WZB9";
+    
+    async function fetchSheetByGid(gid) {
+        // Try multiple variations for GID fetch
+        const urls = [
+            `${SHEET_URL_BASE}/pub?gid=${gid}&single=true&output=csv`,
+            `${SHEET_URL_BASE}/pub?output=csv&gid=${gid}`
+        ];
+        
+        for (const u of urls) {
+            try {
+                const res = await fetch(u);
+                if (!res.ok) continue;
+                const text = await res.text();
+                if (text && text.includes(',') && !text.trim().startsWith('<')) {
+                    return text;
+                }
+            } catch (_) {}
+        }
+        return null;
+    }
+
+    Promise.all([
+        fetchSheetByGid('0'),          // General (usually 0)
+        fetchSheetByGid('889451535')   // Ramadhan (GID provided by user)
+    ]).then(([g, r]) => {
+        scheduleState.csv.general = g ? parseCSV(g) : null;
+        scheduleState.csv.ramadhan = r ? parseCSV(r) : null;
+        buildEventsByDate();
+        render();
+    }).catch(err => {
+        console.error("Failed to load schedules", err);
+        render();
+    });
+
+    batchFilterSelect.addEventListener("change", () => {
+        scheduleState.batchFilter = batchFilterSelect.value;
+        render();
+    });
+
+})("schedule-app");
+</script>
+</body>
+</html>
