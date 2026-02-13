@@ -148,17 +148,22 @@ import type { WPScholarship, WPScholarshipsResponse } from '../../types/wp';
 // Helper to extract value from various Pods field formats
 function extractPodValue(val: any): string {
     if (val === null || val === undefined) return '';
-
-    // Handle array (e.g. multi-select)
     if (Array.isArray(val)) {
-        return val.map(item => extractPodValue(item)).join(', ');
+        return val.map(item => extractPodValue(item)).filter(Boolean).join(', ');
     }
-
-    // Handle 'Both' mode object: { value: '...', rendered: '...' }
-    if (typeof val === 'object' && val !== null) {
-        return val.rendered || val.value || JSON.stringify(val);
+    if (typeof val === 'object') {
+        const renderedTop = typeof (val as any).rendered === 'string' ? (val as any).rendered : '';
+        if (renderedTop && renderedTop.trim()) return renderedTop;
+        const v = (val as any).value;
+        if (typeof v === 'string' && v.trim()) return v;
+        if (v && typeof v === 'object') {
+            const renderedInner = typeof (v as any).rendered === 'string' ? (v as any).rendered : '';
+            if (renderedInner && renderedInner.trim()) return renderedInner;
+        }
+        const mediaUrl = (val as any).source_url || (val as any).guid || (val as any).url;
+        if (typeof mediaUrl === 'string' && mediaUrl.trim()) return mediaUrl;
+        return '';
     }
-
     return String(val);
 }
 
@@ -168,11 +173,40 @@ function stripHtml(html: any): string {
     return html.replace(/<[^>]*>?/gm, '').trim();
 }
 
-function normalizeScholarship(post: any): WPScholarship {
-    // 1. Handle Image: Check 'gambar' field first (from Pods), then fallback to standard WP featured media
-    let imageSrc = post.gambar; // Direct URL from Pods
+function pick(...vals: any[]) {
+    for (const v of vals) {
+        if (v === null || v === undefined) continue;
+        if (typeof v === 'string' && v.trim().length > 0) return v;
+        if (typeof v === 'number' && !Number.isNaN(v)) return String(v);
+        if (typeof v === 'object' && Object.keys(v).length > 0) return v;
+    }
+    return '';
+}
 
-    // If 'gambar' is empty/null, try standard WP _embedded
+function normalizeScholarship(post: any): WPScholarship {
+    let imageSrc = typeof post.gambar === 'string' ? post.gambar : '';
+    if (!imageSrc && post.gambar && typeof post.gambar === 'object') {
+        const g = post.gambar;
+        if (typeof g.rendered === 'string' && g.rendered.trim()) {
+            const extracted = extractImageFromContent(g.rendered) || (g.rendered.match(/^https?:\/\//) ? g.rendered : null);
+            if (extracted) imageSrc = extracted;
+        }
+        if (!imageSrc && g.value) {
+            const v = g.value;
+            if (typeof v === 'string') {
+                imageSrc = v;
+            } else if (typeof v === 'object' && v !== null) {
+                imageSrc = v.source_url || v.guid || v.url || v?.sizes?.large || v?.sizes?.medium_large || v?.sizes?.full || '';
+            }
+        }
+    }
+    if (!imageSrc) {
+        const acfImg = pick(post.acf?.gambar, post.acf?.featured_image, post.acf?.image);
+        if (acfImg) {
+            if (typeof acfImg === 'string') imageSrc = acfImg;
+            else imageSrc = acfImg?.url || acfImg?.source_url || acfImg?.sizes?.large || acfImg?.sizes?.medium_large || acfImg?.sizes?.full || '';
+        }
+    }
     if (!imageSrc) {
         const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
         if (featuredMedia?.source_url) {
@@ -181,30 +215,24 @@ function normalizeScholarship(post: any): WPScholarship {
         }
     }
 
-    // Content Fallback: use deskripsi if content is empty
-    const rawDesc = post.deskripsi || post.description || post.acf?.deskripsi;
+    const rawDesc = pick(post.deskripsi, post.description, post.acf?.deskripsi, post.acf?.description);
     const finalContent = post.content?.rendered || post.content || rawDesc || '';
     const finalExcerpt = post.excerpt?.rendered || post.excerpt || (typeof rawDesc === 'string' ? stripHtml(rawDesc).slice(0, 150) + '...' : '');
 
-    // Map Fields based on verified JSON structure
-    const rawCountry = post.negara || post.country;
-    const rawDegree = post.jenjang || post.degree;
-    const rawDeadline = post.deadline;
-    const rawStartDate = post.start_date;
-    const rawUniversity = post.university || post.universitas;
-    const rawType = post.jenis; // Contains HTML <p>..
-    const rawFieldOfStudy = post.bidang || post.field_of_study;
-    const rawBenefits = post.benefit || post.benefits; // Note: 'benefit' in JSON
-    const rawAge = post.umur || post.age;
-    const rawGpa = post.ipk || post.gpa;
-    const rawEnglish = post.english_test;
-    const rawDocuments = post.dokumen || post.documents;
-    const rawOthers = post.lainnya || post.others;
-    const rawApply = post.daftar || post.how_to_apply;
-
-    // Helper to prioritize rendered value if object, or raw if string
-    // But since we saw raw strings in JSON, extractPodValue handles simple strings too.
-    // specific fix: Type needs stripping HTML
+    const rawCountry = pick(post.negara, post.country, post.acf?.negara, post.acf?.country);
+    const rawDegree = pick(post.jenjang, post.degree, post.acf?.jenjang, post.acf?.degree);
+    const rawDeadline = pick(post.deadline, post.acf?.deadline);
+    const rawStartDate = pick(post.start_date, post.acf?.start_date, post.acf?.startDate);
+    const rawUniversity = pick(post.university, post.universitas, post.acf?.university, post.acf?.universitas);
+    const rawType = pick(post.jenis, post.acf?.jenis);
+    const rawFieldOfStudy = pick(post.bidang, post.field_of_study, post.acf?.bidang, post.acf?.field_of_study);
+    const rawBenefits = pick(post.benefit, post.benefits, post.acf?.benefit, post.acf?.benefits);
+    const rawAge = pick(post.umur, post.age, post.acf?.umur, post.acf?.age);
+    const rawGpa = pick(post.ipk, post.gpa, post.acf?.ipk, post.acf?.gpa);
+    const rawEnglish = pick(post.english_test, post.acf?.english_test);
+    const rawDocuments = pick(post.dokumen, post.documents, post.acf?.dokumen, post.acf?.documents);
+    const rawOthers = pick(post.lainnya, post.others, post.acf?.lainnya, post.acf?.others);
+    const rawApply = pick(post.daftar, post.how_to_apply, post.acf?.daftar, post.acf?.how_to_apply);
 
     return {
         id: post.id,
@@ -213,16 +241,13 @@ function normalizeScholarship(post: any): WPScholarship {
         content: finalContent,
         excerpt: finalExcerpt,
         date: post.date,
-        featuredImage: imageSrc ? {
-            src: imageSrc,
-            alt: post.title?.rendered || post.title || 'Scholarship Image'
-        } : undefined,
+        featuredImage: imageSrc ? { src: imageSrc, alt: post.title?.rendered || post.title || 'Scholarship Image' } : undefined,
         country: extractPodValue(rawCountry),
         degree: extractPodValue(rawDegree),
         deadline: extractPodValue(rawDeadline),
         startDate: extractPodValue(rawStartDate),
         university: extractPodValue(rawUniversity),
-        type: stripHtml(extractPodValue(rawType)), // Fix: Strip HTML for type/badge
+        type: stripHtml(extractPodValue(rawType)),
         fieldOfStudy: extractPodValue(rawFieldOfStudy),
         benefits: extractPodValue(rawBenefits),
         ageLimit: extractPodValue(rawAge),
@@ -230,8 +255,8 @@ function normalizeScholarship(post: any): WPScholarship {
         englishTest: extractPodValue(rawEnglish),
         documents: extractPodValue(rawDocuments),
         others: extractPodValue(rawOthers),
-        howToApply: extractPodValue(rawApply), // Likely HTML
-        description: extractPodValue(rawDesc), // Likely HTML
+        howToApply: extractPodValue(rawApply),
+        description: extractPodValue(rawDesc),
         coverage: ''
     };
 }
@@ -260,12 +285,13 @@ export async function getScholarships(page: number = 1, perPage: number = 10): P
 }
 
 export async function getScholarshipBySlug(slug: string): Promise<WPScholarship | null> {
-    const endpoint = `/wp/v2/beasiswa?_embed&slug=${slug}`;
+    const safeSlug = String(slug || '').trim().replace(/\/+$/, '');
+    const endpoint = `/wp/v2/beasiswa?_embed&slug=${encodeURIComponent(safeSlug)}`;
     try {
         let rawPosts = await wpFetch<any[]>(endpoint);
         if (rawPosts.length === 0) {
             // Try plural endpoint
-            const fallbackEndpoint = `/wp/v2/beasiswas?_embed&slug=${slug}`;
+            const fallbackEndpoint = `/wp/v2/beasiswas?_embed&slug=${encodeURIComponent(safeSlug)}`;
             rawPosts = await wpFetch<any[]>(fallbackEndpoint);
         }
 

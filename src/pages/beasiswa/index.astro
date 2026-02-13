@@ -4,7 +4,6 @@
  * Scholarship listing page with Advanced Filtering.
  */
 import Layout from "../../layouts/Layout.astro";
-import Pagination from "../../components/blog/Pagination.astro";
 import ScholarshipCard from "../../components/scholarship/ScholarshipCard.astro";
 import UnifiedHero from "../../components/common/UnifiedHero.astro";
 import type { WPScholarship } from "../../types/wp";
@@ -22,14 +21,13 @@ let filteredScholarships: WPScholarship[] = [];
 const degreeFilter = Astro.url.searchParams.get("degree") || "";
 const countryFilter = Astro.url.searchParams.get("country") || "";
 const typeFilter = Astro.url.searchParams.get("type") || "";
+const sortFilter = Astro.url.searchParams.get("sort") || "deadline";
 const searchFilter = Astro.url.searchParams.get("q") || "";
-const page = parseInt(Astro.url.searchParams.get("page") || "1");
-const perPage = 10;
+const perPage = 9;
 
 try {
     const { getScholarships } = await import("../../lib/api/endpoints");
-    // Fetch up to 100 items to enable effective filtering
-    const response = await getScholarships(1, 100);
+    const response = await getScholarships(1, perPage);
     allScholarships = response.scholarships;
 } catch (e) {
     console.warn("Failed to fetch scholarships, using fallback data:", e);
@@ -99,10 +97,30 @@ filteredScholarships = allScholarships.filter((s) => {
     return matchDegree && matchCountry && matchType && matchSearch;
 });
 
-// Calculate Pagination
-const totalPages = Math.ceil(filteredScholarships.length / perPage);
-const currentPage = page;
-const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, page * perPage);
+// Sort
+function parseDateSafe(v?: string): number {
+    if (!v) return Number.MAX_SAFE_INTEGER;
+    const t = Date.parse(v);
+    return isNaN(t) ? Number.MAX_SAFE_INTEGER : t;
+}
+if (sortFilter === "deadline") {
+    filteredScholarships.sort((a, b) => parseDateSafe(a.deadline) - parseDateSafe(b.deadline));
+} else if (sortFilter === "recent") {
+    filteredScholarships.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0));
+} else if (sortFilter === "az") {
+    filteredScholarships.sort((a, b) => a.title.localeCompare(b.title, "id"));
+}
+
+const paginatedScholarships = filteredScholarships.slice(0, perPage);
+
+// Build clean query params
+const qp: string[] = [];
+if (searchFilter) qp.push(`q=${encodeURIComponent(searchFilter)}`);
+if (degreeFilter) qp.push(`degree=${encodeURIComponent(degreeFilter)}`);
+if (countryFilter) qp.push(`country=${encodeURIComponent(countryFilter)}`);
+if (typeFilter) qp.push(`type=${encodeURIComponent(typeFilter)}`);
+if (sortFilter) qp.push(`sort=${encodeURIComponent(sortFilter)}`);
+const queryParamsClean = qp.join('&');
 ---
 
 <Layout title={title} description={description}>
@@ -112,13 +130,14 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
         <UnifiedHero title="Temukan Beasiswa Impianmu" subtitle="Akses ribuan informasi beasiswa S1, S2, dan S3 dari seluruh dunia." pillText="Info Beasiswa" image="/images/hero_img.png">
             <!-- Search Bar -->
             <div class="mt-8 max-w-xl">
-                <form action="/beasiswa" method="GET" class="relative">
+                <form action="/beasiswa" method="GET" class="relative" id="searchForm">
                     <input
                         type="text"
                         name="q"
                         value={searchFilter}
                         placeholder="Cari beasiswa, universitas, atau negara..."
-                        class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-full py-4 pl-6 pr-14 text-white placeholder-blue-100 focus:outline-none focus:bg-white focus:text-gray-900 focus:placeholder-gray-400 transition-all shadow-lg"
+                        id="searchInput"
+                        class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-full py-4 pl-6 pr-14 text-white placeholder-blue-100 focus:outline-none focus:bg-white focus:text-gray-900 focus:placeholder-gray-400 transition-all shadow-lg text-base"
                     />
                     <button type="submit" class="absolute right-2 top-2 p-2 bg-white rounded-full text-primary hover:bg-blue-50 transition-colors">
                         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -129,6 +148,7 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
                     {degreeFilter && <input type="hidden" name="degree" value={degreeFilter} />}
                     {countryFilter && <input type="hidden" name="country" value={countryFilter} />}
                     {typeFilter && <input type="hidden" name="type" value={typeFilter} />}
+                    {sortFilter && <input type="hidden" name="sort" value={sortFilter} />}
                 </form>
             </div>
         </UnifiedHero>
@@ -136,17 +156,16 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
         <main class="container mx-auto py-8 transform -translate-y-8">
             <!-- Filter Bar -->
             <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 mb-8 relative z-20">
-                <form action="/beasiswa" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4" id="filterForm">
+                <form action="/beasiswa" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4" id="filterForm">
                     <!-- Preserve search -->
                     {searchFilter && <input type="hidden" name="q" value={searchFilter} />}
 
                     <!-- Degree Filter -->
                     <div class="relative">
-                        <label class="block text-xs md:text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Jenjang</label>
+                        <label class="block text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Jenjang</label>
                         <select
                             name="degree"
-                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
-                            onchange="this.form.submit()"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-base"
                         >
                             <option value="">Semua Jenjang</option>
                             {
@@ -166,11 +185,10 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
 
                     <!-- Country Filter -->
                     <div class="relative">
-                        <label class="block text-xs md:text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Negara</label>
+                        <label class="block text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Negara</label>
                         <select
                             name="country"
-                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
-                            onchange="this.form.submit()"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-base"
                         >
                             <option value="">Semua Negara</option>
                             {
@@ -190,11 +208,10 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
 
                     <!-- Type Filter -->
                     <div class="relative">
-                        <label class="block text-xs md:text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Jenis Beasiswa</label>
+                        <label class="block text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Jenis Beasiswa</label>
                         <select
                             name="type"
-                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
-                            onchange="this.form.submit()"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-base"
                         >
                             <option value="">Semua Jenis</option>
                             {
@@ -204,6 +221,24 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
                                     </option>
                                 ))
                             }
+                        </select>
+                        <div class="absolute right-4 bottom-3 pointer-events-none text-slate-500">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Sort -->
+                    <div class="relative">
+                        <label class="block text-sm font-semibold text-slate-500 uppercase mb-1 ml-1">Urutkan</label>
+                        <select
+                            name="sort"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary appearance-none cursor-pointer text-base"
+                        >
+                            <option value="deadline" selected={sortFilter === "deadline"}>Deadline terdekat</option>
+                            <option value="recent" selected={sortFilter === "recent"}>Terbaru</option>
+                            <option value="az" selected={sortFilter === "az"}>A-Z</option>
                         </select>
                         <div class="absolute right-4 bottom-3 pointer-events-none text-slate-500">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -233,13 +268,14 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
                 </h2>
             </div>
 
-            <!-- Scholarship Grid (Single Column) -->
+            <!-- Scholarship Grid -->
             {
                 paginatedScholarships.length > 0 ? (
-                    <div class="flex flex-col gap-6">
+                    <div id="sch-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" data-q={searchFilter} data-degree={degreeFilter} data-country={countryFilter} data-type={typeFilter} data-sort={sortFilter}>
                         {paginatedScholarships.map((scholarship) => (
                             <ScholarshipCard scholarship={scholarship} />
                         ))}
+                        <div id="sch-sentinel2" class="col-span-full h-1"></div>
                     </div>
                 ) : (
                     <div class="text-center py-20 bg-white rounded-3xl shadow-sm border border-slate-100">
@@ -256,15 +292,253 @@ const paginatedScholarships = filteredScholarships.slice((page - 1) * perPage, p
                     </div>
                 )
             }
-
-            <!-- Pagination -->
-            {
-                totalPages > 1 && (
-                    <div class="mt-12 flex justify-center">
-                        <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/beasiswa" queryParams={`q=${searchFilter}&degree=${degreeFilter}&country=${countryFilter}&type=${typeFilter}`} />
-                    </div>
-                )
-            }
+            <div class="mt-8 flex justify-center">
+                <button id="load-more" class="px-6 py-3 rounded-xl border border-ultimate-blue text-ultimate-blue hover:bg-ultimate-blue hover:text-white transition-colors font-semibold text-base">
+                    Muat Lebih Banyak
+                </button>
+            </div>
+            <script is:inline>
+                const container = document.getElementById('sch-list');
+                const sentinel = document.getElementById('sch-sentinel2');
+                const btn = document.getElementById('load-more');
+                const filterForm = document.getElementById('filterForm');
+                const searchForm = document.getElementById('searchForm');
+                const searchInput = document.getElementById('searchInput');
+                if (container && sentinel && btn) {
+                    let nextPage = 2;
+                    let busy = false;
+                    let ended = false;
+                    const perPage = 9;
+                    function getState() {
+                        return {
+                            q: container.dataset.q || '',
+                            degree: container.dataset.degree || '',
+                            country: container.dataset.country || '',
+                            type: container.dataset.type || '',
+                            sort: container.dataset.sort || 'deadline',
+                        };
+                    }
+                    function updateUrl(state) {
+                        const p = new URLSearchParams();
+                        if (state.q) p.set('q', state.q);
+                        if (state.degree) p.set('degree', state.degree);
+                        if (state.country) p.set('country', state.country);
+                        if (state.type) p.set('type', state.type);
+                        if (state.sort) p.set('sort', state.sort);
+                        history.replaceState({}, '', `/beasiswa?${p.toString()}`);
+                    }
+                    async function fetchAndAppend(page) {
+                        if (busy || ended) return;
+                        busy = true;
+                        btn.disabled = true;
+                        btn.textContent = 'Memuat...';
+                        try {
+                            const st = getState();
+                            const params = new URLSearchParams();
+                            params.set('page', String(page));
+                            params.set('per_page', String(perPage));
+                            if (st.q) params.set('q', st.q);
+                            if (st.degree) params.set('degree', st.degree);
+                            if (st.country) params.set('country', st.country);
+                            if (st.type) params.set('type', st.type);
+                            if (st.sort) params.set('sort', st.sort);
+                            const res = await fetch(`/api/beasiswa.json?${params.toString()}`);
+                            if (!res.ok) {
+                                ended = true;
+                                btn.style.display = 'none';
+                                return;
+                            }
+                            const data = await res.json();
+                            const items = Array.isArray(data.items) ? data.items : [];
+                            if (items.length === 0) {
+                                ended = true;
+                                btn.style.display = 'none';
+                                return;
+                            }
+                            for (const s of items) {
+                                const card = document.createElement('article');
+                                card.className = 'group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col';
+                                card.innerHTML = `
+                                    <a href="/beasiswa/${s.slug}" class="block relative h-48 overflow-hidden">
+                                        ${s.featuredImage?.src ? `<img src="${s.featuredImage.src}" alt="${s.featuredImage.alt || s.title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" />` : `<div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400"><svg class="w-14 h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>`}
+                                        <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                                            ${s.type ? `<span class="px-2.5 py-1 rounded-lg text-sm font-semibold bg-white/90 text-ultimate-navy shadow-sm">${s.type}</span>` : ``}
+                                            ${s.degree ? `<span class="px-2.5 py-1 rounded-lg text-sm font-semibold bg-white/90 text-blue-700 shadow-sm">${s.degree}</span>` : ``}
+                                        </div>
+                                        ${s.deadline ? `<div class="absolute bottom-4 right-4 bg-red-600 text-white text-sm font-semibold px-3 py-1.5 rounded-lg shadow-lg">Tutup: ${new Date(s.deadline).toLocaleDateString('id-ID')}</div>` : ``}
+                                        <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
+                                    </a>
+                                    <div class="p-5 flex-1 flex flex-col">
+                                        <h3 class="font-semibold text-lg md:text-xl text-ultimate-navy mb-2 line-clamp-2 group-hover:text-ultimate-blue transition-colors">
+                                            <a href="/beasiswa/${s.slug}">${s.title}</a>
+                                        </h3>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            ${s.country ? `<span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-sm font-medium"><span class="material-symbols-outlined text-base">public</span>${s.country}</span>` : ``}
+                                            ${s.university ? `<span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-sm font-medium"><span class="material-symbols-outlined text-base">school</span>${s.university}</span>` : ``}
+                                        </div>
+                                        ${s.startDate ? `<div class="text-sm text-slate-500 mb-4">Mulai: <span class="font-semibold text-slate-700">${s.startDate}</span></div>` : ``}
+                                        <div class="mt-auto">
+                                            <a href="/beasiswa/${s.slug}" class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-ultimate-blue hover:bg-blue-700 text-white text-sm font-semibold transition-all">
+                                                Lihat Detail
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                `;
+                                container.appendChild(card);
+                            }
+                            nextPage = page + 1;
+                            if (data.hasMore === false) {
+                                ended = true;
+                                btn.style.display = 'none';
+                            } else {
+                                btn.disabled = false;
+                                btn.textContent = 'Muat Lebih Banyak';
+                            }
+                        } catch (e) {
+                            ended = true;
+                            btn.style.display = 'none';
+                        } finally {
+                            busy = false;
+                        }
+                    }
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        fetchAndAppend(nextPage);
+                    });
+                    function interceptSubmit(form) {
+                        form?.addEventListener('submit', (e) => e.preventDefault());
+                    }
+                    interceptSubmit(filterForm);
+                    interceptSubmit(searchForm);
+                    function applyFilters() {
+                        const dd = filterForm?.querySelector('select[name="degree"]');
+                        const cc = filterForm?.querySelector('select[name="country"]');
+                        const tt = filterForm?.querySelector('select[name="type"]');
+                        const ss = filterForm?.querySelector('select[name="sort"]');
+                        const state = {
+                            q: searchInput?.value?.trim() || '',
+                            degree: dd?.value || '',
+                            country: cc?.value || '',
+                            type: tt?.value || '',
+                            sort: ss?.value || 'deadline'
+                        };
+                        container.dataset.q = state.q;
+                        container.dataset.degree = state.degree;
+                        container.dataset.country = state.country;
+                        container.dataset.type = state.type;
+                        container.dataset.sort = state.sort;
+                        updateUrl(state);
+                        Array.from(container.children).forEach((el) => {
+                            if (!el.id) el.remove();
+                        });
+                        nextPage = 1;
+                        ended = false;
+                        btn.style.display = '';
+                        btn.disabled = true;
+                        btn.textContent = 'Memuat...';
+                        fetchAndAppend(1);
+                    }
+                    filterForm?.querySelectorAll('select').forEach((sel) => {
+                        sel.addEventListener('change', applyFilters);
+                    });
+                    if (searchInput) {
+                        searchInput.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                applyFilters();
+                            }
+                        });
+                    }
+                }
+            </script>
+            <script is:inline>
+                if (container && sentinel) {
+                    let page = 2;
+                    let loading = false;
+                    let ended = false;
+                    const q = container.dataset.q || '';
+                    const degree = container.dataset.degree || '';
+                    const country = container.dataset.country || '';
+                    const type = container.dataset.type || '';
+                    const sort = container.dataset.sort || 'deadline';
+                    const perPage = 9;
+                    const io = new IntersectionObserver(async (entries) => {
+                        if (ended || loading) return;
+                        for (const entry of entries) {
+                            if (entry.isIntersecting) {
+                                loading = true;
+                                try {
+                                    const params = new URLSearchParams();
+                                    params.set('page', String(page));
+                                    params.set('per_page', String(perPage));
+                                    if (q) params.set('q', q);
+                                    if (degree) params.set('degree', degree);
+                                    if (country) params.set('country', country);
+                                    if (type) params.set('type', type);
+                                    if (sort) params.set('sort', sort);
+                                    const res = await fetch(`/api/beasiswa.json?${params.toString()}`);
+                                    if (res.ok) {
+                                        const data = await res.json();
+                                        const items = Array.isArray(data.items) ? data.items : [];
+                                        if (items.length === 0) {
+                                            ended = true;
+                                            io.disconnect();
+                                        } else {
+                                            for (const s of items) {
+                                                const card = document.createElement('article');
+                                                card.className = 'group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col';
+                                                card.innerHTML = `
+                                                    <a href="/beasiswa/${s.slug}" class="block relative h-48 overflow-hidden">
+                                                        ${s.featuredImage?.src ? `<img src="${s.featuredImage.src}" alt="${s.featuredImage.alt || s.title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" />` : `<div class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400"><svg class="w-14 h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2z" /></svg></div>`}
+                                                        <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+                                                            ${s.type ? `<span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/90 text-ultimate-navy shadow-sm">${s.type}</span>` : ``}
+                                                            ${s.degree ? `<span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/90 text-blue-700 shadow-sm">${s.degree}</span>` : ``}
+                                                        </div>
+                                                        ${s.deadline ? `<div class="absolute bottom-4 right-4 bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-lg">Tutup: ${new Date(s.deadline).toLocaleDateString('id-ID')}</div>` : ``}
+                                                        <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
+                                                    </a>
+                                                    <div class="p-5 flex-1 flex flex-col">
+                                                        <h3 class="font-semibold text-lg md:text-xl text-ultimate-navy mb-2 line-clamp-2 group-hover:text-ultimate-blue transition-colors">
+                                                            <a href="/beasiswa/${s.slug}">${s.title}</a>
+                                                        </h3>
+                                                        <div class="flex flex-wrap gap-2 mb-4">
+                                                            ${s.country ? `<span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-medium"><span class="material-symbols-outlined text-base">public</span>${s.country}</span>` : ``}
+                                                            ${s.university ? `<span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-medium"><span class="material-symbols-outlined text-base">school</span>${s.university}</span>` : ``}
+                                                        </div>
+                                                        ${s.startDate ? `<div class="text-xs text-slate-500 mb-4">Mulai: <span class="font-semibold text-slate-700">${s.startDate}</span></div>` : ``}
+                                                        <div class="mt-auto">
+                                                            <a href="/beasiswa/${s.slug}" class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-ultimate-blue hover:bg-blue-700 text-white text-sm font-semibold transition-all">
+                                                                Lihat Detail
+                                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                                container.insertBefore(card, sentinel);
+                                            }
+                                            page += 1;
+                                            if (data.hasMore === false) {
+                                                ended = true;
+                                                io.disconnect();
+                                            }
+                                        }
+                                    } else {
+                                        ended = true;
+                                        io.disconnect();
+                                    }
+                                } catch (e) {
+                                    ended = true;
+                                    io.disconnect();
+                                } finally {
+                                    loading = false;
+                                }
+                            }
+                        }
+                    }, { rootMargin: '0px 0px 400px 0px' });
+                    io.observe(sentinel);
+                }
+            </script>
         </main>
 
         <!-- CTA -->

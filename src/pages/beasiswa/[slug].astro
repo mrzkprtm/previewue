@@ -259,9 +259,9 @@ function formatDate(dateString: string) {
                     {
                         scholarship.howToApply && (
                             <section class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
-                                <h2 class="text-2xl font-semibold font-heading text-slate-900 mb-6 flex items-center gap-3">
+                                <h2 id="link-pendaftaran" class="text-2xl font-semibold font-heading text-slate-900 mb-6 flex items-center gap-3">
                                     <span class="w-10 h-1 rounded-full bg-blue-500 block" />
-                                    Cara Mendaftar
+                                    Link Pendaftaran
                                 </h2>
                                 <div class="prose prose-slate max-w-none">
                                     <Fragment set:html={scholarship.howToApply} />
