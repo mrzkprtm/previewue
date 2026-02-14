@@ -37,7 +37,7 @@ const programs = [
 
 <section class="py-12 lg:py-20 bg-white">
     <div class="container mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-10 md:mb-16">
             <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-ultimate-blue text-xs md:text-sm font-semibold uppercase tracking-wider mb-4"> Program Terbaik </span>
             <h2 class="text-2xl md:text-3xl lg:text-4xl font-semibold font-heading text-ultimate-navy">Program Unggulan Ultimate Education</h2>
         </div>
@@ -45,18 +45,18 @@ const programs = [
         <div class="space-y-12">
             {
                 programs.map((program, i) => (
-                    <div class={`flex flex-col md:flex-row items-center gap-8 md:gap-12 ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}>
+                    <div class={`flex flex-col md:flex-row items-center gap-6 md:gap-12 ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}>
                         <div class="w-full md:w-1/2">
                             <div class="relative rounded-2xl overflow-hidden shadow-xl group">
                                 <div class="absolute inset-0 bg-ultimate-blue/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
                                 <img src={program.image} alt={program.title} class="w-full h-64 md:h-80 object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                             </div>
                         </div>
-                        <div class="w-full md:w-1/2 space-y-6">
+                        <div class="w-full md:w-1/2 space-y-4 md:space-y-6 text-center md:text-left">
                             <span class="inline-block py-1 px-3 rounded-md bg-ultimate-yellow/20 text-ultimate-navy text-xs md:text-sm font-semibold uppercase tracking-wider">{program.badge}</span>
-                            <h3 class="text-2xl md:text-3xl font-semibold font-heading text-ultimate-navy leading-tight">{program.title}</h3>
-                            <p class="text-gray-600 text-lg leading-relaxed">{program.description}</p>
-                            <a href={program.link} class="inline-flex items-center gap-2 text-ultimate-blue font-medium hover:text-ultimate-navy transition-colors group/link">
+                            <h3 class="text-xl md:text-3xl font-semibold font-heading text-ultimate-navy leading-tight">{program.title}</h3>
+                            <p class="text-gray-600 text-[15px] md:text-lg leading-relaxed">{program.description}</p>
+                            <a href={program.link} class="inline-flex items-center justify-center md:justify-start gap-2 text-ultimate-blue font-medium hover:text-ultimate-navy transition-colors group/link">
                                 {program.cta}
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

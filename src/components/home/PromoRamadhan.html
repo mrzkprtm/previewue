@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ultimate Education Ramadan Banner V1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#edc92a", // Gold from prompt
+                        "primary-hover": "#d4b321",
+                        "accent-blue": "#145da0", // Deep blue from prompt
+                        "deep-blue": "#0a2e52",
+                        "background-light": "#f0f4f8",
+                        "background-dark": "#0f172a",
+                        "card-dark": "#0c2340",
+                        "card-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                        sans: ["Poppins", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                        '3xl': '2rem',
+                    },
+                    backgroundImage: {
+                        'blue-gradient': 'linear-gradient(135deg, #145da0 0%, #0a2e52 100%)',
+                        'gold-gradient': 'linear-gradient(135deg, #fce38a 0%, #edc92a 50%, #dbb42c 100%)',
+                        'card-shine': 'linear-gradient(45deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        .banner-mask {
+            mask-image: linear-gradient(to right, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(237, 201, 42, 0.3);
+        }
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans antialiased min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
+<div class="w-full max-w-6xl mx-auto">
+<nav class="flex justify-between items-center py-4 px-2 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-icons-outlined text-accent-blue dark:text-primary text-3xl">school</span>
+<span class="text-2xl font-bold text-gray-800 dark:text-white">Ultimate<span class="text-accent-blue dark:text-primary">Edu</span></span>
+</div>
+<div class="flex gap-4">
+<button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+<span class="material-icons-outlined text-gray-600 dark:text-gray-300">dark_mode</span>
+</button>
+</div>
+</nav>
+<div class="relative overflow-hidden rounded-3xl shadow-2xl bg-white dark:bg-gray-900 flex flex-col lg:flex-row h-auto lg:h-[420px] w-full border border-gray-100 dark:border-gray-800">
+<div class="relative w-full lg:w-[55%] bg-blue-gradient p-8 lg:p-12 flex flex-col justify-center items-start z-10 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+<svg class="absolute -top-10 -left-10 w-64 h-64 text-white" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zm0 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 17zm10-7a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0120 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zm12.37-4.93a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm-9.9 9.9a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm9.9 0a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0zm-9.9-9.9a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0z"></path>
+</svg>
+<span class="material-icons-outlined text-9xl absolute bottom-0 right-10 transform rotate-12 text-white opacity-20">mosque</span>
+</div>
+<div class="flex items-center gap-3 mb-6">
+<div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+<span class="material-icons-outlined text-white text-2xl">school</span>
+</div>
+<span class="text-white text-xl font-semibold tracking-wide">Ultimate Education</span>
+</div>
+<h2 class="text-white text-lg font-medium mb-1 uppercase tracking-widest text-primary">Ramadan Special</h2>
+<h1 class="text-white text-4xl lg:text-5xl font-extrabold leading-tight mb-4 drop-shadow-md">
+                    Discount Up To <br/>
+<span class="text-primary glow-effect px-2">Rp 1,500,000</span>
+</h1>
+<div class="mt-4 mb-8 relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-primary rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+<div class="relative bg-gradient-to-r from-blue-900 to-accent-blue border border-blue-400/30 rounded-xl p-1 flex items-center pr-6 max-w-md shadow-lg">
+<div class="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-3 mr-4 shadow-inner border border-blue-300/50">
+<span class="material-icons-outlined text-white text-3xl">diamond</span>
+</div>
+<div class="flex flex-col">
+<span class="text-2xl font-bold text-white tracking-wide">Limited Offer</span>
+</div>
+</div>
+</div>
+<p class="text-blue-200 text-xs mt-auto opacity-80 max-w-xs">
+                    *Terms and conditions apply. Offer valid until the end of Ramadan. Authorized by Ministry of Education.
+                </p>
+<div class="hidden lg:block absolute top-0 right-0 h-full w-16 lg:w-24">
+<svg class="h-full w-full text-background-light dark:text-background-dark" preserveAspectRatio="none" viewBox="0 0 100 100">
+<path class="text-white dark:text-gray-900" d="M50 0 C 10 20 10 80 50 100 L 100 100 L 100 0 Z" fill="currentColor"></path>
+<path class="opacity-80" d="M50 0 C 10 20 10 80 50 100" fill="none" stroke="#edc92a" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="relative w-full lg:w-[45%] bg-white dark:bg-gray-900 p-8 lg:p-12 flex flex-col justify-center items-center z-0">
+<div class="absolute top-4 right-4 animate-bounce duration-[3000ms]">
+<span class="material-icons-outlined text-primary text-2xl">star</span>
+</div>
+<div class="absolute bottom-12 left-4 animate-pulse">
+<span class="material-icons-outlined text-primary text-xl">nights_stay</span>
+</div>
+<div class="space-y-4 w-full max-w-sm">
+<div class="group relative">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-accent-blue rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+<div class="relative bg-deep-blue rounded-xl p-5 border border-blue-700/50 shadow-xl flex items-center justify-between overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full bg-card-shine pointer-events-none"></div>
+<div class="z-10">
+<h3 class="text-blue-200 text-xs font-bold uppercase tracking-wider mb-1">Ramadan Exclusive</h3>
+<p class="text-white text-xl lg:text-2xl font-bold">Special Rates</p>
+<p class="text-blue-300 text-xs mt-1">For All Courses</p>
+</div>
+<div class="bg-blue-600/30 p-3 rounded-full z-10">
+<span class="material-icons-outlined text-primary text-3xl">percent</span>
+</div>
+</div>
+</div>
+<div class="group relative">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-accent-blue rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+<div class="relative bg-deep-blue rounded-xl p-5 border border-blue-700/50 shadow-xl flex items-center justify-between overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full bg-card-shine pointer-events-none"></div>
+<div class="z-10">
+<h3 class="text-blue-200 text-xs font-bold uppercase tracking-wider mb-1">Flexibility</h3>
+<p class="text-white text-xl lg:text-2xl font-bold">Flexible Enrollment</p>
+<p class="text-blue-300 text-xs mt-1">Start Anytime</p>
+</div>
+<div class="bg-blue-600/30 p-3 rounded-full z-10">
+<span class="material-icons-outlined text-primary text-3xl">event_available</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 w-full max-w-sm">
+<button class="w-full bg-primary hover:bg-primary-hover text-deep-blue font-extrabold text-lg py-4 px-6 rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group">
+                        Enroll Now
+                        <span class="material-icons-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center text-gray-400 text-xs mt-3">Limited seats available for this batch.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 mt-8 px-4 text-center opacity-70">
+<div class="flex flex-col items-center">
+<span class="material-icons-outlined text-gray-500 dark:text-gray-400 mb-2">verified</span>
+<span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Certified Tutors</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-icons-outlined text-gray-500 dark:text-gray-400 mb-2">devices</span>
+<span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Online Access</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-icons-outlined text-gray-500 dark:text-gray-400 mb-2">workspace_premium</span>
+<span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Premium Content</span>
+</div>
+</div>
+</div>
+<script>
+        const button = document.querySelector('button');
+        const html = document.querySelector('html');
+        button.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const icon = button.querySelector('span');
+            if (html.classList.contains('dark')) {
+                icon.textContent = 'light_mode';
+            } else {
+                icon.textContent = 'dark_mode';
+            }
+        });
+    </script>
+
+</body></html>
