@@ -11,8 +11,15 @@ export default defineConfig({
     inlineStylesheets: 'auto',
   },
   image: {
-    service: passthroughImageService(),
+    // service: passthroughImageService(),
+    domains: [
+      "images.unsplash.com",
+      "placehold.co",
+      "i.pravatar.cc",
+      "lh3.googleusercontent.com"
+    ],
   },
+  prefetch: true,
   vite: {
     server: {
       allowedHosts: true,

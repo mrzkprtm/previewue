@@ -1,23 +1,28 @@
 ---
+import { Image } from "astro:assets";
+import yudistira from "@/assets/images/alumni/YUDISTIRA-YUDADISASTRA-1.webp";
+import satriyo from "@/assets/images/alumni/SATRIYO-BHAWIKO-ADHI-1.webp";
+import astrid from "@/assets/images/alumni/astrid-gloria-pepita-2.webp";
+
 const testimonials = {
     ielts: [
         {
             name: "YUDISTIRA YUDADISASTRA",
             position: "Assistant Vice President MANDIRI SEKURITAS",
             text: "Great course with professional teachers. The extra lessons really helped us improve our English skills.",
-            image: "/images/alumni/YUDISTIRA-YUDADISASTRA-1.webp",
+            image: yudistira,
         },
         {
             name: "SATRIYO BHAWIKO ADHI",
             position: "Assurances Services Advisory Deloitte",
             text: "Taught by experts. We even got free grammar classes to help us get better results.",
-            image: "/images/alumni/SATRIYO-BHAWIKO-ADHI-1.webp",
+            image: satriyo,
         },
         {
             name: "ASTRID GLORIA PEPITA",
             position: "Assistant Manager Grab",
             text: "The right choice. I understood the test better and achieved an 8.0 score. Thank you!",
-            image: "/images/alumni/astrid-gloria-pepita-2.webp",
+            image: astrid,
         },
     ],
     // Other categories can be added if needed, focusing on IELTS for now as main display or use client-side logic for tabs
@@ -48,7 +53,7 @@ const displayTestimonials = testimonials.ielts;
                         <p class="text-gray-600 mb-8 relative z-10 italic leading-relaxed">"{t.text}"</p>
 
                         <div class="flex items-center gap-4 mt-auto">
-                            <img src={t.image} alt={t.name} class="w-12 h-12 rounded-full border-2 border-ultimate-blue/20" loading="lazy" />
+                            <Image src={t.image} alt={t.name} class="w-12 h-12 rounded-full border-2 border-ultimate-blue/20" loading="lazy" />
                             <div>
                                 <h3 class="font-semibold text-ultimate-navy text-sm">{t.name}</h3>
                                 <p class="text-base text-ultimate-blue font-medium mt-0.5">{t.position}</p>

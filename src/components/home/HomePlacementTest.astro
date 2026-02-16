@@ -1,5 +1,9 @@
 ---
-
+import { Image } from "astro:assets";
+import everydayImg from "@/assets/images/freetest/Everyday-Before.webp";
+import businessImg from "@/assets/images/freetest/Business-Before.webp";
+import studyImg from "@/assets/images/freetest/Study-Before.webp";
+import travelImg from "@/assets/images/freetest/Travel-Before.webp";
 ---
 
 <section class="py-10 lg:py-16 bg-white">
@@ -10,7 +14,14 @@
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div class="relative group h-100 overflow-hidden rounded-3xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
-                <img alt="Everyday" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" src="/images/freetest/Everyday-Before.webp" width="315" height="547" loading="lazy" decoding="async" fetchpriority="low" />
+                <Image
+                    alt="Everyday"
+                    class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                    src={everydayImg}
+                    width={315}
+                    loading="lazy"
+                    decoding="async"
+                />
                 <div class="absolute inset-0 bg-gradient-to-t from-ultimate-navy/80 via-transparent to-transparent flex flex-col justify-end p-4 md:p-6">
                     <h3 class="text-white text-base md:text-xl font-semibold font-heading mb-1 md:mb-2 text-center md:text-left">Everyday</h3>
                     <a href="https://wa.me/6283812310368" target="_blank" rel="noopener noreferrer" class="w-full md:w-fit bg-white/20 backdrop-blur-md text-white border border-white/40 px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-medium hover:bg-white hover:text-ultimate-navy transition-all"
@@ -20,7 +31,14 @@
             </div>
 
             <div class="relative group h-100 overflow-hidden rounded-3xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
-                <img alt="Business" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" src="/images/freetest/Business-Before.webp" width="315" height="547" loading="lazy" decoding="async" fetchpriority="low" />
+                <Image
+                    alt="Business"
+                    class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                    src={businessImg}
+                    width={315}
+                    loading="lazy"
+                    decoding="async"
+                />
                 <div class="absolute inset-0 bg-gradient-to-t from-ultimate-navy/80 via-transparent to-transparent flex flex-col justify-end p-4 md:p-6">
                     <h3 class="text-white text-base md:text-xl font-semibold font-heading mb-1 md:mb-2 text-center md:text-left">Business</h3>
                     <a href="https://wa.me/6283812310368" target="_blank" rel="noopener noreferrer" class="w-full md:w-fit bg-white/20 backdrop-blur-md text-white border border-white/40 px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-medium hover:bg-white hover:text-ultimate-navy transition-all"
@@ -30,7 +48,14 @@
             </div>
 
             <div class="relative group h-100 overflow-hidden rounded-3xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
-                <img alt="Study" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" src="/images/freetest/Study-Before.webp" width="315" height="547" loading="lazy" decoding="async" fetchpriority="low" />
+                <Image
+                    alt="Study"
+                    class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                    src={studyImg}
+                    width={315}
+                    loading="lazy"
+                    decoding="async"
+                />
                 <div class="absolute inset-0 bg-gradient-to-t from-ultimate-navy/80 via-transparent to-transparent flex flex-col justify-end p-4 md:p-6">
                     <h3 class="text-white text-base md:text-xl font-semibold font-heading mb-1 md:mb-2 text-center md:text-left">Study</h3>
                     <a href="https://wa.me/6283812310368" target="_blank" rel="noopener noreferrer" class="w-full md:w-fit bg-white/20 backdrop-blur-md text-white border border-white/40 px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-medium hover:bg-white hover:text-ultimate-navy transition-all"
@@ -40,7 +65,14 @@
             </div>
 
             <div class="relative group h-100 overflow-hidden rounded-3xl shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
-                <img alt="Travel" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700" src="/images/freetest/Travel-Before.webp" width="315" height="547" loading="lazy" decoding="async" fetchpriority="low" />
+                <Image
+                    alt="Travel"
+                    class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                    src={travelImg}
+                    width={315}
+                    loading="lazy"
+                    decoding="async"
+                />
                 <div class="absolute inset-0 bg-gradient-to-t from-ultimate-navy/80 via-transparent to-transparent flex flex-col justify-end p-4 md:p-6">
                     <h3 class="text-white text-base md:text-xl font-semibold font-heading mb-1 md:mb-2 text-center md:text-left">Travel</h3>
                     <a href="https://wa.me/6283812310368" target="_blank" rel="noopener noreferrer" class="w-full md:w-fit bg-white/20 backdrop-blur-md text-white border border-white/40 px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-medium hover:bg-white hover:text-ultimate-navy transition-all"

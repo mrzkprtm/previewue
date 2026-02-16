@@ -1,9 +1,15 @@
 ---
+import { Image } from "astro:assets";
+import ballard from "@/assets/images/mentor/12505828bf851b9c213d2ec3d522d4fe34ca870b.png";
+import dee from "@/assets/images/mentor/882da435fb72ca1762594ce50f496e802c95458c.png";
+import ifa from "@/assets/images/mentor/e36acd71c9d0a3cf31eb26fc4e64d423d6fb6974.png";
+import umen from "@/assets/images/mentor/c71ca56cbe2522a1a282382e8abf61230a86320d.png";
+
 const mentors = [
-    { name: "Mr. Ballard", title: "IELTS Expert", university: "Swineburn University", qualification: "Native Speaker • 8 Years Experience", image: "/images/mentor/12505828bf851b9c213d2ec3d522d4fe34ca870b.png" },
-    { name: "Ms. Dee", title: "TESOL Certified", university: "University of Hull", qualification: "Native Speaker • 10 Years Experience", image: "/images/mentor/882da435fb72ca1762594ce50f496e802c95458c.png" },
-    { name: "Kak Ifa", title: "LPDP Awardee", university: "University of Edinburgh", qualification: "IELTS 7.5 • 8 Years Experience", image: "/images/mentor/e36acd71c9d0a3cf31eb26fc4e64d423d6fb6974.png", rotate: true },
-    { name: "Kak Umen", title: "LPDP Awardee", university: "Univ College London", qualification: "IELTS 7.5 • 8 Years Experience", image: "/images/mentor/c71ca56cbe2522a1a282382e8abf61230a86320d.png" },
+    { name: "Mr. Ballard", title: "IELTS Expert", university: "Swineburn University", qualification: "Native Speaker • 8 Years Experience", image: ballard },
+    { name: "Ms. Dee", title: "TESOL Certified", university: "University of Hull", qualification: "Native Speaker • 10 Years Experience", image: dee },
+    { name: "Kak Ifa", title: "LPDP Awardee", university: "University of Edinburgh", qualification: "IELTS 7.5 • 8 Years Experience", image: ifa, rotate: true },
+    { name: "Kak Umen", title: "LPDP Awardee", university: "Univ College London", qualification: "IELTS 7.5 • 8 Years Experience", image: umen },
 ];
 ---
 
@@ -20,7 +26,7 @@ const mentors = [
                     <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-slate-100 group">
                         <div class="relative mb-6 mx-auto w-32 h-32 md:w-40 md:h-40">
                             <div class={`absolute inset-0 bg-ultimate-yellow rounded-full transform ${mentor.rotate ? "rotate-12" : "-rotate-6"} group-hover:rotate-0 transition-transform duration-300 opacity-20`} />
-                            <img src={mentor.image} alt={mentor.name} class={`w-full h-full object-cover rounded-full border-4 border-white shadow-md relative z-10 ${mentor.rotate ? "rotate-[15deg]" : ""}`} loading="lazy" />
+                            <Image src={mentor.image} alt={mentor.name} class={`w-full h-full object-cover rounded-full border-4 border-white shadow-md relative z-10 ${mentor.rotate ? "rotate-[15deg]" : ""}`} loading="lazy" />
                             <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-ultimate-navy text-white text-xs font-semibold py-1 px-2 md:px-3 rounded-full z-20 whitespace-nowrap">{mentor.title}</div>
                         </div>
                         <div class="text-center">
