@@ -1,60 +1,198 @@
 ---
+/**
+ * RamadhanBanner Astro Component
+ * A responsive, high-conversion section with dark mode support.
+ */
 
+interface Props {
+  institutionName?: string;
+  discountAmount?: string;
+  validUntil?: string;
+}
+
+const { 
+  institutionName = "Ultimate Education", 
+  discountAmount = "Rp 1,500,000",
+  validUntil = "the end of Ramadhan"
+} = Astro.props;
 ---
 
-<section class="py-12 lg:py-20 bg-white">
-    <div class="container mx-auto px-4 md:px-6 xl:px-0">
-        <div class="rounded-3xl overflow-hidden border border-slate-100 shadow-2xl bg-white">
-            <div class="flex flex-col lg:flex-row">
-                <div class="relative w-full lg:w-3/5 px-8 py-10 sm:px-10 lg:px-12 lg:py-12 text-white">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#145da0] via-[#145da0] to-[#0a2e52]"></div>
-                    <div class="absolute -top-32 -left-24 h-64 w-64 rounded-full bg-[#edc92a]/20 blur-[120px]"></div>
-                    <div class="absolute -bottom-32 right-0 h-64 w-64 rounded-full bg-white/10 blur-[140px]"></div>
-                    <div class="absolute top-8 right-10 text-white/15">
-                        <svg class="h-12 w-12" viewBox="0 0 64 64" fill="currentColor">
-                            <path d="M44 10a20 20 0 1 0 0 40 24 24 0 1 1 0-40z"></path>
-                        </svg>
-                    </div>
-                    <div class="relative z-10 flex items-center gap-3">
-                        <div class="bg-white rounded-[5px] p-2 shadow-lg">
-                            <img src="/logos/logo-ue.png" alt="Ultimate Education" class="h-8 w-auto" />
-                        </div>                    </div>
-                    <div class="relative z-10 mt-8">
-                        <p class="text-xs md:text-sm uppercase tracking-[0.35em] text-[#edc92a]">Ramadan Special</p>
-                        <h2 class="mt-3 text-3xl md:text-4xl lg:text-[42px] font-heading font-semibold leading-tight">
-                            Ramadan Discount<br/><span class="text-[#edc92a]">Up to Rp 1,500,000</span>
-                        </h2>
-                        <div class="mt-6 inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 shadow-[0_0_20px_rgba(237,201,42,0.25)]">
-                            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#edc92a]/20 text-[#edc92a] font-semibold">%</div>
-                            <div>
-                                <p class="text-sm font-semibold">Premium Offer</p>
-                                <p class="text-xs text-white/70">Limited Ramadan discount</p>
-                            </div>
-                        </div>
-                        <p class="mt-8 text-xs text-white/70 max-w-sm">*Terms and conditions apply. Offer valid until the end of Ramadan.</p>
-                    </div>
-                </div>
-                <div class="w-full lg:w-2/5 bg-white px-8 py-10 sm:px-10 lg:px-12 lg:py-12 flex flex-col justify-center gap-5">
-                    <div class="rounded-2xl border border-slate-100 shadow-lg px-5 py-4 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs uppercase tracking-widest text-slate-400">Ramadan Exclusive</p>
-                            <p class="text-lg font-semibold text-slate-900">Special Rates</p>
-                            <p class="text-xs text-slate-500">For all courses</p>
-                        </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-[#145da0]/10 text-[#145da0] font-semibold">%</div>
-                    </div>
-                    <div class="rounded-2xl border border-slate-100 shadow-lg px-5 py-4 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs uppercase tracking-widest text-slate-400">Flexibility</p>
-                            <p class="text-lg font-semibold text-slate-900">Flexible Enrollment</p>
-                            <p class="text-xs text-slate-500">Start anytime</p>
-                        </div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-[#145da0]/10 text-[#145da0] font-semibold">✓</div>
-                    </div>
-                    <button class="mt-2 w-full rounded-xl bg-[#edc92a] px-6 py-4 font-semibold text-[#0a2e52] shadow-lg hover:shadow-xl transition-all">Get the Offer</button>
-                    <p class="text-center text-xs text-slate-400">Limited seats available for this batch.</p>
-                </div>
-            </div>
+<section class="ramadan-banner-wrapper antialiased py-6 px-4">
+  <div class="w-full max-w-6xl mx-auto">
+
+
+    <!-- Main Banner Card -->
+    <div class="relative overflow-hidden rounded-3xl shadow-2xl bg-white flex flex-col lg:flex-row h-auto lg:h-[320px] w-full border border-gray-100 ">
+      
+      <!-- Left Section: Promotion Details -->
+      <div class="relative w-full lg:w-[55%] bg-blue-gradient p-5 lg:p-7 flex flex-col justify-center items-start z-10 overflow-hidden">
+        <!-- Background Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <svg class="absolute -top-10 -left-10 w-64 h-64 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zm0 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 17zm10-7a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0120 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zm12.37-4.93a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm-9.9 9.9a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm9.9 0a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0zm-9.9-9.9a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0z"></path>
+          </svg>
+          <span class="material-icons-outlined text-9xl absolute bottom-0 right-10 transform rotate-12 text-white opacity-30 z-10">mosque</span>
         </div>
+
+        <h2 class="text-[#edc92a] text-base font-medium mb-1 uppercase tracking-widest">Ramadhan Special</h2>
+        <h1 class="text-white text-[26px] lg:text-3xl font-extrabold leading-tight mb-2 text-shadow">
+          Discount Up To <br/>
+          <span class="text-[#edc92a] px-2">{discountAmount}</span>
+        </h1>
+
+        <div class="mt-2.5 mb-5 relative group w-content max-w-md">
+          <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-[#edc92a] rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+          <div class="relative bg-gradient-to-r from-blue-900 to-[#145da0] border border-blue-400/30 rounded-xl p-1 flex items-center pr-6 shadow-lg">
+            <div class="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-2.5 mr-4 shadow-inner border border-blue-300/50">
+              <span class="material-icons-outlined text-white text-2xl">percent</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-lg font-bold text-white tracking-wide">Limited Offer</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="supporting-text text-white/80 text-[10px] mt-auto max-w-xs italic">
+          *Terms and conditions apply. Offer valid until {validUntil}.
+        </p>
+
+        <!-- Decorative Curve for Desktop -->
+        <div class="hidden lg:block absolute top-0 right-0 h-full w-16 lg:w-24 pointer-events-none">
+          <svg class="h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <path class="text-white" d="M50 0 C 10 20 10 80 50 100 L 100 100 L 100 0 Z" fill="currentColor"></path>
+            <path class="opacity-80" d="M50 0 C 10 20 10 80 50 100" fill="none" stroke="#edc92a" stroke-width="4"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right Section: Feature Cards & CTA -->
+      <div class="relative w-full lg:w-[45%] bg-white p-5 lg:p-7 flex flex-col justify-center items-center z-0">
+        <div class="absolute top-4 right-4 animate-bounce-slow">
+          <span class="material-icons-outlined text-[#145da0] text-2xl">star</span>
+        </div>
+        <div class="absolute bottom-10 left-4 animate-pulse">
+          <span class="material-icons-outlined text-[#145da0] text-xl">nights_stay</span>
+        </div>
+
+        <div class="space-y-3 w-full max-w-sm">
+          <!-- Feature 1 -->
+          <div class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-[#145da0] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+            <div class="relative bg-[#ffffff] rounded-xl p-4 border border-blue-700/50 shadow-xl flex items-center justify-between overflow-hidden">
+              <div class="absolute top-0 left-0 w-full h-full bg-card-shine pointer-events-none"></div>
+              <div class="z-10">
+                <p class="text-[#145da0] text-lg lg:text-xl font-bold">Special Rates</p>
+                <p class="supporting-text text-[#145da0]/70 text-xs mt-1">For All Courses</p>
+              </div>
+              <div class="bg-[#145da0] p-2.5 rounded-full z-10">
+                <span class="material-icons-outlined text-[#edc92a] text-3xl">percent</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-[#145da0] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+            <div class="relative bg-[#ffffff] rounded-xl p-4 border border-blue-700/50 shadow-xl flex items-center justify-between overflow-hidden">
+              <div class="absolute top-0 left-0 w-full h-full bg-card-shine pointer-events-none"></div>
+              <div class="z-10">
+                <p class="text-[#145da0] text-lg lg:text-xl font-bold">Flexible Enrollment</p>
+                <p class="supporting-text text-[#145da0]/70 text-xs mt-1">Start Anytime</p>
+              </div>
+              <div class="bg-[#145da0] p-2.5 rounded-full z-10">
+                <span class="material-icons-outlined text-[#edc92a] text-3xl">event_available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 w-full max-w-sm">
+          <a href="https://wa.me/6283812310368" target="_blank" rel="noopener noreferrer" class="w-full bg-[#145da0] hover:bg-[#edc92a] hover:text-[#145da0] text-[#ffffff] font-extrabold text-[15px] py-3 px-6 rounded-xl shadow-lg shadow-yellow-500/30 hover:shadow-yellow-500/50 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group">
+            Get the Offer
+            <span class="material-icons-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+          <p class="supporting-text text-center text-[#145da0]/70 text-xs mt-3">Limited seats available for this batch.</p>
+        </div>
+      </div>
     </div>
+
+    <!-- Trust Badges -->
+
+  </div>
 </section>
+
+<!-- Google Font & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+
+<style>
+  /* Base Component Overrides */
+  .ramadan-banner-wrapper {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .supporting-text {
+    font-family: "Segoe UI", "Poppins", sans-serif;
+  }
+
+  /* Gradients */
+  .bg-blue-gradient {
+    background: linear-gradient(135deg, #145da0 0%, #0a2e52 100%);
+  }
+
+  .bg-card-shine {
+    background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%);
+  }
+
+  /* Effects */
+  .glow-effect {
+    box-shadow: 0 0 20px rgba(237, 201, 42, 0.3);
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  /* Animations */
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite ease-in-out;
+  }
+
+  /* Dark mode toggle helper (Astro specific) */
+  :global(html.dark) .ramadan-banner-wrapper {
+    color-scheme: dark;
+  }
+</style>
+
+<script>
+  function setupThemeToggle() {
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-toggle-icon');
+    const html = document.documentElement;
+
+    // Check for saved user preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.classList.add('dark');
+      if (themeIcon) themeIcon.textContent = 'light_mode';
+    } else {
+      html.classList.remove('dark');
+      if (themeIcon) themeIcon.textContent = 'dark_mode';
+    }
+
+    themeBtn?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      const isDark = html.classList.contains('dark');
+      
+      localStorage.theme = isDark ? 'dark' : 'light';
+      if (themeIcon) themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    });
+  }
+
+  // Initialize on page load and on Astro transitions
+  setupThemeToggle();
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

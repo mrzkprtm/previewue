@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { fetchPricingData, findProgramRow, cleanNum, formatPrice as fmt, ONLINE_PRICES, WA_NUMBER, isTBI, SUBJECTS_FALLBACK } from '../../../utils/pricing';
 
+const normalizeTextBlock = (text = '') => String(text)
+    .split('\n')
+    .map((line) => line.replace(/\s+/g, ' ').trim())
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+
 const ProgramPricingTabs = ({ data, programSlug }) => {
     // Basic program info
     const programData = data || {};
@@ -192,13 +199,13 @@ const ProgramPricingTabs = ({ data, programSlug }) => {
                                 </h3>
 
                                 {currentProg.description && (
-                                    <p className="text-slate-600 mb-4 leading-relaxed text-[15px]">
-                                        {currentProg.description}
+                                    <p className="text-slate-600 mb-4 leading-relaxed text-[15px] whitespace-pre-line text-justify">
+                                        {normalizeTextBlock(currentProg.description)}
                                     </p>
                                 )}
                                 {currentProg.features && (
-                                    <p className="text-slate-500 mb-10 leading-relaxed text-[15px]">
-                                        {currentProg.features}
+                                    <p className="text-slate-500 mb-10 leading-relaxed text-[15px] whitespace-pre-line text-justify">
+                                        {normalizeTextBlock(currentProg.features)}
                                     </p>
                                 )}
 
@@ -899,8 +906,8 @@ const CurriculumList = ({ features }) => {
                             <svg className={`w-5 h-5 text-ultimate-blue shrink-0 ml-4 transition-transform duration-200 ${openIdx === idx ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M19 9l-7 7-7-7" /></svg>
                         </button>
                         <div className={`overflow-hidden transition-all duration-200 ${openIdx === idx ? 'max-h-96' : 'max-h-0'}`}>
-                            <div className="p-4 md:p-5 text-slate-600 border-t border-slate-100 text-[15px] leading-relaxed whitespace-pre-line">
-                                {item.content}
+                            <div className="p-4 md:p-5 text-slate-600 border-t border-slate-100 text-[15px] leading-relaxed whitespace-pre-line text-justify">
+                                {normalizeTextBlock(item.content)}
                             </div>
                         </div>
                     </div>

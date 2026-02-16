@@ -7,6 +7,13 @@ interface Props {
 }
 
 const { items } = Astro.props;
+const normalizeLine = (text: string) => text.replace(/\s+/g, " ").trim();
+const normalizeTextBlock = (text: string) => text
+    .split("\n")
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 ---
 
 <section class="py-12 md:py-16 bg-white">
@@ -22,7 +29,7 @@ const { items } = Astro.props;
                     items.map((item) => (
                         <details class="group border-b border-slate-100 last:border-0">
                             <summary class="flex items-center justify-between cursor-pointer py-4 list-none text-slate-800 font-semibold hover:text-ultimate-blue transition-colors text-sm md:text-[15px]">
-                                <span class="pr-4">{item.q}</span>
+                                <span class="pr-4">{normalizeLine(item.q)}</span>
                                 <div class="w-7 h-7 shrink-0 rounded-full bg-slate-50 flex items-center justify-center group-open:bg-ultimate-blue group-open:text-white transition-all duration-200">
                                     <svg
                                         class="w-3.5 h-3.5 transform group-open:rotate-180 transition-transform duration-200"
@@ -37,7 +44,7 @@ const { items } = Astro.props;
                                     </svg>
                                 </div>
                             </summary>
-                            <div class="pb-5 text-slate-600 leading-relaxed text-sm">{item.a}</div>
+                            <div class="pb-5 text-slate-600 leading-relaxed text-sm whitespace-pre-line text-justify">{normalizeTextBlock(item.a)}</div>
                         </details>
                     ))
                 }
