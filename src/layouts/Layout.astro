@@ -28,6 +28,7 @@ const { title, description = "Astro WordPress Headless Site" } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="/logos/logo-ue.webp" imagesrcset="/logos/logo-ue.webp 1x, /logos/logo-ue@2x.webp 2x, /logos/logo-ue.png 1x, /logos/logo-ue.png 2x" fetchpriority="high" />
     <link rel="preload" as="image" href="/logos/logo-ue.png" />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
