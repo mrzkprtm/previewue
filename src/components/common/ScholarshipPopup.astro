@@ -1,0 +1,123 @@
+---
+---
+
+<div id="scholarship-popup" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-500 backdrop-blur-sm bg-slate-900/40">
+    <div id="popup-content" class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden transform translate-y-10 transition-transform duration-500 border border-white/20">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-ultimate-blue to-ultimate-navy opacity-10"></div>
+        <div class="absolute -top-16 -right-16 w-32 h-32 bg-ultimate-yellow rounded-full blur-3xl opacity-30"></div>
+        <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-ultimate-blue rounded-full blur-3xl opacity-30"></div>
+
+        <!-- Close Button -->
+        <button id="close-popup" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors z-20 bg-white/50 rounded-full p-1 hover:bg-white/80 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="relative z-10 p-8 text-center">
+            <!-- Icon -->
+            <div class="relative w-20 h-20 mx-auto mb-6">
+                <div class="absolute inset-0 bg-gradient-to-br from-ultimate-blue to-ultimate-navy rounded-2xl transform rotate-3 hover:rotate-0 transition-transform duration-300 shadow-lg flex items-center justify-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div class="absolute -bottom-2 -right-2 bg-ultimate-yellow text-ultimate-navy text-xs font-bold px-2 py-1 rounded-lg shadow-sm border-2 border-white transform rotate-12 z-20">
+                    2026
+                </div>
+            </div>
+
+            <!-- Content -->
+            <h3 class="font-heading font-bold text-2xl text-ultimate-navy mb-2">
+                Kalender Beasiswa <span class="text-ultimate-blue">2026</span>
+            </h3>
+            <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                Jangan lewatkan deadline penting! Dapatkan jadwal lengkap pendaftaran beasiswa ke luar negeri.
+            </p>
+
+            <!-- CTA -->
+            <div class="space-y-3">
+                <a href="/documents/Kalender%20UE.pdf" download="Kalender Beasiswa 2026.pdf" target="_blank" class="block w-full bg-gradient-to-r from-ultimate-blue to-ultimate-navy text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                    <span class="relative flex items-center justify-center gap-2">
+                        Download Sekarang
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </span>
+                </a>
+                
+                <button id="maybe-later" class="text-xs text-slate-400 hover:text-ultimate-blue font-medium transition-colors cursor-pointer">
+                    Nanti saja, terima kasih
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Popup Logic
+    const popup = document.getElementById('scholarship-popup');
+    const popupContent = document.getElementById('popup-content');
+    const closeBtn = document.getElementById('close-popup');
+    const maybeLaterBtn = document.getElementById('maybe-later');
+    const STORAGE_KEY = 'ue_scholarship_popup_closed';
+    const SHOW_DELAY = 5000; // 5 seconds
+    const EXPIRE_DAYS = 3; // Show again after 3 days
+
+    function checkAndShowPopup() {
+        if (!popup || !popupContent) return;
+
+        // Check local storage
+        const closedAt = localStorage.getItem(STORAGE_KEY);
+        if (closedAt) {
+            const dateClosed = new Date(parseInt(closedAt));
+            const now = new Date();
+            const diffTime = Math.abs(now.getTime() - dateClosed.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays < EXPIRE_DAYS) return;
+        }
+
+        // Show popup
+        popup.classList.remove('pointer-events-none', 'opacity-0');
+        popupContent.classList.remove('translate-y-10');
+    }
+
+    function hidePopup() {
+        if (!popup || !popupContent) return;
+        
+        popup.classList.add('opacity-0');
+        popupContent.classList.add('translate-y-10');
+        
+        setTimeout(() => {
+            popup.classList.add('pointer-events-none');
+        }, 500);
+
+        // Save closed state
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    }
+
+    // Initialize
+    if (popup) {
+        // Show after delay
+        setTimeout(checkAndShowPopup, SHOW_DELAY);
+
+        // Event Listeners
+        closeBtn?.addEventListener('click', hidePopup);
+        maybeLaterBtn?.addEventListener('click', hidePopup);
+        
+        // Close on outside click
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) hidePopup();
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !popup.classList.contains('opacity-0')) {
+                hidePopup();
+            }
+        });
+    }
+</script>
