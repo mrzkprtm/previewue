@@ -26,7 +26,7 @@ export default function MegaMenuWrapper() {
         <div className="flex items-center justify-between">
           {/* Logo Section */}
           <a href="/" className="flex items-center gap-2 group transition-transform hover:scale-105 duration-300">
-            <img src="/logos/logo-ue.png" alt="Ultimate Education" className="h-12 w-auto" width="512" height="512" />
+            <img src="/logos/logo-ue.png" alt="Ultimate Education" className="h-12 w-auto" fetchpriority="high" width="512" height="512" />
           </a>
 
           {/* Desktop Navigation */}

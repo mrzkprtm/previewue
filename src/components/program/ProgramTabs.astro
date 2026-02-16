@@ -1,7 +1,7 @@
 ---
-const { program } = Astro.props;
-
 import { parsePricingCSV, mapProgramToTabs } from "../../api/csvPricing";
+
+const { program } = Astro.props;
 
 let pricingData = {};
 let tabs = ["Group Class", "Private Class", "Custom Class", "Bundling Class"];
