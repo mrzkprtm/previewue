@@ -4,5 +4,26 @@ import MegaMenuWrapper from './MegaMenuWrapper.jsx';
 
 <a href="#main-content" class="sr-only focus:not-sr-only absolute left-2 top-2 bg-white text-[#145da0] font-bold px-4 py-2 rounded z-[1001] shadow-md transition-all">Skip to main content</a>
 <header class="sticky top-0 w-full z-[999] bg-white shadow-md">
-  <MegaMenuWrapper client:idle />
+  <nav class="w-full py-3">
+    <div class="container mx-auto">
+      <div class="flex items-center justify-between">
+        {/* Logo Section */}
+        <a href="/" class="flex items-center gap-2 group transition-transform hover:scale-105 duration-300">
+          <img
+            src="/logos/logo-ue.png"
+            srcset="/logos/logo-ue.png 1x, /logos/logo-ue.png 2x"
+            alt="Ultimate Education"
+            class="h-12 w-auto"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            width="200"
+            height="48"
+          />
+        </a>
+
+        <MegaMenuWrapper client:idle />
+      </div>
+    </div>
+  </nav>
 </header>
