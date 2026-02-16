@@ -85,6 +85,7 @@ export default function MegaMenuWrapper() {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-xl transition-colors text-[#145da0] hover:bg-[#145da0]/10"
             aria-label={isMobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
@@ -119,7 +120,7 @@ export default function MegaMenuWrapper() {
         <div className="p-6 flex flex-col h-full bg-ultimate-navy text-white">
           <div className="flex items-center justify-between mb-10">
             <div className="font-heading font-extrabold text-xl">ULTIMATE<span className="text-ultimate-yellow">.</span></div>
-            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/10 rounded-full hover:bg-white/20" aria-label="Tutup menu navigasi">
+            <button type="button" onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-white/10 rounded-full hover:bg-white/20" aria-label="Tutup menu navigasi">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
