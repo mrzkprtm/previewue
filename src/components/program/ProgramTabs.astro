@@ -80,8 +80,7 @@ try {
                                     <span id="group-total" class="text-2xl font-semibold text-ultimate-blue">Rp 0</span>
                                 </div>
                             </form>
-                            <script type="text/javascript">
-                                // Simple client-side calculation for demo (Astro hydration or Alpine/React recommended for production)
+                            <script type="text/javascript" define:vars={{ perSesiPrice: pricingData[tab]?.options?.find(opt => opt.name === 'Per Sesi')?.price || 0, bundlingPrice: pricingData['Bundling Class']?.price || '' }}>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const form = document.getElementById('group-class-form');
                                     if (!form) return;
@@ -94,12 +93,12 @@ try {
                                         tierRadios.forEach(r => { if (r.checked) base = Number(r.value)||0; });
                                         let extra = 0;
                                         if (extraInput) {
-                                            const perSesi = Number({JSON.stringify(pricingData[tab]?.options?.find(opt => opt.name === 'Per Sesi')?.price||0)});
+                                            const perSesi = Number(perSesiPrice || 0);
                                             extra = (Number(extraInput.value)||0) * perSesi;
                                         }
                                         let bundling = 0;
                                         if (bundlingCheck && bundlingCheck.checked) {
-                                            const bundVal = '{pricingData['Bundling Class']?.price}';
+                                            const bundVal = String(bundlingPrice || '');
                                             if (!isNaN(Number(bundVal.replace(/[^\d]/g, '')))) bundling = Number(bundVal.replace(/[^\d]/g, ''));
                                         }
                                         const total = base + extra + bundling;

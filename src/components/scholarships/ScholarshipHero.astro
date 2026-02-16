@@ -22,15 +22,19 @@
         <!-- Search & Filter bar -->
         <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-xl max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-center">
             <div class="flex-1 w-full relative">
+                <label for="scholarship-search" class="sr-only">Cari nama beasiswa</label>
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
                 <input
+                    id="scholarship-search"
+                    name="search"
                     class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none"
                     placeholder="Cari nama beasiswa..."
                     type="text"
                 />
             </div>
             <div class="w-full md:w-48">
-                <select class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer">
+                <label for="scholarship-country" class="sr-only">Filter negara</label>
+                <select id="scholarship-country" name="country" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer">
                     <option value="">Semua Negara</option>
                     <option value="uk">United Kingdom</option>
                     <option value="us">USA</option>
@@ -39,7 +43,8 @@
                 </select>
             </div>
             <div class="w-full md:w-48">
-                <select class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer">
+                <label for="scholarship-degree" class="sr-only">Filter jenjang studi</label>
+                <select id="scholarship-degree" name="degree" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-ultimate-blue outline-none cursor-pointer">
                     <option value="">Jenjang Studi</option>
                     <option value="s1">Bachelor (S1)</option>
                     <option value="s2">Master (S2)</option>

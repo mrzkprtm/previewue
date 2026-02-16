@@ -535,18 +535,20 @@
             return;
         }
         if (!lines.length) return;
+        const rect = dayEl.getBoundingClientRect();
         globalTooltip.innerHTML = lines.map(l => `<div class="tooltip-line" style="background:${l.color}">${l.text}</div>`).join("");
         globalTooltip.style.display = "flex";
         globalTooltip.style.left = "0px";
         globalTooltip.style.top = "0px";
-        const rect = dayEl.getBoundingClientRect();
-        const tipRect = globalTooltip.getBoundingClientRect();
-        let left = rect.left + rect.width / 2 - tipRect.width / 2;
-        left = Math.max(8, Math.min(left, window.innerWidth - tipRect.width - 8));
-        let top = rect.top - tipRect.height - 8;
-        if (top < 8) top = rect.bottom + 8;
-        globalTooltip.style.left = `${left}px`;
-        globalTooltip.style.top = `${top}px`;
+        requestAnimationFrame(() => {
+            const tipRect = globalTooltip.getBoundingClientRect();
+            let left = rect.left + rect.width / 2 - tipRect.width / 2;
+            left = Math.max(8, Math.min(left, window.innerWidth - tipRect.width - 8));
+            let top = rect.top - tipRect.height - 8;
+            if (top < 8) top = rect.bottom + 8;
+            globalTooltip.style.left = `${left}px`;
+            globalTooltip.style.top = `${top}px`;
+        });
     }
 
     function render() {

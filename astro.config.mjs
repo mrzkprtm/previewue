@@ -7,6 +7,9 @@ export default defineConfig({
   output: 'hybrid',
   adapter: vercel(),
   integrations: [tailwind(), react()],
+  build: {
+    inlineStylesheets: 'auto',
+  },
   image: {
     service: passthroughImageService(),
   },
