@@ -1,7 +1,5 @@
 ---
 import MegaMenuWrapper from './MegaMenuWrapper.astro';
-import { Image } from "astro:assets";
-import logo from "@/assets/logos/logo-ue.webp";
 ---
 
 <a href="#main-content" class="sr-only focus:not-sr-only absolute left-2 top-2 bg-white text-[#145da0] font-bold px-4 py-2 rounded z-[1001] shadow-md transition-all">Skip to main content</a>
@@ -11,12 +9,12 @@ import logo from "@/assets/logos/logo-ue.webp";
       <div class="flex items-center justify-between">
         {/* Logo Section */}
 		<a href="/" class="flex items-center gap-2 group transition-transform hover:scale-105 duration-300">
-          <Image
-            src={logo}
+          <img
+            src="/logos/logo-ue.webp"
             alt="Ultimate Education"
             class="h-12 w-auto"
-            width={120}
-            height={48}
+            width="120"
+            height="48"
             loading="eager"
             decoding="async"
             fetchpriority="high"
