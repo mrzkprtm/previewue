@@ -1,0 +1,166 @@
+---
+import MegaMenu from './MegaMenu.astro';
+
+const navItems = [
+  { label: 'Beranda', href: '/' },
+  { label: 'Program', href: '/program', hasDropdown: true },
+  { label: 'Beasiswa', href: '/beasiswa' },
+  { label: 'Kontak', href: '/kontak' },
+  { label: 'Mitra', href: '/mitra' },
+  { label: 'Partnership', href: '/partnership' },
+  { label: 'Artikel', href: '/artikel' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!-- Desktop Navigation -->
+<div class="hidden lg:flex items-center gap-1">
+  {navItems.map((item, idx) => {
+    const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+    const isProgram = item.label === 'Program';
+
+    return (
+      <div
+        class="relative px-4 py-2 group nav-item"
+        data-has-dropdown={item.hasDropdown ? 'true' : 'false'}
+      >
+        <div>
+          <a
+            href={item.href}
+            class:list={[
+              "text-base font-normal font-heading capitalize tracking-wide transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-1",
+              isActive ? "text-black" : "text-[#145da0] hover:text-ultimate-yellow"
+            ]}
+          >
+            {item.label}
+            {item.hasDropdown && (
+              <svg class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+              </svg>
+            )}
+          </a>
+
+          {/* Active/Hover Indicator Underline */}
+          <span class:list={[
+            "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 rounded-full transition-all duration-300 bg-ultimate-yellow",
+            isActive ? "w-1/2 opacity-100" : "w-0 group-hover:w-1/2 opacity-0 group-hover:opacity-100"
+          ]}></span>
+
+          {/* Mega Menu Dropdown */}
+          {item.hasDropdown && (
+            <div
+              class="absolute top-full left-1/2 -translate-x-1/2 pt-5 w-[90vw] max-w-7xl z-[1000] hidden group-hover:block hover:block animate-in fade-in slide-in-from-top-4 duration-300"
+            >
+              <MegaMenu />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<!-- Mobile Menu Button -->
+<button
+  type="button"
+  id="mobile-menu-btn"
+  class="lg:hidden p-2 rounded-xl transition-colors text-[#145da0] hover:bg-[#145da0]/10"
+  aria-label="Buka menu navigasi"
+  aria-expanded="false"
+  aria-controls="mobile-menu-drawer"
+>
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+</button>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[998] lg:hidden hidden opacity-0 transition-opacity duration-300"
+></div>
+
+<!-- Mobile Menu Drawer -->
+<div
+  id="mobile-menu-drawer"
+  class="lg:hidden fixed top-0 right-0 h-screen w-[280px] z-[999] bg-white shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out"
+>
+  <div class="p-6 flex flex-col h-full bg-ultimate-navy text-white">
+    <div class="flex items-center justify-between mb-10">
+      <div class="font-heading font-extrabold text-xl">ULTIMATE<span class="text-ultimate-yellow">.</span></div>
+      <button type="button" id="close-mobile-menu" class="p-2 bg-white/10 rounded-full hover:bg-white/20" aria-label="Tutup menu navigasi">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-2 overflow-y-auto">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        return (
+          <div class="mobile-nav-item">
+            <a
+              href={item.href}
+              class:list={[
+                "text-lg font-normal font-heading py-3 flex items-center justify-between group",
+                isActive ? "text-ultimate-yellow" : "text-slate-300"
+              ]}
+            >
+              {item.label}
+              {item.hasDropdown && <span class="text-base">▾</span>}
+            </a>
+            {item.hasDropdown && (
+              <div class="pl-4 border-l-2 border-white/10 mt-1 flex flex-col gap-2">
+                <a href="/program/ielts" class="text-base py-2 text-slate-400">Ultimate IELTS</a>
+                <a href="/beasiswa" class="text-base py-2 text-slate-400">Beasiswa</a>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile Menu Logic
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+  const mobileMenuIcon = mobileMenuBtn?.querySelector('svg path');
+
+  function openMobileMenu() {
+    mobileMenuDrawer?.classList.remove('translate-x-full');
+    mobileMenuDrawer?.classList.add('translate-x-0');
+    mobileMenuOverlay?.classList.remove('hidden', 'opacity-0');
+    mobileMenuOverlay?.classList.add('block', 'opacity-100');
+    mobileMenuBtn?.setAttribute('aria-expanded', 'true');
+    if (mobileMenuIcon) {
+       mobileMenuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+    }
+  }
+
+  function closeMobileMenu() {
+    mobileMenuDrawer?.classList.remove('translate-x-0');
+    mobileMenuDrawer?.classList.add('translate-x-full');
+    mobileMenuOverlay?.classList.remove('block', 'opacity-100');
+    mobileMenuOverlay?.classList.add('hidden', 'opacity-0');
+    mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+    if (mobileMenuIcon) {
+       mobileMenuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+    }
+  }
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+
+  closeMobileMenuBtn?.addEventListener('click', closeMobileMenu);
+  mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+</script>

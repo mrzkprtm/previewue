@@ -1,5 +1,5 @@
 ---
-import MegaMenuWrapper from './MegaMenuWrapper.jsx';
+import MegaMenuWrapper from './MegaMenuWrapper.astro';
 ---
 
 <a href="#main-content" class="sr-only focus:not-sr-only absolute left-2 top-2 bg-white text-[#145da0] font-bold px-4 py-2 rounded z-[1001] shadow-md transition-all">Skip to main content</a>
@@ -20,7 +20,7 @@ import MegaMenuWrapper from './MegaMenuWrapper.jsx';
           />
         </a>
 
-        <MegaMenuWrapper client:idle />
+        <MegaMenuWrapper />
       </div>
     </div>
   </nav>
