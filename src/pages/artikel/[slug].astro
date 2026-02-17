@@ -116,6 +116,9 @@ function getReadingTime(content: string): number {
 }
 
 const readingTime = getReadingTime(post.content);
+const articleContent = post.content
+  .replace(/<figure[\s\S]*?<\/figure>/gi, "")
+  .replace(/<img[^>]*>/gi, "");
 const canonicalUrl = `${Astro.url.origin}/artikel/${post.slug}`;
 
 // SEO Structured Data
@@ -216,7 +219,7 @@ const breadcrumbStructuredData = {
 
         <!-- Article Content -->
         <div class="bg-white rounded-2xl shadow-card p-6 lg:p-10 mb-10">
-          <div class="prose md:prose-lg max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-a:text-primary prose-a:no-underline hover:prose-a:underline" set:html={post.content} />
+          <div class="prose md:prose-lg max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-a:text-primary prose-a:no-underline hover:prose-a:underline" set:html={articleContent} />
         </div>
 
         <!-- Share & Tags -->
