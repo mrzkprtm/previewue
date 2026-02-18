@@ -9,6 +9,516 @@
       "source": "/wp-admin/:path*",
       "destination": "https://cms.ultimateducation.co.id/wp-login.php",
       "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/kontak",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/kontak",
+      "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/program-v02",
+      "destination": "/program",
+      "permanent": true
+    },
+    {
+      "source": "/program-v02/",
+      "destination": "/program",
+      "permanent": true
+    },
+    {
+      "source": "/company",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/company/",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/perusahaan",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/perusahaan/",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/sales",
+      "destination": "/partnership",
+      "permanent": true
+    },
+    {
+      "source": "/sales/",
+      "destination": "/partnership",
+      "permanent": true
+    },
+    {
+      "source": "/sales-partner",
+      "destination": "/partnership",
+      "permanent": true
+    },
+    {
+      "source": "/sales-partner/",
+      "destination": "/partnership",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-gmat",
+      "destination": "/program/gmat",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-gmat/",
+      "destination": "/program/gmat",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-ielts",
+      "destination": "/program/ielts",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-ielts/",
+      "destination": "/program/ielts",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-utbk",
+      "destination": "/program/utbk",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-utbk/",
+      "destination": "/program/utbk",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-toefl",
+      "destination": "/program/toefl",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-toefl/",
+      "destination": "/program/toefl",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-gre",
+      "destination": "/program/gre",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-gre/",
+      "destination": "/program/gre",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-sat",
+      "destination": "/program/sat",
+      "permanent": true
+    },
+    {
+      "source": "/kursus-persiapan-sat/",
+      "destination": "/program/sat",
+      "permanent": true
+    },
+    {
+      "source": "/ged-preparation",
+      "destination": "/program/ged",
+      "permanent": true
+    },
+    {
+      "source": "/ged-preparation/",
+      "destination": "/program/ged",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-ged",
+      "destination": "/program/ged",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-ged/",
+      "destination": "/program/ged",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-ged-01",
+      "destination": "/program/ged",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-ged-01/",
+      "destination": "/program/ged",
+      "permanent": true
+    },
+    {
+      "source": "/toeic-preparation",
+      "destination": "/program/toeic",
+      "permanent": true
+    },
+    {
+      "source": "/toeic-preparation/",
+      "destination": "/program/toeic",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-toeic",
+      "destination": "/program/toeic",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-toeic/",
+      "destination": "/program/toeic",
+      "permanent": true
+    },
+    {
+      "source": "/act-preparation",
+      "destination": "/program/act",
+      "permanent": true
+    },
+    {
+      "source": "/act-preparation/",
+      "destination": "/program/act",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-act",
+      "destination": "/program/act",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-act/",
+      "destination": "/program/act",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-act-01",
+      "destination": "/program/act",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-act-01/",
+      "destination": "/program/act",
+      "permanent": true
+    },
+    {
+      "source": "/igcse-preparation",
+      "destination": "/program/igcse",
+      "permanent": true
+    },
+    {
+      "source": "/igcse-preparation/",
+      "destination": "/program/igcse",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-igcse",
+      "destination": "/program/igcse",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-igcse/",
+      "destination": "/program/igcse",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-pte",
+      "destination": "/program/pte",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-pte/",
+      "destination": "/program/pte",
+      "permanent": true
+    },
+    {
+      "source": "/tes-tesdaf",
+      "destination": "/program/testdaf",
+      "permanent": true
+    },
+    {
+      "source": "/tes-tesdaf/",
+      "destination": "/program/testdaf",
+      "permanent": true
+    },
+    {
+      "source": "/testdaf-course",
+      "destination": "/program/testdaf",
+      "permanent": true
+    },
+    {
+      "source": "/testdaf-course/",
+      "destination": "/program/testdaf",
+      "permanent": true
+    },
+    {
+      "source": "/tes-delf",
+      "destination": "/program/delf",
+      "permanent": true
+    },
+    {
+      "source": "/tes-delf/",
+      "destination": "/program/delf",
+      "permanent": true
+    },
+    {
+      "source": "/delf-course-01",
+      "destination": "/program/delf",
+      "permanent": true
+    },
+    {
+      "source": "/delf-course-01/",
+      "destination": "/program/delf",
+      "permanent": true
+    },
+    {
+      "source": "/tes-topik",
+      "destination": "/program/topik",
+      "permanent": true
+    },
+    {
+      "source": "/tes-topik/",
+      "destination": "/program/topik",
+      "permanent": true
+    },
+    {
+      "source": "/topik-course",
+      "destination": "/program/topik",
+      "permanent": true
+    },
+    {
+      "source": "/topik-course/",
+      "destination": "/program/topik",
+      "permanent": true
+    },
+    {
+      "source": "/tes-hsk",
+      "destination": "/program/hsk",
+      "permanent": true
+    },
+    {
+      "source": "/tes-hsk/",
+      "destination": "/program/hsk",
+      "permanent": true
+    },
+    {
+      "source": "/tes-hsk-01",
+      "destination": "/program/hsk",
+      "permanent": true
+    },
+    {
+      "source": "/tes-hsk-01/",
+      "destination": "/program/hsk",
+      "permanent": true
+    },
+    {
+      "source": "/hsk-test",
+      "destination": "/program/hsk",
+      "permanent": true
+    },
+    {
+      "source": "/hsk-test/",
+      "destination": "/program/hsk",
+      "permanent": true
+    },
+    {
+      "source": "/tes-jlpt",
+      "destination": "/program/jlpt",
+      "permanent": true
+    },
+    {
+      "source": "/tes-jlpt/",
+      "destination": "/program/jlpt",
+      "permanent": true
+    },
+    {
+      "source": "/tes-bipa",
+      "destination": "/program/bipa",
+      "permanent": true
+    },
+    {
+      "source": "/tes-bipa/",
+      "destination": "/program/bipa",
+      "permanent": true
+    },
+    {
+      "source": "/ausbildung-ver-2-0",
+      "destination": "/program/ausbildung",
+      "permanent": true
+    },
+    {
+      "source": "/ausbildung-ver-2-0/",
+      "destination": "/program/ausbildung",
+      "permanent": true
+    },
+    {
+      "source": "/ultimate-scholarship",
+      "destination": "/program/scholarship",
+      "permanent": true
+    },
+    {
+      "source": "/ultimate-scholarship/",
+      "destination": "/program/scholarship",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-lsat",
+      "destination": "/program/lsat",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-lsat/",
+      "destination": "/program/lsat",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-o-level",
+      "destination": "/program/o-level",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-o-level/",
+      "destination": "/program/o-level",
+      "permanent": true
+    },
+    {
+      "source": "/as-level-preparation",
+      "destination": "/program/as-level",
+      "permanent": true
+    },
+    {
+      "source": "/as-level-preparation/",
+      "destination": "/program/as-level",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-as-level",
+      "destination": "/program/as-level",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-as-level/",
+      "destination": "/program/as-level",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-a-level",
+      "destination": "/program/a-level",
+      "permanent": true
+    },
+    {
+      "source": "/persiapan-a-level/",
+      "destination": "/program/a-level",
+      "permanent": true
+    },
+    {
+      "source": "/business-english",
+      "destination": "/program/business-english",
+      "permanent": true
+    },
+    {
+      "source": "/business-english/",
+      "destination": "/program/business-english",
+      "permanent": true
+    },
+    {
+      "source": "/business-english-2",
+      "destination": "/program/business-english",
+      "permanent": true
+    },
+    {
+      "source": "/business-english-2/",
+      "destination": "/program/business-english",
+      "permanent": true
+    },
+    {
+      "source": "/business-english-course",
+      "destination": "/program/business-english",
+      "permanent": true
+    },
+    {
+      "source": "/business-english-course/",
+      "destination": "/program/business-english",
+      "permanent": true
+    },
+    {
+      "source": "/generalenglish",
+      "destination": "/program/general-english",
+      "permanent": true
+    },
+    {
+      "source": "/generalenglish/",
+      "destination": "/program/general-english",
+      "permanent": true
+    },
+    {
+      "source": "/general-english",
+      "destination": "/program/general-english",
+      "permanent": true
+    },
+    {
+      "source": "/general-english/",
+      "destination": "/program/general-english",
+      "permanent": true
+    },
+    {
+      "source": "/general-english-course",
+      "destination": "/program/general-english",
+      "permanent": true
+    },
+    {
+      "source": "/general-english-course/",
+      "destination": "/program/general-english",
+      "permanent": true
+    },
+    {
+      "source": "/gre-preparation",
+      "destination": "/program/gre",
+      "permanent": true
+    },
+    {
+      "source": "/gre-preparation/",
+      "destination": "/program/gre",
+      "permanent": true
+    },
+    {
+      "source": "/sat-preparation",
+      "destination": "/program/sat",
+      "permanent": true
+    },
+    {
+      "source": "/sat-preparation/",
+      "destination": "/program/sat",
+      "permanent": true
+    },
+    {
+      "source": "/ielts-preparation",
+      "destination": "/program/ielts",
+      "permanent": true
+    },
+    {
+      "source": "/ielts-preparation/",
+      "destination": "/program/ielts",
+      "permanent": true
     }
   ]
 }

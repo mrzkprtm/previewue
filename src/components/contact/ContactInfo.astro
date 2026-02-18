@@ -20,7 +20,7 @@ const contacts = [
     },
     {
         label: "Email",
-        items: ["info@ultimateeducation.com", "admissions@ultimateeducation.com"],
+        items: ["info@ultimateducation.com"],
         icon: "mail",
     },
 ];
@@ -28,17 +28,27 @@ const contacts = [
 const socials = [
     {
         name: "Instagram",
-        href: "#",
+        href: "https://www.instagram.com/ultimate.education/",
         icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuA2PNSnJ09kSJKWMU-n_I_xvEHrKaKM9_uovYdpLbnK2KvTVTXPtbX9wR0yNXgiV8OA6gcDEo1LcEQk3ejUZu3J1no5oguEIkpDJVGXsaALWzgaZkC09EZXMGzNB2mWuGB6hVmD7wqlQi0wfqOH86lS07_JUaflcm6Cyac6GSQyVHGAI70ppukSHnGtJ8rRjnMNn_XuJehT2XnJHYYnQJFYbG_6e2zhTunQXWsyZjh12xmRA7s4EQUPxdb-cyUqlgl_14l9DAQTT9c",
     },
     {
         name: "Facebook",
-        href: "#",
+        href: "https://www.facebook.com/UltimatEducation",
         icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuBdVB8-cZXfy-It9E7LVkyQE-5wfbG5FMSKYbb_X0bZsXtl5j6F29f_BF6CywlvO5XEdue7FLP3Fo25TnhLv_JtunnlEy2o_8Yu82bShN75bPF3VBbL6DnxwnvlYJ1G_0cceBdGvlCZSoJioWtkQCq0vXmUqRsAYbYnZwELjd-OcbnWNLRZH-nPP1DWbWQykFMti1kRm3UxB5-Ez-HtbjvO6YthgUfG_Zjw0UEGf5Z4Uj084wY_vEJ02EDCraHKKElrYrrp_r1yZq0",
     },
     {
+        name: "X",
+        href: "https://x.com/Ultimate_Eduind",
+        icon: "",
+    },
+    {
+        name: "YouTube",
+        href: "https://www.youtube.com/channel/UCHHq1s89_z9BoclcvNH7naA",
+        icon: "",
+    },
+    {
         name: "LinkedIn",
-        href: "#",
+        href: "https://id.linkedin.com/company/ultimate-education",
         icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuCWm-BcWEdgI5oQlnn5AsPl5APG6sFOL35PiSGwh3ci8VRBq7wQpadfj1RvldmaadPLl_vNPjaCQq2VN91pctO0uaNcHcmmG9YIDL2RexWQk0sCKkV6QbOxwm90F2KeujwNUa7HkomR4BRJRrFlS6599iHnuMFEGE5Veq0R1zyBXffbgOEoNGeItvXBFSWMc99Yvl9Y8-pPpvxtKFuQsoZuHVkrJnsUhj2shLFOFjM7rcU6kxPSpUdd2i722ab6FnWSYZVrCRpbHdQ",
     },
 ];
@@ -105,6 +115,16 @@ const socials = [
                         {social.name === "LinkedIn" && (
                             <svg class="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                                 <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.327c0-3.771 4.968-4.085 4.968 0v8.327h5v-9.352c0-5.717-6.142-5.496-7.551-2.709l-.449-.788v-3.15z" />
+                            </svg>
+                        )}
+                        {social.name === "YouTube" && (
+                            <svg class="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.498-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        )}
+                        {social.name === "X" && (
+                            <svg class="w-6 h-6 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                                <path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.45l-5.05-6.27L5.5 22H2.74l6.98-7.98L1.5 2h6.61l4.57 5.66L18.244 2Zm-1.13 18h1.64L7.22 3.91H5.46L17.115 20Z" />
                             </svg>
                         )}
                     </a>
