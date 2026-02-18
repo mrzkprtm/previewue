@@ -520,15 +520,6 @@
       "destination": "/program/ielts",
       "permanent": true
     },
-    {
-      "source": "/:slug((?!about$|artikel$|articles$|api$|beasiswa$|kontak$|mitra$|partnership$|pendaftaran$|program$|programschedule\\.html$|promo$|shop$|checkout$|customer-dashboard$|wp-admin$|sitemap\\.xml$|robots\\.txt$)[^/]+)",
-      "destination": "/artikel/:slug",
-      "permanent": true
-    },
-    {
-      "source": "/:slug((?!about$|artikel$|articles$|api$|beasiswa$|kontak$|mitra$|partnership$|pendaftaran$|program$|programschedule\\.html$|promo$|shop$|checkout$|customer-dashboard$|wp-admin$|sitemap\\.xml$|robots\\.txt$)[^/]+)/",
-      "destination": "/artikel/:slug",
-      "permanent": true
-    }
+    
   ]
 }
