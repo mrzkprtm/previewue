@@ -8,12 +8,7 @@ import ArticleCard from "../../../components/blog/ArticleCard.astro";
 import Pagination from "../../../components/blog/Pagination.astro";
 import type { WPPost, WPCategory } from "../../../types/wp";
 
-export async function getStaticPaths() {
-    const pages = Array.from({ length: 10 }, (_, i) => ({
-        params: { page: String(i + 1) },
-    }));
-    return pages;
-}
+export const prerender = false;
 
 const { page } = Astro.params;
 const currentPage = parseInt(page || "1");

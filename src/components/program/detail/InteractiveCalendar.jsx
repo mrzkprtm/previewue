@@ -15,12 +15,6 @@ function getFirstDayOfWeek(year, month) {
     return new Date(year, month, 1).getDay();
 }
 
-function getUrlParam(name) {
-    if (typeof window === 'undefined') return null;
-    const params = new URLSearchParams(window.location.search);
-    return params.get(name);
-}
-
 function parseCSV(text) {
     if (!text) return [];
     const rows = text.split(/\r?\n/).map(r => r.trim()).filter(r => r.length > 0);
@@ -71,30 +65,139 @@ function parseDateLabel(label, year) {
     return dt;
 }
 
-function extractEventsFromCSV(rows, year, programId) {
+function getLocalISO(d) {
+    const y = d.getFullYear();
+    const m = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    return `${y}-${m}-${day}`;
+}
+
+function shortProgramName(name) {
+    const map = {
+        "IElTS Weekdays (19.30 - 21.00)":"IELTS",
+        "IELTS Weekdays (19.00 - 21.00)":"IELTS",
+        "IELTS Weekend (13.0 - 17.00)":"IELTS",
+        "SAT (08.00 - 12.00)":"SAT",
+        "SAT (10.00 - 12.00) ":"SAT",
+        "GRE (13.00 - 17.00)":"GRE",
+        "GRE (13.00 - 15.00)":"GRE",
+        "GMAT (13.00 - 17.00)":"GMAT",
+        "GMAT (13.00 - 15.00)":"GMAT"
+    };
+    return map[name] || name.split(" ")[0];
+}
+
+function formatBatchLabel(batch) {
+    const cleaned = batch
+        .replace(/^(IELTS|SAT|GRE|GMAT)\s+/i, "")
+        .replace(/\bINTENSIVE\b/i, "")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+    return cleaned || batch;
+}
+
+function hashOffset(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+        h = (h * 31 + str.charCodeAt(i)) % 360;
+    }
+    return h;
+}
+
+function getProgramTime(programFull, group) {
+    if (programFull) {
+        const m = programFull.match(/\(([^)]+)\)/);
+        if (m && m[1]) return m[1].trim();
+    }
+    const full = (programFull || "").toLowerCase();
+    if (full.includes("weekday")) {
+        return group === "ramadhan" ? "19.00 - 21.00" : "19.30 - 21.00";
+    }
+    if (full.includes("weekend")) {
+        return "13.0 - 17.00";
+    }
+    const short = shortProgramName(programFull || "");
+    const map = {
+        general: {
+            "SAT": "08.00 - 12.00",
+            "GRE": "13.00 - 17.00",
+            "GMAT": "13.00 - 17.00"
+        },
+        ramadhan: {
+            "SAT": "10.00 - 12.00",
+            "GRE": "13.00 - 15.00",
+            "GMAT": "13.00 - 15.00"
+        }
+    };
+    return (map[group] && map[group][short]) || "";
+}
+
+function extractEventsFromCSV(rows, year, group) {
     if (!rows || rows.length < 3) return [];
-    let headers = rows[1];
-    let batches = rows[2];
-    let startRow = 3;
     const events = [];
+    let headers = null;
+    let batches = null;
+    let headerRowIndex = -1;
+    for (let i = 0; i < Math.min(rows.length, 10); i++) {
+        const rowStr = rows[i].join(" ").toUpperCase();
+        if ((rowStr.includes("IELTS") && rowStr.includes("WEEKEND")) ||
+            (rowStr.includes("SAT") && rowStr.includes("12.00")) ||
+            (rowStr.includes("GRE") && rowStr.includes("15.00"))) {
+            if (!rowStr.includes("INTENSIVE") && !rowStr.includes("BATCH")) {
+                if (headerRowIndex === -1) {
+                    headerRowIndex = i;
+                }
+            }
+        }
+    }
+    if (headerRowIndex === -1) return [];
+    let batchRowIndex = headerRowIndex + 1;
+    if (batchRowIndex >= rows.length) return [];
+    headers = rows[headerRowIndex];
+    batches = rows[batchRowIndex];
+    let startRow = batchRowIndex + 1;
+    const batchColors = new Map();
+    const programColorIndex = new Map();
     for (let r = startRow; r < rows.length; r++) {
         const row = rows[r];
+        const rowStr = row.join(" ").toUpperCase();
+        if ((rowStr.includes("INTENSIVE") || rowStr.includes("BATCH")) && !rowStr.match(/\d{1,2}\s+(JAN|FEB|MAR|APR|MAY|MEI|JUN|JUL|AUG|AGU|SEP|OCT|OKT|NOV|DEC|DES)/i)) {
+            batches = row;
+            continue;
+        }
+        if (row.every(c => !c.trim())) continue;
         for (let c = 0; c < headers.length; c++) {
-            const progName = headers[c];
-            const batch = batches[c];
-            if (!progName || !batch) continue;
-            const short = progName.split(" ")[0].toLowerCase();
-            if (short !== programId) continue;
-            const date = parseDateLabel(row[0], year);
-            if (!date) continue;
-            events.push({
-                date: date,
-                day: date.getDate(),
-                month: date.getMonth(),
-                year: date.getFullYear(),
-                programId,
-                batch,
-            });
+            const cell = row[c] || "";
+            if (!cell.trim()) continue;
+            const dt = parseDateLabel(cell, year);
+            if (dt) {
+                const programFull = headers[c];
+                if (!programFull) continue;
+                const batch = batches[c] || "Unknown Batch";
+                const programShort = shortProgramName(programFull);
+                const programId = programShort.toLowerCase();
+                const key = programId + "|" + batch;
+                if (!batchColors.has(key)) {
+                    const idx = programColorIndex.get(programId) || 0;
+                    const hue = (hashOffset(programId) + idx * 137) % 360;
+                    const color = `hsl(${hue}, 70%, 45%)`;
+                    programColorIndex.set(programId, idx + 1);
+                    batchColors.set(key, color);
+                }
+                const time = getProgramTime(programFull, group);
+                events.push({
+                    date: getLocalISO(dt),
+                    day: dt.getDate(),
+                    month: dt.getMonth(),
+                    year: dt.getFullYear(),
+                    program: programShort,
+                    programId,
+                    batch,
+                    short: programShort,
+                    time,
+                    color: batchColors.get(key)
+                });
+            }
         }
     }
     return events;
@@ -112,8 +215,11 @@ const InteractiveCalendar = ({ programSlug }) => {
     const today = new Date();
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth());
-    const [hoveredDate, setHoveredDate] = useState(null);
-    const [events, setEvents] = useState([]);
+    const [hoveredDateKey, setHoveredDateKey] = useState(null);
+    const [eventsByDate, setEventsByDate] = useState(new Map());
+    const [batchFilter, setBatchFilter] = useState('all');
+    const [csvRowsGeneral, setCsvRowsGeneral] = useState(null);
+    const [csvRowsRamadhan, setCsvRowsRamadhan] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const programId = programSlug && PROGRAMS.includes(programSlug) ? programSlug : null;
@@ -121,21 +227,45 @@ const InteractiveCalendar = ({ programSlug }) => {
     useEffect(() => {
         if (!programId) return;
         setLoading(true);
-        const urls = [
-            `${SHEET_URL_BASE}/pub?gid=${SHEET_GID.general}&single=true&output=csv`,
-            `${SHEET_URL_BASE}/pub?gid=${SHEET_GID.ramadhan}&single=true&output=csv`
-        ];
-        Promise.all(
-            urls.map(url => fetch(url).then(r => r.ok ? r.text() : null).catch(() => null))
-        ).then(([generalCsv, ramadhanCsv]) => {
-            const rowsG = parseCSV(generalCsv);
-            const rowsR = parseCSV(ramadhanCsv);
-            const evG = extractEventsFromCSV(rowsG, year, programId);
-            const evR = extractEventsFromCSV(rowsR, year, programId);
-            setEvents([...evG, ...evR]);
-            setLoading(false);
+        const fetchSheetByGid = async (gid) => {
+            const urls = [
+                `${SHEET_URL_BASE}/pub?gid=${gid}&single=true&output=csv`,
+                `${SHEET_URL_BASE}/pub?output=csv&gid=${gid}`
+            ];
+            for (const u of urls) {
+                try {
+                    const res = await fetch(u);
+                    if (!res.ok) continue;
+                    const text = await res.text();
+                    if (text && text.includes(',') && !text.trim().startsWith('<')) {
+                        return text;
+                    }
+                } catch (_) {}
+            }
+            return null;
+        };
+        Promise.all([fetchSheetByGid(SHEET_GID.general), fetchSheetByGid(SHEET_GID.ramadhan)])
+            .then(([generalCsv, ramadhanCsv]) => {
+                setCsvRowsGeneral(generalCsv ? parseCSV(generalCsv) : null);
+                setCsvRowsRamadhan(ramadhanCsv ? parseCSV(ramadhanCsv) : null);
+            })
+            .finally(() => setLoading(false));
+    }, [programId]);
+
+    useEffect(() => {
+        if (!programId) return;
+        const rowsG = csvRowsGeneral;
+        const rowsR = csvRowsRamadhan;
+        const eventsG = rowsG ? extractEventsFromCSV(rowsG, year, "general") : [];
+        const eventsR = rowsR ? extractEventsFromCSV(rowsR, year, "ramadhan") : [];
+        const events = eventsG.concat(eventsR);
+        const map = new Map();
+        events.forEach(ev => {
+            if (!map.has(ev.date)) map.set(ev.date, []);
+            map.get(ev.date).push(ev);
         });
-    }, [year, programId]);
+        setEventsByDate(map);
+    }, [year, csvRowsGeneral, csvRowsRamadhan, programId]);
 
     const totalDays = getDaysInMonth(year, month);
     const startOffset = getFirstDayOfWeek(year, month);
@@ -155,9 +285,23 @@ const InteractiveCalendar = ({ programSlug }) => {
 
     if (!programId) return null;
 
-    const eventDays = events
-        .filter(ev => ev.year === year && ev.month === month)
-        .map(ev => ev.day);
+    const availableBatches = useMemo(() => {
+        const set = new Set();
+        eventsByDate.forEach((list) => {
+            list.forEach((ev) => {
+                if (ev.programId === programId) set.add(ev.batch);
+            });
+        });
+        return Array.from(set).sort();
+    }, [eventsByDate, programId]);
+
+    const getEventsForDate = (d) => {
+        const key = getLocalISO(d);
+        const list = eventsByDate.get(key) || [];
+        let filtered = list.filter(e => e.programId === programId);
+        if (batchFilter !== 'all') filtered = filtered.filter(e => e.batch === batchFilter);
+        return filtered;
+    };
 
     const prevMonth = () => {
         if (month === 0) { setMonth(11); setYear(y => y - 1); }
@@ -210,6 +354,21 @@ const InteractiveCalendar = ({ programSlug }) => {
                                             <span className="text-xs font-medium text-slate-400">Tidak ada kelas</span>
                                         </div>
                                     </div>
+                                    {availableBatches.length > 0 && (
+                                        <div className="mb-5">
+                                            <div className="text-xs font-semibold text-slate-600 mb-2">Batch</div>
+                                            <select
+                                                className="w-full rounded-lg border border-slate-200 text-xs px-3 py-2 text-slate-700"
+                                                value={batchFilter}
+                                                onChange={(e) => setBatchFilter(e.target.value)}
+                                            >
+                                                <option value="all">Semua Batch</option>
+                                                {availableBatches.map((b) => (
+                                                    <option key={b} value={b}>{formatBatchLabel(b)}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    )}
 
                                     <p className="text-xs text-slate-500 leading-relaxed">
                                         Jadwal kelas diambil dari spreadsheet Ultimate Education.
@@ -239,9 +398,11 @@ const InteractiveCalendar = ({ programSlug }) => {
                                         if (date === null) {
                                             return <div key={`blank-${idx}`} className="aspect-square" />;
                                         }
-                                        const isEventDay = eventDays.includes(date);
+                                        const cellDate = new Date(year, month, date);
+                                        const events = getEventsForDate(cellDate);
+                                        const isEventDay = events.length > 0;
                                         const isTodayCell = isToday(date);
-                                        const isHovered = hoveredDate === date;
+                                        const isHovered = hoveredDateKey === getLocalISO(cellDate);
 
                                         let cellClass =
                                             'aspect-square flex items-center justify-center rounded-lg md:rounded-xl text-xs md:text-sm font-semibold transition-all duration-150 select-none relative';
@@ -260,10 +421,17 @@ const InteractiveCalendar = ({ programSlug }) => {
                                             <div
                                                 key={date}
                                                 className={cellClass}
-                                                onMouseEnter={() => isEventDay && setHoveredDate(date)}
-                                                onMouseLeave={() => setHoveredDate(null)}
+                                                onMouseEnter={() => isEventDay && setHoveredDateKey(getLocalISO(cellDate))}
+                                                onMouseLeave={() => setHoveredDateKey(null)}
                                             >
-                                                {date}
+                                                <span className="relative z-10">{date}</span>
+                                                {isEventDay && (
+                                                    <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center gap-1">
+                                                        {events.slice(0, 3).map((ev, i) => (
+                                                            <span key={`${ev.batch}-${i}`} className="w-1.5 h-1.5 rounded-full" style={{ background: ev.color || '#0ea5e9' }} />
+                                                        ))}
+                                                    </div>
+                                                )}
                                                 {isTodayCell && (
                                                     <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-ultimate-blue" />
                                                 )}
@@ -274,11 +442,40 @@ const InteractiveCalendar = ({ programSlug }) => {
 
                                 {/* Hover feedback */}
                                 <div className="mt-4 h-8 flex items-center justify-center">
-                                    {hoveredDate ? (
-                                        <div className="text-xs text-ultimate-blue font-semibold bg-blue-50 px-3 py-1.5 rounded-full">
-                                            {hoveredDate} {MONTH_NAMES[month]} {year} — Kelas tersedia
-                                        </div>
-                                    ) : (
+                                    {hoveredDateKey ? (() => {
+                                        const [y, m, d] = hoveredDateKey.split("-").map(Number);
+                                        const hoveredDate = new Date(y, m - 1, d);
+                                        const hoveredEvents = getEventsForDate(hoveredDate);
+                                        if (hoveredEvents.length === 0) {
+                                            return (
+                                                <div className="text-[11px] text-slate-400 italic">
+                                                    Arahkan kursor ke tanggal berwarna untuk info kelas
+                                                </div>
+                                            );
+                                        }
+                                        const unique = [];
+                                        const seen = new Set();
+                                        hoveredEvents.forEach(ev => {
+                                            const key = ev.program + "|" + ev.batch;
+                                            if (!seen.has(key)) {
+                                                seen.add(key);
+                                                unique.push(ev);
+                                            }
+                                        });
+                                        return (
+                                            <div className="text-xs text-ultimate-blue font-semibold bg-blue-50 px-3 py-1.5 rounded-full flex flex-wrap items-center gap-2">
+                                                <span>{hoveredDate.getDate()} {MONTH_NAMES[hoveredDate.getMonth()]} {hoveredDate.getFullYear()}</span>
+                                                {unique.map((ev, i) => (
+                                                    <span key={`${ev.batch}-${i}`} className="flex items-center gap-1">
+                                                        <span className="w-2 h-2 rounded-full" style={{ background: ev.color || '#0ea5e9' }} />
+                                                        <span className="text-[11px] text-slate-600 font-medium">
+                                                            {formatBatchLabel(ev.batch)}{ev.time ? ` • ${ev.time}` : ''}
+                                                        </span>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        );
+                                    })() : (
                                         <div className="text-[11px] text-slate-400 italic">
                                             Arahkan kursor ke tanggal berwarna untuk info kelas
                                         </div>
