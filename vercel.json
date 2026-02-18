@@ -519,7 +519,7 @@
       "source": "/ielts-preparation/",
       "destination": "/program/ielts",
       "permanent": true
-    },
+    }
     
   ]
 }
