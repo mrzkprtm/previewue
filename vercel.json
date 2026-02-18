@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/wp-admin",
+      "destination": "https://cms.ultimateducation.co.id/wp-login.php",
+      "permanent": true
+    },
+    {
+      "source": "/wp-admin/:path*",
+      "destination": "https://cms.ultimateducation.co.id/wp-login.php",
+      "permanent": true
+    }
+  ]
+}
