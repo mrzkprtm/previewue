@@ -519,6 +519,16 @@
       "source": "/ielts-preparation/",
       "destination": "/program/ielts",
       "permanent": true
+    },
+    {
+      "source": "/:slug((?!about$|artikel$|articles$|api$|beasiswa$|kontak$|mitra$|partnership$|program$|promo$|shop$|checkout$|customer-dashboard$|wp-admin$|sitemap\\.xml$|robots\\.txt$)[^/]+)",
+      "destination": "/artikel/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/:slug((?!about$|artikel$|articles$|api$|beasiswa$|kontak$|mitra$|partnership$|program$|promo$|shop$|checkout$|customer-dashboard$|wp-admin$|sitemap\\.xml$|robots\\.txt$)[^/]+)/",
+      "destination": "/artikel/:slug",
+      "permanent": true
     }
   ]
 }
