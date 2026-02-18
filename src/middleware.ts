@@ -62,6 +62,7 @@ const ARTICLE_SLUG_EXCLUSIONS = new Set([
     "beasiswa",
     "kontak",
     "mitra",
+    "pendaftaran",
     "partnership",
     "program",
     "promo",
