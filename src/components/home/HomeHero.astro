@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import HomeHeroAnimation from "./HomeHeroAnimation.astro";
+import { programs as allPrograms } from "@/data/programs";
 
 import p1 from "@/assets/logos/partners/4-300x300.webp";
 import p2 from "@/assets/logos/partners/6-300x300.webp";
@@ -14,7 +15,18 @@ import p9 from "@/assets/logos/partners/puninar_logistics.webp";
 
 const partners = [p1, p2, p3, p4, p5, p6, p7, p8, p9];
 
-const programOptions = ["Ultimate Scholarship Prep", "Ultimate IELTS", "Ultimate Lang Prep"];
+const ACRONYMS = new Set(["act", "as", "bipa", "ged", "gmat", "gre", "hsk", "ib", "igcse", "ielts", "jlpt", "lsat", "pte", "sat", "toefl", "toeic", "topik", "utbk", "whv"]);
+
+const toProgramLabel = (slug: string) => {
+    const name = (slug || "")
+        .split("-")
+        .filter(Boolean)
+        .map((part) => (ACRONYMS.has(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
+        .join(" ");
+    return `Ultimate ${name}`.trim();
+};
+
+const programOptions = Array.from(new Set(allPrograms.map((p) => toProgramLabel(p.slug)))).sort((a, b) => a.localeCompare(b, "id"));
 ---
 
 <section class="relative pb-16 overflow-hidden bg-hero-gradient">
@@ -39,7 +51,9 @@ const programOptions = ["Ultimate Scholarship Prep", "Ultimate IELTS", "Ultimate
             <!-- Left Column: Content & Social Proof -->
             <div class="w-full lg:w-1/2 text-center lg:text-left">
                 <div class="animate-fade-in-up">
-                    <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-ultimate-yellow text-sm md:text-xs md:text-sm font-semibold uppercase tracking-wider mb-6 backdrop-blur-sm"> #1 Education Consultant </span>
+                    <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-ultimate-yellow text-sm md:text-xs md:text-sm font-semibold uppercase tracking-wider mb-6 backdrop-blur-sm">
+                        #1 Education Consultant
+                    </span>
                     <h1 class="font-heading font-semibold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.2] lg:leading-[1.4] mb-6">
                         Siap Kuliah di Luar Negeri? Kursus <span class="text-ultimate-yellow">IELTS, SAT, GRE & GMAT</span> di Sini!
                     </h1>
@@ -89,7 +103,7 @@ const programOptions = ["Ultimate Scholarship Prep", "Ultimate IELTS", "Ultimate
                     <h2 class="text-center font-semibold text-xl mb-2 text-ultimate-navy">
                         Ambil <span class="text-ultimate-blue relative">Promo Spesial<span class="absolute bottom-0 left-0 w-full h-1 bg-ultimate-yellow/30"></span></span>
                     </h2>
-                    <form class="space-y-4">
+                    <form id="home-hero-offer-form" class="space-y-4">
                         <div class="flex flex-col md:flex-row gap-3">
                             <div class="flex-1">
                                 <label for="home-hero-whatsapp" class="block text-xs md:text-sm font-semibold text-slate-500 mb-1.5 tracking-wide">Nomor WhatsApp</label>
@@ -124,6 +138,7 @@ const programOptions = ["Ultimate Scholarship Prep", "Ultimate IELTS", "Ultimate
                             </div>
                         </div>
                         <a
+                            id="home-hero-claim"
                             href="https://wa.me/6283812310368"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -144,42 +159,75 @@ const programOptions = ["Ultimate Scholarship Prep", "Ultimate IELTS", "Ultimate
             <div class="bg-white rounded-full py-6 px-10 shadow-lg w-full overflow-hidden">
                 <div class="flex items-center animate-marquee">
                     <div class="flex items-center gap-12 shrink-0">
-                        {partners.map((logo) => (
-                            <Image
-                                alt="Partner Logo"
-                                class="h-8 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                                src={logo}
-                                width={56}
-                                widths={[56, 112]}
-                                sizes="(max-width: 768px) 56px, 112px"
-                                quality={50}
-                                loading="lazy"
-                                decoding="async"
-                                format="webp"
-                            />
-                        ))}
+                        {
+                            partners.map((logo) => (
+                                <Image
+                                    alt="Partner Logo"
+                                    class="h-8 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                                    src={logo}
+                                    width={56}
+                                    widths={[56, 112]}
+                                    sizes="(max-width: 768px) 56px, 112px"
+                                    quality={50}
+                                    loading="lazy"
+                                    decoding="async"
+                                    format="webp"
+                                />
+                            ))
+                        }
                     </div>
                     <div class="flex items-center gap-12 shrink-0 ml-12" aria-hidden="true">
-                        {partners.map((logo) => (
-                            <Image
-                                alt="Partner Logo"
-                                class="h-8 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                                src={logo}
-                                width={56}
-                                widths={[56, 112]}
-                                sizes="(max-width: 768px) 56px, 112px"
-                                quality={50}
-                                loading="lazy"
-                                decoding="async"
-                                format="webp"
-                            />
-                        ))}
+                        {
+                            partners.map((logo) => (
+                                <Image
+                                    alt="Partner Logo"
+                                    class="h-8 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                                    src={logo}
+                                    width={56}
+                                    widths={[56, 112]}
+                                    sizes="(max-width: 768px) 56px, 112px"
+                                    quality={50}
+                                    loading="lazy"
+                                    decoding="async"
+                                    format="webp"
+                                />
+                            ))
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script is:inline>
+    const form = document.getElementById("home-hero-offer-form");
+    const whatsappInput = document.getElementById("home-hero-whatsapp");
+    const programSelect = document.getElementById("home-hero-program");
+    const claim = document.getElementById("home-hero-claim");
+
+    if (form && whatsappInput && programSelect && claim) {
+        const waPhone = "6283812310368";
+
+        const buildMessage = (program) => {
+            const selected = (program || "").trim();
+
+            const programText = selected ? `promo program ${selected}` : "info promo program";
+
+            return `Halo Ultimate Education, saya ingin ${programText}. Mohon info detail (harga, jadwal, dan cara daftar). Terima kasih.`;
+        };
+
+        const updateHref = () => {
+            const msg = buildMessage(programSelect.value);
+            const url = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
+            claim.setAttribute("href", url);
+        };
+
+        whatsappInput.addEventListener("input", updateHref);
+        programSelect.addEventListener("change", updateHref);
+        updateHref();
+    }
+</script>
 
 <style>
     @keyframes fade-in-up {

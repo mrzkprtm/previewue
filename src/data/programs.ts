@@ -77,7 +77,7 @@ export const programs: ProgramData[] = [
         "pricing": {
             "Private CLASS": {
                 "title": "Private CLASS",
-                "description": "Alur Persiapan (Step-by-Step)Profiling & Rekomendasi BeasiswaAnalisis mendalam terhadap transkrip, CV, prestasi, minat riset, dan rencana karier. Hasil profiling dipakai untuk menyusun daftar target beasiswa/universitas yang realistic & strategis.Perencanaan & Roadmap PendaftaranMenentukan timeline pendaftaran, deadline dokumen, kebutuhan language score, dan strategi aplikasi.Penyusunan Dokumen AplikasiMotivation Letter untuk pelamar S1 & S2: brainstorming ide, struktur, serta revisi hingga final.Research Proposal untuk pelamar S3: pembentukan ide riset, metodologi, kontribusi ilmiah, serta penyusunan referensi.Semua dokumen melalui proses proofreading, editing gaya bahasa akademik, dan personal branding agar lebih persuasive.Persiapan Bahasa InggrisLatihan intens pada keempat keterampilan (Listening, Reading, Writing, Speaking) + akses free IELTS & TOEFL practice tests berkala untuk memastikan skor memenuhi syarat beasiswa.Tes Skolastik & PenalaranLatihan numerik, logika, dan tes kemampuan akademik yang sering muncul pada proses seleksi atau assessment center.Mock Interview BeasiswaSimulasi wawancara dengan feedback konkret: menjawab pertanyaan sensitif, menyusun jawaban STAR (Situation-Task-Action-Result), dan melatih delivery agar percaya diri.Seminar & NetworkingSesi seminar strategi pendaftaran, beasiswa yang relevan, serta sharing dari alumni penerima beasiswa untuk insight praktis.",
+                "description": "Alur Persiapan (Step-by-Step):\n1. Profiling & Rekomendasi Beasiswa\nAnalisis mendalam terhadap transkrip, CV, prestasi, minat riset, dan rencana karier. Hasil profiling dipakai untuk menyusun daftar target beasiswa/universitas yang realistic & strategis.\n2. Perencanaan & Roadmap Pendaftaran\nMenentukan timeline pendaftaran, deadline dokumen, kebutuhan language score, dan strategi aplikasi.\n3. Penyusunan Dokumen Aplikasi\nMotivation Letter untuk pelamar S1 & S2: brainstorming ide, struktur, serta revisi hingga final.\nResearch Proposal untuk pelamar S3: pembentukan ide riset, metodologi, kontribusi ilmiah, serta penyusunan referensi.\nSemua dokumen melalui proses proofreading, editing gaya bahasa akademik, dan personal branding agar lebih persuasive.\n4. Persiapan Bahasa Inggris\nLatihan intens pada keempat keterampilan (Listening, Reading, Writing, Speaking) + akses free IELTS & TOEFL practice tests berkala untuk memastikan skor memenuhi syarat beasiswa.\n5. Tes Skolastik & Penalaran\nLatihan numerik, logika, dan tes kemampuan akademik yang sering muncul pada proses seleksi atau assessment center.\n6. Mock Interview Beasiswa\nSimulasi wawancara dengan feedback konkret: menjawab pertanyaan sensitif, menyusun jawaban STAR (Situation-Task-Action-Result), dan melatih delivery agar percaya diri.\n7. Seminar & Networking\nSesi seminar strategi pendaftaran, beasiswa yang relevan, serta sharing dari alumni penerima beasiswa untuk insight praktis.",
                 "features": "",
                 "curriculum": [
                     {
@@ -391,14 +391,18 @@ export const programs: ProgramData[] = [
         "overview": {
             "title": "Gambaran Kursus ",
             "content": [
-                "Program persiapan LSAT (Law School Admission Test) di Ultimate Education dirancang untuk membantu calon mahasiswa hukum meraih skor terbaik sebagai syarat masuk law school internasional. Dengan dukungan tutor berpengalaman (native speaker & lokal), kurikulum up-to-date sesuai format LSAT terbaru, serta jadwal belajar fleksibel, peserta akan mendapatkan bimbingan intensif pada tiga bagian utama LSAT:",
-                "Logical Reasoning – mengasah kemampuan berpikir kritis, menganalisis argumen, dan menarik kesimpulan secara logis. Analytical Reasoning (Logic Games) – melatih kemampuan problem solving, pola berpikir deduktif, dan menyelesaikan soal berbasis aturan. Reading Comprehension – meningkatkan kecepatan membaca, memahami teks hukum/akademik, serta menjawab pertanyaan dengan akurat. Selain penguasaan materi, siswa juga akan mendapatkan strategi ujian, latihan soal intensif, hingga mock test untuk memastikan kesiapan menghadapi tes LSAT yang sesungguhnya."
+                "Program persiapan LSAT (Law School Admission Test) di Ultimate Education dirancang untuk membantu calon mahasiswa hukum meraih skor terbaik sebagai syarat masuk law school internasional. Dengan dukungan tutor berpengalaman (native speaker & lokal), kurikulum up-to-date sesuai format LSAT terbaru, serta jadwal belajar fleksibel.",
+                "Peserta akan mendapatkan bimbingan intensif pada tiga bagian utama LSAT:",
+                "• Logical Reasoning – mengasah kemampuan berpikir kritis, menganalisis argumen, dan menarik kesimpulan secara logis.",
+                "• Analytical Reasoning (Logic Games) – melatih kemampuan problem solving, pola berpikir deduktif, dan menyelesaikan soal berbasis aturan.",
+                "• Reading Comprehension – meningkatkan kecepatan membaca, memahami teks hukum/akademik, serta menjawab pertanyaan dengan akurat.",
+                "Selain penguasaan materi, siswa juga akan mendapatkan strategi ujian, latihan soal intensif, hingga mock test untuk memastikan kesiapan menghadapi tes LSAT yang sesungguhnya."
             ]
         },
         "pricing": {
             "LSAT PRIVATE": {
                 "title": "LSAT PRIVATE",
-                "description": "Program LSAT Private (One-on-One) di Ultimate Education dirancang untuk memberikan pengalaman belajar yang paling personal, intensif, dan efektif. Dalam kelas privat ini, setiap siswa akan mendapatkan bimbingan langsung dari tutor berpengalaman—baik native speaker maupun pengajar lokal profesional—yang memahami secara mendalam format LSAT terbaru dan strategi terbaik untuk menaklukkannya. Pendekatan 1-on-1 memungkinkan tutor untuk: • Menganalisis kebutuhan siswa sejak awal, termasuk kekuatan dan kelemahan di setiap section LSAT: Logical Reasoning, Analytical Reasoning, dan Reading Comprehension. • Menyusun rencana belajar tailored, sesuai dengan target skor, kebutuhan aplikasi sekolah hukum, serta durasi persiapan yang tersedia. • Memberikan feedback langsung dan detail pada setiap latihan, sehingga siswa dapat memperbaiki cara berpikir, teknik menjawab soal, hingga manajemen waktu dengan cepat dan efektif.",
+                "description": "Program LSAT Private (One-on-One) di Ultimate Education dirancang untuk memberikan pengalaman belajar yang paling personal, intensif, dan efektif. Dalam kelas privat ini, setiap siswa akan mendapatkan bimbingan langsung dari tutor berpengalaman—baik native speaker maupun pengajar lokal profesional—yang memahami secara mendalam format LSAT terbaru dan strategi terbaik untuk menaklukkannya.\nPendekatan 1-on-1 memungkinkan tutor untuk:\n• Menganalisis kebutuhan siswa sejak awal, termasuk kekuatan dan kelemahan di setiap section LSAT: Logical Reasoning, Analytical Reasoning, dan Reading Comprehension.\n• Menyusun rencana belajar tailored, sesuai dengan target skor, kebutuhan aplikasi sekolah hukum, serta durasi persiapan yang tersedia.\n• Memberikan feedback langsung dan detail pada setiap latihan, sehingga siswa dapat memperbaiki cara berpikir, teknik menjawab soal, hingga manajemen waktu dengan cepat dan efektif.",
                 "features": "",
                 "curriculum": [
                     {
@@ -506,6 +510,11 @@ export const programs: ProgramData[] = [
             "content": [
                 "IB Preparation Course di Ultimate Education dirancang untuk membantu siswa meraih hasil terbaik dalam International Baccalaureate (IB) Diploma Programme (DP) maupun IB Middle Years Programme (MYP). Dengan bimbingan tutor berpengalaman (native speaker & lokal), kurikulum up-to-date sesuai standar IB, serta jadwal belajar fleksibel, siswa akan mendapatkan pembelajaran komprehensif yang terarah dan efektif.",
                 "Program mencakup berbagai mata pelajaran utama IB, antara lain:",
+                "• Mathematics (Analysis & Approaches, Applications & Interpretations)",
+                "• Sciences (Physics, Chemistry, Biology, Computer Science)",
+                "• Individuals & Societies (Economics, Business Management, Psychology, History)",
+                "• Studies in Language & Literature",
+                "• Language Acquisition",
                 "Selain penguasaan materi, siswa akan dibekali dengan latihan intensif, strategi ujian, serta mock test untuk memastikan kesiapan menghadapi ujian IB dengan percaya diri."
             ]
         },
@@ -697,6 +706,11 @@ export const programs: ProgramData[] = [
             "content": [
                 "Kursus O Level di Ultimate Education dirancang khusus untuk membantu siswa menghadapi ujian Cambridge O Level dengan percaya diri. Dengan dukungan tutor berpengalaman (native speaker & lokal), kurikulum up-to-date yang relevan, serta jadwal belajar fleksibel, siswa dapat belajar lebih fokus, efektif, dan sesuai kebutuhan akademik.",
                 "Program ini mencakup berbagai mata pelajaran inti maupun pilihan, antara lain:",
+                "• Mathematics (D-Math, A-Math)",
+                "• Science (Physics, Chemistry, Biology)",
+                "• English Language & Literature",
+                "• Humanities (Economics, Business Studies, Geography, History)",
+                "• Accounting & Computer Science",
                 "Selain penguasaan materi, siswa juga dibekali dengan strategi menghadapi ujian, latihan intensif, hingga mock test sehingga siap menghadapi tantangan ujian O Level yang sesungguhnya."
             ]
         },
@@ -888,6 +902,11 @@ export const programs: ProgramData[] = [
             "content": [
                 "Kursus A Level di Ultimate Education dirancang untuk membantu siswa mempersiapkan diri menghadapi ujian Cambridge International A Level yang diakui oleh universitas top dunia. Dengan bimbingan tutor berpengalaman (native speaker & lokal), kurikulum up-to-date yang relevan, serta jadwal belajar fleksibel, peserta dapat belajar secara lebih terarah sesuai bidang studi yang dipilih.",
                 "Program ini mencakup mata pelajaran utama A Level, seperti:",
+                "• Mathematics & Further Mathematics",
+                "• Sciences (Physics, Chemistry, Biology)",
+                "• Economics, Business, & Accounting",
+                "• Psychology & Sociology",
+                "• English Literature",
                 "Selain itu, peserta akan berlatih soal-soal berbasis kurikulum Cambridge, mempelajari strategi menjawab sesuai format ujian, serta mengikuti mock test untuk mengukur kesiapan sebelum menghadapi ujian resmi."
             ]
         },
@@ -1080,6 +1099,8 @@ export const programs: ProgramData[] = [
                 "Kursus TOEIC di Ultimate Education dirancang untuk membantu Anda meraih skor optimal TOEIC dengan bimbingan tutor berpengalaman, baik native speaker maupun pengajar lokal profesional.",
                 "Program ini menggunakan kurikulum terbaru yang relevan dengan format TOEIC terkini, berfokus pada penguasaan bahasa Inggris untuk kebutuhan kerja dan profesional.",
                 "Peserta akan berlatih intensif pada dua keterampilan utama:",
+                "• Listening Comprehension – memahami percakapan, instruksi, dan presentasi dalam konteks bisnis.",
+                "• Reading Comprehension – memahami teks, email, laporan, dan dokumen profesional lainnya.",
                 "Selain itu, pembelajaran juga dilengkapi dengan strategi pengerjaan soal, vocabulary bisnis, serta mock test untuk memastikan kesiapan menghadapi TOEIC."
             ]
         },
@@ -1296,13 +1317,17 @@ export const programs: ProgramData[] = [
             "content": [
                 "Kursus Business English di Ultimate Education ditujukan khusus bagi profesional, eksekutif, maupun mahasiswa yang ingin mempersiapkan diri menghadapi tuntutan komunikasi bisnis dalam skala global.",
                 "Program ini mencakup keterampilan penting dalam dunia kerja, antara lain:",
+                "• Business Correspondence (Email, Report Writing)",
+                "• Meetings & Negotiations",
+                "• Presentations & Public Speaking",
+                "• Professional Networking & Socializing",
                 "Dengan latihan praktis, role play, studi kasus, dan simulasi dunia kerja nyata, peserta akan lebih percaya diri, fasih, dan profesional dalam menggunakan bahasa Inggris di lingkungan kerja internasional."
             ]
         },
         "pricing": {
             "Business English private class": {
                 "title": "Business English private class",
-                "description": "Bagi peserta yang membutuhkan pembelajaran intensif dan personal, Business English Private 1-on-1 adalah pilihan terbaik. Dalam kelas ini, tutor akan menyesuaikan materi, latihan, dan strategi sesuai kebutuhan peserta, misalnya: Fokus pada email writing untuk komunikasi kerja sehari-hari. Latihan public speaking & presentation skills untuk meeting atau pitching. Peningkatan vocabulary bisnis & workplace communication. Strategi negosiasi & diplomasi dalam bahasa Inggris. Cocok untuk profesional muda, karyawan, eksekutif, maupun mahasiswa yang ingin lebih percaya diri berkomunikasi secara profesional di dunia kerja global.",
+                "description": "Bagi peserta yang membutuhkan pembelajaran intensif dan personal, Business English Private 1-on-1 adalah pilihan terbaik. Dalam kelas ini, tutor akan menyesuaikan materi, latihan, dan strategi sesuai kebutuhan peserta, misalnya:\n• Fokus pada email writing untuk komunikasi kerja sehari-hari.\n• Latihan public speaking & presentation skills untuk meeting atau pitching.\n• Peningkatan vocabulary bisnis & workplace communication.\n• Strategi negosiasi & diplomasi dalam bahasa Inggris.\nCocok untuk profesional muda, karyawan, eksekutif, maupun mahasiswa yang ingin lebih percaya diri berkomunikasi secara profesional di dunia kerja global.",
                 "features": "",
                 "curriculum": [
                     {
@@ -1441,7 +1466,7 @@ export const programs: ProgramData[] = [
         "pricing": {
             "General English Private Class": {
                 "title": "General English Private Class",
-                "description": "Bagi peserta yang menginginkan pembelajaran lebih personal dan intensif, General English Private 1-on-1 adalah pilihan terbaik. Melalui pendekatan tailored learning, tutor akan menyesuaikan materi, latihan, dan strategi pembelajaran dengan kebutuhan individu, seperti: • Fokus pada percakapan sehari-hari (casual speaking). • Peningkatan kemampuan mendengar (listening) dalam percakapan natural. • Latihan menulis (writing) untuk email, laporan, maupun esai. • Penguasaan membaca (reading) teks akademik maupun umum. Program ini sangat cocok untuk pelajar, mahasiswa, hingga profesional muda yang ingin lebih percaya diri menggunakan bahasa Inggris di sekolah, kampus, tempat kerja, atau dalam interaksi sehari-hari.",
+                "description": "Bagi peserta yang menginginkan pembelajaran lebih personal dan intensif, General English Private 1-on-1 adalah pilihan terbaik. Melalui pendekatan tailored learning, tutor akan menyesuaikan materi, latihan, dan strategi pembelajaran dengan kebutuhan individu, seperti:\n• Fokus pada percakapan sehari-hari (casual speaking).\n• Peningkatan kemampuan mendengar (listening) dalam percakapan natural.\n• Latihan menulis (writing) untuk email, laporan, maupun esai.\n• Penguasaan membaca (reading) teks akademik maupun umum.\nProgram ini sangat cocok untuk pelajar, mahasiswa, hingga profesional muda yang ingin lebih percaya diri menggunakan bahasa Inggris di sekolah, kampus, tempat kerja, atau dalam interaksi sehari-hari.",
                 "features": "",
                 "curriculum": [
                     {
@@ -1753,7 +1778,7 @@ export const programs: ProgramData[] = [
         "pricing": {
             "TOPIK Private CLASS": {
                 "title": "TOPIK Private CLASS",
-                "description": "Program 개인수업 (Gaein Sueop / Private One-on-One) yang dirancang untuk pembelajaran personal dan intensif.Keunggulan:Fokus pada area tertentu (misalnya 듣기, 쓰기, atau tata bahasa).Materi 맞춤형 (Majchumhyeong / tailored) sesuai kemampuan awal & target siswa.Fleksibel: tersedia 온라인 (online) maupun 오프라인 (offline).Ideal untuk siswa yang menyiapkan syarat kuliah, beasiswa, atau kebutuhan profesional di Korea.",
+                "description": "Program 개인수업 (Gaein Sueop / Private One-on-One) yang dirancang untuk pembelajaran personal dan intensif.\nKeunggulan:\n• Fokus pada area tertentu (misalnya 듣기, 쓰기, atau tata bahasa).\n• Materi 맞춤형 (Majchumhyeong / tailored) sesuai kemampuan awal & target siswa.\n• Fleksibel: tersedia 온라인 (online) maupun 오프라인 (offline).\n• Ideal untuk siswa yang menyiapkan syarat kuliah, beasiswa, atau kebutuhan profesional di Korea.",
                 "features": "",
                 "curriculum": [
                     {
@@ -1794,7 +1819,7 @@ export const programs: ProgramData[] = [
             },
             "TOPIK Customized Class": {
                 "title": "TOPIK Customized Class",
-                "description": "Program 맞춤반 (Majchum Ban / Customized Class) cocok untuk mereka yang memiliki waktu terbatas atau fokus pada area tertentu.Paket fleksibel (kelipatan 3 sesi).Fokus sesuai kebutuhan, misalnya 쓰기 (writing) untuk TOPIK II atau 듣기 (listening) intensif.Sepenuhnya 개인화 (Gaeinhwa / personalized) dari segi materi, jadwal, hingga strategi.Sangat efektif bagi mahasiswa maupun profesional yang ingin mencapai target level TOPIK dengan efisien dan tepat sasaran.",
+                "description": "Program 맞춤반 (Majchum Ban / Customized Class) cocok untuk mereka yang memiliki waktu terbatas atau fokus pada area tertentu.\n• Paket fleksibel (kelipatan 3 sesi).\n• Fokus sesuai kebutuhan, misalnya 쓰기 (writing) untuk TOPIK II atau 듣기 (listening) intensif.\n• Sepenuhnya 개인화 (Gaeinhwa / personalized) dari segi materi, jadwal, hingga strategi.\n• Sangat efektif bagi mahasiswa maupun profesional yang ingin mencapai target level TOPIK dengan efisien dan tepat sasaran.",
                 "features": "",
                 "curriculum": [
                     {
@@ -1867,7 +1892,7 @@ export const programs: ProgramData[] = [
             },
             "TOPIK Group Class": {
                 "title": "TOPIK Group Class",
-                "description": "Kelas semi privat dengan 5–7 siswa, suasana belajar lebih fokus, interaktif, dan kolaboratif.Peserta akan berlatih:듣기 (listening), 읽기 (reading), 쓰기 (writing untuk TOPIK II), serta kosakata & tata bahasa.Latihan soal, diskusi, dan 모의고사 (moigosa) agar terbiasa dengan format resmi ujian.Cocok untuk siswa yang ingin belajar bersama dengan suasana aktif, seru, namun tetap mendalam.",
+                "description": "Kelas semi privat dengan 5–7 siswa, suasana belajar lebih fokus, interaktif, dan kolaboratif.\nPeserta akan berlatih:\n• 듣기 (listening), 읽기 (reading), 쓰기 (writing untuk TOPIK II), serta kosakata & tata bahasa.\n• Latihan soal, diskusi, dan 모의고사 (moigosa) agar terbiasa dengan format resmi ujian.\n• Cocok untuk siswa yang ingin belajar bersama dengan suasana aktif, seru, namun tetap mendalam.",
                 "features": "",
                 "curriculum": [
                     {
@@ -1981,7 +2006,7 @@ export const programs: ProgramData[] = [
         "pricing": {
             "HSK Private CLASS": {
                 "title": "HSK Private CLASS",
-                "description": "Program HSK 一对一 (Yī duì yī / Private One-on-One) memberikan pengalaman belajar personal dan intensif. Tutor akan menargetkan langsung area yang perlu diperkuat, baik 听力 (tīnglì), 阅读 (yuèdú), 写作 (xiězuò), maupun penguasaan kosakata dan tata bahasa. Materi akan 量身定制 (Liángshēn Dìngzhì / tailored) sesuai kebutuhan individu—misalnya persiapan kuliah di Tiongkok, beasiswa, atau kebutuhan profesional. Kelas tersedia 线上 (xiànshàng / online) maupun 线下 (xiànxià / tatap muka) dengan jadwal fleksibel.",
+                "description": "Program HSK 一对一 (Yī duì yī / Private One-on-One) memberikan pengalaman belajar personal dan intensif.\nTutor akan menargetkan langsung area yang perlu diperkuat, baik 听力 (tīnglì), 阅读 (yuèdú), 写作 (xiězuò), maupun penguasaan kosakata dan tata bahasa.\nMateri akan 量身定制 (Liángshēn Dìngzhì / tailored) sesuai kebutuhan individu—misalnya persiapan kuliah di Tiongkok, beasiswa, atau kebutuhan profesional.\nKelas tersedia 线上 (xiànshàng / online) maupun 线下 (xiànxià / tatap muka) dengan jadwal fleksibel.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2022,7 +2047,7 @@ export const programs: ProgramData[] = [
             },
             "HSK Customized Class": {
                 "title": "HSK Customized Class",
-                "description": "Program HSK 定制课程 (Dìngzhì Kèchéng / Customized Class) cocok bagi peserta dengan waktu terbatas atau kebutuhan spesifik. Dengan paket fleksibel (kelipatan 3 sesi), siswa dapat fokus pada keterampilan tertentu—misalnya 写作 (writing) untuk level HSK 5–6 atau 听力 (listening) untuk pemula. Kelas ini sepenuhnya 个性化 (Gèxìnghuà / personalized) dari segi materi, jadwal, hingga strategi ujian, sehingga efektif untuk mahasiswa maupun profesional yang ingin mencapai target HSK secara efisien.",
+                "description": "Program HSK 定制课程 (Dìngzhì Kèchéng / Customized Class) cocok bagi peserta dengan waktu terbatas atau kebutuhan spesifik.\nDengan paket fleksibel (kelipatan 3 sesi), siswa dapat fokus pada keterampilan tertentu—misalnya 写作 (writing) untuk level HSK 5–6 atau 听力 (listening) untuk pemula.\nKelas ini sepenuhnya 个性化 (Gèxìnghuà / personalized) dari segi materi, jadwal, hingga strategi ujian, sehingga efektif untuk mahasiswa maupun profesional yang ingin mencapai target HSK secara efisien.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2063,7 +2088,7 @@ export const programs: ProgramData[] = [
             },
             "HSK Group Class": {
                 "title": "HSK Group Class",
-                "description": "Kelas kelompok semi privat dengan jumlah terbatas 5–7 siswa, menghadirkan suasana belajar yang fokus, interaktif, dan kolaboratif. Materi mencakup keterampilan mendengar, membaca, menulis (level menengah–lanjut), serta kosakata & tata bahasa sesuai level ujian. Melalui diskusi, latihan bersama, dan 模拟考试 (mónǐ kǎoshì), siswa terbiasa dengan format resmi HSK dan lebih siap mencapai target level HSK 1–6.",
+                "description": "Kelas kelompok semi privat dengan jumlah terbatas 5–7 siswa, menghadirkan suasana belajar yang fokus, interaktif, dan kolaboratif.\nMateri mencakup keterampilan mendengar, membaca, menulis (level menengah–lanjut), serta kosakata & tata bahasa sesuai level ujian.\nMelalui diskusi, latihan bersama, dan 模拟考试 (mónǐ kǎoshì), siswa terbiasa dengan format resmi HSK dan lebih siap mencapai target level HSK 1–6.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2396,7 +2421,7 @@ export const programs: ProgramData[] = [
         "pricing": {
             "JLPT Private CLASS": {
                 "title": "JLPT Private CLASS",
-                "description": "Program JLPT Private 1-on-1 ditujukan untuk pembelajaran yang lebih personal dan intensif. Tutor akan menargetkan langsung area yang perlu diperkuat, misalnya 漢字 (kanji), 文法 (bunpō), atau 聴解 (chōkai). Materi dan strategi belajar akan カスタマイズ (kasutamaizu / disesuaikan) dengan kemampuan awal siswa dan target level JLPT (N5–N1). Kelas tersedia dalam format オンライン (onrain / online) maupun 対面 (taimen / tatap muka), dengan jadwal fleksibel sesuai kebutuhan siswa.",
+                "description": "Program JLPT Private 1-on-1 ditujukan untuk pembelajaran yang lebih personal dan intensif.\nTutor akan menargetkan langsung area yang perlu diperkuat, misalnya 漢字 (kanji), 文法 (bunpō), atau 聴解 (chōkai).\nMateri dan strategi belajar akan カスタマイズ (kasutamaizu / disesuaikan) dengan kemampuan awal siswa dan target level JLPT (N5–N1).\nKelas tersedia dalam format オンライン (onrain / online) maupun 対面 (taimen / tatap muka), dengan jadwal fleksibel sesuai kebutuhan siswa.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2437,7 +2462,7 @@ export const programs: ProgramData[] = [
             },
             "JLPT Customized Class": {
                 "title": "JLPT Customized Class",
-                "description": "Program JLPT Customized Class cocok untuk mereka yang memiliki waktu terbatas atau ingin fokus pada keterampilan tertentu. Dengan paket fleksibel (kelipatan 3 sesi), siswa bisa memilih fokus pembelajaran, misalnya 聴解 (chōkai) intensif atau 読解 (dokkai) tingkat lanjut. Kelas ini sepenuhnya パーソナライズ (pāsonaraizu / personalized): mulai dari materi, fokus keterampilan, hingga strategi ujian, sehingga sangat efektif untuk mahasiswa, profesional, maupun siapa saja yang ingin meraih 合格 (gōkaku / kelulusan) JLPT sesuai target.",
+                "description": "Program JLPT Customized Class cocok untuk mereka yang memiliki waktu terbatas atau ingin fokus pada keterampilan tertentu.\nDengan paket fleksibel (kelipatan 3 sesi), siswa bisa memilih fokus pembelajaran, misalnya 聴解 (chōkai) intensif atau 読解 (dokkai) tingkat lanjut.\nKelas ini sepenuhnya パーソナライズ (pāsonaraizu / personalized): mulai dari materi, fokus keterampilan, hingga strategi ujian, sehingga sangat efektif untuk mahasiswa, profesional, maupun siapa saja yang ingin meraih 合格 (gōkaku / kelulusan) JLPT sesuai target.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2510,7 +2535,7 @@ export const programs: ProgramData[] = [
             },
             "JLPT Group Class": {
                 "title": "JLPT Group Class",
-                "description": "Program JLPT Group Class menggunakan metode semi-privat dengan jumlah peserta terbatas (5–7 siswa). Suasana belajar lebih fokus, interaktif, dan menyenangkan. Peserta akan mempelajari seluruh materi JLPT sesuai level (N5–N1), mencakup 語彙 (goi), 文法 (bunpō), 読解 (dokkai), 聴解 (chōkai), serta latihan soal. Melalui diskusi, latihan bersama, dan 模擬試験 (mogi shiken), siswa akan terbiasa dengan format JLPT dan lebih percaya diri menghadapi ujian resmi.",
+                "description": "Program JLPT Group Class menggunakan metode semi-privat dengan jumlah peserta terbatas (5–7 siswa). Suasana belajar lebih fokus, interaktif, dan menyenangkan.\nPeserta akan mempelajari seluruh materi JLPT sesuai level (N5–N1), mencakup 語彙 (goi), 文法 (bunpō), 読解 (dokkai), 聴解 (chōkai), serta latihan soal.\nMelalui diskusi, latihan bersama, dan 模擬試験 (mogi shiken), siswa akan terbiasa dengan format JLPT dan lebih percaya diri menghadapi ujian resmi.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2626,7 +2651,7 @@ export const programs: ProgramData[] = [
         "pricing": {
             "BIPA Private CLASS": {
                 "title": "BIPA Private CLASS",
-                "description": "Highly personalized and intensive learning. Focus on specific needs such as:Business communication (negotiation, meetings, formal writing).Academic Indonesian (essay writing, research, discussions).Daily conversations for living and traveling in Indonesia.Available both offline (face-to-face) and online with flexible schedules.",
+                "description": "Highly personalized and intensive learning. Focus on specific needs such as:\n• Business communication (negotiation, meetings, formal writing).\n• Academic Indonesian (essay writing, research, discussions).\n• Daily conversations for living and traveling in Indonesia.\n• Available both offline (face-to-face) and online with flexible schedules.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2667,7 +2692,7 @@ export const programs: ProgramData[] = [
             },
             "BIPA Customized Class": {
                 "title": "BIPA Customized Class",
-                "description": "Perfect for participants with limited time or specific goals. Offered in flexible packages (multiples of 3 sessions). Students can focus on a particular area, such as:Professional communication.Academic Indonesian.Practical vocabulary for daily life.Fully personalized in terms of content, schedule, and exam strategies for fast, effective, and relevant results.",
+                "description": "Perfect for participants with limited time or specific goals. Offered in flexible packages (multiples of 3 sessions). Students can focus on a particular area, such as:\n• Professional communication.\n• Academic Indonesian.\n• Practical vocabulary for daily life.\n• Fully personalized in terms of content, schedule, and exam strategies for fast, effective, and relevant results.",
                 "features": "",
                 "curriculum": [
                     {
@@ -2765,13 +2790,13 @@ export const programs: ProgramData[] = [
         "slug": "act",
         "originalSlug": "persiapan-act",
         "meta": {
-            "title": "ACT ver 2.0",
-            "description": "Raih skor ACT ver 2.0 impianmu dengan bimbingan intensif."
+            "title": "ACT",
+            "description": "Raih skor ACT impianmu dengan bimbingan intensif."
         },
         "hero": {
-            "title": "Kursus Persiapan <span class=\"text-ultimate-yellow\">ACT ver 2.0</span>",
+            "title": "Kursus Persiapan <span class=\"text-ultimate-yellow\">ACT/span>",
             "subtitle": "Raih skor impianmu dengan bimbingan intensif dari pengajar ahli",
-            "pillText": "ACT VER 2.0 Preparation",
+            "pillText": "ACT Preparation",
             "image": "/images/hero_img.png"
         },
         "overview": {
@@ -3002,10 +3027,13 @@ export const programs: ProgramData[] = [
         "overview": {
             "title": "Gambaran Kursus ",
             "content": [
-                "Kursus persiapan GRE di Ultimate Education dirancang untuk membantu peserta meraih skor optimal dalam Graduate Record Examination (GRE Test) sebagai salah satu persyaratan utama kuliah di luar negri, khususnya untuk jenjang pascasarjana. Program ini dibimbing oleh tutor berpengalaman, terdiri dari pengajar lokal profesional dna native speaker, dengan kurikulum terbaru yang disesuaikan dengan format ujian GRE Terkini.",
+                "Kursus persiapan GRE di Ultimate Education dirancang untuk membantu peserta meraih skor optimal dalam Graduate Record Examination (GRE Test) sebagai salah satu persyaratan utama kuliah di luar negeri, khususnya untuk jenjang pascasarjana. Program ini dibimbing oleh tutor berpengalaman, terdiri dari pengajar lokal profesional dan native speaker, dengan kurikulum terbaru yang disesuaikan dengan format ujian GRE terkini.",
                 "Melalui kelas persiapan GRE yang terstruktur dan sistematis, peserta akan mempelajari seluruh komponen penting GRE.",
                 "Pembelajaran mencakup seluruh bagian utama GRE:",
-                "Pembelajaran dilengkapi dengan latihan soal terarah, strategi ujian yang efektif, serta mock test dan simulasi test yang menyerupai kondisi ujian sebenarnya. Dengan pilihan jadwal yang fleksibel, kursus persiapan GRE ini cocok bagi mahasiswa maupun profesional yang ingin meningkatkan peluang diterima di universitas top dunia untuk kuliah di luar negri."
+                "• Verbal Reasoning",
+                "• Quantitative Reasoning",
+                "• Analytical Writing",
+                "Pembelajaran dilengkapi dengan latihan soal terarah, strategi ujian yang efektif, serta mock test dan simulasi test yang menyerupai kondisi ujian sebenarnya. Dengan pilihan jadwal yang fleksibel, kursus persiapan GRE ini cocok bagi mahasiswa maupun profesional yang ingin meningkatkan peluang diterima di universitas top dunia untuk kuliah di luar negeri."
             ]
         },
         "pricing": {
@@ -3122,22 +3150,6 @@ export const programs: ProgramData[] = [
             },
             "PROGRAM BUNDLING": {
                 "title": "PROGRAM BUNDLING",
-                "description": "",
-                "features": "",
-                "curriculum": [],
-                "pricing": {
-                    "Offline": {
-                        "Bronze": 0,
-                        "Silver": 0
-                    },
-                    "Online": {
-                        "Bronze": 0,
-                        "Silver": 0
-                    }
-                }
-            },
-            "Utimate GRE": {
-                "title": "Utimate GRE",
                 "description": "",
                 "features": "",
                 "curriculum": [],
@@ -3521,6 +3533,10 @@ export const programs: ProgramData[] = [
             "content": [
                 "Kursus GED di Ultimate Education dirancang khusus untuk membantu Anda lulus ujian GED dan mendapatkan sertifikat setara SMA internasional yang diakui secara luas di berbagai negara. Dengan bimbingan tutor berpengalaman (native speaker maupun pengajar lokal profesional) serta kurikulum up-to-date sesuai format GED terbaru, peserta akan berlatih secara intensif dan terarah.",
                 "Program ini mencakup pembelajaran menyeluruh pada empat area utama GED:",
+                "• Mathematical Reasoning",
+                "• Reasoning Through Language Arts (RLA)",
+                "• Science",
+                "• Social Studies",
                 "Selain itu, peserta juga akan mendapatkan strategi ujian, latihan soal, serta mock test untuk mengukur kesiapan sebelum menghadapi ujian resmi GED."
             ]
         },
@@ -3837,10 +3853,10 @@ export const programs: ProgramData[] = [
         "overview": {
             "title": "Gambaran Kursus ",
             "content": [
-                "Kursus persiapan TOEFL di ultimate Education dirancang bagi Anda yang menargetkan skor TOEFL tinggi untuk kuliah di luar negri, beasiswa, atau kebutuhan profesional internasional. Program ini berfokus pada peningkatan skor secara terukur melalui bimbingan tutor berpengalaman (native speaker dan pengajar profesional), dengan kurikulum terbaru yang mengikuti starndar resmi TEOFL.",
-                "TOEFL iBT: fokus pada 4 keterampilan utama—Reading, Listening, Speaking, dan Writing. Cocok untuk studi internasional, beasiswa, atau kebutuhan profesional global.",
-                "TOEFL ITP: fokus pada Listening, Structure & Written Expression, serta Reading. Ideal untuk syarat akademik, seleksi beasiswa, maupun karier.",
-                "Setiap peserta mendapatkan latihan soal teofl, mock test berkala, serta evaluasi perkembangan skor. Dengan jadwal belajar yang fleksibel dan pendampingan intensif, kursus persiapan TOEFL ini membantu Anda mencapai skor target secara lebih efektif dan meningkatkan peluang kuliah di luar negri."
+                "Kursus persiapan TOEFL di Ultimate Education dirancang bagi Anda yang menargetkan skor TOEFL tinggi untuk kuliah di luar negeri, beasiswa, atau kebutuhan profesional internasional. Program ini berfokus pada peningkatan skor secara terukur melalui bimbingan tutor berpengalaman (native speaker dan pengajar profesional), dengan kurikulum terbaru yang mengikuti standar resmi TOEFL.",
+                "• TOEFL iBT: fokus pada 4 keterampilan utama—Reading, Listening, Speaking, dan Writing. Cocok untuk studi internasional, beasiswa, atau kebutuhan profesional global.",
+                "• TOEFL ITP: fokus pada Listening, Structure & Written Expression, serta Reading. Ideal untuk syarat akademik, seleksi beasiswa, maupun karier.",
+                "Setiap peserta mendapatkan latihan soal TOEFL, mock test berkala, serta evaluasi perkembangan skor. Dengan jadwal belajar yang fleksibel dan pendampingan intensif, kursus persiapan TOEFL ini membantu Anda mencapai skor target secara lebih efektif dan meningkatkan peluang kuliah di luar negeri."
             ]
         },
         "pricing": {
@@ -4115,6 +4131,9 @@ export const programs: ProgramData[] = [
             "content": [
                 "Kursus PTE Academic di Ultimate Education dirancang untuk membantu peserta meraih skor terbaik dengan dukungan tutor berpengalaman—baik native speaker maupun pengajar lokal profesional. Program ini menggunakan kurikulum up-to-date dan relevan dengan format Pearson Test of English (PTE) Academic, sehingga siswa dapat mempersiapkan diri dengan efektif dan terarah.",
                 "Pembelajaran mencakup semua komponen tes:",
+                "• Speaking & Writing",
+                "• Reading",
+                "• Listening",
                 "Peserta akan mendapatkan latihan soal intensif, strategi ujian yang efektif, mock test berbasis komputer, serta jadwal belajar fleksibel. Dengan pendekatan ini, siswa lebih percaya diri menghadapi PTE Academic, baik untuk kebutuhan kuliah di luar negeri, keperluan kerja, maupun proses migrasi internasional."
             ]
         },
@@ -4329,8 +4348,8 @@ export const programs: ProgramData[] = [
         "overview": {
             "title": "Gambaran Kursus ",
             "content": [
-                "Kursus persiapan SAT di Ultimate Educationdirancang untuk membantu siswa meraih skor SAT yang optimal sebagai salah satu syarat kuliah di luar negri, khususnya ke universitas ternama di Amerika Serikat dan negara lainnya. Program ini dibimbing oleh tutor berpengalaman, terdiri dari pengajar lokal profesional dan native speaker, dengan kurikulum yang disesuaikan dengan format SAT terbaru serta mencakup seluruh materi utama, yaitu Reading, & Writing dan Math.",
-                "Melalui kelas persiapan SAT yang terstruktur, siswa akan mengikuti latihan intensif, pembahasan soal berbasis ujian resmi, serta mock test SAT yang menyerupai kondisi tes sebenarnya. Didukung dengan jadwal yang fleksibel dan evaluasi berkala, program ini membantu siswa belajar lebih fokus, terarah, dan lebih percaya diri dalam menghadapai SAT Test sebagai langkah penting menuju kuliah di luar negri."
+                "Kursus persiapan SAT di Ultimate Education dirancang untuk membantu siswa meraih skor SAT yang optimal sebagai salah satu syarat kuliah di luar negeri, khususnya ke universitas ternama di Amerika Serikat dan negara lainnya. Program ini dibimbing oleh tutor berpengalaman, terdiri dari pengajar lokal profesional dan native speaker, dengan kurikulum yang disesuaikan dengan format SAT terbaru serta mencakup seluruh materi utama, yaitu Reading, Writing dan Math.",
+                "Melalui kelas persiapan SAT yang terstruktur, siswa akan mengikuti latihan intensif, pembahasan soal berbasis ujian resmi, serta mock test SAT yang menyerupai kondisi tes sebenarnya. Didukung dengan jadwal yang fleksibel dan evaluasi berkala, program ini membantu siswa belajar lebih fokus, terarah, dan lebih percaya diri dalam menghadapi SAT Test sebagai langkah penting menuju kuliah di luar negeri."
             ]
         },
         "pricing": {
@@ -4580,9 +4599,12 @@ export const programs: ProgramData[] = [
         "overview": {
             "title": "Gambaran Kursus ",
             "content": [
-                "Kursus persiapan GMAT di Ultimate Education dirancang untuk membantu peserta meraih skor optimal dalam GMAT Focus Edition sebagai salah satu syarat utama kuliah di luar negeri, khususnya untuk program MBA dan studi bisnis internasional. Program ini dibimbing oleh tutor berpengalaman, terdiri dari native speaker dan pengajar lokal profesional, dengan kurikulim terbaru yang disesuaikan dengan format GMAT terkini serta strategi ujian yang teruji.",
+                "Kursus persiapan GMAT di Ultimate Education dirancang untuk membantu peserta meraih skor optimal dalam GMAT Focus Edition sebagai salah satu syarat utama kuliah di luar negeri, khususnya untuk program MBA dan studi bisnis internasional. Program ini dibimbing oleh tutor berpengalaman, terdiri dari native speaker dan pengajar lokal profesional, dengan kurikulum terbaru yang disesuaikan dengan format GMAT terkini serta strategi ujian yang teruji.",
                 "Melalui kelas persiapan GMAT yang terstruktur, peserta akan mempelajari seluruh bagian utama GMAT Focus Edition, meliputi:",
-                "Pembelajaran dilengkapi dengan latihan soal terarah, mock test, dan simulasi ujian yang menyerupain kondisi test sebenarnya. Dengan jadwal yang fleksibel, kursus persiapan GMAT ini cocok bagi profesional maupun calon mahasiswa MBA yang ingin meningkatkan peluang diterima di sekolah bisnis top dunia untuk kuliah di luar negeri."
+                "• Quantitative Reasoning",
+                "• Verbal Reasoning",
+                "• Data Insights",
+                "Pembelajaran dilengkapi dengan latihan soal terarah, mock test, dan simulasi ujian yang menyerupai kondisi test sebenarnya. Dengan jadwal yang fleksibel, kursus persiapan GMAT ini cocok bagi profesional maupun calon mahasiswa MBA yang ingin meningkatkan peluang diterima di sekolah bisnis top dunia untuk kuliah di luar negeri."
             ]
         },
         "pricing": {
