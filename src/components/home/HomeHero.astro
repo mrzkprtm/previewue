@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import HomeHeroAnimation from "./HomeHeroAnimation.astro";
-import { programs as allPrograms } from "@/data/programs";
+import { programs } from "@/data/programData";
 
 import p1 from "@/assets/logos/partners/4-300x300.webp";
 import p2 from "@/assets/logos/partners/6-300x300.webp";
@@ -15,18 +15,7 @@ import p9 from "@/assets/logos/partners/puninar_logistics.webp";
 
 const partners = [p1, p2, p3, p4, p5, p6, p7, p8, p9];
 
-const ACRONYMS = new Set(["act", "as", "bipa", "ged", "gmat", "gre", "hsk", "ib", "igcse", "ielts", "jlpt", "lsat", "pte", "sat", "toefl", "toeic", "topik", "utbk", "whv"]);
-
-const toProgramLabel = (slug: string) => {
-    const name = (slug || "")
-        .split("-")
-        .filter(Boolean)
-        .map((part) => (ACRONYMS.has(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
-        .join(" ");
-    return `Ultimate ${name}`.trim();
-};
-
-const programOptions = Array.from(new Set(allPrograms.map((p) => toProgramLabel(p.slug)))).sort((a, b) => a.localeCompare(b, "id"));
+const programOptions = Array.from(new Set(programs.map((p) => p.title)));
 ---
 
 <section class="relative pb-16 overflow-hidden bg-hero-gradient">
@@ -209,16 +198,18 @@ const programOptions = Array.from(new Set(allPrograms.map((p) => toProgramLabel(
     if (form && whatsappInput && programSelect && claim) {
         const waPhone = "6283812310368";
 
-        const buildMessage = (program) => {
+        const buildMessage = (program, waNumber) => {
             const selected = (program || "").trim();
+            const userWa = (waNumber || "").trim();
 
             const programText = selected ? `promo program ${selected}` : "info promo program";
+            const waText = userWa ? ` Nomor saya: +62${userWa}.` : "";
 
-            return `Halo Ultimate Education, saya ingin ${programText}. Mohon info detail (harga, jadwal, dan cara daftar). Terima kasih.`;
+            return `Halo Ultimate Education, saya ingin ${programText}.${waText} Mohon info detail (harga, jadwal, dan cara daftar). Terima kasih.`;
         };
 
         const updateHref = () => {
-            const msg = buildMessage(programSelect.value);
+            const msg = buildMessage(programSelect.value, whatsappInput.value);
             const url = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
             claim.setAttribute("href", url);
         };
