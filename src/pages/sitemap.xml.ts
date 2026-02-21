@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ site }) => {
-    const baseUrl = (site?.toString() || "https://ultimateducation.co.id").replace(/\/$/, "");
+    const baseUrl = (site?.toString() || "https://www.ultimateducation.co.id").replace(/\/$/, "");
 
     const staticPages = [
         "",

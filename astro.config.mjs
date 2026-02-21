@@ -5,7 +5,7 @@ import vercel from '@astrojs/vercel/serverless';
 
 export default defineConfig({
   output: 'hybrid',
-  site: 'https://ultimateducation.co.id',
+  site: 'https://www.ultimateducation.co.id',
   adapter: vercel(),
   integrations: [tailwind(), react()],
   build: {
