@@ -1,0 +1,6 @@
+---
+const { slug } = Astro.params;
+
+// Redirect old root-level article URLs to the new /artikel/ structure
+return Astro.redirect(`/artikel/${slug}`, 301);
+---

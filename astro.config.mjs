@@ -8,9 +8,6 @@ export default defineConfig({
   site: 'https://ultimateducation.co.id',
   adapter: vercel(),
   integrations: [tailwind(), react()],
-  redirects: {
-    '/[slug]': '/artikel/[slug]'
-  },
   build: {
     inlineStylesheets: 'auto',
   },
