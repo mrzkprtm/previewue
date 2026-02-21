@@ -2794,7 +2794,7 @@ export const programs: ProgramData[] = [
             "description": "Raih skor ACT impianmu dengan bimbingan intensif."
         },
         "hero": {
-            "title": "Kursus Persiapan <span class=\"text-ultimate-yellow\">ACT/span>",
+            "title": "Kursus Persiapan <span class=\"text-ultimate-yellow\">ACT</span>",
             "subtitle": "Raih skor impianmu dengan bimbingan intensif dari pengajar ahli",
             "pillText": "ACT Preparation",
             "image": "/images/hero_img.png"
