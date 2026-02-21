@@ -1,5 +1,15 @@
 ---
+// Force SSR to handle dynamic redirects and check against excluded paths
+export const prerender = false;
+
 const { slug } = Astro.params;
+
+// List of root paths that should never be redirected to /artikel/
+const EXCLUDED_SLUGS = ["about", "kontak", "mitra", "partnership", "promo", "program", "beasiswa", "artikel", "pendaftaran", "sitemap.xml", "robots.txt", "favicon.ico"];
+
+if (!slug || EXCLUDED_SLUGS.includes(slug.toLowerCase())) {
+    return Astro.rewrite("/404");
+}
 
 // Redirect old root-level article URLs to the new /artikel/ structure
 return Astro.redirect(`/artikel/${slug}`, 301);
