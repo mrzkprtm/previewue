@@ -34,9 +34,7 @@ const { program } = Astro.props;
     <ProgramPricingTabs client:load data={program.pricing} programSlug={program.slug} />
 
     <!-- 4. Jadwal Kelas -->
-    {['ielts','gre','gmat','sat'].includes(program.slug) && (
-      <InteractiveCalendar programSlug={program.slug} />
-    )}
+    {["ielts", "gre", "gmat", "sat"].includes(program.slug) && <InteractiveCalendar client:load programSlug={program.slug} />}
 
     <!-- 6. Alur Pembayaran -->
     <PaymentRoadmap client:load />

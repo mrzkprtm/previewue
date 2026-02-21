@@ -456,9 +456,6 @@ const InteractiveCalendar = ({ programSlug }) => {
                                         </div>
                                     )}
 
-                                    <p className="text-xs text-slate-500 leading-relaxed">
-                                        Jadwal kelas diambil dari spreadsheet Ultimate Education.
-                                    </p>
                                 </div>
 
                                 {/* Info banner */}
@@ -479,7 +476,7 @@ const InteractiveCalendar = ({ programSlug }) => {
                                     ))}
                                 </div>
                                 {/* Date cells - 42-cell matrix like HTML version */}
-                                <div className="grid grid-cols-7 gap-1 md:gap-1.5">
+                                <div className="grid grid-cols-7 gap-1 md:gap-1.5" style={{ overflow: 'visible' }}>
                                     {cells.map((c, idx) => {
                                         const events = c.inMonth ? getEventsForDate(c.date) : [];
                                         const isEventDay = events.length > 0;
@@ -494,13 +491,10 @@ const InteractiveCalendar = ({ programSlug }) => {
                                         if (!c.inMonth) {
                                             cellClass += ' opacity-30 text-slate-300';
                                         } else if (isEventDay) {
-                                            // Weekday = green, Weekend = red (matching HTML)
                                             if (isWeekend) {
-                                                cellClass += ' bg-red-50 text-red-600 cursor-pointer hover:bg-red-500 hover:text-white hover:scale-105 hover:shadow-md';
-                                                if (isHovered) cellClass += ' bg-red-500 text-white scale-105 shadow-md';
+                                                cellClass += ' bg-red-50 text-red-600 cursor-default hover:scale-105 hover:shadow-md';
                                             } else {
-                                                cellClass += ' bg-emerald-50 text-emerald-600 cursor-pointer hover:bg-emerald-500 hover:text-white hover:scale-105 hover:shadow-md';
-                                                if (isHovered) cellClass += ' bg-emerald-500 text-white scale-105 shadow-md';
+                                                cellClass += ' bg-emerald-50 text-emerald-600 cursor-default hover:scale-105 hover:shadow-md';
                                             }
                                         } else {
                                             cellClass += ' text-slate-300';
@@ -510,42 +504,35 @@ const InteractiveCalendar = ({ programSlug }) => {
                                             cellClass += ' ring-2 ring-ultimate-blue shadow-lg';
                                         }
 
+                                        // Determine tooltip alignment: cells on right side align right
+                                        const colIdx = idx % 7;
+                                        let tooltipAlign = 'left-1/2 -translate-x-1/2'; // center by default
+                                        if (colIdx <= 1) tooltipAlign = 'left-0'; // left-align for leftmost cols
+                                        if (colIdx >= 5) tooltipAlign = 'right-0'; // right-align for rightmost cols
+
                                         return (
                                             <div
                                                 key={`cell-${idx}`}
                                                 className={cellClass}
                                                 onMouseEnter={() => isEventDay && setHoveredDateKey(dateKey)}
                                                 onMouseLeave={() => setHoveredDateKey(null)}
-                                                style={isEventDay ? {
-                                                    boxShadow: isWeekend
-                                                        ? 'inset 0 0 0 2px #fca5a5'
-                                                        : 'inset 0 0 0 2px #6ee7b7'
-                                                } : undefined}
+                                                style={Object.assign(
+                                                    { overflow: 'visible' },
+                                                    isEventDay ? {
+                                                        boxShadow: isWeekend
+                                                            ? 'inset 0 0 0 2px #fca5a5'
+                                                            : 'inset 0 0 0 2px #6ee7b7'
+                                                    } : {}
+                                                )}
                                             >
-                                                <span className="relative z-10">{c.date.getDate().toString().padStart(2, '0')}</span>
-                                                {/* Event chips (matching HTML) */}
+                                                <span>{c.date.getDate().toString().padStart(2, '0')}</span>
+                                                {/* Color dots only */}
                                                 {isEventDay && uniqueEvents.length > 0 && (
-                                                    <div className="mt-0.5 flex flex-wrap items-center justify-center gap-0.5">
-                                                        {uniqueEvents.slice(0, 3).map((ev, i) => (
-                                                            <span
-                                                                key={`${ev.batch}-${i}`}
-                                                                className="text-white leading-none hidden md:inline-block"
-                                                                style={{
-                                                                    background: ev.color || '#0ea5e9',
-                                                                    fontSize: '8px',
-                                                                    padding: '1px 4px',
-                                                                    borderRadius: '999px',
-                                                                    boxShadow: '0 1px 2px rgba(0,0,0,.15)'
-                                                                }}
-                                                            >
-                                                                {ev.short}
-                                                            </span>
-                                                        ))}
-                                                        {/* Mobile: show dots instead of chips */}
-                                                        {uniqueEvents.slice(0, 3).map((ev, i) => (
+                                                    <div className="mt-0.5 flex items-center justify-center gap-0.5">
+                                                        {uniqueEvents.slice(0, 4).map((ev, i) => (
                                                             <span
                                                                 key={`dot-${ev.batch}-${i}`}
-                                                                className="w-1.5 h-1.5 rounded-full md:hidden"
+                                                                className="w-1.5 h-1.5 rounded-full"
                                                                 style={{ background: ev.color || '#0ea5e9' }}
                                                             />
                                                         ))}
@@ -554,6 +541,45 @@ const InteractiveCalendar = ({ programSlug }) => {
                                                 {c.isToday && c.inMonth && (
                                                     <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-ultimate-blue" />
                                                 )}
+
+                                                {/* Floating tooltip above cell */}
+                                                {isHovered && isEventDay && (() => {
+                                                    const dayName = DAY_MAP[c.date.getDay()];
+                                                    return (
+                                                        <div
+                                                            className={`absolute bottom-full mb-2 ${tooltipAlign} z-50 pointer-events-none`}
+                                                            style={{ minWidth: '240px', maxWidth: '340px' }}
+                                                        >
+                                                            <div className="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
+                                                                <div className="bg-gradient-to-r from-[#145da0] to-[#0e4a80] px-4 py-2 flex items-center justify-between">
+                                                                    <span className="text-sm font-bold text-white">{c.date.getDate()} {MONTH_NAMES[c.date.getMonth()]} {c.date.getFullYear()}</span>
+                                                                    <span className="text-xs text-white/70">{dayName}</span>
+                                                                </div>
+                                                                <div className="p-3 space-y-2">
+                                                                    {uniqueEvents.map((ev, i) => {
+                                                                        const label = formatBatchLabel(ev.batch);
+                                                                        return (
+                                                                            <div key={`tip-${ev.batch}-${i}`} className="flex items-center gap-2">
+                                                                                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: ev.color || '#0ea5e9' }} />
+                                                                                <span className="text-xs font-semibold text-slate-700">{ev.program}</span>
+                                                                                <span className="text-xs text-slate-400">·</span>
+                                                                                <span className="text-xs text-slate-500">{label}</span>
+                                                                                {ev.time && (
+                                                                                    <>
+                                                                                        <span className="text-xs text-slate-400">·</span>
+                                                                                        <span className="text-xs text-ultimate-blue font-semibold">{ev.time}</span>
+                                                                                    </>
+                                                                                )}
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
+                                                            {/* Arrow */}
+                                                            <div className={`absolute top-full ${colIdx <= 1 ? 'left-4' : colIdx >= 5 ? 'right-4' : 'left-1/2 -translate-x-1/2'} w-0 h-0`} style={{ borderLeft: '6px solid transparent', borderRight: '6px solid transparent', borderTop: '6px solid white' }} />
+                                                        </div>
+                                                    );
+                                                })()}
                                             </div>
                                         );
                                     })}
@@ -571,44 +597,6 @@ const InteractiveCalendar = ({ programSlug }) => {
                                             <span className="text-xs text-slate-500">Weekend</span>
                                         </div>
                                     </div>
-                                </div>
-
-                                {/* Hover feedback (matching HTML tooltip info) */}
-                                <div className="mt-4 min-h-[2rem] flex items-center justify-center">
-                                    {hoveredDateKey ? (() => {
-                                        const [y, m, d] = hoveredDateKey.split("-").map(Number);
-                                        const hoveredDate = new Date(y, m - 1, d);
-                                        const hoveredEvents = getEventsForDate(hoveredDate);
-                                        if (hoveredEvents.length === 0) {
-                                            return (
-                                                <div className="text-[11px] text-slate-400 italic">
-                                                    Arahkan kursor ke tanggal berwarna untuk info kelas
-                                                </div>
-                                            );
-                                        }
-                                        const unique = dedupeEvents(hoveredEvents);
-                                        return (
-                                            <div className="text-xs text-ultimate-blue font-semibold bg-blue-50 px-3 py-1.5 rounded-full flex flex-wrap items-center gap-2">
-                                                <span>{hoveredDate.getDate()} {MONTH_NAMES[hoveredDate.getMonth()]} {hoveredDate.getFullYear()}</span>
-                                                {unique.map((ev, i) => {
-                                                    const label = formatBatchLabel(ev.batch);
-                                                    const time = ev.time ? ` • ${ev.time}` : '';
-                                                    return (
-                                                        <span key={`${ev.batch}-${i}`} className="flex items-center gap-1">
-                                                            <span className="w-2 h-2 rounded-full" style={{ background: ev.color || '#0ea5e9' }} />
-                                                            <span className="text-[11px] text-slate-600 font-medium">
-                                                                {ev.program} • {label}{time}
-                                                            </span>
-                                                        </span>
-                                                    );
-                                                })}
-                                            </div>
-                                        );
-                                    })() : (
-                                        <div className="text-[11px] text-slate-400 italic">
-                                            Arahkan kursor ke tanggal berwarna untuk info kelas
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         </div>
