@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 
 const MONTH_NAMES = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
@@ -6,14 +6,23 @@ const MONTH_NAMES = [
 ];
 const DAY_HEADERS = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
 
-const PROGRAMS = ['ielts', 'gmat', 'gre', 'sat'];
+const PROGRAMS = [
+    { id: 'ielts', label: 'IELTS', days: [0, 2, 4, 6] },
+    { id: 'gmat', label: 'GMAT', days: [0, 6] },
+    { id: 'gre', label: 'GRE', days: [0, 6] },
+    { id: 'sat', label: 'SAT', days: [0, 6] }
+];
 
-function getDaysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-}
-function getFirstDayOfWeek(year, month) {
-    return new Date(year, month, 1).getDay();
-}
+const RAMADHAN_DAYS = {
+    ielts: [1, 2, 3]
+};
+
+const DAY_MAP = {
+    0: 'Minggu', 1: 'Senin', 2: 'Selasa', 3: 'Rabu',
+    4: 'Kamis', 5: 'Jumat', 6: 'Sabtu'
+};
+
+const PROGRAM_IDS = PROGRAMS.map(p => p.id);
 
 function parseCSV(text) {
     if (!text) return [];
@@ -32,20 +41,20 @@ function parseCSV(text) {
 }
 
 function normalizeMonth(m) {
-    const s = m.toLowerCase().replace(/\s+/g,"");
+    const s = m.toLowerCase().replace(/\s+/g, "");
     const map = {
-        "januari":1,"january":1,"januar":1,
-        "februari":2,"february":2,
-        "maret":3,"march":3,
-        "april":4,
-        "mei":5,"may":5,
-        "juni":6,"june":6,
-        "juli":7,"july":7,
-        "agustus":8,"august":8,
-        "september":9,
-        "oktober":10,"october":10,
-        "november":11,
-        "desember":12,"december":12
+        "januari": 1, "january": 1, "januar": 1,
+        "februari": 2, "february": 2,
+        "maret": 3, "march": 3,
+        "april": 4,
+        "mei": 5, "may": 5,
+        "juni": 6, "june": 6,
+        "juli": 7, "july": 7,
+        "agustus": 8, "august": 8,
+        "september": 9,
+        "oktober": 10, "october": 10,
+        "november": 11,
+        "desember": 12, "december": 12
     };
     return map[s] || null;
 }
@@ -61,8 +70,7 @@ function parseDateLabel(label, year) {
     const dMatch = t.match(/(\d{1,2})/);
     const d = dMatch ? parseInt(dMatch[1]) : null;
     if (!m || !d) return null;
-    const dt = new Date(year, m - 1, d);
-    return dt;
+    return new Date(year, m - 1, d);
 }
 
 function getLocalISO(d) {
@@ -74,15 +82,15 @@ function getLocalISO(d) {
 
 function shortProgramName(name) {
     const map = {
-        "IElTS Weekdays (19.30 - 21.00)":"IELTS",
-        "IELTS Weekdays (19.00 - 21.00)":"IELTS",
-        "IELTS Weekend (13.0 - 17.00)":"IELTS",
-        "SAT (08.00 - 12.00)":"SAT",
-        "SAT (10.00 - 12.00) ":"SAT",
-        "GRE (13.00 - 17.00)":"GRE",
-        "GRE (13.00 - 15.00)":"GRE",
-        "GMAT (13.00 - 17.00)":"GMAT",
-        "GMAT (13.00 - 15.00)":"GMAT"
+        "IElTS Weekdays (19.30 - 21.00)": "IELTS",
+        "IELTS Weekdays (19.00 - 21.00)": "IELTS",
+        "IELTS Weekend (13.0 - 17.00)": "IELTS",
+        "SAT (08.00 - 12.00)": "SAT",
+        "SAT (10.00 - 12.00) ": "SAT",
+        "GRE (13.00 - 17.00)": "GRE",
+        "GRE (13.00 - 15.00)": "GRE",
+        "GMAT (13.00 - 17.00)": "GMAT",
+        "GMAT (13.00 - 15.00)": "GMAT"
     };
     return map[name] || name.split(" ")[0];
 }
@@ -118,54 +126,49 @@ function getProgramTime(programFull, group) {
     }
     const short = shortProgramName(programFull || "");
     const map = {
-        general: {
-            "SAT": "08.00 - 12.00",
-            "GRE": "13.00 - 17.00",
-            "GMAT": "13.00 - 17.00"
-        },
-        ramadhan: {
-            "SAT": "10.00 - 12.00",
-            "GRE": "13.00 - 15.00",
-            "GMAT": "13.00 - 15.00"
-        }
+        general: { "SAT": "08.00 - 12.00", "GRE": "13.00 - 17.00", "GMAT": "13.00 - 17.00" },
+        ramadhan: { "SAT": "10.00 - 12.00", "GRE": "13.00 - 15.00", "GMAT": "13.00 - 15.00" }
     };
     return (map[group] && map[group][short]) || "";
 }
 
-function extractEventsFromCSV(rows, year, group) {
+function extractEventsFromCSV(rows, year, group, getBatchColor) {
     if (!rows || rows.length < 3) return [];
     const events = [];
     let headers = null;
     let batches = null;
     let headerRowIndex = -1;
+
     for (let i = 0; i < Math.min(rows.length, 10); i++) {
         const rowStr = rows[i].join(" ").toUpperCase();
         if ((rowStr.includes("IELTS") && rowStr.includes("WEEKEND")) ||
             (rowStr.includes("SAT") && rowStr.includes("12.00")) ||
             (rowStr.includes("GRE") && rowStr.includes("15.00"))) {
             if (!rowStr.includes("INTENSIVE") && !rowStr.includes("BATCH")) {
-                if (headerRowIndex === -1) {
-                    headerRowIndex = i;
-                }
+                if (headerRowIndex === -1) headerRowIndex = i;
             }
         }
     }
     if (headerRowIndex === -1) return [];
+
     let batchRowIndex = headerRowIndex + 1;
     if (batchRowIndex >= rows.length) return [];
+
     headers = rows[headerRowIndex];
     batches = rows[batchRowIndex];
     let startRow = batchRowIndex + 1;
-    const batchColors = new Map();
-    const programColorIndex = new Map();
+
     for (let r = startRow; r < rows.length; r++) {
         const row = rows[r];
         const rowStr = row.join(" ").toUpperCase();
-        if ((rowStr.includes("INTENSIVE") || rowStr.includes("BATCH")) && !rowStr.match(/\d{1,2}\s+(JAN|FEB|MAR|APR|MAY|MEI|JUN|JUL|AUG|AGU|SEP|OCT|OKT|NOV|DEC|DES)/i)) {
+
+        if ((rowStr.includes("INTENSIVE") || rowStr.includes("BATCH")) &&
+            !rowStr.match(/\d{1,2}\s+(JAN|FEB|MAR|APR|MAY|MEI|JUN|JUL|AUG|AGU|SEP|OCT|OKT|NOV|DEC|DES)/i)) {
             batches = row;
             continue;
         }
         if (row.every(c => !c.trim())) continue;
+
         for (let c = 0; c < headers.length; c++) {
             const cell = row[c] || "";
             if (!cell.trim()) continue;
@@ -176,26 +179,17 @@ function extractEventsFromCSV(rows, year, group) {
                 const batch = batches[c] || "Unknown Batch";
                 const programShort = shortProgramName(programFull);
                 const programId = programShort.toLowerCase();
-                const key = programId + "|" + batch;
-                if (!batchColors.has(key)) {
-                    const idx = programColorIndex.get(programId) || 0;
-                    const hue = (hashOffset(programId) + idx * 137) % 360;
-                    const color = `hsl(${hue}, 70%, 45%)`;
-                    programColorIndex.set(programId, idx + 1);
-                    batchColors.set(key, color);
-                }
+                const color = getBatchColor(programId, batch);
                 const time = getProgramTime(programFull, group);
+
                 events.push({
                     date: getLocalISO(dt),
-                    day: dt.getDate(),
-                    month: dt.getMonth(),
-                    year: dt.getFullYear(),
                     program: programShort,
                     programId,
                     batch,
                     short: programShort,
                     time,
-                    color: batchColors.get(key)
+                    color
                 });
             }
         }
@@ -203,12 +197,32 @@ function extractEventsFromCSV(rows, year, group) {
     return events;
 }
 
-
 const SHEET_URL_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEJ_iHnHRZAY40HtvBvGjHK2fL5XNgigtlUwKcz6CSzRbct6s8L-EwNE9tcm_lPUtAadtFbzi3WZB9";
 const SHEET_GID = {
     general: '0',
     ramadhan: '889451535'
 };
+
+// 42-cell calendar matrix (6 rows × 7 cols) matching HTML version
+function getMatrix(year, month) {
+    const today = new Date();
+    const first = new Date(year, month, 1);
+    const startDow = first.getDay();
+    const start = new Date(first);
+    start.setDate(1 - startDow);
+
+    const arr = [];
+    for (let i = 0; i < 42; i++) {
+        const d = new Date(start);
+        d.setDate(start.getDate() + i);
+        arr.push({
+            date: d,
+            inMonth: d.getMonth() === month,
+            isToday: d.toDateString() === today.toDateString()
+        });
+    }
+    return arr;
+}
 
 
 const InteractiveCalendar = ({ programSlug }) => {
@@ -221,8 +235,26 @@ const InteractiveCalendar = ({ programSlug }) => {
     const [csvRowsGeneral, setCsvRowsGeneral] = useState(null);
     const [csvRowsRamadhan, setCsvRowsRamadhan] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [allBatches, setAllBatches] = useState([]);
+    const [batchColorMap, setBatchColorMap] = useState(new Map());
 
-    const programId = programSlug && PROGRAMS.includes(programSlug) ? programSlug : null;
+    const programId = programSlug && PROGRAM_IDS.includes(programSlug) ? programSlug : null;
+    const programConfig = PROGRAMS.find(p => p.id === programId);
+
+    // Centralized batch color assignment (matching HTML's getBatchColor)
+    const batchColorsRef = useRef(new Map());
+    const programColorIndexRef = useRef(new Map());
+
+    const getBatchColor = useCallback((pId, batch) => {
+        const key = pId + "|" + batch;
+        if (batchColorsRef.current.has(key)) return batchColorsRef.current.get(key);
+        const idx = programColorIndexRef.current.get(pId) || 0;
+        const hue = (hashOffset(pId) + idx * 137) % 360;
+        const color = `hsl(${hue}, 70%, 45%)`;
+        programColorIndexRef.current.set(pId, idx + 1);
+        batchColorsRef.current.set(key, color);
+        return color;
+    }, []);
 
     useEffect(() => {
         if (!programId) return;
@@ -240,7 +272,7 @@ const InteractiveCalendar = ({ programSlug }) => {
                     if (text && text.includes(',') && !text.trim().startsWith('<')) {
                         return text;
                     }
-                } catch (_) {}
+                } catch (_) { }
             }
             return null;
         };
@@ -252,39 +284,45 @@ const InteractiveCalendar = ({ programSlug }) => {
             .finally(() => setLoading(false));
     }, [programId]);
 
+    // Build events map (matching HTML's buildEventsByDate)
     useEffect(() => {
         if (!programId) return;
+
+        // Reset color state per build
+        batchColorsRef.current = new Map();
+        programColorIndexRef.current = new Map();
+
         const rowsG = csvRowsGeneral;
         const rowsR = csvRowsRamadhan;
-        const eventsG = rowsG ? extractEventsFromCSV(rowsG, year, "general") : [];
-        const eventsR = rowsR ? extractEventsFromCSV(rowsR, year, "ramadhan") : [];
+        const eventsG = rowsG ? extractEventsFromCSV(rowsG, year, "general", getBatchColor) : [];
+        const eventsR = rowsR ? extractEventsFromCSV(rowsR, year, "ramadhan", getBatchColor) : [];
         const events = eventsG.concat(eventsR);
         const map = new Map();
+        const batchSet = new Set();
+
         events.forEach(ev => {
             if (!map.has(ev.date)) map.set(ev.date, []);
             map.get(ev.date).push(ev);
+            batchSet.add(ev.batch);
         });
+
         setEventsByDate(map);
-    }, [year, csvRowsGeneral, csvRowsRamadhan, programId]);
+        setAllBatches(Array.from(batchSet).sort());
+        setBatchColorMap(new Map(batchColorsRef.current));
+    }, [year, csvRowsGeneral, csvRowsRamadhan, programId, getBatchColor]);
 
-    const totalDays = getDaysInMonth(year, month);
-    const startOffset = getFirstDayOfWeek(year, month);
+    // 42-cell matrix (matching HTML)
+    const cells = useMemo(() => getMatrix(year, month), [year, month]);
 
-    const cells = useMemo(() => {
-        const arr = [];
-        for (let i = 0; i < startOffset; i++) arr.push(null);
-        for (let d = 1; d <= totalDays; d++) arr.push(d);
-        return arr;
-    }, [year, month, totalDays, startOffset]);
+    const getEventsForDate = useCallback((d) => {
+        const key = getLocalISO(d);
+        const list = eventsByDate.get(key) || [];
+        let filtered = list.filter(e => e.programId === programId);
+        if (batchFilter !== 'all') filtered = filtered.filter(e => e.batch === batchFilter);
+        return filtered;
+    }, [eventsByDate, programId, batchFilter]);
 
-    const isToday = (d) =>
-        d !== null &&
-        year === today.getFullYear() &&
-        month === today.getMonth() &&
-        d === today.getDate();
-
-    if (!programId) return null;
-
+    // Filter batches based on current program
     const availableBatches = useMemo(() => {
         const set = new Set();
         eventsByDate.forEach((list) => {
@@ -295,14 +333,6 @@ const InteractiveCalendar = ({ programSlug }) => {
         return Array.from(set).sort();
     }, [eventsByDate, programId]);
 
-    const getEventsForDate = (d) => {
-        const key = getLocalISO(d);
-        const list = eventsByDate.get(key) || [];
-        let filtered = list.filter(e => e.programId === programId);
-        if (batchFilter !== 'all') filtered = filtered.filter(e => e.batch === batchFilter);
-        return filtered;
-    };
-
     const prevMonth = () => {
         if (month === 0) { setMonth(11); setYear(y => y - 1); }
         else setMonth(m => m - 1);
@@ -311,6 +341,27 @@ const InteractiveCalendar = ({ programSlug }) => {
         if (month === 11) { setMonth(0); setYear(y => y + 1); }
         else setMonth(m => m + 1);
     };
+
+    if (!programId) return null;
+
+    // Deduplicate events for display
+    const dedupeEvents = (events) => {
+        const unique = [];
+        const seen = new Set();
+        events.forEach(ev => {
+            const key = ev.program + "|" + ev.batch;
+            if (!seen.has(key)) {
+                seen.add(key);
+                unique.push(ev);
+            }
+        });
+        return unique;
+    };
+
+    // Program availability info (matching HTML's renderProgramInfo)
+    const programDayNames = programConfig ? programConfig.days.map(d => DAY_MAP[d]).join(', ') : '';
+    const ramadhanDays = RAMADHAN_DAYS[programId];
+    const ramadhanDayNames = ramadhanDays ? ramadhanDays.map(d => DAY_MAP[d]).join(', ') : '';
 
     return (
         <section className="py-12 md:py-16 bg-white">
@@ -326,10 +377,10 @@ const InteractiveCalendar = ({ programSlug }) => {
                         </h2>
 
                         <div className="bg-white rounded-2xl md:rounded-[2rem] p-4 md:p-8 shadow-inner flex flex-col md:flex-row gap-6 md:gap-8">
-                            {/* Left panel */}
+                            {/* Left panel - Sidebar */}
                             <div className="md:w-[30%] flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-100 pb-5 md:pb-0 md:pr-6">
-                                {/* Month navigation */}
                                 <div>
+                                    {/* Month navigation */}
                                     <div className="flex items-center justify-between mb-4">
                                         <button onClick={prevMonth} className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors" aria-label="Bulan sebelumnya">
                                             <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
@@ -343,19 +394,37 @@ const InteractiveCalendar = ({ programSlug }) => {
                                         </button>
                                     </div>
 
-                                    {/* Legend */}
-                                    <div className="space-y-2 mb-5">
+                                    {/* Legend - Weekday/Weekend distinction */}
+                                    <div className="space-y-2 mb-4">
                                         <div className="flex items-center gap-2.5">
-                                            <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                                            <span className="text-xs font-medium text-slate-600">Hari kelas</span>
+                                            <span className="w-4 h-4 rounded bg-green-100 border-2 border-green-300" />
+                                            <span className="text-xs font-medium text-slate-600">Hari kerja (Weekday)</span>
                                         </div>
                                         <div className="flex items-center gap-2.5">
-                                            <div className="w-3 h-3 rounded-full bg-slate-200" />
-                                            <span className="text-xs font-medium text-slate-400">Tidak ada kelas</span>
+                                            <span className="w-4 h-4 rounded bg-red-100 border-2 border-red-300" />
+                                            <span className="text-xs font-medium text-slate-600">Akhir pekan (Weekend)</span>
                                         </div>
                                     </div>
+
+                                    {/* Program availability info */}
+                                    {programConfig && (
+                                        <div className="space-y-2 mb-4">
+                                            <div className="bg-gray-50 rounded-lg p-3">
+                                                <p className="text-xs font-semibold text-ultimate-blue">{programConfig.label} Class</p>
+                                                <p className="text-xs text-slate-500 mt-1">Available on {programDayNames}</p>
+                                            </div>
+                                            {ramadhanDays && (
+                                                <div className="bg-gray-50 rounded-lg p-3">
+                                                    <p className="text-xs font-semibold text-ultimate-blue">{programConfig.label} Ramadhan Class</p>
+                                                    <p className="text-xs text-slate-500 mt-1">Available on {ramadhanDayNames}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Batch filter */}
                                     {availableBatches.length > 0 && (
-                                        <div className="mb-5">
+                                        <div className="mb-4">
                                             <div className="text-xs font-semibold text-slate-600 mb-2">Batch</div>
                                             <select
                                                 className="w-full rounded-lg border border-slate-200 text-xs px-3 py-2 text-slate-700"
@@ -367,6 +436,23 @@ const InteractiveCalendar = ({ programSlug }) => {
                                                     <option key={b} value={b}>{formatBatchLabel(b)}</option>
                                                 ))}
                                             </select>
+                                        </div>
+                                    )}
+
+                                    {/* Batch legend (matching HTML's renderBatchLegend) */}
+                                    {availableBatches.length > 0 && (
+                                        <div className="space-y-1.5 mb-4">
+                                            <p className="text-xs font-bold text-ultimate-blue">Batch Legend</p>
+                                            {availableBatches.map(b => {
+                                                const colorKey = programId + "|" + b;
+                                                const color = batchColorMap.get(colorKey) || "#0ea5e9";
+                                                return (
+                                                    <div key={b} className="flex items-center gap-2">
+                                                        <span className="w-3.5 h-3.5 rounded flex-shrink-0" style={{ background: color, boxShadow: '0 1px 2px rgba(0,0,0,.2)' }} />
+                                                        <span className="text-xs text-slate-600">{formatBatchLabel(b)}</span>
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     )}
 
@@ -392,47 +478,80 @@ const InteractiveCalendar = ({ programSlug }) => {
                                         </div>
                                     ))}
                                 </div>
-                                {/* Date cells */}
+                                {/* Date cells - 42-cell matrix like HTML version */}
                                 <div className="grid grid-cols-7 gap-1 md:gap-1.5">
-                                    {cells.map((date, idx) => {
-                                        if (date === null) {
-                                            return <div key={`blank-${idx}`} className="aspect-square" />;
-                                        }
-                                        const cellDate = new Date(year, month, date);
-                                        const events = getEventsForDate(cellDate);
+                                    {cells.map((c, idx) => {
+                                        const events = c.inMonth ? getEventsForDate(c.date) : [];
                                         const isEventDay = events.length > 0;
-                                        const isTodayCell = isToday(date);
-                                        const isHovered = hoveredDateKey === getLocalISO(cellDate);
+                                        const uniqueEvents = isEventDay ? dedupeEvents(events) : [];
+                                        const dateKey = getLocalISO(c.date);
+                                        const isHovered = hoveredDateKey === dateKey;
+                                        const isWeekend = c.date.getDay() === 0 || c.date.getDay() === 6;
 
                                         let cellClass =
-                                            'aspect-square flex items-center justify-center rounded-lg md:rounded-xl text-xs md:text-sm font-semibold transition-all duration-150 select-none relative';
+                                            'aspect-square flex flex-col items-center justify-center rounded-lg md:rounded-xl text-xs md:text-sm font-semibold transition-all duration-150 select-none relative';
 
-                                        if (isEventDay) {
-                                            cellClass += ' bg-emerald-50 text-emerald-600 border border-emerald-200/60 cursor-pointer hover:bg-emerald-500 hover:text-white hover:scale-105 hover:shadow-md';
+                                        if (!c.inMonth) {
+                                            cellClass += ' opacity-30 text-slate-300';
+                                        } else if (isEventDay) {
+                                            // Weekday = green, Weekend = red (matching HTML)
+                                            if (isWeekend) {
+                                                cellClass += ' bg-red-50 text-red-600 cursor-pointer hover:bg-red-500 hover:text-white hover:scale-105 hover:shadow-md';
+                                                if (isHovered) cellClass += ' bg-red-500 text-white scale-105 shadow-md';
+                                            } else {
+                                                cellClass += ' bg-emerald-50 text-emerald-600 cursor-pointer hover:bg-emerald-500 hover:text-white hover:scale-105 hover:shadow-md';
+                                                if (isHovered) cellClass += ' bg-emerald-500 text-white scale-105 shadow-md';
+                                            }
                                         } else {
                                             cellClass += ' text-slate-300';
                                         }
 
-                                        if (isHovered && isEventDay) {
-                                            cellClass += ' bg-emerald-500 text-white scale-105 shadow-md';
+                                        if (c.isToday && c.inMonth) {
+                                            cellClass += ' ring-2 ring-ultimate-blue shadow-lg';
                                         }
 
                                         return (
                                             <div
-                                                key={date}
+                                                key={`cell-${idx}`}
                                                 className={cellClass}
-                                                onMouseEnter={() => isEventDay && setHoveredDateKey(getLocalISO(cellDate))}
+                                                onMouseEnter={() => isEventDay && setHoveredDateKey(dateKey)}
                                                 onMouseLeave={() => setHoveredDateKey(null)}
+                                                style={isEventDay ? {
+                                                    boxShadow: isWeekend
+                                                        ? 'inset 0 0 0 2px #fca5a5'
+                                                        : 'inset 0 0 0 2px #6ee7b7'
+                                                } : undefined}
                                             >
-                                                <span className="relative z-10">{date}</span>
-                                                {isEventDay && (
-                                                    <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center gap-1">
-                                                        {events.slice(0, 3).map((ev, i) => (
-                                                            <span key={`${ev.batch}-${i}`} className="w-1.5 h-1.5 rounded-full" style={{ background: ev.color || '#0ea5e9' }} />
+                                                <span className="relative z-10">{c.date.getDate().toString().padStart(2, '0')}</span>
+                                                {/* Event chips (matching HTML) */}
+                                                {isEventDay && uniqueEvents.length > 0 && (
+                                                    <div className="mt-0.5 flex flex-wrap items-center justify-center gap-0.5">
+                                                        {uniqueEvents.slice(0, 3).map((ev, i) => (
+                                                            <span
+                                                                key={`${ev.batch}-${i}`}
+                                                                className="text-white leading-none hidden md:inline-block"
+                                                                style={{
+                                                                    background: ev.color || '#0ea5e9',
+                                                                    fontSize: '8px',
+                                                                    padding: '1px 4px',
+                                                                    borderRadius: '999px',
+                                                                    boxShadow: '0 1px 2px rgba(0,0,0,.15)'
+                                                                }}
+                                                            >
+                                                                {ev.short}
+                                                            </span>
+                                                        ))}
+                                                        {/* Mobile: show dots instead of chips */}
+                                                        {uniqueEvents.slice(0, 3).map((ev, i) => (
+                                                            <span
+                                                                key={`dot-${ev.batch}-${i}`}
+                                                                className="w-1.5 h-1.5 rounded-full md:hidden"
+                                                                style={{ background: ev.color || '#0ea5e9' }}
+                                                            />
                                                         ))}
                                                     </div>
                                                 )}
-                                                {isTodayCell && (
+                                                {c.isToday && c.inMonth && (
                                                     <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-ultimate-blue" />
                                                 )}
                                             </div>
@@ -440,8 +559,22 @@ const InteractiveCalendar = ({ programSlug }) => {
                                     })}
                                 </div>
 
-                                {/* Hover feedback */}
-                                <div className="mt-4 h-8 flex items-center justify-center">
+                                {/* Mobile Legend */}
+                                <div className="md:hidden border-t border-slate-100 mt-3 pt-3">
+                                    <div className="flex justify-center gap-6">
+                                        <div className="flex items-center gap-2">
+                                            <span className="w-3 h-3 rounded bg-green-100 border-2 border-green-300" />
+                                            <span className="text-xs text-slate-500">Weekday</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="w-3 h-3 rounded bg-red-100 border-2 border-red-300" />
+                                            <span className="text-xs text-slate-500">Weekend</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Hover feedback (matching HTML tooltip info) */}
+                                <div className="mt-4 min-h-[2rem] flex items-center justify-center">
                                     {hoveredDateKey ? (() => {
                                         const [y, m, d] = hoveredDateKey.split("-").map(Number);
                                         const hoveredDate = new Date(y, m - 1, d);
@@ -453,26 +586,22 @@ const InteractiveCalendar = ({ programSlug }) => {
                                                 </div>
                                             );
                                         }
-                                        const unique = [];
-                                        const seen = new Set();
-                                        hoveredEvents.forEach(ev => {
-                                            const key = ev.program + "|" + ev.batch;
-                                            if (!seen.has(key)) {
-                                                seen.add(key);
-                                                unique.push(ev);
-                                            }
-                                        });
+                                        const unique = dedupeEvents(hoveredEvents);
                                         return (
                                             <div className="text-xs text-ultimate-blue font-semibold bg-blue-50 px-3 py-1.5 rounded-full flex flex-wrap items-center gap-2">
                                                 <span>{hoveredDate.getDate()} {MONTH_NAMES[hoveredDate.getMonth()]} {hoveredDate.getFullYear()}</span>
-                                                {unique.map((ev, i) => (
-                                                    <span key={`${ev.batch}-${i}`} className="flex items-center gap-1">
-                                                        <span className="w-2 h-2 rounded-full" style={{ background: ev.color || '#0ea5e9' }} />
-                                                        <span className="text-[11px] text-slate-600 font-medium">
-                                                            {formatBatchLabel(ev.batch)}{ev.time ? ` • ${ev.time}` : ''}
+                                                {unique.map((ev, i) => {
+                                                    const label = formatBatchLabel(ev.batch);
+                                                    const time = ev.time ? ` • ${ev.time}` : '';
+                                                    return (
+                                                        <span key={`${ev.batch}-${i}`} className="flex items-center gap-1">
+                                                            <span className="w-2 h-2 rounded-full" style={{ background: ev.color || '#0ea5e9' }} />
+                                                            <span className="text-[11px] text-slate-600 font-medium">
+                                                                {ev.program} • {label}{time}
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                ))}
+                                                    );
+                                                })}
                                             </div>
                                         );
                                     })() : (

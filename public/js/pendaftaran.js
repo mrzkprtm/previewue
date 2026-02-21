@@ -1179,6 +1179,8 @@ function validateCurrentSection() {
     const meterBar = document.getElementById('password_meter_bar');
     const passwordHelp = document.getElementById('password_help');
 
+    if (!pw) return; // Exit early if password field doesn't exist
+
     function scorePassword(s) {
         let score = 0;
         if (!s) return 0;
@@ -1192,28 +1194,38 @@ function validateCurrentSection() {
     function updateMeter() {
         const score = scorePassword(pw.value);
         const percent = (score / 4) * 100;
-        meterBar.style.width = percent + '%';
-        if (score <= 1) {
-            meterBar.style.background = '#e74c3c';
-            passwordHelp.textContent = (langDict && langDict[currentLang] && langDict[currentLang].passwordHelpWeak) || 'Lemah — gunakan minimal 8 karakter dengan kombinasi huruf dan angka.';
-        } else if (score === 2) {
-            meterBar.style.background = '#f1c40f';
-            passwordHelp.textContent = (langDict && langDict[currentLang] && langDict[currentLang].passwordHelpMedium) || 'Sedang — tambahkan simbol atau huruf kapital.';
-        } else {
-            meterBar.style.background = '#2ecc71';
-            passwordHelp.textContent = (langDict && langDict[currentLang] && langDict[currentLang].passwordHelpStrong) || 'Kuat — baik!';
+        if (meterBar) {
+            meterBar.style.width = percent + '%';
+            if (score <= 1) {
+                meterBar.style.background = '#e74c3c';
+            } else if (score === 2) {
+                meterBar.style.background = '#f1c40f';
+            } else {
+                meterBar.style.background = '#2ecc71';
+            }
+        }
+        if (passwordHelp) {
+            if (score <= 1) {
+                passwordHelp.textContent = (langDict && langDict[currentLang] && langDict[currentLang].passwordHelpWeak) || 'Lemah — gunakan minimal 8 karakter dengan kombinasi huruf dan angka.';
+            } else if (score === 2) {
+                passwordHelp.textContent = (langDict && langDict[currentLang] && langDict[currentLang].passwordHelpMedium) || 'Sedang — tambahkan simbol atau huruf kapital.';
+            } else {
+                passwordHelp.textContent = (langDict && langDict[currentLang] && langDict[currentLang].passwordHelpStrong) || 'Kuat — baik!';
+            }
         }
     }
 
-    toggle.addEventListener('click', () => {
-        if (pw.type === 'password') {
-            pw.type = 'text';
-            toggle.textContent = 'Hide';
-        } else {
-            pw.type = 'password';
-            toggle.textContent = 'Show';
-        }
-    });
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+            if (pw.type === 'password') {
+                pw.type = 'text';
+                toggle.textContent = 'Hide';
+            } else {
+                pw.type = 'password';
+                toggle.textContent = 'Show';
+            }
+        });
+    }
 
     // Confirm password toggle
     const pwConfirm = document.getElementById('lms_password_confirm');
@@ -1237,9 +1249,12 @@ function validateCurrentSection() {
 // Form submission
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('[pendaftaran] Submit clicked, section:', currentSection);
     if (!validateCurrentSection()) {
+        console.log('[pendaftaran] Validation failed');
         return;
     }
+    console.log('[pendaftaran] Validation passed, starting upload...');
     loadingEl.style.display = 'block';
     messageEl.style.display = 'none';
     try {
@@ -1362,16 +1377,17 @@ form.addEventListener('submit', async (e) => {
         }
         messageEl.innerHTML = successMsg + previewHtml;
         messageEl.style.display = 'block';
-        // Reset form
-        form.reset();
-        currentSection = 1;
-        showSection(1);
-        document.getElementById('field_perusahaan').classList.add('hidden-field');
-        document.getElementById('field_posisi').classList.add('hidden-field');
-        document.getElementById('field_kursus_sebelumnya').classList.add('hidden-field');
-        document.getElementById('field_tes_tambahan').classList.add('hidden-field');
-        document.getElementById('field_program_level').classList.add('hidden-field');
-        document.getElementById('program_level_select').innerHTML = `<option value="">${(langDict && langDict[currentLang] && langDict[currentLang].fields && langDict[currentLang].fields.options && langDict[currentLang].fields.options.program_level_pending && langDict[currentLang].fields.options.program_level_pending[0]) || '-- Pilih Kelas Terlebih Dahulu --'}</option>`;
+        // Hide form and show only success message
+        // Hide all form sections
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        // Hide progress bar, actions, and form elements
+        const progressBar = document.querySelector('.progress-bar');
+        const formActions = document.querySelector('.form-actions');
+        if (progressBar) progressBar.style.display = 'none';
+        if (formActions) formActions.style.display = 'none';
+        form.style.display = 'none';
+        // Scroll to success message
+        messageEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (error) {
         loadingEl.style.display = 'none';
         const errMsg = error && error.message ? error.message : 'Terjadi kesalahan';
