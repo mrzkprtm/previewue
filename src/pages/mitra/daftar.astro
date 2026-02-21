@@ -1,0 +1,761 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Daftar Mitra Ultimate Education" description="Bergabunglah sebagai Mitra Ultimate Education dan mulai hasilkan komisi dari setiap referensi Anda.">
+    <main class="flex-grow bg-slate-50 min-h-screen py-12 lg:py-20">
+        <div class="container mx-auto px-4 max-w-3xl">
+
+            <!-- Header -->
+            <div class="text-center mb-10">
+                <a href="/mitra" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-ultimate-blue mb-6 transition-colors">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    <span id="back-label">Kembali ke Halaman Mitra</span>
+                </a>
+                <h1 class="text-3xl md:text-4xl font-bold font-heading text-ultimate-navy mb-3" id="page-title">Formulir Pendaftaran Mitra</h1>
+                <p class="text-slate-500" id="page-subtitle">Isi data di bawah ini untuk bergabung sebagai Mitra Ultimate Education.</p>
+
+                <!-- Language Toggle -->
+                <div class="flex items-center justify-center gap-2 mt-6">
+                    <button id="btn-id" onclick="setLang('id')" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-ultimate-navy text-white">🇮🇩 Indonesia</button>
+                    <button id="btn-en" onclick="setLang('en')" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-slate-200 text-slate-600">🇬🇧 English</button>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 md:p-10">
+                <form id="mitra-form" novalidate class="space-y-6">
+
+                    <!-- Nama Depan + Nama Belakang (side by side) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="nama-depan" class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-nama-depan">Nama Depan *</label>
+                            <input type="text" id="nama-depan" name="nama_depan" required placeholder="Budi"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 placeholder:text-slate-400" />
+                        </div>
+                        <div>
+                            <label for="nama-belakang" class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-nama-belakang">Nama Belakang</label>
+                            <input type="text" id="nama-belakang" name="nama_belakang" placeholder="Santoso"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 placeholder:text-slate-400" />
+                        </div>
+                    </div>
+
+                    <!-- Referral Code Preview -->
+                    <div id="referral-section" class="hidden">
+                        <!-- Warning Banner -->
+                        <div class="flex items-start gap-3 bg-amber-50 border border-amber-300 rounded-2xl px-4 py-3 mb-3">
+                            <span class="material-symbols-outlined text-amber-500 mt-0.5 shrink-0">warning</span>
+                            <p class="text-sm text-amber-700 font-medium" id="referral-warning">
+                                ⚠️ Simpan kode referral Anda sebelum mendaftar! Kode ini akan digunakan untuk melacak komisi Anda.
+                            </p>
+                        </div>
+
+                        <!-- Code Display -->
+                        <div class="bg-gradient-to-br from-ultimate-navy to-blue-900 rounded-2xl p-5 text-white">
+                            <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-2" id="referral-label-text">Kode Referral Anda</p>
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <div class="flex-1 bg-white/10 backdrop-blur rounded-xl px-4 py-3 min-w-0">
+                                    <span id="referral-code-display" class="text-2xl font-bold tracking-wider font-mono text-white break-all">—</span>
+                                </div>
+                                <div class="flex gap-2 shrink-0">
+                                    <!-- Copy Button -->
+                                    <button type="button" id="btn-copy" onclick="copyReferral()"
+                                        class="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 backdrop-blur text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all active:scale-95">
+                                        <span class="material-symbols-outlined text-base">content_copy</span>
+                                        <span id="copy-label">Salin</span>
+                                    </button>
+                                    <!-- Download PDF Button -->
+                                    <button type="button" id="btn-pdf" onclick="downloadReferralPDF()"
+                                        class="flex items-center gap-1.5 bg-ultimate-yellow hover:bg-yellow-300 text-ultimate-navy text-sm font-semibold px-4 py-2.5 rounded-xl transition-all active:scale-95">
+                                        <span class="material-symbols-outlined text-base">download</span>
+                                        <span id="pdf-label">PDF</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-xs text-blue-200 mt-3" id="referral-note-text">Gunakan kode ini saat mempromosikan program Ultimate Education.</p>
+                        </div>
+                    </div>
+
+                    <!-- Pekerjaan -->
+                    <div>
+                        <label for="pekerjaan" class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-pekerjaan">Pekerjaan *</label>
+                        <input type="text" id="pekerjaan" name="pekerjaan" required placeholder="Contoh: Guru, Mahasiswa, Karyawan Swasta"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 placeholder:text-slate-400" />
+                    </div>
+
+                    <!-- No HP -->
+                    <div>
+                        <label for="nohp" class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-nohp">Nomor HP / WhatsApp *</label>
+                        <input type="tel" id="nohp" name="nohp" required placeholder="08xx xxxx xxxx"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 placeholder:text-slate-400" />
+                    </div>
+
+                    <!-- Alumni -->
+                    <div>
+                        <label class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-alumni">Apakah Anda alumni Ultimate Education? *</label>
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="alumni" value="ya" required class="accent-ultimate-blue w-4 h-4" />
+                                <span class="text-slate-700 text-sm" id="alumni-ya">Ya, Alumni</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="alumni" value="tidak" class="accent-ultimate-blue w-4 h-4" />
+                                <span class="text-slate-700 text-sm" id="alumni-tidak">Bukan Alumni</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Nomor Rekening -->
+                    <div>
+                        <label for="norek" class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-norek">Nomor Rekening *</label>
+                        <input type="text" id="norek" name="norek" required placeholder="Contoh: 1234567890"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 placeholder:text-slate-400" />
+                    </div>
+
+                    <!-- Bank -->
+                    <div>
+                        <label for="bank" class="block text-sm font-semibold text-ultimate-navy mb-1.5" id="label-bank">Nama Bank *</label>
+                        <select id="bank" name="bank" required
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 bg-white appearance-none">
+                            <option value="" id="bank-placeholder" disabled selected>Pilih bank Anda</option>
+                            <option value="BCA">BCA</option>
+                            <option value="BNI">BNI</option>
+                            <option value="BRI">BRI</option>
+                            <option value="BSI">BSI (Syariah Indonesia)</option>
+                            <option value="Mandiri">Bank Mandiri</option>
+                            <option value="CIMB">CIMB Niaga</option>
+                            <option value="Danamon">Bank Danamon</option>
+                            <option value="Permata">Bank Permata</option>
+                            <option value="Jago">Bank Jago</option>
+                            <option value="SeaBank">SeaBank</option>
+                            <option value="Jenius">Jenius (BTPN)</option>
+                            <option value="Lainnya" id="bank-other">Lainnya</option>
+                        </select>
+                        <!-- Custom bank name input (shown when Lainnya is selected) -->
+                        <div id="bank-custom-wrap" class="hidden mt-3">
+                            <input type="text" id="bank-custom" name="bank_custom" placeholder="Tuliskan nama bank Anda"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-ultimate-blue focus:ring-2 focus:ring-ultimate-blue/20 outline-none transition-all text-slate-700 placeholder:text-slate-400" />
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-100" />
+
+                    <!-- Agreement Section -->
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-base font-bold text-ultimate-navy" id="agreement-title">Perjanjian Kemitraan</h3>
+                            <span class="text-xs text-slate-400 italic" id="agreement-lang-note">Baca dalam Bahasa Indonesia</span>
+                        </div>
+                        <div id="agreement-box" class="bg-slate-50 rounded-2xl border border-slate-200 p-5 h-80 overflow-y-auto text-xs text-slate-600 leading-relaxed space-y-4 scroll-smooth">
+                            <!-- ID Content -->
+                            <div id="agreement-id">
+                                <p class="font-bold text-ultimate-navy">PASAL 1 – DEFINISI</p>
+                                <p>"Calon Peserta" berarti setiap individu atau institusi yang diperkenalkan oleh Pemberi Referensi kepada Ultimate Education. "Siswa Retail" berarti peserta individu yang mendaftar secara mandiri. "Klien Korporat" berarti institusi atau perusahaan yang menjalin kerja sama B2B. "Fee/Komisi Referral" berarti kompensasi yang dibayarkan kepada Pemberi Referensi sesuai perjanjian ini. "Nilai Program" berarti biaya program setelah diskon dan sebelum pajak. "Nilai Kontrak Bersih" berarti nilai kerja sama korporat setelah diskon dan sebelum pajak.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 2 – RUANG LINGKUP KERJA SAMA</p>
+                                <p>Pemberi Referensi berhak merekomendasikan Calon Peserta kepada Ultimate Education. Semua proses administrasi, negosiasi harga, penerbitan invoice, dan pelaksanaan kontrak sepenuhnya merupakan wewenang Ultimate Education. Pemberi Referensi tidak berwenang untuk: (a) mengikat Ultimate Education dalam perjanjian apapun; (b) menentukan harga atau memberikan diskon; (c) menggunakan nama atau logo Ultimate Education tanpa persetujuan tertulis; (d) membuat pernyataan di luar informasi yang resmi diberikan.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 3 – SKEMA KOMISI – SISWA RETAIL</p>
+                                <p>Pemberi Referensi berhak menerima komisi untuk Siswa Retail yang: (a) terverifikasi sebagai referensi Pemberi Referensi; (b) belum pernah tercatat dalam database Ultimate Education; (c) telah melakukan minimal DP. Besaran komisi: Di bawah Rp3.000.000 → Rp100.000 | Rp3.500.000–Rp7.000.000 → Rp150.000 | Di atas Rp7.000.000 → Rp200.000. Komisi dihitung dari pembayaran yang benar-benar diterima.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 4 – SKEMA KOMISI – KLIEN KORPORAT</p>
+                                <p>Komisi dihitung dari Nilai Kontrak Bersih: Hingga Rp50.000.000 → 3% | Rp50.000.001–Rp100.000.000 → 4% | Di atas Rp100.000.000 → 5%. Komisi korporat hanya dibayarkan jika: (a) institusi pertama kali diperkenalkan oleh Pemberi Referensi; (b) belum ada komunikasi sebelumnya; (c) kontrak telah ditandatangani dan pembayaran diterima.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 5 – KETENTUAN PEMBAYARAN</p>
+                                <p>Komisi dibayar paling lambat 30 hari kalender setelah: (a) pembayaran diterima Ultimate Education; (b) tidak ada pembatalan atau pengembalian dana. Jika terjadi refund penuh → tidak ada komisi. Refund sebagian → komisi dihitung proporsional. Komisi tunduk pada peraturan perpajakan yang berlaku. Pembayaran dilakukan via transfer bank ke rekening yang didaftarkan secara tertulis.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 6 – LARANGAN DAN ETIKA</p>
+                                <p>Pemberi Referensi wajib menjaga reputasi Ultimate Education dan dilarang: (a) mengalihkan hak komisi kepada pihak ketiga; (b) memanipulasi data peserta; (c) menjanjikan hasil nilai atau jaminan kelulusan; (d) mengungkapkan informasi internal tanpa otorisasi.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 7 – KERAHASIAAN</p>
+                                <p>Pemberi Referensi wajib menjaga kerahasiaan data peserta, struktur harga, dan strategi internal. Kewajiban ini tetap berlaku setelah perjanjian berakhir.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 8 – HUBUNGAN PARA PIHAK</p>
+                                <p>Hubungan dalam perjanjian ini bersifat independen dan tidak menimbulkan hubungan kerja, kemitraan, atau keagenan. Pemberi Referensi tidak berhak atas tunjangan karyawan.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 9 – JANGKA WAKTU</p>
+                                <p>Perjanjian ini berlaku selama 1 (satu) tahun sejak tanggal penandatanganan dan dapat diperpanjang atas kesepakatan tertulis Para Pihak.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 10 – PENGAKHIRAN</p>
+                                <p>Ultimate Education berhak mengakhiri perjanjian ini secara sepihak jika terjadi: (a) pelanggaran ketentuan; (b) tindakan yang merusak reputasi; (c) penyalahgunaan merek atau kekayaan intelektual. Hak komisi yang telah memenuhi syarat sebelum tanggal pengakhiran tetap dapat dibayarkan.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">PASAL 11 – PENYELESAIAN SENGKETA</p>
+                                <p>Setiap sengketa diselesaikan terlebih dahulu secara musyawarah. Jika tidak tercapai kesepakatan, Para Pihak sepakat untuk tunduk pada yurisdiksi eksklusif Pengadilan Negeri yang sesuai dengan domisili hukum Ultimate Education.</p>
+                            </div>
+
+                            <!-- EN Content -->
+                            <div id="agreement-en" class="hidden">
+                                <p class="font-bold text-ultimate-navy">ARTICLE 1 – DEFINITIONS</p>
+                                <p>"Prospective Participant" means any individual or institution introduced by the Referrer to Ultimate Education. "Retail Student" means an individual participant who enrolls independently. "Corporate Client" means any institution or company entering into B2B cooperation. "Referral Fee/Commission" means compensation payable to the Referrer. "Program Value" means the program fee after discounts, excluding taxes. "Net Contract Value" means the value of a corporate agreement after discounts and before taxes.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 2 – SCOPE OF COOPERATION</p>
+                                <p>The Referrer shall have the right to recommend Prospective Participants to Ultimate Education. All administrative processes, price negotiations, invoicing, and contract execution remain the sole authority of Ultimate Education. The Referrer shall not: (a) bind Ultimate Education in any agreement; (b) determine pricing or grant discounts; (c) use the name or logo of Ultimate Education without prior written consent; (d) make representations beyond officially provided information.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 3 – COMMISSION SCHEME – RETAIL STUDENT</p>
+                                <p>The Referrer is entitled to commission for each Retail Student who: (a) is verified as referred by the Referrer; (b) has not been previously recorded in the Ultimate Education database; (c) has made at least a minimum down payment. Commission: Below IDR 3,000,000 → IDR 100,000 | IDR 3,500,000–IDR 7,000,000 → IDR 150,000 | Above IDR 7,000,000 → IDR 200,000. Commission is calculated based on payments actually received.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 4 – COMMISSION SCHEME – CORPORATE CLIENT</p>
+                                <p>Commission is based on Net Contract Value: Up to IDR 50,000,000 → 3% | IDR 50,000,001–IDR 100,000,000 → 4% | Above IDR 100,000,000 → 5%. Corporate commission is only payable if: (a) the institution is introduced for the first time; (b) no prior communication existed; (c) the contract is executed and payment received.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 5 – PAYMENT TERMS</p>
+                                <p>Commission shall be paid no later than 30 calendar days after: (a) payment is received by Ultimate Education; (b) no cancellation or refund has occurred. Full refund → no commission. Partial refund → commission recalculated proportionally. Commission is subject to applicable tax regulations. Payment is via bank transfer to the Referrer's registered account.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 6 – PROHIBITIONS AND ETHICAL CONDUCT</p>
+                                <p>The Referrer shall maintain the reputation of Ultimate Education and is prohibited from: (a) assigning commission rights to any third party; (b) manipulating participant data; (c) promising score results or guaranteed outcomes; (d) disclosing internal information without authorization.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 7 – CONFIDENTIALITY</p>
+                                <p>The Referrer shall maintain the confidentiality of participant data, pricing structures, and internal strategies. This obligation survives the termination of this Agreement.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 8 – RELATIONSHIP OF THE PARTIES</p>
+                                <p>The relationship is independent in nature and does not create any employment, partnership, or agency relationship. The Referrer is not entitled to any employee benefits.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 9 – TERM</p>
+                                <p>This Agreement shall remain valid for one (1) year from the date of signing and may be extended upon written agreement.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 10 – TERMINATION</p>
+                                <p>Ultimate Education may terminate this Agreement unilaterally in the event of: (a) breach of any provision; (b) actions damaging to reputation; (c) misuse of brand or intellectual property. Commission rights fulfilled prior to termination remain payable.</p>
+
+                                <p class="font-bold text-ultimate-navy mt-3">ARTICLE 11 – DISPUTE RESOLUTION</p>
+                                <p>Any dispute shall first be resolved amicably. If no resolution is reached, the Parties agree to submit to the exclusive jurisdiction of the District Court at the legal domicile of Ultimate Education.</p>
+                            </div>
+                        </div>
+
+                        <!-- Agree Checkbox -->
+                        <label class="flex items-start gap-3 mt-4 cursor-pointer">
+                            <input type="checkbox" id="agree" name="agree" required class="mt-0.5 w-5 h-5 accent-ultimate-blue shrink-0" />
+                            <span class="text-sm text-slate-600" id="agree-text">
+                                Saya telah membaca dan menyetujui seluruh ketentuan <span class="font-semibold text-ultimate-navy">Perjanjian Kemitraan</span> di atas.
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2">
+                        <button type="submit" id="submit-btn"
+                            class="w-full bg-ultimate-yellow text-ultimate-navy font-semibold py-4 px-8 rounded-full hover:bg-yellow-400 transition-all shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 text-base">
+                            <span class="material-symbols-outlined">person_add</span>
+                            <span id="submit-label">Daftar Sekarang</span>
+                        </button>
+                        <p class="text-center text-xs text-slate-400 mt-3" id="submit-note">Dengan mendaftar, Anda menyetujui semua syarat dan ketentuan yang berlaku.</p>
+                    </div>
+                </form>
+
+                <!-- Success Message (hidden) -->
+                <div id="success-msg" class="hidden text-center py-12">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                        <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-ultimate-navy mb-3" id="success-title">Pendaftaran Berhasil!</h3>
+                    <p class="text-slate-500 mb-4" id="success-sub">Tim kami akan menghubungi Anda dalam 1–3 hari kerja.</p>
+
+                    <!-- Referral code reminder on success -->
+                    <div id="success-referral-box" class="bg-gradient-to-br from-ultimate-navy to-blue-900 rounded-2xl p-5 text-white text-left mb-6">
+                        <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-2" id="success-refcode-label">Kode Referral Anda</p>
+                        <p id="success-referral-code" class="text-3xl font-bold tracking-wider font-mono mb-3">—</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <button type="button" onclick="copyReferral()"
+                                class="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all active:scale-95">
+                                <span class="material-symbols-outlined text-base">content_copy</span>
+                                <span id="success-copy-label">Salin Kode</span>
+                            </button>
+                            <button type="button" onclick="downloadReferralPDF()"
+                                class="flex items-center gap-1.5 bg-ultimate-yellow hover:bg-yellow-300 text-ultimate-navy text-sm font-semibold px-4 py-2 rounded-xl transition-all active:scale-95">
+                                <span class="material-symbols-outlined text-base">download</span>
+                                <span id="success-pdf-label">Unduh PDF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <a href="/mitra" class="inline-flex items-center gap-2 bg-ultimate-yellow text-ultimate-navy font-semibold px-8 py-3 rounded-full hover:bg-yellow-400 transition-all">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span id="success-back">Kembali ke Halaman Mitra</span>
+                    </a>
+                </div>
+
+                <!-- Already Registered Message (hidden by default) -->
+                <div id="duplicate-msg" class="hidden text-center py-10">
+                    <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                        <span class="material-symbols-outlined text-4xl text-amber-500">person_check</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-ultimate-navy mb-2" id="dup-title">Anda Sudah Terdaftar!</h3>
+                    <p class="text-slate-500 mb-6" id="dup-sub">Nomor HP dan rekening ini sudah tercatat di sistem kami.</p>
+
+                    <!-- Existing referral code (if any) -->
+                    <div id="dup-refcode-wrap" class="hidden bg-gradient-to-br from-ultimate-navy to-blue-900 rounded-2xl p-5 text-white text-left mb-6">
+                        <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-2" id="dup-refcode-label">Kode Referral Anda</p>
+                        <p id="dup-referral-code" class="text-3xl font-bold tracking-wider font-mono mb-3">—</p>
+                        <button type="button" onclick="copyDupReferral()"
+                            class="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all active:scale-95">
+                            <span class="material-symbols-outlined text-base">content_copy</span>
+                            <span id="dup-copy-label">Salin Kode</span>
+                        </button>
+                    </div>
+
+                    <!-- WhatsApp help button -->
+                    <div class="bg-green-50 border border-green-200 rounded-2xl p-5 mb-6 text-left">
+                        <p class="text-sm font-semibold text-green-800 mb-1" id="dup-wa-title">Butuh Bantuan?</p>
+                        <p class="text-sm text-green-700 mb-4" id="dup-wa-desc">Jika Anda lupa kode referral atau ada kendala, hubungi admin kami via WhatsApp.</p>
+                        <a id="dup-wa-link" href="#" target="_blank" rel="noopener"
+                            class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold px-6 py-3 rounded-full transition-all shadow active:scale-95">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.858L0 24l6.335-1.512A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.017-1.376l-.36-.214-3.724.888.939-3.623-.235-.373A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+                            <span id="dup-wa-btn">Chat Admin WhatsApp</span>
+                        </a>
+                    </div>
+
+                    <a href="/mitra" class="inline-flex items-center gap-2 text-slate-500 hover:text-ultimate-navy text-sm transition-colors">
+                        <span class="material-symbols-outlined text-sm">arrow_back</span>
+                        <span id="dup-back">Kembali ke Halaman Mitra</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<!-- Hidden PDF template (not visible on page, printed via JS) -->
+<div id="referral-pdf-template" style="display:none;">
+    <div id="referral-pdf-content"></div>
+</div>
+
+<script>
+    // =====================
+    // Referral Code State
+    // =====================
+    let referralCode = '';
+    let dupReferralCode = ''; // for already registered users
+    let lockedDigits = ''; // locked once on first blur
+
+    function buildReferralCode(firstName: string, digits: string): string {
+        const clean = firstName.replace(/[^a-zA-ZÀ-ÿ]/g, '').trim();
+        if (!clean) return '';
+        // Capitalize first letter, keep the rest as typed
+        const formatted = clean.charAt(0).toUpperCase() + clean.slice(1);
+        return `${formatted}.${digits}`;
+    }
+
+    const namaDepanEl = document.getElementById('nama-depan') as HTMLInputElement;
+
+    // On every keystroke: update the name part but keep the same digits
+    namaDepanEl?.addEventListener('input', function() {
+        const val = this.value.trim();
+        const section = document.getElementById('referral-section') as HTMLElement;
+        const display = document.getElementById('referral-code-display') as HTMLElement;
+
+        if (!val) {
+            section.classList.add('hidden');
+            referralCode = '';
+            lockedDigits = '';
+            return;
+        }
+
+        // If digits not yet locked, show a live preview without locking
+        const previewDigits = lockedDigits || '???';
+        const preview = buildReferralCode(val, previewDigits);
+        display.textContent = preview || '—';
+        section.classList.remove('hidden');
+    });
+
+    // On blur: lock the digits once and set the final code
+    namaDepanEl?.addEventListener('blur', function() {
+        const val = this.value.trim();
+        if (!val) return;
+        if (!lockedDigits) {
+            lockedDigits = String(Math.floor(100 + Math.random() * 900));
+        }
+        referralCode = buildReferralCode(val, lockedDigits);
+        const display = document.getElementById('referral-code-display') as HTMLElement;
+        display.textContent = referralCode;
+    });
+
+    // =====================
+    // Auto-space every 4 digits (phone & rekening)
+    // =====================
+    function formatGrouped(raw: string): string {
+        // Keep only digits, then insert space every 4 chars
+        const digits = raw.replace(/\D/g, '');
+        return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+    }
+
+    const nohpEl = document.getElementById('nohp') as HTMLInputElement;
+    const norekEl = document.getElementById('norek') as HTMLInputElement;
+
+    [nohpEl, norekEl].forEach(el => {
+        if (!el) return;
+        el.addEventListener('input', function() {
+            const pos = this.selectionStart ?? this.value.length;
+            const raw = this.value;
+            const formatted = formatGrouped(raw);
+            this.value = formatted;
+            // Restore caret roughly to same position
+            const diff = formatted.length - raw.length;
+            const newPos = Math.max(0, pos + diff);
+            this.setSelectionRange(newPos, newPos);
+        });
+    });
+
+    // =====================
+    // Show/hide custom bank input when Lainnya is selected
+    // =====================
+    const bankSelect = document.getElementById('bank') as HTMLSelectElement;
+    const bankCustomWrap = document.getElementById('bank-custom-wrap') as HTMLElement;
+    const bankCustomInput = document.getElementById('bank-custom') as HTMLInputElement;
+
+    bankSelect?.addEventListener('change', function() {
+        const isOther = this.value === 'Lainnya';
+        bankCustomWrap.classList.toggle('hidden', !isOther);
+        bankCustomInput.required = isOther;
+        if (isOther) bankCustomInput.focus();
+    });
+
+
+
+    // =====================
+    // Copy to Clipboard
+    // =====================
+    function copyReferral() {
+        if (!referralCode) return;
+        navigator.clipboard.writeText(referralCode).then(() => {
+            const copyLabel = document.getElementById('copy-label');
+            const successCopyLabel = document.getElementById('success-copy-label');
+            const t = translations[currentLang as keyof typeof translations];
+            if (copyLabel) copyLabel.textContent = t.copied;
+            if (successCopyLabel) successCopyLabel.textContent = t.copied;
+            setTimeout(() => {
+                if (copyLabel) copyLabel.textContent = t.copyLabel;
+                if (successCopyLabel) successCopyLabel.textContent = t.copyLabel;
+            }, 2000);
+        });
+    }
+
+    function copyDupReferral() {
+        if (!dupReferralCode) return;
+        navigator.clipboard.writeText(dupReferralCode).then(() => {
+            const copyLabel = document.getElementById('dup-copy-label');
+            const t = translations[currentLang as keyof typeof translations];
+            if (copyLabel) copyLabel.textContent = t.copied;
+            setTimeout(() => {
+                if (copyLabel) copyLabel.textContent = t.successCopyLabel;
+            }, 2000);
+        });
+    }
+
+    // =====================
+    // Download as PDF (print dialog)
+    // =====================
+    function downloadReferralPDF() {
+        const activeCode = referralCode || dupReferralCode;
+        if (!activeCode) return;
+        const t = translations[currentLang as keyof typeof translations];
+
+        const win = window.open('', '_blank', 'width=600,height=500');
+        if (!win) return;
+        win.document.write(`<!DOCTYPE html>
+<html lang="${currentLang}">
+<head>
+  <meta charset="UTF-8"/>
+  <title>${t.pdfTitle} - ${activeCode}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+    .card {
+      width: 480px; background: #fff; border-radius: 24px; padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.12); text-align:center;
+    }
+    .logo { font-size: 13px; font-weight:700; letter-spacing:.15em; color:#6b7280; text-transform:uppercase; margin-bottom:28px; }
+    .title { font-size:14px; color:#6b7280; margin-bottom:12px; }
+    .code-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      border-radius: 16px; padding: 28px 36px; margin: 0 auto 24px;
+    }
+    .code-label { font-size:11px; font-weight:700; letter-spacing:.15em; color:#93c5fd; text-transform:uppercase; margin-bottom:10px; }
+    .code { font-size:38px; font-weight:900; color:#fff; letter-spacing:.08em; font-family:monospace; }
+    .note { font-size:12px; color:#94a3b8; margin-top:28px; line-height:1.6; }
+    .divider { height:1px; background:#e2e8f0; margin:20px 0; }
+    .footer { font-size:11px; color:#94a3b8; }
+    @media print { body { background:white; } .card { box-shadow:none; } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Ultimate Education</div>
+    <div class="title">${t.pdfTitle}</div>
+    <div class="code-box">
+      <div class="code-label">${t.referralLabelText}</div>
+      <div class="code">${activeCode}</div>
+    </div>
+    <div class="note">${t.pdfNote}</div>
+    <div class="divider"></div>
+    <div class="footer">ultimateducation.co.id &nbsp;·&nbsp; ${new Date().toLocaleDateString(currentLang === 'id' ? 'id-ID' : 'en-GB', { year:'numeric', month:'long', day:'numeric' })}</div>
+  </div>
+  <script>window.onload = function(){ window.print(); }<\/script>
+</body>
+</html>`);
+        win.document.close();
+    }
+
+    // =====================
+    // Language System
+    // =====================
+    const translations = {
+        id: {
+            pageTitle: "Formulir Pendaftaran Mitra",
+            pageSubtitle: "Isi data di bawah ini untuk bergabung sebagai Mitra Ultimate Education.",
+            backLabel: "Kembali ke Halaman Mitra",
+            labelNamaDepan: "Nama Depan *",
+            placeholderNamaDepan: "Budi",
+            labelNamaBelakang: "Nama Belakang",
+            placeholderNamaBelakang: "Santoso",
+            referralWarning: "⚠️ Simpan kode referral Anda sebelum mendaftar! Kode ini akan digunakan untuk melacak komisi Anda.",
+            referralLabelText: "Kode Referral Anda",
+            referralNoteText: "Gunakan kode ini saat mempromosikan program Ultimate Education.",
+            copyLabel: "Salin",
+            copied: "Disalin!",
+            pdfLabel: "PDF",
+            pdfTitle: "Kartu Kode Referral Mitra",
+            pdfNote: "Simpan kartu ini. Kode referral digunakan untuk melacak setiap referensi yang Anda berikan kepada Ultimate Education.",
+            labelPekerjaan: "Pekerjaan *",
+            placeholderPekerjaan: "Contoh: Guru, Mahasiswa, Karyawan Swasta",
+            labelNohp: "Nomor HP / WhatsApp *",
+            labelAlumni: "Apakah Anda alumni Ultimate Education? *",
+            alumniYa: "Ya, Alumni",
+            alumniTidak: "Bukan Alumni",
+            labelNorek: "Nomor Rekening *",
+            placeholderNorek: "Contoh: 1234567890",
+            labelBank: "Nama Bank *",
+            bankPlaceholder: "Pilih bank Anda",
+            bankOther: "Lainnya",
+            agreementTitle: "Perjanjian Kemitraan",
+            agreementLangNote: "Baca dalam Bahasa Indonesia",
+            agreeText: "Saya telah membaca dan menyetujui seluruh ketentuan <strong>Perjanjian Kemitraan</strong> di atas.",
+            submitLabel: "Daftar Sekarang",
+            submitNote: "Dengan mendaftar, Anda menyetujui semua syarat dan ketentuan yang berlaku.",
+            successTitle: "Pendaftaran Berhasil!",
+            successSub: "Tim kami akan menghubungi Anda dalam 1–3 hari kerja.",
+            successRefcodeLabel: "Kode Referral Anda",
+            successBack: "Kembali ke Halaman Mitra",
+            successCopyLabel: "Salin Kode",
+            successPdfLabel: "Unduh PDF",
+        },
+        en: {
+            pageTitle: "Partner Registration Form",
+            pageSubtitle: "Fill in the details below to join as an Ultimate Education Partner.",
+            backLabel: "Back to Partner Page",
+            labelNamaDepan: "First Name *",
+            placeholderNamaDepan: "John",
+            labelNamaBelakang: "Last Name",
+            placeholderNamaBelakang: "Doe",
+            referralWarning: "⚠️ Save your referral code before registering! This code will be used to track your commissions.",
+            referralLabelText: "Your Referral Code",
+            referralNoteText: "Use this code when promoting Ultimate Education programs.",
+            copyLabel: "Copy",
+            copied: "Copied!",
+            pdfLabel: "PDF",
+            pdfTitle: "Partner Referral Code Card",
+            pdfNote: "Keep this card. The referral code is used to track each referral you make to Ultimate Education.",
+            labelPekerjaan: "Occupation *",
+            placeholderPekerjaan: "e.g. Teacher, Student, Private Sector Employee",
+            labelNohp: "Phone / WhatsApp Number *",
+            labelAlumni: "Are you an Ultimate Education alumnus? *",
+            alumniYa: "Yes, Alumni",
+            alumniTidak: "Not an Alumni",
+            labelNorek: "Bank Account Number *",
+            placeholderNorek: "e.g. 1234567890",
+            labelBank: "Bank Name *",
+            bankPlaceholder: "Select your bank",
+            bankOther: "Other",
+            agreementTitle: "Partnership Agreement",
+            agreementLangNote: "Read in English",
+            agreeText: "I have read and agree to all terms of the <strong>Partnership Agreement</strong> above.",
+            submitLabel: "Register Now",
+            submitNote: "By registering, you agree to all applicable terms and conditions.",
+            successTitle: "Registration Successful!",
+            successSub: "Our team will contact you within 1–3 business days.",
+            successRefcodeLabel: "Your Referral Code",
+            successBack: "Back to Partner Page",
+            successCopyLabel: "Copy Code",
+            successPdfLabel: "Download PDF",
+        }
+    };
+
+    let currentLang = 'id';
+
+    function setLang(lang: string) {
+        currentLang = lang;
+        const t = translations[lang as keyof typeof translations];
+
+        (document.getElementById('page-title') as HTMLElement).textContent = t.pageTitle;
+        (document.getElementById('page-subtitle') as HTMLElement).textContent = t.pageSubtitle;
+        (document.getElementById('back-label') as HTMLElement).textContent = t.backLabel;
+        (document.getElementById('label-nama-depan') as HTMLElement).textContent = t.labelNamaDepan;
+        (document.getElementById('nama-depan') as HTMLInputElement).placeholder = t.placeholderNamaDepan;
+        (document.getElementById('label-nama-belakang') as HTMLElement).textContent = t.labelNamaBelakang;
+        (document.getElementById('nama-belakang') as HTMLInputElement).placeholder = t.placeholderNamaBelakang;
+        (document.getElementById('referral-warning') as HTMLElement).textContent = t.referralWarning;
+        (document.getElementById('referral-label-text') as HTMLElement).textContent = t.referralLabelText;
+        (document.getElementById('referral-note-text') as HTMLElement).textContent = t.referralNoteText;
+        (document.getElementById('copy-label') as HTMLElement).textContent = t.copyLabel;
+        (document.getElementById('pdf-label') as HTMLElement).textContent = t.pdfLabel;
+        (document.getElementById('label-pekerjaan') as HTMLElement).textContent = t.labelPekerjaan;
+        (document.getElementById('pekerjaan') as HTMLInputElement).placeholder = t.placeholderPekerjaan;
+        (document.getElementById('label-nohp') as HTMLElement).textContent = t.labelNohp;
+        (document.getElementById('label-alumni') as HTMLElement).textContent = t.labelAlumni;
+        (document.getElementById('alumni-ya') as HTMLElement).textContent = t.alumniYa;
+        (document.getElementById('alumni-tidak') as HTMLElement).textContent = t.alumniTidak;
+        (document.getElementById('label-norek') as HTMLElement).textContent = t.labelNorek;
+        (document.getElementById('norek') as HTMLInputElement).placeholder = t.placeholderNorek;
+        (document.getElementById('label-bank') as HTMLElement).textContent = t.labelBank;
+        (document.getElementById('bank-placeholder') as HTMLElement).textContent = t.bankPlaceholder;
+        (document.getElementById('bank-other') as HTMLElement).textContent = t.bankOther;
+        (document.getElementById('agreement-title') as HTMLElement).textContent = t.agreementTitle;
+        (document.getElementById('agreement-lang-note') as HTMLElement).textContent = t.agreementLangNote;
+        (document.getElementById('agree-text') as HTMLElement).innerHTML = t.agreeText;
+        (document.getElementById('submit-label') as HTMLElement).textContent = t.submitLabel;
+        (document.getElementById('submit-note') as HTMLElement).textContent = t.submitNote;
+        (document.getElementById('success-title') as HTMLElement).textContent = t.successTitle;
+        (document.getElementById('success-sub') as HTMLElement).textContent = t.successSub;
+        (document.getElementById('success-refcode-label') as HTMLElement).textContent = t.successRefcodeLabel;
+        (document.getElementById('success-back') as HTMLElement).textContent = t.successBack;
+        (document.getElementById('success-copy-label') as HTMLElement).textContent = t.successCopyLabel;
+        (document.getElementById('success-pdf-label') as HTMLElement).textContent = t.successPdfLabel;
+
+        // Toggle agreement content
+        (document.getElementById('agreement-id') as HTMLElement).classList.toggle('hidden', lang !== 'id');
+        (document.getElementById('agreement-en') as HTMLElement).classList.toggle('hidden', lang !== 'en');
+
+        // Active button styling
+        (document.getElementById('btn-id') as HTMLElement).className = lang === 'id'
+            ? 'px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-ultimate-navy text-white'
+            : 'px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-slate-200 text-slate-600';
+        (document.getElementById('btn-en') as HTMLElement).className = lang === 'en'
+            ? 'px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-ultimate-navy text-white'
+            : 'px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-slate-200 text-slate-600';
+    }
+
+    // =====================
+    // Form Submission
+    // =====================
+    document.getElementById('mitra-form')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const agreeEl = document.getElementById('agree') as HTMLInputElement;
+
+        // Clear previous errors
+        const errEl = document.getElementById('form-error');
+        if (errEl) errEl.remove();
+
+        // Block if checkbox not ticked
+        if (!agreeEl.checked) {
+            agreeEl.focus();
+            showError(currentLang === 'id'
+                ? 'Anda harus menyetujui Perjanjian Kemitraan sebelum mendaftar.'
+                : 'You must agree to the Partnership Agreement before registering.');
+            return;
+        }
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const namaDepan = (document.getElementById('nama-depan') as HTMLInputElement).value;
+        const namaBelakang = (document.getElementById('nama-belakang') as HTMLInputElement).value;
+        const alumniRadio = form.querySelector('input[name="alumni"]:checked') as HTMLInputElement | null;
+
+        // Resolve bank value — use custom text if "Lainnya" was selected
+        const bankSelectEl = document.getElementById('bank') as HTMLSelectElement;
+        const bankCustomEl = document.getElementById('bank-custom') as HTMLInputElement;
+        const bankValue = bankSelectEl.value === 'Lainnya'
+            ? (bankCustomEl.value.trim() || 'Lainnya')
+            : bankSelectEl.value;
+
+        const payload = {
+            nama_depan:     namaDepan,
+            nama_belakang:  namaBelakang,
+            nama:           `${namaDepan} ${namaBelakang}`.trim(),
+            pekerjaan:      (document.getElementById('pekerjaan') as HTMLInputElement).value,
+            no_hp:          (document.getElementById('nohp') as HTMLInputElement).value,
+            alumni:         alumniRadio ? alumniRadio.value : '',
+            nomor_rekening: (document.getElementById('norek') as HTMLInputElement).value,
+            bank:           bankValue,
+            referral_code:  referralCode,
+            terms_accepted: true,
+        };
+
+        // Loading state
+        const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+        const btnLabel = document.getElementById('submit-label') as HTMLElement;
+        const origLabel = btnLabel.textContent;
+        btn.disabled = true;
+        btnLabel.textContent = currentLang === 'id' ? 'Mengirim...' : 'Submitting...';
+        btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+        try {
+            const res = await fetch('/api/contributor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            // 409 = duplicate: no_hp + nomor_rekening already exist
+            if (res.status === 409) {
+                const existingCode: string | null = data.referral_code ?? null;
+                const t = translations[currentLang as keyof typeof translations];
+
+                // Populate the duplicate UI
+                if (existingCode) {
+                    (document.getElementById('dup-referral-code') as HTMLElement).textContent = existingCode;
+                    (document.getElementById('dup-refcode-wrap') as HTMLElement).classList.remove('hidden');
+                    dupReferralCode = existingCode;
+                }
+
+                // Build WhatsApp message
+                const waMsg = currentLang === 'id'
+                    ? `Halo Admin, saya sudah terdaftar sebagai Mitra UE namun ingin konfirmasi kode referral saya. Nama: ${payload.nama} | No HP: ${payload.no_hp} | No Rek: ${payload.nomor_rekening}`
+                    : `Hello Admin, I am already registered as a UE Partner and would like to confirm my referral code. Name: ${payload.nama} | Phone: ${payload.no_hp} | Account: ${payload.nomor_rekening}`;
+                const waUrl = `https://wa.me/6283812310368?text=${encodeURIComponent(waMsg)}`;
+                (document.getElementById('dup-wa-link') as HTMLAnchorElement).href = waUrl;
+
+                form.classList.add('hidden');
+                (document.getElementById('duplicate-msg') as HTMLElement).classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            if (!res.ok) {
+                throw new Error(data.error || (currentLang === 'id' ? 'Terjadi kesalahan server.' : 'A server error occurred.'));
+            }
+
+            // Success — show referral code on success screen
+            (document.getElementById('success-referral-code') as HTMLElement).textContent = referralCode || '—';
+            form.classList.add('hidden');
+            (document.getElementById('success-msg') as HTMLElement).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err: any) {
+            showError(err.message || (currentLang === 'id' ? 'Gagal mengirim data. Coba lagi.' : 'Failed to submit. Please try again.'));
+            btn.disabled = false;
+            btnLabel.textContent = origLabel;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+        }
+    });
+
+    function showError(msg: string) {
+        const existing = document.getElementById('form-error');
+        if (existing) existing.remove();
+        const el = document.createElement('p');
+        el.id = 'form-error';
+        el.className = 'text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded-xl px-4 py-3 mt-2';
+        el.textContent = msg;
+        const btn = document.getElementById('submit-btn');
+        btn?.parentElement?.insertBefore(el, btn);
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Expose to window for onclick attributes
+    (window as any).setLang = setLang;
+    (window as any).copyReferral = copyReferral;
+    (window as any).copyDupReferral = copyDupReferral;
+    (window as any).downloadReferralPDF = downloadReferralPDF;
+</script>

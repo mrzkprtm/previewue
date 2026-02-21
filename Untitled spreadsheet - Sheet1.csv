@@ -1,8 +1,0 @@
-Elemen,Font Family,Weight,Line-height,Tracking,Notes
-H1,Poppins,600 (Semibold),Tight (1.1–1.2),Tight,Hero / page title
-H2,Poppins,600,Tight,Tight,Section title
-H3,Poppins,600,Snug,Normal,Sub-section
-H4,Poppins,600,Snug,Normal,Card / block title
-Body,Segoe UI,400 (Regular),Relaxed (1.6),Normal,Paragraph utama
-UI / Button,Segoe UI,500 (Medium),Normal,Slight Wide,"CTA, nav, action"
-Small / Caption,Segoe UI,400–500,Snug,Slight Wide,"Meta, helper text"
