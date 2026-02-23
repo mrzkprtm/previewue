@@ -5,21 +5,23 @@ interface Props {
     pillText?: string;
     image?: string;
     showPatterns?: boolean;
+    ctaLabel?: string;
+    ctaHref?: string;
 }
 
-const { title, subtitle, pillText = "Ultimate Education", image = "/images/hero_img.png", showPatterns = true } = Astro.props;
+const { title, subtitle, pillText = "Ultimate Education", image = "/images/hero_img.png", showPatterns = true, ctaLabel, ctaHref } = Astro.props;
 ---
 
-<section class="relative pb-8 lg:pb-0 bg-hero-gradient overflow-hidden lg:max-h-[300px] lg:flex lg:items-center">
+<section class="relative pb-12 md:pb-14 lg:pb-8 bg-hero-gradient overflow-hidden lg:max-h-[300px] lg:flex lg:items-center">
     <!-- Decorative element -->
     <!-- Hero Decoration (Image & Semi-circle) -->
     <div class="absolute inset-0 hidden lg:flex pointer-events-none z-10">
         <div class="container mx-auto w-full flex items-end justify-end">
             <div class="relative w-[35%] h-full flex flex-col items-center justify-end">
                 <!-- Semi-circle background -->
-                <div class="absolute top-0 w-[360px] h-[180px] bg-ultimate-yellow rounded-b-full left-1/3 -translate-y-[54px] z-0"></div>
+                <div class="absolute top-0 w-[360px] h-[180px] bg-ultimate-yellow rounded-b-full left-[28%] -translate-y-[54px] z-0"></div>
                 <!-- Hero Image Overlay -->
-                <img src={image} alt="Ilustrasi siswa belajar" class="absolute z-10 h-[85%] w-auto object-contain object-bottom left-[73%] -translate-x-1/2" />
+                <img src={image} alt="Ilustrasi siswa belajar" class="absolute z-10 h-[100%] w-auto object-contain object-bottom left-[73%] -translate-x-1/2" />
             </div>
         </div>
     </div>
@@ -33,6 +35,21 @@ const { title, subtitle, pillText = "Ultimate Education", image = "/images/hero_
                 <h1 class="font-heading font-semibold text-white text-3xl md:text-4xl lg:text-5xl mb-4 leading-snug" set:html={title} />
 
                 {subtitle && <p class="text-slate-300 text-[15px] md:text-base lg:text-lg lg:text-xl mb-8 leading-relaxed font-light" set:html="Panduan terbaru tentang persiapan tes internasional dan beasiswa luar negeri" />}
+                {
+                    ctaLabel && ctaHref && (
+                        <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <a
+                                href={ctaHref}
+                                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-ultimate-yellow text-ultimate-navy font-semibold px-6 sm:px-7 py-3 sm:py-3.5 text-sm sm:text-base shadow-lg shadow-ultimate-yellow/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                            >
+                                {ctaLabel}
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </a>
+                        </div>
+                    )
+                }
             </div>
         </div>
     </div>
