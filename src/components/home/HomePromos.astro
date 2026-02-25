@@ -10,33 +10,28 @@ interface Props {
   validUntil?: string;
 }
 
-const { 
-  institutionName = "Ultimate Education", 
-  discountAmount = "Rp 1,500,000",
-  validUntil = "the end of Ramadhan"
-} = Astro.props;
+const { institutionName = "Ultimate Education", discountAmount = "Rp 1,500,000", validUntil = "the end of Ramadhan" } = Astro.props;
 ---
 
 <section class="antialiased py-6 font-sans">
   <div class="container mx-auto">
-
-
     <!-- Main Banner Card -->
-    <div class="relative overflow-hidden rounded-3xl shadow-2xl bg-white flex flex-col lg:flex-row h-auto lg:h-[320px] w-full border border-gray-100 ">
-      
+    <div class="relative overflow-hidden rounded-3xl shadow-2xl bg-white flex flex-col lg:flex-row h-auto lg:h-[320px] w-full border border-gray-100">
       <!-- Left Section: Promotion Details -->
       <div class="relative w-full lg:w-[55%] bg-hero-gradient p-5 lg:p-7 flex flex-col justify-center items-start z-10 overflow-hidden">
         <!-- Background Decorative Elements -->
         <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
           <svg class="absolute -top-10 -left-10 w-64 h-64 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zm0 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 17zm10-7a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0120 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zm12.37-4.93a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm-9.9 9.9a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm9.9 0a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0zm-9.9-9.9a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0z"></path>
+            <path
+              d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zm0 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 17zm10-7a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0120 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zm12.37-4.93a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm-9.9 9.9a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zm9.9 0a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0zm-9.9-9.9a.75.75 0 010-1.06l1.06-1.06a.75.75 0 011.06 1.06l-1.06 1.06a.75.75 0 01-1.06 0z"
+            ></path>
           </svg>
           <span class="material-icons-outlined text-9xl absolute bottom-0 right-10 transform rotate-12 text-white opacity-30 z-10">mosque</span>
         </div>
 
         <p class="text-[#edc92a] text-base font-medium mb-1 uppercase tracking-widest">Ramadhan Special</p>
         <h2 class="text-white text-[26px] lg:text-3xl font-extrabold leading-tight mb-2 drop-shadow-sm">
-          Discount Up To <br/>
+          Discount Up To <br />
           <span class="text-[#edc92a] px-2">{discountAmount}</span>
         </h2>
 
@@ -107,7 +102,12 @@ const {
         </div>
 
         <div class="mt-5 w-full max-w-sm">
-          <a href="https://wa.me/6283812310368" target="_blank" rel="noopener noreferrer" class="w-full bg-[#145da0] hover:bg-[#edc92a] hover:text-[#145da0] text-[#ffffff] font-extrabold text-[15px] py-3 px-6 rounded-xl shadow-lg shadow-yellow-500/30 hover:shadow-yellow-500/50 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group">
+          <a
+            href="https://wa.me/6283812310368"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full bg-[#145da0] hover:bg-[#edc92a] hover:text-[#145da0] text-[#ffffff] font-extrabold text-[15px] py-3 px-6 rounded-xl shadow-lg shadow-yellow-500/30 hover:shadow-yellow-500/50 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group"
+          >
             Get the Offer
             <span class="material-icons-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </a>
@@ -117,7 +117,6 @@ const {
     </div>
 
     <!-- Trust Badges -->
-
   </div>
 </section>
 
@@ -129,29 +128,29 @@ const {
 
 <script>
   function setupThemeToggle() {
-    const themeBtn = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-toggle-icon');
+    const themeBtn = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-toggle-icon");
     const html = document.documentElement;
 
     // Check for saved user preference
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      html.classList.add('dark');
-      if (themeIcon) themeIcon.textContent = 'light_mode';
+    if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      html.classList.add("dark");
+      if (themeIcon) themeIcon.textContent = "light_mode";
     } else {
-      html.classList.remove('dark');
-      if (themeIcon) themeIcon.textContent = 'dark_mode';
+      html.classList.remove("dark");
+      if (themeIcon) themeIcon.textContent = "dark_mode";
     }
 
-    themeBtn?.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      const isDark = html.classList.contains('dark');
-      
-      localStorage.theme = isDark ? 'dark' : 'light';
-      if (themeIcon) themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+    themeBtn?.addEventListener("click", () => {
+      html.classList.toggle("dark");
+      const isDark = html.classList.contains("dark");
+
+      localStorage.theme = isDark ? "dark" : "light";
+      if (themeIcon) themeIcon.textContent = isDark ? "light_mode" : "dark_mode";
     });
   }
 
   // Initialize on page load and on Astro transitions
   setupThemeToggle();
-  document.addEventListener('astro:after-swap', setupThemeToggle);
+  document.addEventListener("astro:after-swap", setupThemeToggle);
 </script>

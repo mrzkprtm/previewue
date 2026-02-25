@@ -4,21 +4,27 @@ import Footer from "../components/common/Footer.astro";
 import ChatWidget from "../components/common/ChatWidget.astro";
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import SEO from "../components/common/SEO.astro";
+import Schema from "../components/common/Schema.astro";
 
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+  ogType?: "website" | "article" | "profile" | "book" | "video.other" | "video.movie" | "video.episode" | "video.tv_show" | "music.song" | "music.album" | "music.playlist" | "music.radio_station";
 }
 
-const { title, description = "Astro WordPress Headless Site" } = Astro.props;
+const { title, description, image, noindex, nofollow, ogType } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11149613429"></script>
-    <script>
+    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=AW-11149613429"></script>
+    <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -26,22 +32,13 @@ const { title, description = "Astro WordPress Headless Site" } = Astro.props;
       gtag("js", new Date());
       gtag("config", "AW-11149613429");
     </script>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/logos/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/logos/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/logos/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/logos/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/logos/android-chrome-512x512.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="mask-icon" href="/logos/safari-pinned-tab.svg" color="#145da0" />
-    <meta name="theme-color" content="#145da0" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Preload LCP Logo -->
-    <link rel="preload" as="image" href="/logos/logo-ue.png" imagesrcset="/logos/logo-ue.png 1x, /logos/logo-ue.png 2x" fetchpriority="high" />
+
+    <SEO title={title} description={description} image={image} noindex={noindex} nofollow={nofollow} ogType={ogType} />
+
+    <!-- Global Schemas -->
+    <Schema type="EducationalOrganization" />
+    <Schema type="WebSite" />
+    <Schema type="LocalBusiness" />
 
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
@@ -51,87 +48,6 @@ const { title, description = "Astro WordPress Headless Site" } = Astro.props;
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" media="print" onload="this.media='all'" />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" media="print" onload="this.media='all'" />
-
-    <!-- SEO Metadata -->
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-    <meta name="keywords" content="Kursus IELTS Jakarta, Kursus GMAT Indonesia, Kursus GRE Bandung, Kursus SAT Jakarta, Bimbingan Belajar Luar Negeri, Ultimate Education" />
-    <meta name="robots" content="index, follow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="language" content="Indonesian" />
-    <meta name="author" content="Ultimate Education" />
-    <link rel="canonical" href={Astro.url} />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://placehold.co/1200x630?text=Ultimate+Education" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://placehold.co/1200x630?text=Ultimate+Education" />
-
-    <!-- JSON-LD Structured Data -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
-        name: "Ultimate Education",
-        url: Astro.url.origin,
-        logo: "https://placehold.co/200x60",
-        description: "Konsultan pendidikan luar negeri dan pusat persiapan tes IELTS, SAT, GRE, GMAT terpercaya di Indonesia.",
-        address: [
-          {
-            "@type": "PostalAddress",
-            streetAddress: "Sampoerna Strategic Square, Jalan Jenderal Sudirman No. 45 – 46",
-            addressLocality: "Jakarta",
-            addressCountry: "ID",
-          },
-          {
-            "@type": "PostalAddress",
-            streetAddress: "Jl. Ir. H. Juanda No.84, Lebakgede",
-            addressLocality: "Bandung",
-            addressCountry: "ID",
-          },
-        ],
-        contactPoint: {
-          "@type": "ContactPoint",
-          telephone: "+6283812310368",
-          contactType: "customer service",
-        },
-        sameAs: [
-          "https://www.facebook.com/UltimatEducation",
-          "https://www.instagram.com/ultimate.education/",
-          "https://x.com/Ultimate_Eduind",
-          "https://www.youtube.com/channel/UCHHq1s89_z9BoclcvNH7naA",
-          "https://id.linkedin.com/company/ultimate-education",
-        ],
-      })}
-    />
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        url: Astro.url.origin,
-        potentialAction: {
-          "@type": "SearchAction",
-          target: {
-            "@type": "EntryPoint",
-            urlTemplate: `${Astro.url.origin}/artikel?search={search_term_string}`,
-          },
-          "query-input": "required name=search_term_string",
-        },
-      })}
-    />
-
-    <title>{title}</title>
   </head>
   <body class="bg-white text-gray-900 font-sans text-base antialiased min-h-screen flex flex-col">
     <Header />

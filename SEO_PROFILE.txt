@@ -1,0 +1,115 @@
+SEO PROFILE - ULTIMATE EDUCATION (UNTUK KEBUTUHAN SEO)
+
+1) Informasi Bisnis (Local SEO inti)
+Nama bisnis: Ultimate Education
+Kategori bisnis: Konsultan pendidikan & kursus persiapan tes
+Deskripsi bisnis singkat: Konsultan pendidikan luar negeri dan pusat persiapan tes IELTS, SAT, GRE, GMAT terpercaya di Indonesia.
+Alamat lengkap:
+- Jakarta: Sampoerna Strategic Square, Jalan Jenderal Sudirman No. 45 – 46, Indonesia
+- Bandung: Jl. Ir. H. Juanda No.84, Lebakgede, Indonesia
+Kota: Jakarta; Bandung
+Provinsi: DKI Jakarta; Jawa Barat
+Kode pos: Belum tersedia di repo
+Negara: Indonesia
+Koordinat (lat,long): Belum tersedia di repo
+Nomor telepon: +6283812310368
+WhatsApp: +6283812310368
+Email: info@ultimateducation.co.id
+Website: https://www.ultimateducation.co.id
+Jam operasional: Belum tersedia di repo
+Area layanan (jika tidak melayani di lokasi): Indonesia (online) + Jakarta/Bandung (offline)
+Link Google Maps / CID: Belum tersedia di repo
+
+2) Branding & Identitas
+Logo URL: https://www.ultimateducation.co.id/logos/logo-ue.webp
+Cover image URL: https://placehold.co/1200x630?text=Ultimate+Education
+Foto lokasi (opsional): Belum tersedia di repo
+Nama brand: Ultimate Education
+Slogan: Belum tersedia di repo
+Tahun berdiri: Belum tersedia di repo
+
+3) Target SEO
+Keyword utama:
+- Kursus IELTS Jakarta
+- Kursus GMAT Indonesia
+- Kursus GRE Bandung
+- Kursus SAT Jakarta
+- Bimbingan Belajar Luar Negeri
+- Konsultan pendidikan luar negeri
+Keyword turunan:
+- Kursus TOEFL
+- Persiapan beasiswa luar negeri
+- Konsultasi kuliah luar negeri
+- Kursus bahasa asing (TOPIK, JLPT, HSK, DELF, TestDaF, BIPA)
+- Business English / General English
+Jenis layanan/produk:
+- Program persiapan tes (IELTS, SAT, GRE, GMAT, TOEFL, PTE, TOEIC, dsb.)
+- Program beasiswa & konsultasi studi luar negeri
+- Kelas bahasa asing
+- Kelas bahasa Inggris umum & bisnis
+Target kota/area: Jakarta, Bandung, Indonesia
+Bahasa website: Indonesian
+Target market: Pelajar SMA, mahasiswa, profesional muda, calon studi luar negeri
+
+4) Struktur Website
+Jenis website: Company profile + katalog program + blog/artikel
+Homepage fokus: Konsultan pendidikan luar negeri + promosi program persiapan tes
+Halaman layanan:
+- /program (daftar program)
+- /program/{slug} (detail program)
+Halaman lokasi: Belum tersedia di repo
+Blog ada/tidak: Ada (/artikel)
+Landing page khusus ada/tidak: Ada (/promo, /beasiswa)
+
+5) Data Teknis Astro
+Framework: Astro
+Konten via: WordPress REST API (WP_API_URL / PUBLIC_WP_BASE_URL)
+Deployment: Vercel Serverless (adapter @astrojs/vercel)
+Site type: Hybrid (SSG + SSR)
+Domain utama: https://www.ultimateducation.co.id
+Subdomain (jika ada): https://cms.ultimateducation.co.id
+Tracking: Google Ads gtag (AW-11149613429), Vercel Analytics, Vercel Speed Insights
+
+6) Kompetitor (Opsional)
+Website kompetitor: Belum tersedia di repo
+Google Maps listing kompetitor: Belum tersedia di repo
+Keyword mereka: Belum tersedia di repo
+Kelebihan mereka: Belum tersedia di repo
+
+DATA TAMBAHAN
+USP (keunikan bisnis): Belum tersedia di repo
+Harga range: Belum tersedia di repo
+Garansi: Belum tersedia di repo
+Testimoni: Belum tersedia di repo
+Jumlah pelanggan: Belum tersedia di repo
+Sertifikasi: Belum tersedia di repo
+Metode pembayaran: Belum tersedia di repo
+Emergency service ada/tidak: Tidak relevan
+
+Daftar Program (judul dan URL)
+Ultimate Scholarship — /program/scholarship
+AS-Level Preparation — /program/as-level
+LSAT — /program/lsat
+IB — /program/ib
+O-Level — /program/o-level
+A-Level — /program/a-level
+TOEIC — /program/toeic
+Business English — /program/business-english
+General English — /program/general-english
+Ausbildung — /program/ausbildung
+Kursus Persiapan UTBK - Ultimate Education — /program/utbk
+TOPIK — /program/topik
+HSK — /program/hsk
+DELF — /program/delf
+JLPT — /program/jlpt
+BIPA — /program/bipa
+ACT — /program/act
+Kursus Persiapan GRE - Ultimate Education — /program/gre
+Kursus Persiapan IELTS - Ultimate Education — /program/ielts
+GED — /program/ged
+IGCSE — /program/igcse
+Kursus Persiapan TOEFL - Ultimate Education — /program/toefl
+PTE — /program/pte
+Kursus Persiapan SAT - Ultimate Education — /program/sat
+Kursus Persiapan GMAT - Ultimate Education — /program/gmat
+TESTDAF - Germany A1-C2 Language Course — /program/testdaf

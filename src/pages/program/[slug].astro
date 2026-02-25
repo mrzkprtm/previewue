@@ -10,6 +10,7 @@ import ProgramWhyUs from "../../components/program/detail/ProgramWhyUs.astro";
 import ProgramAlumni from "../../components/program/detail/ProgramAlumni.astro";
 import ProgramFAQ from "../../components/program/detail/ProgramFAQ.astro";
 import WhyChooseUs from "@/components/home/WhyChooseUs.astro";
+import Schema from "../../components/common/Schema.astro";
 import { programs } from "../../data/programs";
 
 export async function getStaticPaths() {
@@ -20,9 +21,48 @@ export async function getStaticPaths() {
 }
 
 const { program } = Astro.props;
+
+const courseSchema = {
+  name: program.hero.title.replace(/<[^>]*>?/gm, ""),
+  description: program.meta.description,
+  provider: {
+    "@type": "EducationalOrganization",
+    name: "Ultimate Education",
+    sameAs: "https://www.ultimateducation.co.id",
+  },
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "Blended",
+    location: "Jakarta & Bandung",
+  },
+};
+
+const breadcrumbData = [
+  {
+    "@type": "ListItem",
+    position: 1,
+    name: "Home",
+    item: "https://www.ultimateducation.co.id",
+  },
+  {
+    "@type": "ListItem",
+    position: 2,
+    name: "Program",
+    item: "https://www.ultimateducation.co.id/program",
+  },
+  {
+    "@type": "ListItem",
+    position: 3,
+    name: program.hero.pillText,
+    item: Astro.url.href,
+  },
+];
 ---
 
 <Layout title={program.meta.title} description={program.meta.description}>
+  <Schema type="Course" data={courseSchema} />
+  <Schema type="BreadcrumbList" data={breadcrumbData} />
+
   <main>
     <!-- 1. Hero -->
     <UnifiedHero title={program.hero.title} subtitle={program.hero.subtitle} pillText={program.hero.pillText} image={program.hero.image} ctaLabel="Konsultasi Sekarang" ctaHref="https://wa.me/6283812310368" />

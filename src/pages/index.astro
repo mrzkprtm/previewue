@@ -3,47 +3,59 @@ import Layout from "../layouts/Layout.astro";
 import HomeHero from "../components/home/HomeHero.astro";
 import HomePaths from "../components/home/HomePaths.astro";
 import HomePromos from "../components/home/HomePromos.astro";
-import FeaturedPrograms from "../components/home/old/FeaturedPrograms.astro";
 import Mentors from "../components/home/old/Mentors.astro";
-import FreeTest from "../components/home/old/FreeTest.astro";
-import Scholarships from "../components/home/old/Scholarships.astro";
 import Alumni from "../components/home/old/Alumni.astro";
 import HighlightedArticles from "../components/home/old/HighlightedArticles.astro";
 import FAQ from "../components/home/old/FAQ.astro";
-import HomePlacementTest from "../components/home/HomePlacementTest.astro";
-import ScholarshipFeed from "../components/home/ScholarshipFeed.astro";
 import WhyChooseUs from "../components/home/WhyChooseUs.astro";
 import FinalCTA from "@/components/home/FinalCTA.astro";
-import HomeSuccessCTA from "@/components/home/HomeSuccessCTA.astro";
 import ScholarshipPopup from "@/components/common/ScholarshipPopup.astro";
-const title = "Ultimate Education - Solusi Terbaik Persiapan Studi Luar Negeri & Beasiswa";
-const description = "Pusat bimbingan persiapan beasiswa, IELTS, SAT, GMAT, GRE, dan bahasa asing terpercaya di Indonesia.";
+import LocationSection from "@/components/home/LocationSection.astro";
+import SEOContent from "@/components/home/SEOContent.astro";
+import HomePlacementTest from "../components/home/HomePlacementTest.astro";
+import HomeSuccessCTA from "@/components/home/HomeSuccessCTA.astro";
+import Scholarships from "../components/home/old/Scholarships.astro";
+const title = "Ultimate Education - Konsultan Pendidikan Luar Negeri & Persiapan Tes";
+const description = "Pusat bimbingan persiapan beasiswa, IELTS, SAT, GMAT, GRE, dan bahasa asing terpercaya di Jakarta & Bandung.";
 ---
 
 <Layout title={title} description={description}>
-  <!-- 1. Hero (New, Modified) -->
+  <!-- 1. Hero (Optimized) -->
   <HomeHero />
 
-  <!-- 3. Pilih Jalur (New) -->
+  <!-- 2. Services Overview (Refined) -->
   <HomePaths />
 
-  <!-- 4. Promo (New) -->
+  <!-- 3. Program Highlights -->
   <HomePromos />
-  <!-- 6. Free Test (Old) -->
+
+  <!-- 4. Placement Test (Restored) -->
   <HomePlacementTest />
+
+  <!-- 5. Success CTA (Restored) -->
   <HomeSuccessCTA />
-  <!-- 5. Mentor Kami (Old) -->
+
+  <!-- 7. Why Choose Us -->
+  <WhyChooseUs />
+
+  <!-- 8. Student Success Stories -->
+  <Alumni />
+
+  <!-- 9. Mentors (Trust) -->
   <Mentors />
 
-  <!-- 7. Beasiswa (Old) -->
+  <!-- 10. Scholarships Feed (Restored) -->
   <Scholarships />
-  <!-- 8. Alumni (Old) -->
-  <Alumni />
-  <WhyChooseUs />
+
+  <!-- 11. Blog / Resources -->
   <HighlightedArticles />
-  <!-- 9. FAQ (Old) -->
+
+  <!-- 12. SEO Content (Long Form) -->
+  <SEOContent />
+
+  <!-- 14. FAQ -->
   <FAQ />
-  
+
   <!-- Popup -->
   <ScholarshipPopup />
 </Layout>

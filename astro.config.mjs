@@ -2,12 +2,21 @@ import { defineConfig, passthroughImageService } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel/serverless';
+import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   output: 'hybrid',
   site: 'https://www.ultimateducation.co.id',
   adapter: vercel(),
-  integrations: [tailwind(), react()],
+  integrations: [
+    tailwind(),
+    react(),
+    partytown({
+      config: {
+        forward: ["dataLayer.push", "gtag"],
+      },
+    }),
+  ],
   build: {
     inlineStylesheets: 'auto',
   },

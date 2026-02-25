@@ -1,0 +1,119 @@
+---
+export interface SchemaProps {
+  type: "Organization" | "LocalBusiness" | "EducationalOrganization" | "Course" | "BreadcrumbList" | "WebSite" | "Article";
+  data?: any;
+}
+
+const { type, data } = Astro.props as SchemaProps;
+
+let schemaData: any = {};
+
+if (type === "Organization" || type === "EducationalOrganization") {
+  schemaData = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Ultimate Education",
+    "url": "https://www.ultimateducation.co.id",
+    "logo": "https://www.ultimateducation.co.id/logos/logo-ue.webp",
+    "description": "Konsultan pendidikan luar negeri dan pusat persiapan tes IELTS, SAT, GRE, GMAT terpercaya di Indonesia.",
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Sampoerna Strategic Square, Jalan Jenderal Sudirman No. 45 – 46",
+        "addressLocality": "Jakarta",
+        "addressRegion": "DKI Jakarta",
+        "postalCode": "12930",
+        "addressCountry": "ID"
+      },
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Jl. Ir. H. Juanda No.84, Lebakgede",
+        "addressLocality": "Bandung",
+        "addressRegion": "Jawa Barat",
+        "addressCountry": "ID"
+      }
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+6283812310368",
+      "contactType": "customer service",
+      "areaServed": "ID",
+      "availableLanguage": "Indonesian"
+    },
+    "sameAs": [
+      "https://www.facebook.com/UltimatEducation",
+      "https://www.instagram.com/ultimate.education/",
+      "https://x.com/Ultimate_Eduind",
+      "https://www.youtube.com/channel/UCHHq1s89_z9BoclcvNH7naA",
+      "https://id.linkedin.com/company/ultimate-education"
+    ]
+  };
+} else if (type === "WebSite") {
+  schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.ultimateducation.co.id",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.ultimateducation.co.id/artikel?search={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
+} else if (type === "LocalBusiness") {
+    // Combine with organization data or specific branch data if needed
+    schemaData = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Ultimate Education Jakarta",
+        "image": "https://placehold.co/1200x630?text=Ultimate+Education",
+        "@id": "https://www.ultimateducation.co.id",
+        "url": "https://www.ultimateducation.co.id",
+        "telephone": "02150913616",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Sampoerna Strategic Square, Jl. Jenderal Sudirman No. 45–46",
+            "addressLocality": "Jakarta",
+            "addressRegion": "DKI Jakarta",
+            "postalCode": "12930",
+            "addressCountry": "ID"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -6.216615028922636,
+            "longitude": 106.81817136706734
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Saturday",
+                "Sunday"
+            ],
+            "opens": "13:00",
+            "closes": "21:00"
+        }
+    }
+} else if (type === "Course") {
+    schemaData = {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        ...data
+    }
+} else if (type === "BreadcrumbList") {
+    schemaData = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": data
+    }
+} else if (type === "Article") {
+    schemaData = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        ...data
+    }
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
