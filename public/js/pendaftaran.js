@@ -145,7 +145,7 @@ const langDict = {
                 'industri_select': ['-- Pilih --', 'Pendidikan', 'Teknologi', 'Keuangan', 'Manufaktur', 'Healthcare', 'Government', 'Lainnya'],
                 'jenjang_select': ['-- Pilih --', 'S1', 'S2', 'S3'],
                 'program_select': [
-                    '-- Pilih --', 'IELTS', 'SAT', 'GMAT', 'GRE', 'TOEFL', 'TOEFL iBT', 'PTE', 'IGCSE', 'TOEIC', 'GED', 'A-Level', 'AS-Level', 'O-Level', 'IB', 'LSAT', 'UTBK', 'Scholarship', 'Ausbildung', 'General English', 'Business English', 'BIPA', 'JLPT', 'HSK', 'TOPIK', 'DELF', 'TestDaF', 'Duolingo', 'Belum Tahu / Butuh Konsultasi'
+                    '-- Pilih --', 'IELTS', 'SAT', 'ACT', 'GMAT', 'GRE', 'TOEFL', 'TOEFL iBT', 'PTE', 'IGCSE', 'TOEIC', 'GED', 'A-Level', 'AS-Level', 'O-Level', 'IB', 'LSAT', 'UTBK', 'Scholarship', 'Ausbildung', 'General English', 'Business English', 'BIPA', 'JLPT', 'HSK', 'TOPIK', 'DELF', 'TestDaF', 'Duolingo', 'Belum Tahu / Butuh Konsultasi'
                 ],
                 'tes_tambahan_select': ['-- Pilih --', 'Ya', 'Tidak', 'Belum Yakin'],
                 'intake_select': ['-- Pilih --', 'Januari - Maret', 'April - Juni', 'Juli - September', 'Oktober - Desember', 'Belum Pasti'],
@@ -298,7 +298,7 @@ const langDict = {
                 'industri_select': ['-- Select --', 'Education', 'Technology', 'Finance', 'Manufacturing', 'Healthcare', 'Government', 'Other'],
                 'jenjang_select': ['-- Select --', 'Bachelor', 'Master', 'Doctorate'],
                 'program_select': [
-                    '-- Select --', 'IELTS', 'SAT', 'GMAT', 'GRE', 'TOEFL', 'TOEFL iBT', 'PTE', 'IGCSE', 'TOEIC', 'GED', 'A-Level', 'AS-Level', 'O-Level', 'IB', 'LSAT', 'UTBK', 'Scholarship', 'Ausbildung', 'General English', 'Business English', 'BIPA', 'JLPT', 'HSK', 'TOPIK', 'DELF', 'TestDaF', 'Duolingo', 'Not sure / Need consultation'
+                    '-- Select --', 'IELTS', 'SAT', 'ACT', 'GMAT', 'GRE', 'TOEFL', 'TOEFL iBT', 'PTE', 'IGCSE', 'TOEIC', 'GED', 'A-Level', 'AS-Level', 'O-Level', 'IB', 'LSAT', 'UTBK', 'Scholarship', 'Ausbildung', 'General English', 'Business English', 'BIPA', 'JLPT', 'HSK', 'TOPIK', 'DELF', 'TestDaF', 'Duolingo', 'Not sure / Need consultation'
                 ],
                 'tes_tambahan_select': ['-- Select --', 'Yes', 'No', 'Not sure'],
                 'intake_select': ['-- Select --', 'Jan - Mar', 'Apr - Jun', 'Jul - Sep', 'Oct - Dec', 'Not sure'],
@@ -433,7 +433,7 @@ const allowLists = {
     jenis_kelamin: ['Laki-laki', 'Perempuan'],
     status: ['Pelajar SMA', 'Mahasiswa', 'Fresh Graduate', 'Bekerja', 'Tidak Bekerja / Gap Year'],
     level: ['SMA/SMK', 'D3', 'S1', 'S2', 'S3'],
-    program: ['IELTS', 'SAT', 'GMAT', 'GRE', 'TOEFL', 'TOEFL iBT', 'PTE', 'IGCSE', 'TOEIC', 'GED', 'A-Level', 'AS-Level', 'O-Level', 'IB', 'LSAT', 'UTBK', 'Scholarship', 'Ausbildung', 'General English', 'Business English', 'BIPA', 'JLPT', 'HSK', 'TOPIK', 'DELF', 'TestDaF', 'Duolingo', 'Belum Tahu'],
+    program: ['IELTS', 'SAT', 'ACT', 'GMAT', 'GRE', 'TOEFL', 'TOEFL iBT', 'PTE', 'IGCSE', 'TOEIC', 'GED', 'A-Level', 'AS-Level', 'O-Level', 'IB', 'LSAT', 'UTBK', 'Scholarship', 'Ausbildung', 'General English', 'Business English', 'BIPA', 'JLPT', 'HSK', 'TOPIK', 'DELF', 'TestDaF', 'Duolingo', 'Belum Tahu'],
     tes_tambahan: ['Ya', 'Tidak', 'Belum Yakin'],
     jadwal: ['Private', 'Semi-private', 'Group', 'Paket'],
     program_intensif: ['Ya', 'Tidak', 'Tergantung rekomendasi tutor'],
