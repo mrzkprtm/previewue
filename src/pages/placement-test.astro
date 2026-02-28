@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PlacementTestHero from "../components/placement-test/PlacementTestHero.astro";
+import RegistrationModal from "../components/placement-test/RegistrationModal.astro";
+import StepByStep from "../components/placement-test/StepByStep.astro";
+import StarterPack from "../components/placement-test/StarterPack.astro";
+import TestSelection from "../components/placement-test/TestSelection.astro";
+import ConsultationCTA from "../components/placement-test/ConsultationCTA.astro";
+import PlacementFAQ from "../components/placement-test/PlacementFAQ.astro";
+
+const title = "Study Abroad Placement Test - Ultimate Education";
+const description =
+    "Cek English Skill Kamu Lewat FREE Placement Test! Ambil Placement Test SAT & IELTS GRATIS biar tahu level, strategi & plan belajar terbaik buatmu!";
+---
+
+<Layout title={title} description={description}>
+    <main class="bg-ue-blue-light/50">
+        <!-- Hero Section -->
+        <PlacementTestHero />
+
+        <!-- Step by Step Section -->
+        <StepByStep />
+
+        <!-- Starter Pack Section -->
+        <StarterPack />
+
+        <!-- Test Selection Section -->
+        <TestSelection />
+
+        <!-- Consultation Section -->
+        <ConsultationCTA />
+
+        <!-- FAQ Section -->
+        <PlacementFAQ />
+
+        <RegistrationModal />
+    </main>
+</Layout>

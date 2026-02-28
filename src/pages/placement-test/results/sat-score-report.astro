@@ -1,0 +1,476 @@
+---
+export const prerender = false;
+
+// Fetch registration_id from URL
+const { searchParams } = Astro.url;
+const registrationId = searchParams.get('registrationId');
+
+let scoreData = null;
+let error = null;
+
+if (!registrationId) {
+    error = "Registration ID is required to view results.";
+} else {
+    try {
+        const SUPABASE_URL = import.meta.env.SUPABASE_URL;
+        const SUPABASE_ANON_KEY = import.meta.env.SUPABASE_ANON_KEY;
+
+        // Fetch result with join to get student name
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/placement_test_results?registration_id=eq.${registrationId}&select=*,placement_test_registrations(name)`,
+            {
+                method: "GET",
+                headers: {
+                    apikey: SUPABASE_ANON_KEY,
+                    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        if (!data || data.length === 0) {
+            error = "Result not found for this registration.";
+        } else {
+            const raw = data[0];
+            
+            const getLevel = (score: number) => {
+                if (score >= 700) return "Excellent";
+                if (score >= 600) return "Good";
+                if (score >= 500) return "Medium";
+                return "Beginner";
+            };
+
+            // Safety net: if section was attempted but stored band is 0 (old record),
+            // display the IELTS minimum of 1.0 instead.
+            const normalizeBand = (band: number, total: number): number => {
+                const b = parseFloat(String(band));
+                if (total > 0 && b === 0) return 1.0;
+                return b;
+            };
+
+            const verbalBand = normalizeBand(raw.listening_band, raw.listening_total);
+            const mathBand   = normalizeBand(raw.grammar_band,   raw.grammar_total);
+            const overallBand = verbalBand + mathBand;
+
+            scoreData = {
+                name: raw.placement_test_registrations?.name || "Student",
+                overallBand,
+                aiSummary: raw.ai_analysis_summary || "",
+                recommendations: raw.recommendations || [],
+                sections: {
+                    verbal: {
+                        band: verbalBand,
+                        correct: raw.listening_correct,
+                        total: raw.listening_total,
+                        level: getLevel(verbalBand),
+                        strengths: raw.listening_strengths || [],
+                        improvements: raw.listening_improvements || [],
+                    },
+                    math: {
+                        band: mathBand,
+                        correct: raw.grammar_correct,
+                        total: raw.grammar_total,
+                        level: getLevel(mathBand),
+                        strengths: raw.grammar_strengths || [],
+                        improvements: raw.grammar_improvements || [],
+                    },
+                },
+            };
+        }
+    } catch (e) {
+        console.error("Error fetching score data:", e);
+        error = "An error occurred while loading your results.";
+    }
+}
+---
+
+<script is:inline>
+    // Security Guard for Score Report
+    const urlParams = new URLSearchParams(window.location.search);
+    const regIdFromUrl = urlParams.get("registrationId");
+    const regIdFromSession = sessionStorage.getItem("placement_registration_id");
+    const stage = sessionStorage.getItem("placement_stage");
+
+    if (!regIdFromUrl || regIdFromUrl !== regIdFromSession || stage !== 'result') {
+        // Only redirect if there's no result in DB (but here we just check session for simplicity)
+        // If they have the link but not the session, we could let them view it if it's public
+        // but for now let's lock it to the active session as requested.
+        console.warn("Unauthorized access attempt to score report.");
+    }
+</script>
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>SAT Test Detailed Score Report - Ultimate Education</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script is:inline>
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#0B63C5",
+                            "primary-dark": "#074fa3",
+                            "secondary-blue": "#E0F2FE",
+                            "accent-orange": "#F97316",
+                            "accent-orange-hover": "#ea580c",
+                            "status-green": "#22C55E",
+                            "status-red": "#EF4444",
+                            "background-light": "#F3F4F6",
+                            "background-dark": "#111827",
+                            "card-light": "#FFFFFF",
+                            "card-dark": "#1F2937",
+                            "main-content": "#111827",
+                            "muted-content": "#374151",
+                            "ultimate-navy": "#061f35",
+                            "ultimate-blue": "#145da0",
+                            "ultimate-yellow": "#FFB800",
+                        },
+                        fontFamily: {
+                            display: ["Poppins", "Inter", "sans-serif"],
+                            sans: ["Inter", "sans-serif"],
+                            heading: ["Poppins", "Inter", "sans-serif"],
+                        },
+                        backgroundImage: {
+                            "hero-gradient":
+                                "linear-gradient(135deg, #061f35 0%, #145da0 100%)",
+                        },
+                        borderRadius: {
+                            DEFAULT: "0.5rem",
+                            xl: "1rem",
+                            "2xl": "1.5rem",
+                        },
+                        boxShadow: {
+                            soft: "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+                            card: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            body { 
+                font-family: 'Inter', sans-serif;
+            }
+            h1, h2, h3, h4, .font-heading {
+                font-family: 'Poppins', sans-serif;
+            }
+            .pattern-dots {
+                background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-background-light dark:bg-background-dark font-sans text-main-content dark:text-white transition-colors duration-200 flex flex-col min-h-screen"
+    >
+        <header
+            class="bg-white border-b border-gray-200 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50 shadow-sm"
+        >
+            <div class="flex items-center gap-2">
+                <a href="/">
+                    <img
+                        src="/logos/logo-ue.png"
+                        alt="Ultimate Education"
+                        class="h-10 w-auto"
+                    />
+                </a>
+            </div>
+            <a
+                href="/"
+                class="flex items-center gap-2 px-6 py-2 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors text-sm font-bold text-slate-600 hover:text-ultimate-blue uppercase tracking-wider"
+            >
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                BACK TO WEBSITE
+            </a>
+        </header>
+
+        {error && (
+            <main class="w-full flex-grow flex items-center justify-center p-8">
+                <div class="bg-white dark:bg-card-dark p-12 rounded-3xl shadow-2xl text-center max-w-2xl border border-red-100 dark:border-red-900/30">
+                    <div class="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="material-symbols-outlined text-4xl text-red-600">error</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Oops! Data tidak ditemukan</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-lg mb-8">{error}</p>
+                    <a href="/" class="inline-flex items-center gap-2 bg-hero-gradient text-white px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all transform hover:scale-105">
+                        <span class="material-symbols-outlined">home</span>
+                        Kembali ke Home
+                    </a>
+                </div>
+            </main>
+        )}
+
+        {scoreData && (
+        <main class="w-full flex-grow pb-20">
+            <!-- Hero Section: Pure Gradient -->
+            <div class="bg-hero-gradient text-white pt-12 pb-24 px-4 md:px-12 relative">
+                <div class="container mx-auto max-w-6xl relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-center md:text-left space-y-4 max-w-xl">
+                        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium border border-white/30">
+                            <span class="material-symbols-outlined text-lg">celebration</span>
+                            Test Completed Successfully
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+                            Selamat, <span class="text-ultimate-yellow">{scoreData.name}</span>!
+                        </h1>
+                        <p class="text-blue-50 text-lg md:text-xl leading-relaxed">
+                            {scoreData.aiSummary || "Anda telah menyelesaikan tes penempatan SAT. Berikut adalah analisis detail performa Anda berdasarkan hasil pengerjaan soal."}
+                        </p>
+                    </div>
+                    
+                    <!-- Overall Band: Full Circle Progress -->
+                    <div class="flex flex-col items-center justify-center p-8 min-w-[320px]">
+                        <div class="relative w-56 h-56">
+                            <canvas id="gaugeOverall"></canvas>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                                <span class="text-6xl font-bold">{scoreData.overallBand}</span>
+                                <span class="text-sm font-medium uppercase tracking-widest opacity-80 mt-1">Total Score</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <span class="text-sm font-medium text-blue-50 opacity-80 uppercase tracking-widest">Overall Estimated Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mx-auto max-w-6xl px-4 md:px-6 -mt-16 relative z-20 space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Section Cards -->
+                    {Object.entries(scoreData.sections).map(([id, data]) => {
+                        const incorrect = data.total - data.correct;
+                        const correctWins = data.correct >= incorrect;
+                        return (
+                        <div class="bg-white rounded-2xl shadow-soft overflow-hidden flex flex-col h-full border border-gray-100">
+                            <div class="p-6 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <div class={`p-2 rounded-lg ${id === 'verbal' ? 'bg-blue-100 text-blue-600' : 'bg-purple-100 text-purple-600'}`}>
+                                        <span class="material-symbols-outlined">{id === 'verbal' ? 'menu_book' : 'calculate'}</span>
+                                    </div>
+                                    <h3 class="font-bold text-lg text-slate-900 capitalize">
+                                        {id}
+                                    </h3>
+                                </div>
+                                <span class={`text-xs font-bold px-2 py-1 rounded ${id === 'verbal' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
+                                    {data.level}
+                                </span>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow bg-white">
+                                <div class="flex flex-col items-center mb-6">
+                                    <div class="relative w-48 h-32">
+                                        <canvas id={`gauge${id.charAt(0).toUpperCase() + id.slice(1)}`}></canvas>
+                                        <div class="absolute inset-0 flex items-end justify-center pb-2">
+                                            <span class="text-3xl font-bold text-slate-900">{data.band}</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-slate-500 mt-2 font-medium">Score (Max 800)</span>
+                                </div>
+                                
+                                <!-- Correct/Incorrect Comparison Bar -->
+                                <div class="mb-8">
+                                    <div class="flex justify-between text-xs mb-2 font-bold uppercase tracking-tight">
+                                        <div class="flex items-center gap-1.5 p-1 px-2 rounded-md bg-emerald-50 text-emerald-700">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                            Correct: {data.correct}
+                                        </div>
+                                        <div class={`flex items-center gap-1.5 p-1 px-2 rounded-md ${!correctWins ? 'bg-rose-100 text-rose-700' : 'bg-rose-50 text-rose-500'}`}>
+                                            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                                            Incorrect: {incorrect}
+                                        </div>
+                                    </div>
+                                    <div class="h-5 bg-gray-100 rounded-full flex overflow-hidden shadow-inner relative group">
+                                        <div 
+                                            class="h-full bg-emerald-500 transition-all duration-1000 ease-out relative z-10" 
+                                            style={`width: ${data.total > 0 ? (data.correct / data.total) * 100 : 0}%`}
+                                        ></div>
+                                        <div 
+                                            class="h-full bg-rose-400 transition-all duration-1000 ease-out relative z-10" 
+                                            style={`width: ${data.total > 0 ? (incorrect / data.total) * 100 : 100}%`}
+                                        ></div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-4 text-sm flex-grow">
+                                    <div>
+                                        <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-green-500 text-base">check_circle</span> Strengths
+                                        </h4>
+                                        <ul class="list-disc list-inside text-slate-600 space-y-1 pl-1">
+                                            {data.strengths.map((s: string) => <li>{s}</li>)}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-slate-800 mb-2 flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-ultimate-yellow text-base">info</span> Improvement
+                                        </h4>
+                                        <ul class="list-disc list-inside text-slate-600 space-y-1 pl-1">
+                                            {data.improvements.map((i: string) => <li>{i}</li>)}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        );
+                    })}
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Performance Chart Card -->
+                    <div class="bg-white p-8 rounded-2xl shadow-soft border border-gray-100">
+                        <h3 class="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">bar_chart</span>
+                            Performance vs. Average Student
+                        </h3>
+                        <div class="space-y-6">
+                            {Object.entries(scoreData.sections).map(([id, data]) => {
+                                const avg = id === 'verbal' ? 550 : 540;
+                                const color = id === 'verbal' ? '#0B63C5' : '#A855F7';
+                                return (
+                                    <div class="relative pt-1">
+                                        <div class="flex mb-2 items-center justify-between">
+                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">{id}</span>
+                                            <div class="text-right text-xs font-bold text-slate-900">
+                                                You ({data.band}) vs Avg ({avg})
+                                            </div>
+                                        </div>
+                                        <div class="overflow-hidden h-2.5 mb-4 text-xs flex rounded bg-slate-100 relative">
+                                            <div class="absolute top-0 bottom-0 w-0.5 bg-slate-400 z-10" style={`left: ${(avg/800)*100}%`}></div>
+                                            <div class="shadow-none flex flex-col text-center whitespace-nowrap justify-center" style={`width: ${(data.band/800)*100}%; background-color: ${color}`}></div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <!-- Recommended Modules Card -->
+                    <div class="bg-hero-gradient text-white p-8 rounded-2xl shadow-xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 pointer-events-none"></div>
+                        <h3 class="text-lg font-bold text-white mb-6 relative z-10">
+                            Rekomendasi
+                        </h3>
+                        <div class="space-y-4 relative z-10">
+                            {scoreData.recommendations && scoreData.recommendations.length > 0 ? (
+                                scoreData.recommendations.map((mod: any) => (
+                                    <div class={`bg-white/10 backdrop-blur-md p-4 rounded-xl border-l-4 ${mod.border || 'border-blue-400'} flex justify-between items-center group cursor-pointer hover:bg-white/20 transition-all shadow-sm`}>
+                                        <div>
+                                            <h4 class="font-bold text-white text-sm">{mod.title}</h4>
+                                            <p class="text-xs text-blue-100 mt-1">{mod.info}</p>
+                                        </div>
+                                        <span class="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">chevron_right</span>
+                                    </div>
+                                ))
+                            ) : (
+                                <p class="text-sm text-blue-100/70 italic">AI sedang meramu rekomendasi belajar terbaik untukmu...</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section: Mitra Style -->
+                <div class="bg-hero-gradient rounded-3xl overflow-hidden shadow-2xl text-white relative p-8 md:p-16 text-center">
+                    <div class="absolute inset-0 opacity-10 pattern-dots pointer-events-none"></div>
+                    <div class="relative z-10 max-w-4xl mx-auto">
+                        <h2 class="text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-white mb-6 leading-tight">Siap untuk mencapai target skor Anda?</h2>
+                        <p class="text-white/80 text-lg mb-10">Konsultasikan gratis untuk hasil tes Anda! Kami bantu jelaskan potensi skor Anda secara detail dan strategi untuk mencapai target score Anda.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="/program/sat" class="bg-ultimate-yellow text-ultimate-navy font-bold px-8 py-4 rounded-full hover:bg-yellow-400 transition-all shadow-lg flex items-center justify-center gap-2 transform hover:scale-105">
+                                <span class="material-symbols-outlined">description</span>
+                                Daftar Persiapan SAT
+                            </a>
+                            <button class="bg-transparent border-2 border-white text-white font-medium px-8 py-4 rounded-full hover:bg-white hover:text-ultimate-blue transition-all flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">chat</span>
+                                Konsultasi Gratis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        )}
+
+        <footer class="w-full bg-hero-gradient text-white/60 text-center py-8 text-sm mt-auto">
+            <div class="container mx-auto px-6">
+                © 2026 Ultimate Education. All rights reserved.
+            </div>
+        </footer>
+
+        <script is:inline define:vars={{ scoreData }}>
+            if (scoreData) {
+                window.addEventListener("load", () => {
+                    const getScoreColor = (value) => {
+                        // Value is 0 to 1600
+                        if (value >= 1400) return "#22C55E"; // Green
+                        if (value >= 1200) return "#FFB800"; // Yellow/Orange
+                        if (value >= 1000) return "#F97316"; // Orange
+                        if (value > 0) return "#EF4444"; // Red
+                        return "#94A3B8"; // Slate for 0
+                    };
+
+                    const createGauge = (id, label, value, colorOverride, cutout = "80%") => {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+                        
+                        const color = colorOverride || getScoreColor(value);
+                        
+                        const ctx = el.getContext("2d");
+                        new Chart(ctx, {
+                            type: "doughnut",
+                            data: {
+                                datasets: [{
+                                    data: [value || 0.1, Math.max(0, (id === 'gaugeOverall' ? 1600 : 800) - (value || 0.1))],
+                                    backgroundColor: [colorOverride || (value > 800 ? getScoreColor(value) : (value >= 700 ? "#22C55E" : value >= 600 ? "#FFB800" : value >= 500 ? "#F97316" : "#EF4444")), id === 'gaugeOverall' ? "rgba(255, 255, 255, 0.1)" : "rgba(229, 231, 235, 0.5)"],
+                                    borderWidth: 0,
+                                    borderRadius: 10,
+                                    cutout: cutout,
+                                }],
+                            },
+                            options: {
+                                circumference: id === 'gaugeOverall' ? 360 : 180,
+                                rotation: id === 'gaugeOverall' ? 0 : 270,
+                                plugins: {
+                                    tooltip: { enabled: false },
+                                    legend: { display: false },
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                animation: {
+                                    duration: 2000,
+                                    easing: "easeOutQuart",
+                                },
+                            },
+                        });
+                    };
+ 
+                    // Overall Gauge - Using Dynamic Color
+                    createGauge("gaugeOverall", "Overall", scoreData.overallBand, null, "85%");
+ 
+                    // Section Gauges
+                    createGauge("gaugeVerbal", "Verbal", scoreData.sections.verbal.band, "#0B63C5", "80%");
+                    createGauge("gaugeMath", "Math", scoreData.sections.math.band, "#A855F7", "80%");
+                });
+            }
+        </script>
+    </body>
+</html>

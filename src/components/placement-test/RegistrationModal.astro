@@ -1,0 +1,459 @@
+<!-- src/components/placement-test/RegistrationModal.astro -->
+<dialog id="registration-modal" class="modal bg-transparent">
+    <div
+        class="modal-box w-11/12 max-w-5xl p-0 bg-transparent shadow-none overflow-hidden rounded-[2.5rem]"
+    >
+        <form method="dialog" class="absolute top-4 right-4 z-50">
+            <button
+                class="btn btn-sm btn-circle btn-ghost text-white bg-black/50 hover:bg-black/80"
+                >✕</button
+            >
+        </form>
+
+        <div
+            class="bg-card-light dark:bg-card-dark rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-gray-700 relative overflow-hidden flex flex-col md:flex-row"
+        >
+            <!-- Illustration Side (Hidden on Mobile) -->
+            <div
+                class="hidden md:flex md:w-5/12 bg-gradient-to-r from-ultimate-navy to-ultimate-blue overflow-hidden relative items-center justify-center border-r border-gray-100 dark:border-gray-700"
+            >
+                <img
+                    alt="Success Student"
+                    class="w-[110%] max-w-none h-auto object-cover object-center relative z-0"
+                    src="/images/cta_img.png"
+                    style="mask-image: linear-gradient(to bottom, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);"
+                />
+            </div>
+
+            <!-- Form Side -->
+            <div
+                class="w-full md:w-7/12 p-8 md:p-12 relative bg-white dark:bg-card-dark"
+            >
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-orange-50 dark:bg-orange-900/10 rounded-bl-full -mr-16 -mt-16 pointer-events-none"
+                >
+                </div>
+
+                <div class="relative z-10">
+                    <h2
+                        class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 leading-tight"
+                    >
+                        Sebelum Mulai Kita<br /><span class="text-ultimate-blue"
+                            >Kenalan Dulu Yuk!!</span
+                        >
+                    </h2>
+                    <p class="text-gray-500 dark:text-gray-400 mb-8 text-sm">
+                        Isi data diri kamu untuk memulai tes.
+                    </p>
+
+                    <form id="placement-registration-form" class="space-y-6">
+                        <input
+                            type="hidden"
+                            id="test-type"
+                            name="test_type"
+                            value=""
+                        />
+
+                        <div
+                            id="form-error"
+                            class="hidden bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-200"
+                        >
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="relative group">
+                                <label
+                                    class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 ml-1"
+                                    for="name">Nama Lengkap</label
+                                >
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-gray-400 group-focus-within:text-ultimate-blue transition-colors"
+                                            >person</span
+                                        >
+                                    </div>
+                                    <input
+                                        required
+                                        class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ultimate-blue focus:border-transparent transition shadow-sm focus:bg-white"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Masukkan nama kamu"
+                                        type="text"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="relative group">
+                                <label
+                                    class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 ml-1"
+                                    for="email">Email Address</label
+                                >
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-gray-400 group-focus-within:text-ultimate-blue transition-colors"
+                                            >mail</span
+                                        >
+                                    </div>
+                                    <input
+                                        required
+                                        class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ultimate-blue focus:border-transparent transition shadow-sm focus:bg-white"
+                                        id="email"
+                                        name="email"
+                                        placeholder="contoh@email.com"
+                                        type="email"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="relative group">
+                                <label
+                                    class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1 ml-1"
+                                    for="phone">No. WhatsApp Aktif</label
+                                >
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-gray-400 group-focus-within:text-ultimate-blue transition-colors"
+                                            >call</span
+                                        >
+                                    </div>
+                                    <input
+                                        required
+                                        class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ultimate-blue focus:border-transparent transition shadow-sm focus:bg-white"
+                                        id="phone"
+                                        name="phone"
+                                        placeholder="0812xxxx"
+                                        type="tel"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropdowns Area -->
+                        <div
+                            class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100 space-y-4"
+                        >
+                            <div>
+                                <label
+                                    class="block text-sm font-semibold text-gray-700 mb-1"
+                                    for="atmosphere">Suasana Belajar</label
+                                >
+                                <div class="relative">
+                                    <select
+                                        required
+                                        class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-ultimate-blue appearance-none transition cursor-pointer shadow-sm text-sm"
+                                        id="atmosphere"
+                                        name="atmosphere"
+                                    >
+                                        <option disabled selected value=""
+                                            >Pilih suasana belajar</option
+                                        >
+                                        <option
+                                            value="Grouping (20 student/class)"
+                                            >Grouping (20 student/class)</option
+                                        >
+                                        <option
+                                            value="Semi-Private (6 student/class)"
+                                            >Semi-Private (6 student/class)</option
+                                        >
+                                        <option value="Private (1 on 1 tutor)"
+                                            >Private (1 on 1 tutor)</option
+                                        >
+                                    </select>
+                                    <span
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-sm"
+                                            >expand_more</span
+                                        >
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-sm font-semibold text-gray-700 mb-1"
+                                    for="study-plan">Rencana Belajar</label
+                                >
+                                <div class="relative">
+                                    <select
+                                        required
+                                        class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-ultimate-blue appearance-none transition cursor-pointer shadow-sm text-sm"
+                                        id="study-plan"
+                                        name="study_plan"
+                                    >
+                                        <option disabled selected value=""
+                                            >Mau belajar apa?</option
+                                        >
+                                        <option value="Listening"
+                                            >Listening</option
+                                        >
+                                        <option value="Reading">Reading</option>
+                                        <option value="Writing">Writing</option>
+                                        <option value="Speaking"
+                                            >Speaking</option
+                                        >
+                                        <option value="Math">Math</option>
+                                        <option value="Verbal">Verbal</option>
+                                        <option value="All Skills"
+                                            >All Skills</option
+                                        >
+                                    </select>
+                                    <span
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400"
+                                    >
+                                        <span
+                                            class="material-symbols-outlined text-sm"
+                                            >expand_more</span
+                                        >
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-sm font-semibold text-gray-700 mb-1"
+                                    for="source">Info Dari Mana?</label
+                                >
+                                <div class="relative">
+                                    <select
+                                        required
+                                        class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-ultimate-blue appearance-none transition cursor-pointer shadow-sm text-sm"
+                                        id="source"
+                                        name="source"
+                                    >
+                                        <option disabled selected value=""
+                                            >Tahu "Placement Test" ini dari
+                                            mana?</option
+                                        >
+                                        <option
+                                            value="Website Ultimate Education"
+                                            >Website Ultimate Education</option
+                                        >
+                                        <option value="Pencarian Google"
+                                            >Pencarian Google</option
+                                        >
+                                        <option
+                                            value="Social Media Ultimate Education"
+                                            >Social Media Ultimate Education</option
+                                        >
+                                        <option value="Teman/Kerabat"
+                                            >Teman/Kerabat</option
+                                        >
+                                        <option value="Admin Ultimate Education"
+                                            >Admin Ultimate Education</option
+                                        >
+                                    </select>
+                                    <span
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400"
+                                    >
+                                        <span class="material-icons text-sm"
+                                            >expand_more</span
+                                        >
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 mt-2 px-1">
+                            <input
+                                required
+                                class="mt-1 w-5 h-5 text-ultimate-blue rounded border-gray-300 focus:ring-ultimate-blue cursor-pointer"
+                                id="privacy"
+                                name="privacy_accepted"
+                                type="checkbox"
+                                value="true"
+                            />
+                            <label
+                                class="text-xs text-gray-600 leading-tight cursor-pointer select-none"
+                                for="privacy"
+                            >
+                                Saya menyetujui kebijakan privasi yang berlaku
+                                dan mengizinkan tim Ultimate Education untuk
+                                menghubungi via WhatsApp.
+                            </label>
+                        </div>
+
+                        <div class="pt-2">
+                            <button
+                                id="submit-btn"
+                                class="w-full bg-ultimate-yellow hover:brightness-110 text-white font-bold text-lg py-3.5 px-8 rounded-2xl shadow-lg shadow-yellow-200/50 hover:shadow-xl transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-yellow-200/50 flex justify-center items-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                                type="submit"
+                            >
+                                <span id="submit-text">Mulai Tes Gratis</span>
+                                <span
+                                    id="submit-icon"
+                                    class="material-symbols-outlined group-hover:translate-x-1 transition-transform"
+                                    >arrow_forward</span
+                                >
+                                <span
+                                    id="submit-loading"
+                                    class="hidden loading loading-spinner loading-sm"
+                                ></span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Success State -->
+                    <div
+                        id="success-state"
+                        class="hidden flex-col items-center justify-center space-y-4 py-8 text-center animate-fade-in"
+                    >
+                        <div
+                            class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <span
+                                class="material-symbols-outlined text-green-500 text-4xl"
+                                >check_circle</span
+                            >
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">
+                            Pendaftaran Berhasil!
+                        </h3>
+                        <p class="text-gray-600 text-sm max-w-sm">
+                            Mohon tunggu sebentar, kami sedang mengarahkan kamu
+                            ke halaman Placement Test...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Click outside to close -->
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
+<style>
+    .glass-icon {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById(
+            "placement-registration-form",
+        ) as HTMLFormElement;
+        const errorDiv = document.getElementById("form-error");
+        const submitBtn = document.getElementById(
+            "submit-btn",
+        ) as HTMLButtonElement;
+        const submitText = document.getElementById("submit-text");
+        const submitIcon = document.getElementById("submit-icon");
+        const submitLoading = document.getElementById("submit-loading");
+        const successState = document.getElementById("success-state");
+
+        // Global function to open modal with specific test type
+        window.openRegistrationModal = (testType: string) => {
+            const modal = document.getElementById(
+                "registration-modal",
+            ) as HTMLDialogElement;
+            const testTypeInput = document.getElementById(
+                "test-type",
+            ) as HTMLInputElement;
+            if (testTypeInput) testTypeInput.value = testType;
+            if (modal) modal.showModal();
+        };
+
+        if (form) {
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                errorDiv?.classList.add("hidden");
+
+                // Loading state
+                submitBtn.disabled = true;
+                if (submitText) submitText.textContent = "Memproses...";
+                submitIcon?.classList.add("hidden");
+                submitLoading?.classList.remove("hidden");
+
+                const formData = new FormData(form);
+                const data: Record<string, any> = Object.fromEntries(
+                    formData.entries(),
+                );
+
+                // Ensure boolean
+                data.privacy_accepted = data.privacy_accepted === "true";
+
+                try {
+                    const response = await fetch(
+                        "/api/placement-test-registration",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        },
+                    );
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        // Show success state
+                        form.classList.add("hidden");
+                        successState?.classList.remove("hidden");
+                        successState?.classList.add("flex");
+
+                        // Redirect to the test page
+                        setTimeout(() => {
+                            if (result.registration_id) {
+                                sessionStorage.setItem(
+                                    "placement_registration_id",
+                                    result.registration_id,
+                                );
+                                // Set initial stage
+                                sessionStorage.setItem(
+                                    "placement_stage",
+                                    "instruction",
+                                );
+                            }
+                            // Redirect based on API response or fallback
+                            const redirectUrl =
+                                result.redirect_url ||
+                                `/placement-test/${data.test_type === "IELTS" ? "ielts-free-test" : "sat-free-test"}?registrationId=${result.registration_id}`;
+
+                            window.location.href = redirectUrl;
+                        }, 1500);
+                    } else {
+                        throw new Error(
+                            result.error || "Terjadi kesalahan sistem.",
+                        );
+                    }
+                } catch (error: any) {
+                    if (errorDiv) {
+                        errorDiv.textContent = error.message;
+                        errorDiv.classList.remove("hidden");
+                    }
+                } finally {
+                    // Reset loading state
+                    submitBtn.disabled = false;
+                    if (submitText) submitText.textContent = "Mulai Tes Gratis";
+                    submitIcon?.classList.remove("hidden");
+                    submitLoading?.classList.add("hidden");
+                }
+            });
+        }
+    });
+
+    // Add TypeScript definition for window object
+    declare global {
+        interface Window {
+            openRegistrationModal: (testType: string) => void;
+        }
+    }
+</script>
