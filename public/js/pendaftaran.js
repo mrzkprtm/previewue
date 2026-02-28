@@ -493,7 +493,7 @@ const clearFieldError = (field) => {
     field.removeAttribute('aria-invalid');
     if (formGroup) {
         const errorEl = formGroup.querySelector('.field-error');
-        if (errorEl) errorEl.textContent = '';
+        if (errorEl) errorEl.remove();
     }
 };
 const isVisibleField = (field) => !field.closest('.hidden-field');

@@ -1000,7 +1000,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
         }
 
         /* ─── TOASTS ─── */
-        #toast-container {
+        :global(#toast-container) {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1008,43 +1008,74 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             display: flex;
             flex-direction: column;
             gap: 10px;
+            pointer-events: none;
         }
-        .toast {
-            padding: 14px 20px;
-            border-radius: 12px;
-            color: #fff;
+        :global(.toast) {
+            padding: 14px 18px 14px 14px;
+            border-radius: 14px;
+            color: #0f172a;
             opacity: 0;
             transform: translateX(60px);
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-width: 280px;
-            backdrop-filter: blur(10px);
+            min-width: 300px;
+            max-width: 380px;
+            backdrop-filter: blur(12px);
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            pointer-events: auto;
+            gap: 10px;
         }
-        .toast.show {
+        :global(.toast::before) {
+            content: "";
+            width: 28px;
+            height: 28px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            flex: 0 0 28px;
+        }
+        :global(.toast.show) {
             opacity: 1;
             transform: translateX(0);
         }
-        .toast.error {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+        :global(.toast.error) {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #7f1d1d;
+            border-color: #fecaca;
         }
-        .toast.success {
-            background: linear-gradient(135deg, #10b981, #059669);
+        :global(.toast.success) {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            color: #14532d;
+            border-color: #bbf7d0;
         }
-        .toast .close {
+        :global(.toast.error::before) {
+            content: "!";
+            background: #fecaca;
+            color: #b91c1c;
+        }
+        :global(.toast.success::before) {
+            content: "✓";
+            background: #bbf7d0;
+            color: #15803d;
+        }
+        :global(.toast .close) {
             background: none;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 20px;
-            padding: 0 0 0 12px;
+            color: currentColor;
+            font-size: 18px;
+            padding: 0 0 0 6px;
             text-decoration: none;
             transition: color 0.2s;
         }
-        .toast .close:hover {
-            color: #fff;
+        :global(.toast .close:hover) {
+            color: #0f172a;
         }
 
         /* ─── LOADING ─── */
@@ -1091,17 +1122,29 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             border: 1px solid #fecaca;
         }
 
-        .field-error {
-            margin-top: 6px;
+        :global(.field-error) {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #7f1d1d;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 6px 10px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        :global(.field-error::before) {
+            content: "⚠";
             font-size: 12px;
             color: #b91c1c;
         }
-        .input-error {
+        :global(.input-error) {
             border-color: #e74c3c !important;
             box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.12);
         }
-        .has-error input[type="checkbox"],
-        .has-error input[type="radio"] {
+        :global(.has-error input[type="checkbox"]),
+        :global(.has-error input[type="radio"]) {
             accent-color: #e74c3c;
         }
 
