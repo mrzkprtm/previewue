@@ -117,6 +117,8 @@ function getReadingTime(content: string): number {
 
 const readingTime = getReadingTime(post.content);
 const articleContent = post.content
+  .replace(/<h1\b/gi, "<h2")
+  .replace(/<\/h1>/gi, "</h2>")
   .replace(/<figure[\s\S]*?<\/figure>/gi, "")
   .replace(/<img[^>]*>/gi, "");
 const canonicalUrl = `${Astro.url.origin}/artikel/${post.slug}`;
@@ -204,7 +206,7 @@ const breadcrumbStructuredData = {
       <article class="pb-12 lg:pb-16 container mx-auto">
         <!-- Article Header (Removed original header) -->
         <header class="mb-8 sr-only">
-          <h1>{post.title}</h1>
+          <h2>{post.title}</h2>
         </header>
 
         <!-- Featured Image -->

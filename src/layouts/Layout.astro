@@ -22,6 +22,7 @@ const { title, description, image, noindex, nofollow, ogType } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="utf-8" />
     <!-- Google tag (gtag.js) -->
     <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=AW-11149613429"></script>
     <script type="text/partytown">
@@ -34,6 +35,7 @@ const { title, description, image, noindex, nofollow, ogType } = Astro.props;
     </script>
 
     <SEO title={title} description={description} image={image} noindex={noindex} nofollow={nofollow} ogType={ogType} />
+    <slot name="head" />
 
     <!-- Global Schemas -->
     <Schema type="EducationalOrganization" />

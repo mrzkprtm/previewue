@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Allow: /_astro/
+Allow: /assets/
+Allow: /images/
+Allow: /logos/
+Allow: /icons/
 
 Sitemap: https://www.ultimateducation.co.id/sitemap.xml

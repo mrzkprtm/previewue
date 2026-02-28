@@ -160,6 +160,7 @@ Sekarang PR di GitHub akan hijau kembali.
 2.  Gunakan fitur "Comment" di GitHub Review untuk saran.
 3.  **Cek Mobile:** Selalu cek hasil codingan di tampilan mobile view (Inspect Element).
 4.  **Backend Changes:** Jika Dev B mengubah struktur data di WordPress (tambah field ACF baru), kabari Dev A agar UI bisa disesuaikan.
+5.  **Robots CMS:** Pastikan `cms.ultimateducation.co.id/robots.txt` mengizinkan crawl `wp-content/uploads` agar gambar tidak terblokir di audit SEO. Referensi konfigurasi ada di `references/robots-cms.txt`.
 
 ---
 *Happy Coding & Collaborate! 🚀*
