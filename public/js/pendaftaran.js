@@ -1382,6 +1382,12 @@ form.addEventListener('submit', async (e) => {
     console.log('[pendaftaran] Submit clicked, section:', currentSection);
     if (!validateCurrentSection()) {
         console.log('[pendaftaran] Validation failed');
+        const t = (langDict && langDict[currentLang] && langDict[currentLang].toast) ? langDict[currentLang].toast : {};
+        const hasMsg = messageEl && messageEl.style.display !== 'none' && messageEl.textContent;
+        if (!hasMsg) {
+            const fallback = t.validationMissing || '⚠ Harap isi semua field yang wajib diisi';
+            showToast(fallback, 'error');
+        }
         return;
     }
     console.log('[pendaftaran] Validation passed, starting upload...');

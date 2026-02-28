@@ -77,6 +77,9 @@ export const onRequest = defineMiddleware(({ url, redirect }, next) => {
     if (url.pathname === "/wp-admin" || url.pathname.startsWith("/wp-admin/")) {
         return redirect("https://cms.ultimateducation.co.id/wp-login.php", 301);
     }
+    if (url.pathname === "/sitemap.xml" || url.pathname.startsWith("/sitemaps/") || url.pathname.startsWith("/sitemap-")) {
+        return next();
+    }
 
     const normalizedPath = url.pathname !== "/" ? url.pathname.replace(/\/+$/g, "") : "/";
     const legacyRedirect = LEGACY_REDIRECTS.get(normalizedPath);

@@ -595,7 +595,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
     <!-- Toast container -->
     <div id="toast-container"></div>
 
-    <style>
+    <style is:global>
         /* ─── RESET & BASE ─── */
         * {
             margin: 0;
@@ -1000,7 +1000,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
         }
 
         /* ─── TOASTS ─── */
-        :global(#toast-container) {
+        #toast-container {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -1010,7 +1010,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             gap: 10px;
             pointer-events: none;
         }
-        :global(.toast) {
+        .toast {
             padding: 14px 18px 14px 14px;
             border-radius: 14px;
             color: #0f172a;
@@ -1030,7 +1030,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             pointer-events: auto;
             gap: 10px;
         }
-        :global(.toast::before) {
+        .toast::before {
             content: "";
             width: 28px;
             height: 28px;
@@ -1042,31 +1042,31 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             font-weight: 700;
             flex: 0 0 28px;
         }
-        :global(.toast.show) {
+        .toast.show {
             opacity: 1;
             transform: translateX(0);
         }
-        :global(.toast.error) {
+        .toast.error {
             background: linear-gradient(135deg, #fee2e2, #fecaca);
             color: #7f1d1d;
             border-color: #fecaca;
         }
-        :global(.toast.success) {
+        .toast.success {
             background: linear-gradient(135deg, #dcfce7, #bbf7d0);
             color: #14532d;
             border-color: #bbf7d0;
         }
-        :global(.toast.error::before) {
+        .toast.error::before {
             content: "!";
             background: #fecaca;
             color: #b91c1c;
         }
-        :global(.toast.success::before) {
+        .toast.success::before {
             content: "✓";
             background: #bbf7d0;
             color: #15803d;
         }
-        :global(.toast .close) {
+        .toast .close {
             background: none;
             color: currentColor;
             font-size: 18px;
@@ -1074,7 +1074,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             text-decoration: none;
             transition: color 0.2s;
         }
-        :global(.toast .close:hover) {
+        .toast .close:hover {
             color: #0f172a;
         }
 
@@ -1122,7 +1122,7 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             border: 1px solid #fecaca;
         }
 
-        :global(.field-error) {
+        .field-error {
             margin-top: 8px;
             font-size: 12px;
             color: #7f1d1d;
@@ -1134,17 +1134,17 @@ const title = "Form Pendaftaran Siswa - Ultimate Education";
             align-items: center;
             gap: 6px;
         }
-        :global(.field-error::before) {
+        .field-error::before {
             content: "⚠";
             font-size: 12px;
             color: #b91c1c;
         }
-        :global(.input-error) {
+        .input-error {
             border-color: #e74c3c !important;
             box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.12);
         }
-        :global(.has-error input[type="checkbox"]),
-        :global(.has-error input[type="radio"]) {
+        .has-error input[type="checkbox"],
+        .has-error input[type="radio"] {
             accent-color: #e74c3c;
         }
 

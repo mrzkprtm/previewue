@@ -5,7 +5,7 @@ export const prerender = false;
 const { slug } = Astro.params;
 
 // List of root paths that should never be redirected to /artikel/
-const EXCLUDED_SLUGS = ["about", "kontak", "mitra", "partnership", "promo", "program", "beasiswa", "artikel", "pendaftaran", "sitemap.xml", "robots.txt", "favicon.ico"];
+const EXCLUDED_SLUGS = ["about", "kontak", "mitra", "partnership", "promo", "program", "beasiswa", "artikel", "pendaftaran", "sitemap.xml", "sitemaps", "robots.txt", "favicon.ico"];
 
 if (!slug || EXCLUDED_SLUGS.includes(slug.toLowerCase())) {
     return Astro.rewrite("/404");
