@@ -31,6 +31,10 @@ const langDict = {
             passwordMismatch: 'Konfirmasi password tidak sama',
             passwordTooShort: 'Password LMS minimal 8 karakter',
             fileRequired: 'Anda harus mengupload bukti pembayaran',
+            invalidEmail: 'Format email tidak valid',
+            invalidPhone: 'Format nomor WhatsApp harus angka (9-15 digit)',
+            invalidFileType: 'Format file harus JPG, PNG, atau PDF',
+            invalidFileSize: 'Ukuran file maksimal 5MB',
             validationMissing: '⚠ Harap isi semua field yang wajib diisi',
             genericError: 'Error: {msg}'
         },
@@ -185,6 +189,10 @@ const langDict = {
             passwordMismatch: 'Password confirmation does not match',
             passwordTooShort: 'LMS password must be at least 8 characters',
             fileRequired: 'You must upload the payment proof',
+            invalidEmail: 'Invalid email format',
+            invalidPhone: 'WhatsApp number must be digits (9-15 digits)',
+            invalidFileType: 'File must be JPG, PNG, or PDF',
+            invalidFileSize: 'File size max 5MB',
             validationMissing: '⚠ Please fill all required fields',
             genericError: 'Error: {msg}'
         },
@@ -454,6 +462,115 @@ const validateFile = (file) => {
     return { ok: true };
 };
 const sanitizeMultiValue = (values = []) => values.map(v => sanitizeText(v)).filter(Boolean);
+const getFieldLabel = (field, fallback) => {
+    const formGroup = field.closest('.form-group');
+    let labelEl = null;
+    if (field.id) labelEl = document.querySelector(`label[for="${field.id}"]`);
+    if (!labelEl && formGroup) labelEl = formGroup.querySelector('label');
+    return labelEl ? labelEl.textContent.replace(/\*/g, '').trim() : fallback;
+};
+const setFieldError = (field, message) => {
+    if (!field) return;
+    const formGroup = field.closest('.form-group');
+    if (formGroup) formGroup.classList.add('has-error');
+    field.classList.add('input-error');
+    field.setAttribute('aria-invalid', 'true');
+    if (formGroup) {
+        let errorEl = formGroup.querySelector('.field-error');
+        if (!errorEl) {
+            errorEl = document.createElement('div');
+            errorEl.className = 'field-error';
+            formGroup.appendChild(errorEl);
+        }
+        errorEl.textContent = message || '';
+    }
+};
+const clearFieldError = (field) => {
+    if (!field) return;
+    const formGroup = field.closest('.form-group');
+    if (formGroup) formGroup.classList.remove('has-error');
+    field.classList.remove('input-error');
+    field.removeAttribute('aria-invalid');
+    if (formGroup) {
+        const errorEl = formGroup.querySelector('.field-error');
+        if (errorEl) errorEl.textContent = '';
+    }
+};
+const isVisibleField = (field) => !field.closest('.hidden-field');
+const validateField = (field) => {
+    const t = (langDict && langDict[currentLang] && langDict[currentLang].toast) ? langDict[currentLang].toast : {};
+    if (!field || !isVisibleField(field)) return true;
+    const value = (field.value || '').trim();
+    if (field.hasAttribute('required') && !value) {
+        const labelText = getFieldLabel(field, field.name || (currentLang === 'en' ? 'This field' : 'Field ini'));
+        const template = t.fieldRequired || '{field} wajib diisi';
+        setFieldError(field, template.replace('{field}', labelText));
+        return false;
+    }
+    if (value && field.type === 'email') {
+        const emailRegex = /^[\w.!#$%&'*+/=?`{|}~-]+@[\w-]+(\.[\w-]+)+$/;
+        if (!emailRegex.test(value)) {
+            setFieldError(field, t.invalidEmail || 'Format email tidak valid');
+            return false;
+        }
+    }
+    if (value && field.type === 'tel') {
+        const phoneRegex = /^\d{9,15}$/;
+        if (!phoneRegex.test(value.replace(/\s|\+/g, ''))) {
+            setFieldError(field, t.invalidPhone || 'Format nomor WhatsApp harus angka (9-15 digit)');
+            return false;
+        }
+    }
+    if (field.name === 'lms_password_confirm') {
+        const pw = document.getElementById('lms_password');
+        if (pw && pw.value && value && pw.value !== value) {
+            setFieldError(field, t.passwordMismatch || 'Konfirmasi password tidak sama');
+            return false;
+        }
+    }
+    clearFieldError(field);
+    return true;
+};
+const validateGroup = (groupName, contextEl) => {
+    const t = (langDict && langDict[currentLang] && langDict[currentLang].toast) ? langDict[currentLang].toast : {};
+    const groupEls = (contextEl || document).querySelectorAll(`[name="${groupName}"]`);
+    if (!groupEls.length) return true;
+    const visibleEls = Array.from(groupEls).filter(el => isVisibleField(el));
+    if (!visibleEls.length) return true;
+    const any = visibleEls.some(el => el.checked);
+    const first = visibleEls[0];
+    if (!any) {
+        const labelText = getFieldLabel(first, groupName || (currentLang === 'en' ? 'Selection' : 'Pilihan'));
+        const template = t.fieldRequired || '{field} wajib diisi';
+        setFieldError(first, template.replace('{field}', labelText));
+        return false;
+    }
+    clearFieldError(first);
+    return true;
+};
+const validateFileField = (fileInput) => {
+    const t = (langDict && langDict[currentLang] && langDict[currentLang].toast) ? langDict[currentLang].toast : {};
+    if (!fileInput || !isVisibleField(fileInput)) return true;
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) {
+        if (fileInput.hasAttribute('required')) {
+            setFieldError(fileInput, t.fileRequired || 'Anda harus mengupload bukti pembayaran');
+            return false;
+        }
+        clearFieldError(fileInput);
+        return true;
+    }
+    const check = validateFile(file);
+    if (!check.ok) {
+        let msg = check.reason;
+        if (/Format file/i.test(msg)) msg = t.invalidFileType || msg;
+        if (/Ukuran file/i.test(msg)) msg = t.invalidFileSize || msg;
+        setFieldError(fileInput, msg);
+        return false;
+    }
+    clearFieldError(fileInput);
+    return true;
+};
 function validateAndSanitize(formData) {
     // Validate allowlisted select fields
     for (const key of Object.keys(allowLists)) {
@@ -1026,25 +1143,16 @@ function validateCurrentSection() {
 
     // Validate text/email/tel/date/select/textarea
     requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-            field.style.borderColor = '#e74c3c';
-            isValid = false;
-        } else {
-            field.style.borderColor = '';
-        }
+        if (!isVisibleField(field)) return;
+        if (!validateField(field)) isValid = false;
     });
 
     // Validate radio/checkbox groups
     requiredGroups.forEach(groupName => {
-        const group = currentSectionEl.querySelectorAll(`[name="${groupName}"]`);
-        const isChecked = Array.from(group).some(f => f.checked);
-        if (!isChecked) {
-            group.forEach(f => f.style.accentColor = '#e74c3c');
-            isValid = false;
-        } else {
-            group.forEach(f => f.style.accentColor = '#145DA0');
-        }
+        if (!validateGroup(groupName, currentSectionEl)) isValid = false;
     });
+    const fileInput = currentSectionEl.querySelector('input[type="file"][name="bukti_pembayaran"]');
+    if (fileInput && !validateFileField(fileInput)) isValid = false;
 
     if (!isValid) {
         // Use translations for toast messages
@@ -1096,6 +1204,28 @@ function validateCurrentSection() {
     }
     return isValid;
 }
+const bindRealtimeValidation = () => {
+    if (!form) return;
+    const fields = form.querySelectorAll('input, select, textarea');
+    fields.forEach(field => {
+        if (field.type === 'checkbox' || field.type === 'radio') return;
+        field.addEventListener('blur', () => validateField(field));
+        field.addEventListener('input', () => {
+            if (field.classList.contains('input-error')) validateField(field);
+        });
+        field.addEventListener('change', () => validateField(field));
+    });
+    const groups = new Set(Array.from(form.querySelectorAll('[required][type="radio"], [required][type="checkbox"]')).map(f => f.name));
+    groups.forEach(name => {
+        form.querySelectorAll(`[name="${name}"]`).forEach(el => {
+            el.addEventListener('change', () => validateGroup(name, form));
+        });
+    });
+    const fileInput = document.getElementById('bukti_pembayaran');
+    if (fileInput) {
+        fileInput.addEventListener('change', () => validateFileField(fileInput));
+    }
+};
 // Dropzone & LMS UI behaviors
 (function () {
     const dropzone = document.getElementById('dropzone');
@@ -1480,6 +1610,7 @@ function buildCatatan(dataSafe) {
     return parts.join(' | ');
 }
 // Initialize first section & wilayah Indonesia dropdowns
+bindRealtimeValidation();
 showSection(1);
 try {
     if (typeof toggleIndonesiaFields === 'function') {
