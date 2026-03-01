@@ -1,0 +1,717 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const title = "Rasionalisasi SNBP - Ultimate Education";
+const description = "Simulasi rasionalisasi SNBP dengan perbandingan pilihan kampus dan prodi.";
+const supaUrl = import.meta.env.PUBLIC_SUPA_URL ?? "https://xhorsqwwkspcmqmjasef.supabase.co";
+const supaKey = import.meta.env.PUBLIC_SUPA_KEY ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhob3JzcXd3a3NwY21xbWphc2VmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0NTY4MjksImV4cCI6MjA3MjAzMjgyOX0.gYCkDaYk7oEARChrPCgva9Ub_p_YVjyy3aAD7bfaFU8";
+const supaSchema = import.meta.env.PUBLIC_SUPA_SCHEMA ?? "public";
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </Fragment>
+  <main class="bg-slate-50 min-h-screen">
+    <section class="bg-hero-gradient">
+      <div class="container mx-auto px-4 md:px-6 xl:px-0 py-12 lg:py-16">
+        <div class="max-w-3xl text-white">
+          <div class="inline-flex items-center rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-xs md:text-sm font-semibold text-ultimate-yellow mb-4">
+            Rasionalisasi SNBP
+          </div>
+          <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-4">Kalkulator Rasionalisasi SNBP</h1>
+          <p class="text-white/80 text-base md:text-lg">Bandingkan pilihan kampus dan prodi dengan indikator rapor, mapel, alumni, dan prestasi.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto px-4 md:px-6 xl:px-0 py-10 lg:py-14">
+      <div id="snbp-status" class="mb-6 rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600">Memuat data SNBP...</div>
+
+      <div id="step-1" class="bg-white rounded-2xl border border-slate-200 shadow-card p-6 lg:p-8 space-y-6">
+        <h2 class="font-heading text-xl lg:text-2xl font-semibold text-slate-900">Langkah 1 — Pilih Kampus & Prodi</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="text-sm font-semibold text-slate-600">Pilihan 1</div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Kampus</label>
+              <select id="pl1_ptn" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Program Studi</label>
+              <select id="pl1_prodi" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="text-sm font-semibold text-slate-600">Pilihan 2</div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Kampus</label>
+              <select id="pl2_ptn" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Program Studi</label>
+              <select id="pl2_prodi" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button id="btn-step1-next" class="rounded-xl bg-ultimate-blue text-white font-semibold px-6 py-3 hover:brightness-110 transition-all">Lanjut</button>
+        </div>
+      </div>
+
+      <div id="step-2" class="hidden bg-white rounded-2xl border border-slate-200 shadow-card p-6 lg:p-8 space-y-6">
+        <h2 class="font-heading text-xl lg:text-2xl font-semibold text-slate-900">Langkah 2 — Nilai, Sekolah, Mapel & Prestasi</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="text-sm font-semibold text-slate-600">Indeks Sekolah</div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Domisili Sekolah (Kota)</label>
+              <input id="domisili_city" type="text" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base" placeholder="contoh: Bandung" />
+            </div>
+            <div class="text-xs text-slate-500">Kota Kampus: <span id="campus-city-1">-</span> • <span id="campus-city-2">-</span></div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Peringkat Nasional Sekolah</label>
+              <select id="rank_bucket" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="text-sm font-semibold text-slate-600">Nilai Rapor</div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Ranking Paralel</label>
+              <input id="rank_paralel" type="number" min="1" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base" placeholder="contoh: 2" />
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Rata-rata Rapor Sem 1–5</label>
+              <input id="avg_rapor" type="number" min="60" max="100" step="0.01" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base" />
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Tren Nilai</label>
+              <select id="tren" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="naik">Naik</option>
+                <option value="stabil">Stabil</option>
+                <option value="turun">Turun</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="text-sm font-semibold text-slate-600">Pilihan 1</div>
+              <span class="chip" id="chip-pl1-ptn"></span>
+              <span class="chip" id="chip-pl1-prodi"></span>
+              <span class="chip" id="chip-pl1-kelompok"></span>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Kesesuaian Jurusan SMA ↔ Prodi</label>
+              <select id="pl1_linear" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="linear">Linear</option>
+                <option value="semi">Semi-linear</option>
+                <option value="lintas">Lintas-rumpun</option>
+              </select>
+            </div>
+            <div>
+              <div class="text-xs text-slate-500 mb-2" id="pl1-mapel-rekom"></div>
+              <label class="text-sm font-semibold text-slate-700">Mata Pelajaran</label>
+              <select id="pl1_mapel_name" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Nilai Mapel</label>
+              <input id="pl1_mapel_score" type="number" min="0" max="100" step="0.1" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base" />
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Alumni diterima tahun lalu</label>
+              <select id="pl1_alumni" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="0">0</option>
+                <option value="1-3">1-3</option>
+                <option value="4-10" selected>4-10</option>
+                <option value="11-20">11-20</option>
+                <option value="20+">20+</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Status Daftar Ulang Alumni</label>
+              <select id="pl1_du" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="full">Semua daftar ulang</option>
+                <option value="sebagian">Sebagian tidak daftar ulang</option>
+                <option value="mayoritas">Mayoritas tidak daftar ulang</option>
+              </select>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="text-sm font-semibold text-slate-600">Pilihan 2</div>
+              <span class="chip" id="chip-pl2-ptn"></span>
+              <span class="chip" id="chip-pl2-prodi"></span>
+              <span class="chip" id="chip-pl2-kelompok"></span>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Kesesuaian Jurusan SMA ↔ Prodi</label>
+              <select id="pl2_linear" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="linear">Linear</option>
+                <option value="semi">Semi-linear</option>
+                <option value="lintas">Lintas-rumpun</option>
+              </select>
+            </div>
+            <div>
+              <div class="text-xs text-slate-500 mb-2" id="pl2-mapel-rekom"></div>
+              <label class="text-sm font-semibold text-slate-700">Mata Pelajaran</label>
+              <select id="pl2_mapel_name" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base"></select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Nilai Mapel</label>
+              <input id="pl2_mapel_score" type="number" min="0" max="100" step="0.1" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base" />
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Alumni diterima tahun lalu</label>
+              <select id="pl2_alumni" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="0">0</option>
+                <option value="1-3">1-3</option>
+                <option value="4-10" selected>4-10</option>
+                <option value="11-20">11-20</option>
+                <option value="20+">20+</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Status Daftar Ulang Alumni</label>
+              <select id="pl2_du" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm md:text-base">
+                <option value="full">Semua daftar ulang</option>
+                <option value="sebagian">Sebagian tidak daftar ulang</option>
+                <option value="mayoritas">Mayoritas tidak daftar ulang</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <div class="text-sm font-semibold text-slate-600 mb-4">Prestasi (opsional, isi 0–3 item)</div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <div class="rounded-2xl border border-slate-200 bg-white p-4 space-y-2">
+                <div class="text-xs font-semibold text-slate-500">Prestasi {idx + 1}</div>
+                <select id={`p${idx + 1}_tingkat`} class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
+                  <option value="">— Kosongkan —</option>
+                  <option value="kab">Kabupaten/Kota</option>
+                  <option value="prov">Provinsi</option>
+                  <option value="nas">Nasional</option>
+                  <option value="internasional">Internasional</option>
+                </select>
+                <div class="grid grid-cols-2 gap-2">
+                  <select id={`p${idx + 1}_penyelenggara`} class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
+                    <option value="swasta">Swasta</option>
+                    <option value="resmi">Resmi</option>
+                  </select>
+                  <select id={`p${idx + 1}_peringkat`} class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
+                    <option value="">— Tidak Ada —</option>
+                    <option value="1">Juara 1</option>
+                    <option value="2">Juara 2</option>
+                    <option value="3">Juara 3</option>
+                    <option value="harapan">Harapan</option>
+                  </select>
+                </div>
+                <select id={`p${idx + 1}_relevansi`} class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
+                  <option value="tinggi">Tinggi</option>
+                  <option value="sedang">Sedang</option>
+                  <option value="rendah">Rendah</option>
+                </select>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button id="btn-step2-prev" class="rounded-xl border border-slate-200 bg-slate-100 text-slate-700 px-6 py-3 font-semibold">Kembali</button>
+          <button id="btn-step2-next" class="rounded-xl bg-ultimate-blue text-white px-6 py-3 font-semibold hover:brightness-110 transition-all">Lihat Hasil</button>
+        </div>
+      </div>
+
+      <div id="step-3" class="hidden space-y-6"></div>
+    </section>
+  </main>
+
+  <style>
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 0.75rem;
+      color: #475569;
+    }
+  </style>
+
+  <script define:vars={{ supaUrl, supaKey, supaSchema }}>
+    const SUPA_URL = supaUrl;
+    const SUPA_KEY = supaKey;
+    const SUPA_SCHEMA = supaSchema;
+    const MAPEL_DEFAULT = {
+      Saintek: ["Matematika", "Fisika", "Kimia", "Biologi"],
+      Soshum: ["Matematika", "Geografi", "Ekonomi", "Sosiologi"],
+      Campuran: ["Matematika"],
+    };
+    const WEIGHTS = { rapor: 0.5, mapel: 0.2, sekolah: 0.15, alumni: 0.1, prestasi: 0.05 };
+    const LINEARITY = { linear: 100, semi: 60, lintas: 30 };
+    const ALUMNI_BASE = { "0": 40, "1-3": 60, "4-10": 70, "11-20": 80, "20+": 90 };
+    const DU_MUL = { full: 1, sebagian: 0.9, mayoritas: 0.8 };
+    const state = {
+      PTN_PRODI: {},
+      CAMP_BY_ID: {},
+      KEL_BY_ID: {},
+      MAPEL_BY_ID: {},
+      AKTIF_KUR: {},
+      OVR_BY_PRODI: {},
+      KMR_BY_KEL: {},
+    };
+
+    const el = (id) => document.getElementById(id);
+    const setStatus = (text, type = "info") => {
+      const box = el("snbp-status");
+      if (!box) return;
+      box.textContent = text;
+      box.className = "mb-6 rounded-2xl border p-4 text-sm";
+      if (type === "error") {
+        box.classList.add("border-red-200", "bg-red-50", "text-red-600");
+      } else {
+        box.classList.add("border-slate-200", "bg-white", "text-slate-600");
+      }
+    };
+
+    const supaGet = async (path) => {
+      const url = `${SUPA_URL}/rest/v1/${path}`;
+      const headers = {
+        apikey: SUPA_KEY,
+        Authorization: `Bearer ${SUPA_KEY}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+      if (SUPA_SCHEMA && SUPA_SCHEMA !== "public") {
+        headers["Accept-Profile"] = SUPA_SCHEMA;
+        headers["Content-Profile"] = SUPA_SCHEMA;
+      }
+      const response = await fetch(url, { headers });
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+      return response.json();
+    };
+
+    const num = (v, d = 0) => {
+      const n = Number(v);
+      if (Number.isNaN(n) || !Number.isFinite(n)) return 0;
+      return Number(n.toFixed(d));
+    };
+    const raporScore = (avg) => (Math.max(60, Math.min(100, avg)) - 60) * 2.5;
+    const trendScore = (t) => (t === "naik" ? 8 : t === "stabil" ? 4 : -2);
+    const rankParScore = (r) => {
+      if (!r || r <= 0) return 0;
+      if (r === 1) return 100;
+      if (r === 2) return 95;
+      if (r <= 5) return 90;
+      if (r <= 10) return 85;
+      if (r <= 20) return 75;
+      return 65;
+    };
+    const raporTotal = (avg, rank, trend) => 0.75 * raporScore(avg) + 0.15 * rankParScore(rank) + 0.1 * trendScore(trend);
+    const bucketScore = (bucket) => {
+      const a = parseInt((bucket || "901-1000").split("-")[0], 10);
+      const idx = Math.max(0, Math.min(9, Math.floor((a - 1) / 100)));
+      const S = [95, 92, 90, 88, 86, 84, 82, 78, 74, 70];
+      return S[idx];
+    };
+    const sekolahScore = (bucket, cityMatchBonus) => 0.95 * bucketScore(bucket) + 0.05 * Math.max(0, Math.min(5, cityMatchBonus)) * 20;
+    const alumniScore = (bucket, du) => (ALUMNI_BASE[bucket] || 60) * (DU_MUL[du] || 1);
+    const prestasiSingle = (t, p, rk, rel) => {
+      if (!t) return 0;
+      const resmi = p === "resmi";
+      const base = t === "kab" ? (resmi ? 60 : 55) : t === "prov" ? (resmi ? 75 : 70) : t === "nas" ? (resmi ? 90 : 85) : 97;
+      const mod = rk === "1" ? 10 : rk === "2" ? 7 : rk === "3" ? 5 : rk === "harapan" ? 2 : 0;
+      const mul = rel === "tinggi" ? 1 : rel === "sedang" ? 0.85 : 0.7;
+      return Math.max(0, Math.min(100, (base + mod) * mul));
+    };
+    const prestasiTotal = (a, b, c) => {
+      const arr = [a, b, c].filter((v) => v > 0).sort((x, y) => y - x);
+      if (!arr.length) return 0;
+      const top = arr.slice(0, Math.min(2, arr.length));
+      return top.reduce((s, v) => s + v, 0) / top.length;
+    };
+    const cityBonus = (schoolCity, campusCity) => {
+      if (!schoolCity || !campusCity) return 0;
+      return schoolCity.trim().toLowerCase() === campusCity.trim().toLowerCase() ? 5 : 0;
+    };
+
+    const getRekomMapelFor = (prodiId, kelompokId, limit = 6) => {
+      const final = {};
+      const ovr = state.OVR_BY_PRODI[prodiId] || [];
+      ovr.forEach((o) => {
+        const nm = state.MAPEL_BY_ID[o.mapel_id];
+        if (!nm) return;
+        if (!final[o.mapel_id] || !final[o.mapel_id].is_override) {
+          final[o.mapel_id] = { nama_mapel: nm, prioritas: Number(o.prioritas) || 0, is_override: true };
+        }
+      });
+      const kmr = state.KMR_BY_KEL[kelompokId] || [];
+      kmr.forEach((d) => {
+        if (final[d.mapel_id]) return;
+        const nm = state.MAPEL_BY_ID[d.mapel_id];
+        if (!nm) return;
+        final[d.mapel_id] = { nama_mapel: nm, prioritas: Number(d.prioritas) || 0, is_override: false };
+      });
+      const arr = Object.values(final).sort((a, b) => {
+        if (a.is_override !== b.is_override) return a.is_override ? -1 : 1;
+        if (a.prioritas === b.prioritas) return a.nama_mapel.localeCompare(b.nama_mapel);
+        return a.prioritas - b.prioritas;
+      });
+      return limit > 0 ? arr.slice(0, limit) : arr;
+    };
+
+    const populateRankBuckets = () => {
+      const select = el("rank_bucket");
+      if (!select) return;
+      select.innerHTML = "";
+      for (let i = 0; i < 10; i += 1) {
+        const a = i * 100 + 1;
+        const b = (i + 1) * 100;
+        const opt = document.createElement("option");
+        opt.value = `${a}-${b}`;
+        opt.textContent = `${a}–${b}`;
+        if (i === 3) opt.selected = true;
+        select.appendChild(opt);
+      }
+    };
+
+    const populateCampuses = () => {
+      const campuses = Object.keys(state.PTN_PRODI);
+      [el("pl1_ptn"), el("pl2_ptn")].forEach((select) => {
+        select.innerHTML = '<option value="">— Pilih Kampus —</option>';
+        campuses.forEach((name) => {
+          const opt = document.createElement("option");
+          opt.value = name;
+          opt.textContent = name;
+          select.appendChild(opt);
+        });
+      });
+    };
+
+    const populateProdi = (ptnSelectId, prodiSelectId) => {
+      const ptnSelect = el(ptnSelectId);
+      const prodiSelect = el(prodiSelectId);
+      prodiSelect.innerHTML = '<option value="">— Pilih Prodi —</option>';
+      const campusName = ptnSelect.value;
+      if (!campusName || !state.PTN_PRODI[campusName]) return;
+      Object.keys(state.PTN_PRODI[campusName]).forEach((p) => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = p;
+        prodiSelect.appendChild(opt);
+      });
+    };
+
+    const updateStep2Meta = () => {
+      const pl1 = getChoice("pl1");
+      const pl2 = getChoice("pl2");
+      el("chip-pl1-ptn").textContent = pl1?.ptn || "-";
+      el("chip-pl1-prodi").textContent = pl1?.prodi || "-";
+      el("chip-pl1-kelompok").textContent = pl1?.kelompok || "-";
+      el("chip-pl2-ptn").textContent = pl2?.ptn || "-";
+      el("chip-pl2-prodi").textContent = pl2?.prodi || "-";
+      el("chip-pl2-kelompok").textContent = pl2?.kelompok || "-";
+      el("campus-city-1").textContent = pl1?.city || "-";
+      el("campus-city-2").textContent = pl2?.city || "-";
+      updateMapelOptions("pl1", pl1);
+      updateMapelOptions("pl2", pl2);
+    };
+
+    const updateMapelOptions = (prefix, choice) => {
+      const select = el(`${prefix}_mapel_name`);
+      if (!choice) return;
+      const rekom = getRekomMapelFor(choice.prodiId, choice.kelompokId, 6);
+      const options = rekom.length ? Array.from(new Set(rekom.map((r) => r.nama_mapel))) : MAPEL_DEFAULT[choice.kelompok] || MAPEL_DEFAULT.Saintek;
+      select.innerHTML = '<option value="">— Pilih Mapel —</option>';
+      options.forEach((m) => {
+        const opt = document.createElement("option");
+        opt.value = m;
+        opt.textContent = m;
+        select.appendChild(opt);
+      });
+      const rekomText = rekom.length ? `Rekomendasi: ${rekom.map((r) => `${r.nama_mapel}${r.is_override ? "*" : ""}`).join(", ")}` : "Rekomendasi: default kelompok";
+      el(`${prefix}-mapel-rekom`).textContent = rekomText;
+    };
+
+    const getChoice = (prefix) => {
+      const ptn = el(`${prefix}_ptn`).value;
+      const prodi = el(`${prefix}_prodi`).value;
+      if (!ptn || !prodi) return null;
+      const data = state.PTN_PRODI[ptn]?.[prodi];
+      if (!data) return null;
+      return {
+        ptn,
+        prodi,
+        kelompok: data.kelompok || "Saintek",
+        city: data.city || "",
+        prodiId: data.prodi_id,
+        kelompokId: data.kelompok_id,
+      };
+    };
+
+    const computeResults = () => {
+      const choice1 = getChoice("pl1");
+      const choice2 = getChoice("pl2");
+      const avg = Number(el("avg_rapor").value || 0);
+      const rank = Number(el("rank_paralel").value || 0);
+      const trend = el("tren").value;
+      const schoolCity = el("domisili_city").value || "";
+      const rankBucket = el("rank_bucket").value;
+      const m1 = Number(el("pl1_mapel_score").value || 0);
+      const m2 = Number(el("pl2_mapel_score").value || 0);
+      const R = raporTotal(avg, rank, trend);
+      const bonusCity1 = cityBonus(schoolCity, choice1.city);
+      const bonusCity2 = cityBonus(schoolCity, choice2.city);
+      const S1 = sekolahScore(rankBucket, bonusCity1);
+      const S2 = sekolahScore(rankBucket, bonusCity2);
+      const A1 = alumniScore(el("pl1_alumni").value, el("pl1_du").value);
+      const A2 = alumniScore(el("pl2_alumni").value, el("pl2_du").value);
+      const pScores = [1, 2, 3].map((i) =>
+        prestasiSingle(
+          el(`p${i}_tingkat`).value,
+          el(`p${i}_penyelenggara`).value,
+          el(`p${i}_peringkat`).value,
+          el(`p${i}_relevansi`).value
+        )
+      );
+      const P = prestasiTotal(pScores[0], pScores[1], pScores[2]);
+      const bonusLin1 = LINEARITY[el("pl1_linear").value] || 0;
+      const bonusLin2 = LINEARITY[el("pl2_linear").value] || 0;
+      const raw1 = WEIGHTS.rapor * R + WEIGHTS.mapel * m1 + WEIGHTS.sekolah * S1 + WEIGHTS.alumni * A1 + WEIGHTS.prestasi * P + bonusLin1 * 0.05;
+      const raw2 = WEIGHTS.rapor * R + WEIGHTS.mapel * m2 + WEIGHTS.sekolah * S2 + WEIGHTS.alumni * A2 + WEIGHTS.prestasi * P + bonusLin2 * 0.05;
+      const SC1 = Math.max(0, Math.min(100, raw1));
+      const SC2 = Math.max(0, Math.min(100, raw2));
+      const support = (val, label) => val >= 85 ? `${label} sangat kuat.` : val < 70 ? `${label} relatif rendah.` : `${label} cukup baik.`;
+      const sup1 = [support(R, "Rapor"), support(m1, "Mapel"), support(S1, "Sekolah"), support(A1, "Alumni")];
+      const sup2 = [support(R, "Rapor"), support(m2, "Mapel"), support(S2, "Sekolah"), support(A2, "Alumni")];
+      if (P >= 80) {
+        sup1.push("Prestasi kompetitif memberi nilai tambah.");
+        sup2.push("Prestasi kompetitif memberi nilai tambah.");
+      }
+      if (el("pl1_linear").value === "lintas") sup1.push("Prodi tidak sesuai dengan jurusan saat SMA.");
+      if (el("pl2_linear").value === "lintas") sup2.push("Prodi tidak sesuai dengan jurusan saat SMA.");
+      return { choice1, choice2, R, m1, m2, S1, S2, A1, A2, P, SC1, SC2, bonusCity1, bonusCity2, sup1, sup2 };
+    };
+
+    const renderResults = (data) => {
+      const container = el("step-3");
+      container.innerHTML = `
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-card p-6 lg:p-8 space-y-6">
+          <h2 class="font-heading text-xl lg:text-2xl font-semibold text-slate-900">Langkah 3 — Hasil Prediksi Kelulusan</h2>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="text-sm font-semibold text-slate-700 mb-3">Perbandingan Peluang</div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-slate-700 min-w-[3rem]">PIL 1</span>
+                  <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-ultimate-blue" style="width:${num(data.SC1, 1)}%"></div>
+                  </div>
+                  <span class="text-sm font-semibold text-slate-700 min-w-[3rem] text-right">${num(data.SC1, 1)}%</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-slate-700 min-w-[3rem]">PIL 2</span>
+                  <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-ultimate-yellow" style="width:${num(data.SC2, 1)}%"></div>
+                  </div>
+                  <span class="text-sm font-semibold text-slate-700 min-w-[3rem] text-right">${num(data.SC2, 1)}%</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="h-[160px]"><canvas id="donut1"></canvas></div>
+                <div class="h-[160px]"><canvas id="donut2"></canvas></div>
+              </div>
+              <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="h-[220px]"><canvas id="radar1"></canvas></div>
+                <div class="h-[220px]"><canvas id="radar2"></canvas></div>
+              </div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-sm font-medium text-slate-700">
+                <div class="text-slate-600">Pilihan 1</div>
+                <div><span class="chip">${data.choice1.ptn}</span><span class="chip">${data.choice1.prodi}</span></div>
+                <div class="text-slate-600">Pilihan 2</div>
+                <div><span class="chip">${data.choice2.ptn}</span><span class="chip">${data.choice2.prodi}</span></div>
+                <div class="text-slate-600">Skor</div>
+                <div><span class="font-semibold text-ultimate-blue">${num(data.SC1, 1)}%</span> vs <span class="font-semibold text-amber-500">${num(data.SC2, 1)}%</span></div>
+                <div class="text-slate-600">Domisili</div>
+                <div>${el("domisili_city").value || "-"} → bonus PL1 ${num(data.bonusCity1)}, PL2 ${num(data.bonusCity2)}</div>
+              </div>
+              <div class="border-t border-slate-200 mt-4 pt-4"></div>
+              <div class="text-sm text-slate-600 font-semibold mb-2">Kontribusi Komponen</div>
+              <div class="h-[220px]"><canvas id="stacked"></canvas></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-card p-6 space-y-3">
+            <h3 class="font-heading text-lg font-semibold text-slate-900">Breakdown Pilihan 1</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">Kelompok: ${data.choice1.kelompok}</span>
+              <span class="chip">Kota Kampus: ${data.choice1.city || "-"}</span>
+              <span class="chip">Mapel: ${el("pl1_mapel_name").value || "-"}</span>
+            </div>
+            <div class="border-t border-slate-200 pt-3">
+              <div class="text-sm font-semibold text-slate-700 mb-2">Faktor Pendukung</div>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">${data.sup1.map((s) => `<li>${s}</li>`).join("")}</ul>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-card p-6 space-y-3">
+            <h3 class="font-heading text-lg font-semibold text-slate-900">Breakdown Pilihan 2</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">Kelompok: ${data.choice2.kelompok}</span>
+              <span class="chip">Kota Kampus: ${data.choice2.city || "-"}</span>
+              <span class="chip">Mapel: ${el("pl2_mapel_name").value || "-"}</span>
+            </div>
+            <div class="border-t border-slate-200 pt-3">
+              <div class="text-sm font-semibold text-slate-700 mb-2">Faktor Pendukung</div>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">${data.sup2.map((s) => `<li>${s}</li>`).join("")}</ul>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <button id="btn-step3-prev" class="rounded-xl border border-slate-200 bg-white text-slate-700 px-6 py-3 font-semibold">Edit Data</button>
+          <button id="btn-step3-reset" class="rounded-xl bg-ultimate-blue text-white px-6 py-3 font-semibold hover:brightness-110 transition-all">Mulai Ulang</button>
+        </div>
+      `;
+      const CenterText = {
+        id: "centerText",
+        afterDraw(chart, args, opts) {
+          const { ctx, chartArea } = chart;
+          ctx.save();
+          ctx.fillStyle = "#0f172a";
+          ctx.font = "600 14px system-ui";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(opts.text || "", (chartArea.left + chartArea.right) / 2, (chartArea.top + chartArea.bottom) / 2);
+          ctx.restore();
+        },
+      };
+      Chart.register(CenterText);
+      const donut = (id, val, color) => new Chart(el(id), {
+        type: "doughnut",
+        data: { labels: ["Peluang", "Sisa"], datasets: [{ data: [val, 100 - val], backgroundColor: [color, "#e2e8f0"], borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: true, aspectRatio: 1, plugins: { legend: { display: false }, tooltip: { enabled: false }, centerText: { text: `${num(val, 1)}%` } } },
+      });
+      donut("donut1", num(data.SC1, 1), "#145da0");
+      donut("donut2", num(data.SC2, 1), "#f59e0b");
+      const radar = (id, vals, color) => new Chart(el(id), {
+        type: "radar",
+        data: { labels: ["Rapor", "Mapel", "Sekolah", "Alumni", "Prestasi"], datasets: [{ data: vals, backgroundColor: `${color}33`, borderColor: color, pointRadius: 2 }] },
+        options: { responsive: true, maintainAspectRatio: true, aspectRatio: 1.1, plugins: { legend: { display: false } }, scales: { r: { min: 0, max: 100, ticks: { display: false }, grid: { color: "#cbd5e1" }, angleLines: { color: "#cbd5e1" } } } },
+      });
+      radar("radar1", [data.R, data.m1, data.S1, data.A1, data.P], "#145da0");
+      radar("radar2", [data.R, data.m2, data.S2, data.A2, data.P], "#f59e0b");
+      new Chart(el("stacked"), {
+        type: "bar",
+        data: {
+          labels: ["Rapor", "Mapel", "Sekolah", "Alumni", "Prestasi"],
+          datasets: [
+            { label: "PL 1", data: [data.R * 0.5, data.m1 * 0.2, data.S1 * 0.15, data.A1 * 0.1, data.P * 0.05], backgroundColor: "#145da0" },
+            { label: "PL 2", data: [data.R * 0.5, data.m2 * 0.2, data.S2 * 0.15, data.A2 * 0.1, data.P * 0.05], backgroundColor: "#f59e0b" },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 2.1,
+          plugins: { legend: { labels: { color: "#475569" } } },
+          scales: { x: { stacked: true, ticks: { color: "#475569" } }, y: { stacked: true, ticks: { color: "#475569" }, grid: { color: "#e2e8f0" } } },
+        },
+      });
+      el("btn-step3-prev").addEventListener("click", () => showStep(2));
+      el("btn-step3-reset").addEventListener("click", () => showStep(1));
+    };
+
+    const showStep = (step) => {
+      el("step-1").classList.toggle("hidden", step !== 1);
+      el("step-2").classList.toggle("hidden", step !== 2);
+      el("step-3").classList.toggle("hidden", step !== 3);
+      if (step === 1) el("step-3").innerHTML = "";
+    };
+
+    const init = async () => {
+      if (!SUPA_URL || !SUPA_KEY || SUPA_URL.includes("YOUR-") || SUPA_KEY.includes("YOUR-")) {
+        setStatus("Konfigurasi Supabase belum diisi. Tambahkan PUBLIC_SUPA_URL dan PUBLIC_SUPA_KEY di .env.", "error");
+        return;
+      }
+      try {
+        const [campuses, kelompok, prodi, mapel, kurikulum, override, kelompokMapel] = await Promise.all([
+          supaGet("campuses?select=id,name,city&order=name.asc&limit=5000"),
+          supaGet("kelompok_prodi?select=id,nama_kelompok&order=nama_kelompok.asc&limit=5000"),
+          supaGet("program_studi?select=id,nama_prodi,jenjang,kampus_id,kelompok_id,is_active&order=nama_prodi.asc&limit=50000"),
+          supaGet("mata_pelajaran?select=id,nama_mapel&order=nama_mapel.asc&limit=5000"),
+          supaGet("kurikulum?select=id,nama_kurikulum,is_active&order=nama_kurikulum.asc&limit=100"),
+          supaGet("prodi_mapel_override?select=prodi_id,mapel_id,kurikulum_id,prioritas,bobot_nilai,is_wajib&order=prioritas.asc&limit=200000"),
+          supaGet("kelompok_mapel_relevan?select=kelompok_id,mapel_id,kurikulum_id,prioritas,bobot_nilai&order=prioritas.asc&limit=200000"),
+        ]);
+        campuses.forEach((c) => { state.CAMP_BY_ID[c.id] = c; });
+        kelompok.forEach((k) => { state.KEL_BY_ID[k.id] = k; });
+        mapel.forEach((m) => { state.MAPEL_BY_ID[m.id] = m.nama_mapel; });
+        kurikulum.forEach((k) => { if (k.is_active !== false) state.AKTIF_KUR[k.id] = k; });
+        prodi.forEach((p) => {
+          if (p.is_active === false) return;
+          const camp = state.CAMP_BY_ID[p.kampus_id];
+          if (!camp) return;
+          const kel = state.KEL_BY_ID[p.kelompok_id];
+          if (!state.PTN_PRODI[camp.name]) state.PTN_PRODI[camp.name] = {};
+          state.PTN_PRODI[camp.name][p.nama_prodi] = {
+            kelompok: kel?.nama_kelompok || "Saintek",
+            jenjang: p.jenjang || "",
+            city: camp.city || "",
+            prodi_id: p.id,
+            kelompok_id: p.kelompok_id,
+            kampus_id: p.kampus_id,
+          };
+        });
+        override.forEach((o) => {
+          if (!state.AKTIF_KUR[o.kurikulum_id]) return;
+          if (!state.OVR_BY_PRODI[o.prodi_id]) state.OVR_BY_PRODI[o.prodi_id] = [];
+          state.OVR_BY_PRODI[o.prodi_id].push(o);
+        });
+        kelompokMapel.forEach((d) => {
+          if (!state.AKTIF_KUR[d.kurikulum_id]) return;
+          if (!state.KMR_BY_KEL[d.kelompok_id]) state.KMR_BY_KEL[d.kelompok_id] = [];
+          state.KMR_BY_KEL[d.kelompok_id].push(d);
+        });
+        populateRankBuckets();
+        populateCampuses();
+        setStatus("Data SNBP siap digunakan.");
+      } catch (error) {
+        setStatus("Gagal memuat data SNBP. Pastikan konfigurasi Supabase benar.", "error");
+      }
+    };
+
+    el("pl1_ptn").addEventListener("change", () => populateProdi("pl1_ptn", "pl1_prodi"));
+    el("pl2_ptn").addEventListener("change", () => populateProdi("pl2_ptn", "pl2_prodi"));
+    el("btn-step1-next").addEventListener("click", () => {
+      const choice1 = getChoice("pl1");
+      const choice2 = getChoice("pl2");
+      if (!choice1 || !choice2) {
+        setStatus("Lengkapi pilihan kampus dan prodi terlebih dulu.", "error");
+        return;
+      }
+      setStatus("Data SNBP siap digunakan.");
+      showStep(2);
+      updateStep2Meta();
+    });
+    el("btn-step2-prev").addEventListener("click", () => showStep(1));
+    el("btn-step2-next").addEventListener("click", () => {
+      const choice1 = getChoice("pl1");
+      const choice2 = getChoice("pl2");
+      if (!choice1 || !choice2) return;
+      const data = computeResults();
+      showStep(3);
+      renderResults(data);
+      window.scrollTo({ top: el("step-3").offsetTop - 20, behavior: "smooth" });
+    });
+
+    init();
+  </script>
+</Layout>

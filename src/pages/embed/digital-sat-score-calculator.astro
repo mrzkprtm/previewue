@@ -1,0 +1,139 @@
+---
+const title = "Digital SAT Score Calculator";
+---
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <style>
+      :root {
+        --brand: #145da0;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #e2e8f0;
+        --text: #0f172a;
+        --muted: #64748b;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px 40px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      }
+      h1 {
+        font-size: 1.6rem;
+        margin: 0 0 8px;
+      }
+      p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+      }
+      input[type="number"] {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-size: 1rem;
+      }
+      .result {
+        margin-top: 16px;
+        padding: 16px;
+        border-radius: 14px;
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .score {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: var(--brand);
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(20, 93, 160, 0.1);
+        color: var(--brand);
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="badge">Digital SAT</div>
+        <h1>Digital SAT Score Calculator</h1>
+        <p>Masukkan skor English dan Math (200–800) untuk melihat total.</p>
+        <div class="grid">
+          <div>
+            <label for="readingWriting">Evidence-Based Reading & Writing</label>
+            <input id="readingWriting" type="number" min="200" max="800" step="10" value="600" />
+          </div>
+          <div>
+            <label for="mathScore">Math</label>
+            <input id="mathScore" type="number" min="200" max="800" step="10" value="650" />
+          </div>
+        </div>
+        <div class="result">
+          <div class="score" id="totalScore">1250</div>
+          <div class="badge" id="scoreRange">Range 400–1600</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const rw = document.getElementById("readingWriting");
+      const math = document.getElementById("mathScore");
+      const totalEl = document.getElementById("totalScore");
+      const scoreRange = document.getElementById("scoreRange");
+
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+      const updateScore = () => {
+        const r = clamp(Number(rw.value || 0), 200, 800);
+        const m = clamp(Number(math.value || 0), 200, 800);
+        rw.value = r;
+        math.value = m;
+        totalEl.textContent = r + m;
+        scoreRange.textContent = `Range 400–1600`;
+      };
+      rw.addEventListener("input", updateScore);
+      math.addEventListener("input", updateScore);
+      updateScore();
+    </script>
+  </body>
+</html>

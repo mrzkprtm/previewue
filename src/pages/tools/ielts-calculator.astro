@@ -1,0 +1,216 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const title = "IELTS Calculator - Ultimate Education";
+const description = "Hitung IELTS overall band score dan konversi raw score dengan cepat.";
+---
+
+<Layout title={title} description={description}>
+  <main class="bg-slate-50 min-h-screen">
+    <section class="bg-hero-gradient">
+      <div class="container mx-auto px-4 md:px-6 xl:px-0 py-12 lg:py-16">
+        <div class="max-w-3xl text-white">
+          <div class="inline-flex items-center rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-xs md:text-sm font-semibold text-ultimate-yellow mb-4">Kalkulator Skor</div>
+          <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-4">IELTS Calculator</h1>
+          <p class="text-white/80 text-base md:text-lg">Hitung overall band score dan estimasi konversi raw score dengan tampilan interaktif.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto px-4 md:px-6 xl:px-0 py-10 lg:py-14">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-card p-6 lg:p-8">
+          <h2 class="font-heading text-xl lg:text-2xl font-semibold text-slate-900 mb-4">IELTS Overall Band Score</h2>
+          <p class="text-sm md:text-base text-slate-500 mb-6">Pilih skor tiap section lalu tekan Hitung.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="overall-form">
+            <div class="space-y-2">
+              <label for="listeningSelect" class="text-sm font-semibold text-slate-700">Listening</label>
+              <select id="listeningSelect" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+                <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+                <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+                <option>1.5</option><option>1</option><option>0</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="readingSelect" class="text-sm font-semibold text-slate-700">Reading</label>
+              <select id="readingSelect" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+                <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+                <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+                <option>1.5</option><option>1</option><option>0</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="writingSelect" class="text-sm font-semibold text-slate-700">Writing</label>
+              <select id="writingSelect" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+                <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+                <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+                <option>1.5</option><option>1</option><option>0</option>
+              </select>
+            </div>
+            <div class="space-y-2">
+              <label for="speakingSelect" class="text-sm font-semibold text-slate-700">Speaking</label>
+              <select id="speakingSelect" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+                <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+                <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+                <option>1.5</option><option>1</option><option>0</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="calculateBtn" class="mt-6 w-full rounded-xl bg-ultimate-blue text-white font-semibold py-3 hover:brightness-110 transition-all">Hitung</button>
+
+          <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center">
+            <div class="text-sm font-semibold text-slate-600">IELTS Overall Band Score</div>
+            <div id="ieltsScore" class="text-4xl font-bold text-ultimate-blue mt-2">–</div>
+            <div id="ieltsDetail" class="text-xs md:text-sm text-slate-500 mt-2"></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-card p-6 lg:p-8">
+          <h2 class="font-heading text-xl lg:text-2xl font-semibold text-slate-900 mb-4">IELTS Raw Score Calculator</h2>
+          <p class="text-sm md:text-base text-slate-500 mb-6">Masukkan jumlah jawaban benar untuk estimasi band.</p>
+
+          <div class="space-y-5">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="font-semibold text-slate-700 mb-2">Listening</div>
+              <label for="rawL" class="text-xs text-slate-500">Correct answers (0–40)</label>
+              <input
+                id="rawL"
+                type="number"
+                min="0"
+                max="40"
+                inputmode="numeric"
+                placeholder="0–40"
+                class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              />
+              <div class="mt-3 text-sm text-slate-600 text-center">Your score is <span id="rawLA" class="font-bold text-ultimate-blue">_</span> out of 9</div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="font-semibold text-slate-700 mb-2">Reading (Academic)</div>
+              <label for="rawRA" class="text-xs text-slate-500">Correct answers (0–40)</label>
+              <input
+                id="rawRA"
+                type="number"
+                min="0"
+                max="40"
+                inputmode="numeric"
+                placeholder="0–40"
+                class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              />
+              <div class="mt-3 text-sm text-slate-600 text-center">Your score is <span id="rawRAA" class="font-bold text-ultimate-blue">_</span> out of 9</div>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="font-semibold text-slate-700 mb-2">Reading (General Training)</div>
+              <label for="rawRG" class="text-xs text-slate-500">Correct answers (0–40)</label>
+              <input
+                id="rawRG"
+                type="number"
+                min="0"
+                max="40"
+                inputmode="numeric"
+                placeholder="0–40"
+                class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm md:text-base bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              />
+              <div class="mt-3 text-sm text-slate-600 text-center">Your score is <span id="rawRGA" class="font-bold text-ultimate-blue">_</span> out of 9</div>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-400 mt-4">Catatan: Mapping raw → band adalah estimasi umum dan bisa berbeda tiap sesi ujian.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const roundHalf = (x) => Math.round(x * 2) / 2;
+    const calculateOverall = () => {
+      const l = parseFloat($("#listeningSelect").value);
+      const r = parseFloat($("#readingSelect").value);
+      const w = parseFloat($("#writingSelect").value);
+      const s = parseFloat($("#speakingSelect").value);
+      const avg = (l + r + w + s) / 4;
+      const band = roundHalf(avg);
+      $("#ieltsScore").textContent = band.toFixed(1).replace(".0", "");
+      $("#ieltsDetail").textContent = `Average ${avg.toFixed(2)} → rounded to nearest 0.5`;
+    };
+
+    const LISTENING_TABLE = [
+      [39, 40, 9],
+      [37, 38, 8.5],
+      [35, 36, 8],
+      [32, 34, 7.5],
+      [30, 31, 7],
+      [26, 29, 6.5],
+      [23, 25, 6],
+      [18, 22, 5.5],
+      [16, 17, 5],
+      [13, 15, 4.5],
+      [10, 12, 4],
+      [7, 9, 3.5],
+      [5, 6, 3],
+      [3, 4, 2.5],
+      [0, 2, 2],
+    ];
+    const READING_AC_TABLE = [
+      [39, 40, 9],
+      [37, 38, 8.5],
+      [35, 36, 8],
+      [33, 34, 7.5],
+      [30, 32, 7],
+      [27, 29, 6.5],
+      [23, 26, 6],
+      [19, 22, 5.5],
+      [15, 18, 5],
+      [13, 14, 4.5],
+      [10, 12, 4],
+      [8, 9, 3.5],
+      [6, 7, 3],
+      [4, 5, 2.5],
+      [0, 3, 2],
+    ];
+    const READING_GT_TABLE = [
+      [40, 40, 9],
+      [39, 39, 8.5],
+      [37, 38, 8],
+      [36, 36, 7.5],
+      [34, 35, 7],
+      [32, 33, 6.5],
+      [30, 31, 6],
+      [27, 29, 5.5],
+      [23, 26, 5],
+      [19, 22, 4.5],
+      [15, 18, 4],
+      [12, 14, 3.5],
+      [9, 11, 3],
+      [6, 8, 2.5],
+      [0, 5, 2],
+    ];
+    const mapBand = (raw, table) => {
+      if (raw === "" || Number.isNaN(Number(raw))) return "_";
+      const v = Math.max(0, Math.min(40, Math.floor(Number(raw))));
+      for (const [min, max, band] of table) {
+        if (v >= min && v <= max) return band;
+      }
+      return "_";
+    };
+
+    $("#calculateBtn").addEventListener("click", () => {
+      calculateOverall();
+    });
+    $("#rawL").addEventListener("input", (e) => {
+      $("#rawLA").textContent = mapBand(e.target.value, LISTENING_TABLE);
+    });
+    $("#rawRA").addEventListener("input", (e) => {
+      $("#rawRAA").textContent = mapBand(e.target.value, READING_AC_TABLE);
+    });
+    $("#rawRG").addEventListener("input", (e) => {
+      $("#rawRGA").textContent = mapBand(e.target.value, READING_GT_TABLE);
+    });
+    calculateOverall();
+  </script>
+</Layout>

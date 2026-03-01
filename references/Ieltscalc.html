@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Calculator - Calculate Overall Band Score</title>
+<meta name="apple-mobile-web-app-title" content="IELTS Calculator">
+<meta name="application-name" content="IELTS Calculator">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="tool website">
+
+<style>
+:root{
+  --brand:#0075e1;
+  --ink:#0a0a0a;
+  --muted:#6b7280;
+  --card:#ffffff;
+  --bg:#f7f7f7;
+  --border:#d1d2d3;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0; padding:0;
+  display:flex; flex-direction:column; min-height:100vh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans","Helvetica Neue", sans-serif;
+}
+
+main{flex:1; padding:24px 16px}
+.wrapper{max-width:1100px; margin:0 auto}
+
+/* Header */
+h1{font-size:1.75rem; margin:0 0 12px}
+p.lead{color:var(--muted); margin:0 0 20px}
+
+/* Layout */
+.grid{
+  display:grid; gap:20px;
+  grid-template-columns:1fr;
+}
+@media (min-width: 992px){
+  .grid{grid-template-columns:1fr 1fr}
+}
+
+/* Card */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  box-shadow:0 8px 16px rgba(0,0,0,.06);
+  padding:20px;
+}
+.card h2{font-size:1.25rem; margin:0 0 12px}
+.card hr{border:none; border-top:1px solid var(--border); margin:12px 0 16px}
+
+/* Controls */
+.form-grid{
+    gap:16px;
+  grid-template-columns:31fr;
+}
+@media (min-width:560px){ .form-grid{grid-template-columns:1fr 1fr} }
+.form-group{display:flex; flex-direction:column; gap:6px}
+label{font-weight:600}
+select, input[type="number"]{
+  height:44px; width:100%;
+  padding:0 12px; text-align:center;
+  border:1px solid var(--brand); border-radius:8px; background:#fff; font-size:16px;
+  appearance:none;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0 }
+input[type="number"]{ -moz-appearance:textfield }
+select:focus, input:focus{ outline:3px solid rgba(0,117,225,.2) }
+
+/* Button */
+.btn{
+  display:inline-block; width:100%;
+  background:#0075e1; color:#fff;
+  font-size:1.1rem; font-weight:600;
+  padding:12px 16px; border:none; border-radius:8px; cursor:pointer;
+  box-shadow:0 10px 20px rgba(76,97,162,.18), 0 6px 6px rgba(76,97,162,.16);
+}
+.btn:disabled{opacity:.6; cursor:not-allowed}
+
+/* Outputs */
+.output{
+  margin-top:16px; padding:14px;
+  border:1px solid var(--border); border-radius:8px; background:#fff;
+  display:flex; flex-direction:column; gap:8px; align-items:center; justify-content:center;
+}
+.output .label{font-weight:700}
+#ieltsScore{font-size:2.25rem; font-weight:800; color:#00558d; line-height:1}
+
+/* Raw score blocks */
+.block{
+  border:1px solid var(--border);
+  border-radius:8px; background:#fafafa;
+  padding:14px; display:flex; flex-direction:column; gap:10px; margin-bottom:14px;
+}
+.block > .title{font-weight:700}
+.raw-out{font-size:1.4rem; font-weight:800; color:#00558d}
+
+/* Helpers */
+.muted{color:var(--muted)}
+.center{text-align:center}
+</style>
+</head>
+<body data-rsssl=1>
+<main>
+  <div class="wrapper">
+    <div class="grid">
+      <!-- Overall Band Score -->
+      <section class="card" aria-labelledby="overall-heading">
+        <h2 id="overall-heading">IELTS Overall Band Score Calculator</h2>
+        <hr>
+        <p class="center">Select your score for each section, then hit <strong>Hitung</strong>.</p>
+
+        <div class="form-grid" id="overall-form" ali>
+          <div class="form-group">
+            <label for="listeningSelect">Listening score</label>
+            <select id="listeningSelect">
+              <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+              <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+              <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+              <option>1.5</option><option>1</option><option>0</option>
+            </select>
+          </div><br>
+          <div class="form-group">
+            <label for="readingSelect">Reading score</label>
+            <select id="readingSelect">
+              <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+              <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+              <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+              <option>1.5</option><option>1</option><option>0</option>
+            </select>
+          </div>
+<br>
+          <div class="form-group">
+            <label for="writingSelect">Writing score</label>
+            <select id="writingSelect">
+              <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+              <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+              <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+              <option>1.5</option><option>1</option><option>0</option>
+            </select>
+          </div>
+<br>
+          <div class="form-group">
+            <label for="speakingSelect">Speaking score</label>
+            <select id="speakingSelect">
+              <option>9</option><option>8.5</option><option>8</option><option>7.5</option><option>7</option>
+              <option>6.5</option><option>6</option><option>5.5</option><option>5</option><option>4.5</option>
+              <option>4</option><option>3.5</option><option>3</option><option>2.5</option><option>2</option>
+              <option>1.5</option><option>1</option><option>0</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <button class="btn" id="calculateBtn">Hitung</button>
+        </div>
+
+        <div class="output" aria-live="polite">
+          <div class="label">IELTS Overall Band Score</div>
+          <div id="ieltsScore">–</div>
+          <div class="muted" id="ieltsDetail"></div>
+        </div>
+      </section>
+
+      <!-- Raw Score Converter -->
+      <section class="card" aria-labelledby="raw-heading">
+        <h2 id="raw-heading">IELTS Raw Score Calculator</h2>
+        <hr>
+
+        <div class="block">
+          <div class="title">Listening</div>
+          <label for="rawL">Correct answers (0–40)</label>
+          <input type="number" id="rawL" placeholder="0–40" min="0" max="40" inputmode="numeric">
+          <div class="center">
+            <span>Your score is </span><span class="raw-out" id="rawLA">_</span><span> out of 9</span>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="title">Reading (Academic)</div>
+          <label for="rawRA">Correct answers (0–40)</label>
+          <input type="number" id="rawRA" placeholder="0–40" min="0" max="40" inputmode="numeric">
+          <div class="center">
+            <span>Your score is </span><span class="raw-out" id="rawRAA">_</span><span> out of 9</span>
+          </div>
+        </div>
+
+        <div class="block" style="margin-bottom:0">
+          <div class="title">Reading (General Training)</div>
+          <label for="rawRG">Correct answers (0–40)</label>
+          <input type="number" id="rawRG" placeholder="0–40" min="0" max="40" inputmode="numeric">
+          <div class="center">
+            <span>Your score is </span><span class="raw-out" id="rawRGA">_</span><span> out of 9</span>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top:10px">Catatan: Mapping raw→band adalah estimasi umum; tabel resmi bisa bervariasi per sesi ujian.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+// ===== Utilities =====
+const $ = s => document.querySelector(s);
+const roundHalf = x => Math.round(x * 2) / 2;
+
+// ===== Overall Calculator =====
+function calculateOverall(){
+  const l = parseFloat($('#listeningSelect').value);
+  const r = parseFloat($('#readingSelect').value);
+  const w = parseFloat($('#writingSelect').value);
+  const s = parseFloat($('#speakingSelect').value);
+
+  const avg = (l + r + w + s) / 4;
+  const band = roundHalf(avg);
+
+  $('#ieltsScore').textContent = band.toFixed(1).replace('.0','');
+  $('#ieltsDetail').textContent = `Average ${avg.toFixed(2)} → rounded to nearest 0.5`;
+}
+$('#calculateBtn').addEventListener('click', () => {
+  calculateOverall();
+  $('.output').scrollIntoView({behavior:'smooth', block:'center'});
+});
+calculateOverall(); // initial
+
+// ===== Raw → Band tables (approximate) =====
+const LISTENING_TABLE = [
+  [39,40,9],[37,38,8.5],[35,36,8],
+  [32,34,7.5],[30,31,7],[26,29,6.5],
+  [23,25,6],[18,22,5.5],[16,17,5],
+  [13,15,4.5],[10,12,4],[7,9,3.5],
+  [5,6,3],[3,4,2.5],[0,2,2]
+];
+
+const READING_AC_TABLE = [
+  [39,40,9],[37,38,8.5],[35,36,8],
+  [33,34,7.5],[30,32,7],[27,29,6.5],
+  [23,26,6],[19,22,5.5],[15,18,5],
+  [13,14,4.5],[10,12,4],[8,9,3.5],
+  [6,7,3],[4,5,2.5],[0,3,2]
+];
+
+const READING_GT_TABLE = [
+  [40,40,9],[39,39,8.5],[37,38,8],
+  [36,36,7.5],[34,35,7],[32,33,6.5],
+  [30,31,6],[27,29,5.5],[23,26,5],
+  [19,22,4.5],[15,18,4],[12,14,3.5],
+  [9,11,3],[6,8,2.5],[0,5,2]
+];
+
+function mapBand(raw, table){
+  if (raw === '' || isNaN(raw)) return '_';
+  const v = Math.max(0, Math.min(40, Math.floor(Number(raw))));
+  for (const [min,max,band] of table){
+    if (v >= min && v <= max) return band;
+  }
+  return '_';
+}
+
+// Bind inputs
+$('#rawL').addEventListener('input', e => {
+  $('#rawLA').textContent = mapBand(e.target.value, LISTENING_TABLE);
+});
+$('#rawRA').addEventListener('input', e => {
+  $('#rawRAA').textContent = mapBand(e.target.value, READING_AC_TABLE);
+});
+$('#rawRG').addEventListener('input', e => {
+  $('#rawRGA').textContent = mapBand(e.target.value, READING_GT_TABLE);
+});
+</script>
+</body>
+</html>
