@@ -631,15 +631,25 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         <div class="review-modal-backdrop" id="review-modal-backdrop"></div>
         <div class="review-modal-box">
             <div class="review-modal-header" id="review-modal-header">
-                <span class="review-modal-icon" id="review-modal-icon">⚠</span>
+                <div class="review-modal-icon" id="review-modal-icon">
+                    <!-- SVG injected by JS -->
+                </div>
                 <h2 id="review-modal-title">Data Tidak Sesuai</h2>
             </div>
             <div class="review-modal-body" id="review-modal-body">
                 <!-- Filled dynamically -->
             </div>
             <div class="review-modal-footer">
-                <button type="button" id="review-modal-fix" class="review-btn-fix">✏ Perbaiki Data</button>
-                <button type="button" id="review-modal-confirm" class="review-btn-confirm" style="display:none;">✅ Kirim Sekarang</button>
+                <button type="button" id="review-modal-fix" class="review-btn-fix">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                        ><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg
+                    >
+                    <span id="btn-fix-label">Perbaiki Data</span>
+                </button>
+                <button type="button" id="review-modal-confirm" class="review-btn-confirm" style="display:none;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span id="btn-confirm-label">Kirim Sekarang</span>
+                </button>
             </div>
         </div>
     </div>
@@ -1296,59 +1306,132 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         opacity: 0.9;
     }
 
+    /* ── Inline field error messages ── */
+    .field-error-msg {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #c0392b;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 5px;
+        padding: 5px 10px;
+        background: #fff5f5;
+        border-left: 3px solid #e74c3c;
+        border-radius: 0 4px 4px 0;
+        animation: fadeInDown 0.18s ease;
+    }
+    .field-error-msg svg {
+        flex-shrink: 0;
+    }
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .checkbox-group-error {
+        margin-top: 8px;
+        padding: 6px 12px;
+        background: #fff5f5;
+        border-left: 3px solid #e74c3c;
+        border-radius: 0 4px 4px 0;
+        color: #c0392b;
+        font-size: 12px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        animation: fadeInDown 0.18s ease;
+    }
+
     /* Toast notifications */
     #toast-container {
         position: fixed;
-        top: 16px;
-        right: 16px;
+        top: 20px;
+        right: 20px;
         z-index: 99999;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
         pointer-events: none;
     }
     .toast {
-        min-width: 220px;
-        max-width: 420px;
+        min-width: 280px;
+        max-width: 440px;
         color: #fff;
-        background: rgba(0, 0, 0, 0.85);
-        padding: 10px 12px;
-        border-radius: 8px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background: #1a1a2e;
+        border-radius: 12px;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.22),
+            0 2px 8px rgba(0, 0, 0, 0.12);
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
+        align-items: stretch;
+        gap: 0;
         pointer-events: auto;
-        transform: translateY(-6px);
+        transform: translateX(110%);
         opacity: 0;
         transition:
-            transform 160ms ease,
-            opacity 160ms ease;
+            transform 240ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 200ms ease;
+        overflow: hidden;
     }
     .toast.show {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
     }
-    .toast.error {
-        background: linear-gradient(90deg, #e74c3c, #d6453b);
+    .toast-icon-strip {
+        width: 44px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10px;
     }
-    .toast.success {
-        background: linear-gradient(90deg, #27ae60, #2ecc71);
+    .toast.error .toast-icon-strip {
+        background: #e74c3c;
+    }
+    .toast.success .toast-icon-strip {
+        background: #27ae60;
+    }
+    .toast-content {
+        flex: 1;
+        padding: 12px 12px 12px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+    }
+    .toast-title {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        opacity: 0.65;
     }
     .toast .msg {
-        flex: 1;
-        font-size: 14px;
-        line-height: 1.2;
+        font-size: 13.5px;
+        line-height: 1.35;
+        font-weight: 500;
     }
     .toast .close {
         background: transparent;
         border: 0;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 700;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 18px;
         cursor: pointer;
-        padding: 4px;
-        margin-left: 8px;
+        padding: 12px 14px;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        transition: color 0.15s;
+    }
+    .toast .close:hover {
+        color: rgba(255, 255, 255, 0.9);
     }
 </style>
 
@@ -2024,27 +2107,47 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
             toast.className = `toast ${type}`.trim();
             toast.setAttribute("role", "status");
             toast.setAttribute("aria-live", "polite");
+
+            // Icon strip with SVG
+            const strip = document.createElement("div");
+            strip.className = "toast-icon-strip";
+            if (type === "error") {
+                strip.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+            } else {
+                strip.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+            }
+
+            // Content area
+            const content = document.createElement("div");
+            content.className = "toast-content";
+            const titleEl = document.createElement("div");
+            titleEl.className = "toast-title";
+            titleEl.textContent = type === "error" ? (currentLang === "en" ? "Validation Error" : "Perlu Diperbaiki") : currentLang === "en" ? "Success" : "Berhasil";
             const msg = document.createElement("div");
             msg.className = "msg";
-            msg.textContent = message;
+            msg.textContent = message.replace(/^[❌⚠✅🎉]\s*/, ""); // strip leading emoji if any
+            content.appendChild(titleEl);
+            content.appendChild(msg);
+
+            // Close button
             const close = document.createElement("button");
             close.className = "close";
             close.type = "button";
             close.setAttribute("aria-label", "Tutup");
-            close.innerHTML = "×";
+            close.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
             close.addEventListener("click", () => {
                 toast.classList.remove("show");
-                setTimeout(() => toast.remove(), 180);
+                setTimeout(() => toast.remove(), 240);
             });
-            toast.appendChild(msg);
+
+            toast.appendChild(strip);
+            toast.appendChild(content);
             toast.appendChild(close);
             container.appendChild(toast);
-            // show
             requestAnimationFrame(() => toast.classList.add("show"));
-            // auto remove
             setTimeout(() => {
                 toast.classList.remove("show");
-                setTimeout(() => toast.remove(), 200);
+                setTimeout(() => toast.remove(), 260);
             }, timeout);
         } catch (e) {
             console.error("Toast error", e);
@@ -2710,19 +2813,64 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         let isValid = true;
         let firstErrorMsg = "";
 
-        function markInvalid(el) {
+        const ERR_ICON = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+
+        function showFieldError(el, msg) {
             el.style.borderColor = "#e74c3c";
             el.style.boxShadow = "0 0 0 3px rgba(231,76,60,0.18)";
+            // remove old error if any
+            const old = el.parentNode.querySelector(".field-error-msg");
+            if (old) old.remove();
+            const span = document.createElement("span");
+            span.className = "field-error-msg";
+            span.innerHTML = ERR_ICON + " " + msg;
+            el.insertAdjacentElement("afterend", span);
         }
-        function markValid(el) {
+        function clearFieldError(el) {
             el.style.borderColor = "";
             el.style.boxShadow = "";
+            const old = el.parentNode && el.parentNode.querySelector(".field-error-msg");
+            if (old) old.remove();
+        }
+        // aliases for brevity
+        function markInvalid(el, msg) {
+            showFieldError(el, msg || (currentLang === "en" ? "This field is required" : "Field ini wajib diisi"));
+        }
+        function markValid(el) {
+            clearFieldError(el);
+        }
+
+        function showGroupError(groupEl, msg) {
+            const old = groupEl.querySelector(".checkbox-group-error");
+            if (old) old.remove();
+            const div = document.createElement("div");
+            div.className = "checkbox-group-error";
+            div.innerHTML = ERR_ICON + " " + msg;
+            groupEl.appendChild(div);
+        }
+        function clearGroupError(groupEl) {
+            const old = groupEl && groupEl.querySelector(".checkbox-group-error");
+            if (old) old.remove();
         }
 
         // ── 1. Standard required fields ──────────────────────────────────────
         requiredFields.forEach((field) => {
             if (!field.value.trim()) {
-                markInvalid(field);
+                // Get label text for this field
+                let labelText = "";
+                if (field.id) {
+                    const lbl = currentSectionEl.querySelector(`label[for="${field.id}"]`);
+                    if (lbl) labelText = lbl.textContent.replace(/\*/g, "").trim();
+                }
+                if (!labelText) {
+                    const fg = field.closest(".form-group");
+                    if (fg) {
+                        const lbl = fg.querySelector("label");
+                        if (lbl) labelText = lbl.textContent.replace(/\*/g, "").trim();
+                    }
+                }
+                const errMsg = labelText ? (currentLang === "en" ? `${labelText} is required` : `${labelText} wajib diisi`) : currentLang === "en" ? "This field is required" : "Field ini wajib diisi";
+                markInvalid(field, errMsg);
                 isValid = false;
             } else {
                 markValid(field);
@@ -2732,6 +2880,7 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         // ── 2. Required radio/checkbox groups ────────────────────────────────
         requiredGroups.forEach((groupName) => {
             const group = currentSectionEl.querySelectorAll(`[name="${groupName}"]`);
+            const groupContainer = group[0] && (group[0].closest(".radio-group") || group[0].closest(".checkbox-group") || group[0].closest(".form-group"));
             const isChecked = Array.from(group).some((f) => f.checked);
             if (!isChecked) {
                 group.forEach((f) => {
@@ -2739,12 +2888,14 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
                     f.style.outline = "1px solid #e74c3c";
                     f.style.borderRadius = "2px";
                 });
+                if (groupContainer) showGroupError(groupContainer, currentLang === "en" ? "Please select one option" : "Pilih salah satu pilihan");
                 isValid = false;
             } else {
                 group.forEach((f) => {
                     f.style.accentColor = "#145DA0";
                     f.style.outline = "";
                 });
+                if (groupContainer) clearGroupError(groupContainer);
             }
         });
 
@@ -2756,8 +2907,9 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
             if (emailField && emailField.value.trim()) {
                 const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRx.test(emailField.value.trim())) {
-                    markInvalid(emailField);
-                    if (!firstErrorMsg) firstErrorMsg = currentLang === "en" ? "❌ Invalid email format (example: name@domain.com)" : "❌ Format email tidak valid (contoh: nama@domain.com)";
+                    const emailMsg = currentLang === "en" ? "Invalid email format (example: name@domain.com)" : "Format email tidak valid (contoh: nama@domain.com)";
+                    markInvalid(emailField, emailMsg);
+                    if (!firstErrorMsg) firstErrorMsg = "❌ " + emailMsg;
                     isValid = false;
                 }
             }
@@ -2765,8 +2917,9 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
             if (phoneField && phoneField.value.trim()) {
                 const stripped = phoneField.value.trim().replace(/[\s+\-]/g, "");
                 if (!/^\d{9,15}$/.test(stripped)) {
-                    markInvalid(phoneField);
-                    if (!firstErrorMsg) firstErrorMsg = currentLang === "en" ? "❌ WhatsApp number: 9–15 digits only (example: 628123456789)" : "❌ No. WhatsApp harus 9–15 digit angka (contoh: 628123456789)";
+                    const phoneMsg = currentLang === "en" ? "WhatsApp number: 9–15 digits only (example: 628123456789)" : "No. WhatsApp harus 9–15 digit angka (contoh: 628123456789)";
+                    markInvalid(phoneField, phoneMsg);
+                    if (!firstErrorMsg) firstErrorMsg = "❌ " + phoneMsg;
                     isValid = false;
                 }
             }
@@ -2775,6 +2928,7 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         // SECTION 3: Tujuan checkbox group — at least 1 must be checked
         if (currentSection === 3) {
             const tujuanCbs = currentSectionEl.querySelectorAll('input[name="tujuan"]');
+            const tujuanContainer = tujuanCbs[0] && (tujuanCbs[0].closest(".checkbox-group") || tujuanCbs[0].closest(".form-group"));
             const anyTujuan = Array.from(tujuanCbs).some((cb) => cb.checked);
             if (!anyTujuan) {
                 tujuanCbs.forEach((cb) => {
@@ -2782,13 +2936,30 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
                     cb.style.outline = "1px solid #e74c3c";
                     cb.style.borderRadius = "2px";
                 });
-                if (!firstErrorMsg) firstErrorMsg = currentLang === "en" ? "❌ Please select at least one main purpose" : "❌ Pilih minimal satu Tujuan Utama Mengambil Kursus";
+                const tujMsg = currentLang === "en" ? "Please select at least one main purpose" : "Pilih minimal satu Tujuan Utama Mengambil Kursus";
+                if (tujuanContainer) showGroupError(tujuanContainer, tujMsg);
+                if (!firstErrorMsg) firstErrorMsg = "❌ " + tujMsg;
                 isValid = false;
             } else {
                 tujuanCbs.forEach((cb) => {
                     cb.style.accentColor = "#145DA0";
                     cb.style.outline = "";
                 });
+                if (tujuanContainer) clearGroupError(tujuanContainer);
+            }
+
+            // Skor Awal: opsional, tapi jika diisi harus angka valid >= 0
+            const skorAwalField = currentSectionEl.querySelector('input[name="skor_awal"]');
+            if (skorAwalField && skorAwalField.value.trim() !== "") {
+                const val = parseFloat(skorAwalField.value);
+                if (isNaN(val) || val < 0) {
+                    const skorMsg = currentLang === "en" ? "Initial score must be a valid number (e.g. 6.5 or 85)" : "Skor awal harus berupa angka yang valid (contoh: 6.5 atau 85)";
+                    markInvalid(skorAwalField, skorMsg);
+                    if (!firstErrorMsg) firstErrorMsg = "❌ " + skorMsg;
+                    isValid = false;
+                } else {
+                    markValid(skorAwalField);
+                }
             }
         }
 
@@ -3031,12 +3202,17 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
     const reviewBtnConfirm = document.getElementById("review-modal-confirm");
 
     function openReviewModal(issues) {
-        // issues = array of { label, detail } or null/empty = all OK
+        // SVG icon constants
+        const SVG_WARN = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+        const SVG_OK = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+        const SVG_XI = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+        const SVG_STAR = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+
         reviewModalHdr.className = "review-modal-header " + (issues.length ? "has-errors" : "is-ok");
         const isEN = currentLang === "en";
 
         if (issues.length) {
-            reviewModalIcon.textContent = "⚠";
+            reviewModalIcon.innerHTML = SVG_WARN;
             reviewModalTitle.textContent = isEN ? "Data Issues Found" : "Data Tidak Sesuai";
             reviewBtnFix.style.display = "inline-flex";
             reviewBtnConfirm.style.display = "none";
@@ -3045,7 +3221,7 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
             issues.forEach(({ label, detail }) => {
                 const li = document.createElement("li");
                 li.className = "review-issue-item";
-                li.innerHTML = `<span class="issue-icon">❌</span>
+                li.innerHTML = `<span class="issue-icon">${SVG_XI}</span>
                     <span class="issue-text">
                         <span class="issue-label">${label}</span>
                         ${detail || ""}
@@ -3055,12 +3231,12 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
             reviewModalBody.innerHTML = "";
             reviewModalBody.appendChild(ul);
         } else {
-            reviewModalIcon.textContent = "✅";
+            reviewModalIcon.innerHTML = SVG_OK;
             reviewModalTitle.textContent = isEN ? "Ready to Submit" : "Data Siap Dikirim";
             reviewBtnFix.style.display = "inline-flex";
             reviewBtnConfirm.style.display = "inline-flex";
             reviewModalBody.innerHTML = `<div class="review-ok-msg">
-                <span style="font-size:20px;">🎉</span>
+                <span style="display:flex;align-items:center;flex-shrink:0;">${SVG_STAR}</span>
                 <span>${
                     isEN ? "All required data looks good. Click <strong>Submit Now</strong> to send your registration." : "Semua data wajib sudah terisi dengan benar. Klik <strong>Kirim Sekarang</strong> untuk mengirim pendaftaran."
                 }</span>
