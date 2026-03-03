@@ -9,6 +9,9 @@
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
 
+// Ensure this endpoint is server-rendered (not prerendered) in hybrid mode
+export const prerender = false;
+
 // ── Server-side env ──────────────────────────────────────────────────────────
 const SUPABASE_URL = import.meta.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = import.meta.env.SUPABASE_SERVICE_KEY; // Use service role for server writes
@@ -59,6 +62,14 @@ function validateAllowList(key: string, val: string | null): boolean {
 // ── POST handler ─────────────────────────────────────────────────────────────
 export const POST: APIRoute = async ({ request }) => {
   try {
+    // Guard: env vars must be set
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+      return jsonError(
+        "Server configuration error: missing Supabase credentials. Please set SUPABASE_URL and SUPABASE_SERVICE_KEY.",
+        500
+      );
+    }
+
     const formData = await request.formData();
 
     // 1. Extract & validate file

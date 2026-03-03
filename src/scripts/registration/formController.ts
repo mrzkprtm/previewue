@@ -630,7 +630,24 @@ async function doSubmit() {
       body: formData,
     });
 
-    const json = await res.json();
+    // Safely parse JSON – guard against empty or non-JSON responses
+    let json: { ok?: boolean; error?: string; buktiUrl?: string };
+    const contentType = res.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      throw new Error(
+        `Server returned unexpected content type (${res.status}). ` +
+        "API endpoint may not be deployed correctly."
+      );
+    }
+    const text = await res.text();
+    if (!text) {
+      throw new Error(`Server returned empty response (${res.status})`);
+    }
+    try {
+      json = JSON.parse(text);
+    } catch {
+      throw new Error(`Server returned invalid JSON (${res.status})`);
+    }
 
     if (!res.ok || !json.ok) {
       throw new Error(json.error || "Terjadi kesalahan");
