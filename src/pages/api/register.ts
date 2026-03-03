@@ -13,8 +13,11 @@ import { createClient } from "@supabase/supabase-js";
 export const prerender = false;
 
 // ── Server-side env ──────────────────────────────────────────────────────────
-const SUPABASE_URL = import.meta.env.SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = import.meta.env.SUPABASE_SERVICE_KEY; // Use service role for server writes
+// Strip accidental quotes and whitespace that creep in from .env / Vercel dashboard
+const cleanEnv = (v?: string) => (v ?? "").replace(/^["']+|["']+$/g, "").trim();
+
+const SUPABASE_URL = cleanEnv(import.meta.env.SUPABASE_URL);
+const SUPABASE_SERVICE_KEY = cleanEnv(import.meta.env.SUPABASE_SERVICE_KEY);
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
   console.error(
@@ -62,10 +65,26 @@ function validateAllowList(key: string, val: string | null): boolean {
 // ── POST handler ─────────────────────────────────────────────────────────────
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Guard: env vars must be set
+    // Guard: env vars must be set and key must look like a JWT
     if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
       return jsonError(
         "Server configuration error: missing Supabase credentials. Please set SUPABASE_URL and SUPABASE_SERVICE_KEY.",
+        500
+      );
+    }
+    const jwtParts = SUPABASE_SERVICE_KEY.split(".");
+    if (jwtParts.length !== 3 || jwtParts.some((p) => p.length === 0)) {
+      console.error(
+        "[register] SUPABASE_SERVICE_KEY is not a valid JWT. Length:",
+        SUPABASE_SERVICE_KEY.length,
+        "Parts:",
+        jwtParts.length,
+        "First 20 chars:",
+        SUPABASE_SERVICE_KEY.slice(0, 20) + "…"
+      );
+      return jsonError(
+        "Server configuration error: SUPABASE_SERVICE_KEY is not a valid JWT. " +
+        "Check for extra quotes, whitespace, or truncation in Vercel env vars.",
         500
       );
     }
@@ -140,7 +159,32 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 8. Upload file to Supabase Storage
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+    //    Use service_role key with server-side auth options (no session persistence)
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+
+    // Diagnostic: decode JWT payload to verify the key is a service_role key
+    try {
+      const payload = JSON.parse(atob(SUPABASE_SERVICE_KEY.split(".")[1]));
+      if (payload.role !== "service_role") {
+        console.warn(
+          `[register] WARNING: SUPABASE_SERVICE_KEY role is "${payload.role}", expected "service_role". ` +
+          "You may be using the anon key. Go to Supabase Dashboard > Settings > API > service_role."
+        );
+        return jsonError(
+          `Server configuration error: SUPABASE_SERVICE_KEY has role "${payload.role}" instead of "service_role". Update the env var in Vercel.`,
+          500
+        );
+      }
+      console.log(`[register] Supabase key role: ${payload.role}, iss: ${payload.iss}`);
+    } catch (decodeErr) {
+      console.error("[register] Could not decode SUPABASE_SERVICE_KEY JWT payload:", decodeErr);
+    }
+
     const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
     const fileName = `${Date.now()}_${safeName}`;
     const arrayBuffer = await file.arrayBuffer();
