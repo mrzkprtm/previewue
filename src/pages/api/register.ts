@@ -12,21 +12,9 @@ import { createClient } from "@supabase/supabase-js";
 // Ensure this endpoint is server-rendered (not prerendered) in hybrid mode
 export const prerender = false;
 
-// ── Server-side env ──────────────────────────────────────────────────────────
-// Strip accidental quotes and whitespace that creep in from .env / Vercel dashboard
-const cleanEnv = (v?: string) => (v ?? "").replace(/^["']+|["']+$/g, "").trim();
-
-// Accept either SUPABASE_SERVICE_KEY (preferred) or SUPABASE_KEY (anon fallback)
-const SUPABASE_URL = cleanEnv(import.meta.env.SUPABASE_URL);
-const SUPABASE_KEY =
-  cleanEnv(import.meta.env.SUPABASE_SERVICE_KEY) ||
-  cleanEnv(import.meta.env.SUPABASE_KEY);
-
-if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error(
-    "[register] Missing SUPABASE_URL or SUPABASE_SERVICE_KEY/SUPABASE_KEY environment variables."
-  );
-}
+// ── Supabase credentials ─────────────────────────────────────────────────────
+const SUPABASE_URL = "https://rbivamtmcadfnemqcvac.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJiaXZhbXRtY2FkZm5lbXFjdmFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4MTU2MjgsImV4cCI6MjA4MTM5MTYyOH0.hZTprt4i3Y896uY_7m-lz-8T01lAArfj7hBIxw1utnc";
 
 // ── Sanitisation helpers (mirror client-side but authoritative) ──────────────
 const MAX_TEXT = 500;
@@ -68,28 +56,6 @@ function validateAllowList(key: string, val: string | null): boolean {
 // ── POST handler ─────────────────────────────────────────────────────────────
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Guard: env vars must be set and key must look like a JWT
-    if (!SUPABASE_URL || !SUPABASE_KEY) {
-      return jsonError(
-        "Server configuration error: missing Supabase credentials. Set SUPABASE_URL and SUPABASE_SERVICE_KEY (or SUPABASE_KEY).",
-        500
-      );
-    }
-    const jwtParts = SUPABASE_KEY.split(".");
-    if (jwtParts.length !== 3 || jwtParts.some((p) => p.length === 0)) {
-      console.error(
-        "[register] Supabase key is not a valid JWT. Length:",
-        SUPABASE_KEY.length,
-        "Parts:",
-        jwtParts.length
-      );
-      return jsonError(
-        "Server configuration error: Supabase key is not a valid JWT. " +
-        "Check for extra quotes, whitespace, or truncation in Vercel env vars.",
-        500
-      );
-    }
-
     const formData = await request.formData();
 
     // 1. Extract & validate file
@@ -160,26 +126,12 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 8. Upload file to Supabase Storage
-    //    Use service_role key with server-side auth options (no session persistence)
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
       auth: {
         autoRefreshToken: false,
         persistSession: false,
       },
     });
-
-    // Diagnostic: decode JWT payload to log the key role
-    try {
-      const payload = JSON.parse(atob(SUPABASE_KEY.split(".")[1]));
-      console.log(`[register] Supabase key role: ${payload.role}, ref: ${payload.ref}`);
-      if (payload.role !== "service_role") {
-        console.warn(
-          `[register] Using "${payload.role}" key. For full access, use the service_role key from Supabase Dashboard > Project Settings > Data API.`
-        );
-      }
-    } catch (decodeErr) {
-      console.error("[register] Could not decode Supabase key JWT payload:", decodeErr);
-    }
 
     const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
     const fileName = `${Date.now()}_${safeName}`;
