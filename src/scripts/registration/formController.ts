@@ -696,7 +696,12 @@ form.addEventListener("submit", (e) => {
   if (!validator.validateCurrentSection(currentSection)) return;
   const formData = new FormData(form);
   const issues = validator.collectAllIssues(formData);
-  openReviewModal(issues);
+  // If everything is valid, skip the modal and submit directly
+  if (issues.length === 0) {
+    doSubmit();
+  } else {
+    openReviewModal(issues);
+  }
 });
 
 reviewBtnConfirm.addEventListener("click", () => doSubmit());

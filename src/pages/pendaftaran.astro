@@ -5,11 +5,11 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
 ---
 
 <Layout title={title} description={description}>
-    <div class="registration-wrapper bg-[#f5f5f5] py-10 min-h-screen">
+    <div class="registration-wrapper">
         <div class="container">
             <div class="form-header">
                 <!-- Language Toggle (flag switch) -->
-                <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+                <div class="lang-toggle-row">
                     <svg style="display:none;">
                         <symbol id="flag-id" viewBox="0 0 512 512">
                             <g fill-rule="nonzero">
@@ -48,19 +48,22 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
                         </symbol>
                     </svg>
                     <div class="toggle" style="align-items:center;">
-                        <input id="lang-switch" type="checkbox" />
-                        <label for="lang-switch">
+                        <input id="lang-switch" type="checkbox" aria-label="Switch language" />
+                        <label for="lang-switch" aria-hidden="true">
                             <svg class="flag left" viewBox="0 0 512 512" aria-hidden="true"><use href="#flag-id"></use></svg>
                             <svg class="flag right" viewBox="0 0 512 512" aria-hidden="true"><use href="#flag-en"></use></svg>
                         </label>
                     </div>
                 </div>
-                <h1 id="form-title">Formulir Pendaftaran</h1>
+                <div class="header-brand">
+                    <h1 id="form-title">Formulir Pendaftaran</h1>
+                    <p class="header-subtitle">Lengkapi formulir di bawah ini untuk mendaftar program di Ultimate Education</p>
+                </div>
             </div>
             <div class="form-body">
-                <div class="progress-bar">
+                <div class="progress-bar" role="navigation" aria-label="Form progress">
                     <div class="progress-step active" data-step="1">
-                        <div class="progress-circle">1</div>
+                        <div class="progress-circle" aria-current="step">1</div>
                         <div class="progress-label">Dasar</div>
                     </div>
                     <div class="progress-step" data-step="2">
@@ -84,8 +87,8 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
                         <div class="progress-label">Pembayaran</div>
                     </div>
                 </div>
-                <div class="message" id="message"></div>
-                <div class="loading" id="loading">
+                <div class="message" id="message" role="alert"></div>
+                <div class="loading" id="loading" role="status" aria-live="polite">
                     <div class="spinner"></div>
                     <p>Menyimpan data...</p>
                 </div>
@@ -649,49 +652,81 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
 </Layout>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: #f5f5f5;
+    /* ═══════════════════════════════════════════════════════════════════════════
+       REGISTRATION FORM — Enhanced UI/UX
+       All class names, IDs, and JS-referenced selectors preserved exactly.
+       Improvements: spacing, hierarchy, focus states, mobile, accessibility,
+       transitions, card-style sections, refined progress bar, better inputs.
+       ═══════════════════════════════════════════════════════════════════════════ */
+
+    /* ── Reset & base ───────────────────────────────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Page wrapper ───────────────────────────────────────────────────────── */
+    .registration-wrapper {
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8edf2 100%);
         min-height: 100vh;
-        padding: 20px;
+        padding: 32px 16px;
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
+
+    /* ── Main container — elevated card ─────────────────────────────────────── */
     .container {
-        max-width: 900px;
+        max-width: 920px;
         margin: 0 auto;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow:
+            0 1px 3px rgba(0,0,0,0.04),
+            0 8px 32px rgba(0,0,0,0.08);
         overflow: hidden;
     }
+
+    /* ── Header ─────────────────────────────────────────────────────────────── */
     .form-header {
-        background: #ffffff;
-        color: #333;
-        padding: 30px;
+        background: linear-gradient(135deg, #145da0 0%, #0e4a80 100%);
+        color: #fff;
+        padding: 28px 32px 24px;
+        position: relative;
+    }
+    .lang-toggle-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 12px;
+    }
+    .header-brand {
         text-align: center;
-        border-bottom: 2px solid #e0e0e0;
     }
     .form-header h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        font-weight: 600;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        color: #fff;
+        margin-bottom: 6px;
+    }
+    .header-subtitle {
+        font-size: 13.5px;
+        color: rgba(255,255,255,0.75);
+        font-weight: 400;
+        margin: 0;
     }
     .form-header p {
         font-size: 14px;
-        color: #666;
+        color: rgba(255,255,255,0.7);
     }
+
+    /* ── Form body ──────────────────────────────────────────────────────────── */
     .form-body {
-        padding: 30px;
+        padding: 32px;
     }
+
+    /* ── Progress bar — refined pill stepper ────────────────────────────────── */
     .progress-bar {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 30px;
-        align-items: center;
+        margin-bottom: 36px;
+        align-items: flex-start;
+        padding: 0 4px;
     }
     .progress-step {
         display: flex;
@@ -703,68 +738,90 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
     .progress-step:not(:last-child)::after {
         content: "";
         position: absolute;
-        top: 20px;
-        left: 50%;
-        width: 100%;
-        height: 2px;
-        background: #e0e0e0;
-        z-index: -1;
+        top: 19px;
+        left: calc(50% + 22px);
+        width: calc(100% - 44px);
+        height: 3px;
+        background: #e5e7eb;
+        border-radius: 2px;
+        z-index: 0;
+        transition: background 0.35s ease;
     }
-    .progress-step.active:not(:last-child)::after {
+    .progress-step.active:not(:last-child)::after,
+    .progress-step.completed:not(:last-child)::after {
         background: #145da0;
     }
     .progress-circle {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
-        background: #e0e0e0;
+        background: #f1f5f9;
+        border: 2px solid #e2e8f0;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 600;
-        color: #666;
+        font-weight: 700;
+        font-size: 14px;
+        color: #94a3b8;
         margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
     }
     .progress-step.active .progress-circle {
         background: #145da0;
-        color: white;
+        border-color: #145da0;
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(20, 93, 160, 0.15);
     }
     .progress-step.completed .progress-circle {
         background: #145da0;
-        color: white;
+        border-color: #145da0;
+        color: #fff;
     }
     .progress-label {
-        font-size: 12px;
-        color: #666;
+        font-size: 11px;
+        color: #94a3b8;
         text-align: center;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+        transition: color 0.2s;
     }
     .progress-step.active .progress-label {
         color: #145da0;
+        font-weight: 700;
+    }
+    .progress-step.completed .progress-label {
+        color: #145da0;
         font-weight: 600;
     }
+
+    /* ── Section transitions ────────────────────────────────────────────────── */
     .form-section {
         display: none;
-        animation: fadeIn 0.3s ease-in;
+        animation: sectionIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .form-section.active {
         display: block;
     }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
+    @keyframes sectionIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── Section title — accent bar ─────────────────────────────────────────── */
     .section-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #145da0;
+        font-size: 17px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid #145da0;
+        letter-spacing: -0.2px;
+        position: relative;
     }
+
+    /* ── Form grid ──────────────────────────────────────────────────────────── */
     .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -774,48 +831,97 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
     .form-row.full {
         grid-template-columns: 1fr;
     }
+
+    /* ── Form groups — consistent spacing ───────────────────────────────────── */
     .form-group {
         display: flex;
         flex-direction: column;
     }
+
+    /* ── Labels — better hierarchy ──────────────────────────────────────────── */
     label {
         font-weight: 600;
-        color: #333;
-        margin-bottom: 8px;
-        font-size: 14px;
+        color: #374151;
+        margin-bottom: 6px;
+        font-size: 13.5px;
+        line-height: 1.4;
     }
     label .required {
-        color: #e74c3c;
+        color: #ef4444;
+        margin-left: 2px;
     }
+
+    /* ── Hint / help text ───────────────────────────────────────────────────── */
+    small, .form-hint {
+        color: #6b7280 !important;
+        font-size: 12px !important;
+        line-height: 1.5;
+        margin-top: 4px;
+    }
+
+    /* ── Inputs — elevated style with smooth focus ──────────────────────────── */
     input[type="text"],
     input[type="email"],
     input[type="tel"],
     input[type="date"],
     input[type="number"],
+    input[type="password"],
     select,
     textarea {
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        padding: 11px 14px;
+        border: 1.5px solid #d1d5db;
+        border-radius: 10px;
         font-size: 14px;
         font-family: inherit;
-        transition: border-color 0.3s;
+        color: #1e293b;
+        background: #fff;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background-color 0.2s ease;
+        line-height: 1.5;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+    select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 5.646a.5.5 0 01.708 0L8 8.293l2.646-2.647a.5.5 0 01.708.708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 010-.708z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+        padding-right: 36px;
+    }
+    input::placeholder, textarea::placeholder {
+        color: #9ca3af;
+    }
+    input[type="text"]:hover,
+    input[type="email"]:hover,
+    input[type="tel"]:hover,
+    input[type="date"]:hover,
+    input[type="number"]:hover,
+    input[type="password"]:hover,
+    select:hover,
+    textarea:hover {
+        border-color: #9ca3af;
     }
     input[type="text"]:focus,
     input[type="email"]:focus,
     input[type="tel"]:focus,
     input[type="date"]:focus,
     input[type="number"]:focus,
+    input[type="password"]:focus,
     select:focus,
     textarea:focus {
         outline: none;
         border-color: #145da0;
-        box-shadow: 0 0 0 3px rgba(20, 93, 160, 0.1);
+        box-shadow: 0 0 0 3px rgba(20, 93, 160, 0.12);
+        background: #fafcff;
     }
     textarea {
         resize: vertical;
-        min-height: 100px;
+        min-height: 96px;
     }
+
+    /* ── Checkbox & radio — touch-friendly ──────────────────────────────────── */
     .checkbox-group,
     .radio-group {
         display: flex;
@@ -827,6 +933,14 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         display: flex;
         align-items: center;
         gap: 10px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        transition: background 0.15s;
+        cursor: pointer;
+    }
+    .checkbox-item:hover,
+    .radio-item:hover {
+        background: #f8fafc;
     }
     input[type="checkbox"],
     input[type="radio"] {
@@ -834,139 +948,153 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         width: 18px;
         height: 18px;
         accent-color: #145da0;
+        flex-shrink: 0;
     }
     .checkbox-item label,
     .radio-item label {
         margin: 0;
         cursor: pointer;
         font-weight: 400;
+        font-size: 14px;
+        color: #374151;
     }
+
+    /* ── Form action buttons ────────────────────────────────────────────────── */
     .form-actions {
         display: flex;
-        gap: 10px;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #ddd;
+        gap: 12px;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid #e5e7eb;
     }
     button {
-        padding: 12px 30px;
+        padding: 12px 28px;
         font-size: 14px;
         font-weight: 600;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: all 0.2s ease;
+        letter-spacing: 0.1px;
     }
-    .btn-next,
-    .btn-submit {
-        background: #145da0;
-        color: white;
+    button:focus-visible {
+        outline: 2px solid #145da0;
+        outline-offset: 2px;
+    }
+    .btn-next, .btn-submit {
+        background: linear-gradient(135deg, #145da0 0%, #1a6fc2 100%);
+        color: #fff;
         flex: 1;
+        font-weight: 700;
     }
-    .btn-next:hover,
-    .btn-submit:hover {
-        background: #0f4477;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(20, 93, 160, 0.4);
+    .btn-next:hover, .btn-submit:hover {
+        background: linear-gradient(135deg, #0f4a80 0%, #145da0 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(20, 93, 160, 0.35);
+    }
+    .btn-next:active, .btn-submit:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(20, 93, 160, 0.25);
     }
     .btn-prev {
-        background: #ecf0f1;
-        color: #333;
+        background: #f1f5f9;
+        color: #475569;
         flex: 1;
+        border: 1px solid #e2e8f0;
     }
     .btn-prev:hover {
-        background: #bdc3c7;
+        background: #e2e8f0;
+        color: #334155;
     }
+
+    /* ── Messages ───────────────────────────────────────────────────────────── */
     .message {
-        padding: 15px;
-        border-radius: 5px;
+        padding: 14px 18px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
         margin-bottom: 20px;
+        border-left: 4px solid transparent;
+        line-height: 1.5;
         display: none;
     }
-    .message.success {
-        background: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-        display: block;
-    }
     .message.error {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
+        background: #fef2f2;
+        color: #b91c1c;
+        border-left-color: #ef4444;
         display: block;
     }
+    .message.success {
+        background: #f0fdf4;
+        color: #166534;
+        border-left-color: #22c55e;
+        display: block;
+    }
+
+    /* ── Loading spinner ────────────────────────────────────────────────────── */
     .loading {
         display: none;
         text-align: center;
-        padding: 20px;
+        padding: 24px;
+    }
+    .loading p {
+        margin-top: 12px;
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 500;
     }
     .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #145da0;
+        border: 3px solid #e5e7eb;
+        border-top: 3px solid #145da0;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
+        width: 36px;
+        height: 36px;
+        animation: spin 0.8s linear infinite;
         margin: 0 auto;
     }
     @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-    .hidden-field {
-        display: none;
-    }
-    @media (max-width: 768px) {
-        .form-row {
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        .form-header h1 {
-            font-size: 18px;
-        }
-        .form-body {
-            padding: 20px;
-        }
-        .form-actions {
-            flex-direction: column;
-        }
-        .progress-label {
-            font-size: 10px;
-        }
-        .progress-circle {
-            width: 35px;
-            height: 35px;
-            font-size: 12px;
-        }
+        0%   { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
-    /* Upload dropzone styles */
+    /* ── Hidden field toggle ────────────────────────────────────────────────── */
+    .hidden-field {
+        display: none !important;
+    }
+
+    /* ── Upload dropzone — refined ──────────────────────────────────────────── */
     .upload-dropzone {
-        border: 2px dashed #d0d7df;
-        border-radius: 8px;
-        padding: 18px;
+        border: 2px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 28px 20px;
         text-align: center;
-        background: #fbfcfd;
+        background: #f8fafc;
         transition:
             border-color 0.2s,
             background 0.2s,
             box-shadow 0.2s;
+        cursor: pointer;
+    }
+    .upload-dropzone:hover {
+        border-color: #94a3b8;
+        background: #f1f5f9;
     }
     .upload-dropzone.dragover {
         border-color: #145da0;
-        background: #f0f6ff;
-        box-shadow: 0 6px 20px rgba(20, 93, 160, 0.08);
+        background: #eff6ff;
+        box-shadow: 0 0 0 3px rgba(20, 93, 160, 0.1);
     }
     .dropzone-inner p {
         margin: 4px 0;
+        color: #64748b;
+    }
+    .dropzone-inner p strong {
+        color: #334155;
     }
     .dropzone-hint {
-        color: #666;
-        font-size: 13px;
+        color: #94a3b8;
+        font-size: 12.5px;
+        margin-top: 4px;
     }
     .link-button {
         background: none;
@@ -975,44 +1103,74 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         cursor: pointer;
         font-weight: 600;
         padding: 0;
+        font-size: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    .link-button:hover {
+        color: #0f4a80;
     }
     .file-info {
-        margin-top: 10px;
+        margin-top: 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 8px;
+        padding: 10px 14px;
     }
+    .file-info p {
+        font-size: 13px;
+        color: #166534;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    /* ── Password fields ────────────────────────────────────────────────────── */
     .password-wrapper {
         display: flex;
         align-items: center;
         gap: 8px;
     }
+    .password-wrapper input {
+        flex: 1;
+    }
     .password-toggle {
-        background: #ecf0f1;
-        border: none;
-        padding: 6px 8px;
-        border-radius: 6px;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        padding: 8px 12px;
+        border-radius: 8px;
         cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        color: #475569;
+        white-space: nowrap;
+        transition: background 0.15s;
+    }
+    .password-toggle:hover {
+        background: #e2e8f0;
     }
     .password-meter {
         width: 100%;
-        height: 8px;
-        background: #eee;
-        border-radius: 4px;
+        height: 6px;
+        background: #f1f5f9;
+        border-radius: 3px;
         margin-top: 8px;
+        overflow: hidden;
     }
     .password-meter-bar {
         width: 0%;
         height: 100%;
-        background: linear-gradient(90deg, #e74c3c, #f1c40f, #2ecc71);
-        border-radius: 4px;
-        transition: width 0.2s;
+        background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e);
+        border-radius: 3px;
+        transition: width 0.25s ease;
     }
     .lms-credentials input {
-        padding: 10px;
+        padding: 11px 14px;
     }
 
-    /* WordPress compatibility: force input, select, textarea size and style */
+    /* ── WordPress compatibility overrides ──────────────────────────────────── */
     .container input[type="text"],
     .container input[type="email"],
     .container input[type="tel"],
@@ -1021,44 +1179,53 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
     .container input[type="password"],
     .container select,
     .container textarea {
-        padding: 12px !important;
-        border: 1px solid #ddd !important;
-        border-radius: 5px !important;
+        padding: 11px 14px !important;
+        border: 1.5px solid #d1d5db !important;
+        border-radius: 10px !important;
         font-size: 14px !important;
         font-family: inherit !important;
         box-sizing: border-box !important;
-        min-height: 44px !important;
+        min-height: 46px !important;
         background: #fff !important;
-        color: #222222 !important;
+        color: #1e293b !important;
         width: 100% !important;
-        line-height: 1.4 !important;
+        line-height: 1.5 !important;
+    }
+    .container input:focus,
+    .container select:focus,
+    .container textarea:focus {
+        border-color: #145da0 !important;
+        box-shadow: 0 0 0 3px rgba(20, 93, 160, 0.12) !important;
+        background: #fafcff !important;
     }
     .container textarea {
-        min-height: 100px !important;
+        min-height: 96px !important;
     }
     .container label {
-        font-size: 14px !important;
+        font-size: 13.5px !important;
         font-weight: 600 !important;
-        color: #333 !important;
+        color: #374151 !important;
     }
     .container .form-group {
-        margin-bottom: 12px !important;
+        margin-bottom: 4px !important;
     }
     .container input[type="file"] {
         min-height: unset !important;
         padding: 0 !important;
+        border: none !important;
     }
-    /* WordPress compatibility: force select[multiple] size and style */
     .container select[multiple] {
-        min-height: 160px !important; /* 5 row x ~32px */
+        min-height: 160px !important;
         height: auto !important;
         padding: 10px !important;
         font-size: 14px !important;
         width: 100% !important;
         box-sizing: border-box !important;
         background: #fff !important;
+        border-radius: 10px !important;
     }
-    /* Language toggle (flag-only) */
+
+    /* ── Language toggle (flag-only) ────────────────────────────────────────── */
     .toggle {
         position: relative;
         height: 42px;
@@ -1068,11 +1235,9 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
     }
     .toggle input[type="checkbox"] {
         position: absolute;
-        left: 0;
-        top: 0;
+        left: 0; top: 0;
         z-index: 0;
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         cursor: pointer;
         opacity: 0;
     }
@@ -1086,69 +1251,29 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         width: 110px;
         border-radius: 30px;
         border: 1px solid transparent;
-        background: transparent;
+        background: rgba(255,255,255,0.15);
         overflow: visible;
         padding: 0 2px;
     }
     .toggle label .flag {
-        width: 42px;
-        height: 42px;
+        width: 38px; height: 38px;
         display: block;
-        transition:
-            opacity 0.15s ease,
-            transform 0.12s ease;
-        opacity: 0.5; /* default inactive look */
+        transition: opacity 0.15s ease, transform 0.12s ease;
+        opacity: 0.45;
         cursor: pointer;
         position: relative;
-        z-index: 2; /* allow hover on flags */
+        z-index: 2;
+        filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
     }
-    .toggle label .flag.left {
-        margin-left: 8px;
-    }
-    .toggle label .flag.right {
-        margin-left: 0;
-        margin-right: 8px;
-    }
-    /* Active/inactive states based on checkbox (unchecked = id active) */
-    .toggle input[type="checkbox"]:not(:checked) + label .flag.left {
-        opacity: 1;
-    }
-    .toggle input[type="checkbox"]:not(:checked) + label .flag.right {
-        opacity: 0.5;
-    }
-    .toggle input[type="checkbox"]:checked + label .flag.left {
-        opacity: 0.5;
-    }
-    .toggle input[type="checkbox"]:checked + label .flag.right {
-        opacity: 1;
-    }
-    /* Hover: whichever flag hovered becomes full opacity */
-    .toggle label .flag:hover {
-        opacity: 1;
-        transform: scale(1.06);
-    }
+    .toggle label .flag.left  { margin-left: 8px; }
+    .toggle label .flag.right { margin-left: 0; margin-right: 8px; }
+    .toggle input[type="checkbox"]:not(:checked) + label .flag.left  { opacity: 1; }
+    .toggle input[type="checkbox"]:not(:checked) + label .flag.right { opacity: 0.45; }
+    .toggle input[type="checkbox"]:checked + label .flag.left  { opacity: 0.45; }
+    .toggle input[type="checkbox"]:checked + label .flag.right { opacity: 1; }
+    .toggle label .flag:hover { opacity: 1; transform: scale(1.08); }
 
-    /* Inline message alert block */
-    .message {
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 20px;
-        border-left: 4px solid transparent;
-        line-height: 1.5;
-    }
-    .message.error {
-        background: #fff5f5;
-        color: #c0392b;
-        border-left-color: #e74c3c;
-    }
-    .message.success {
-        background: #f0fff4;
-        color: #1e8449;
-        border-left-color: #27ae60;
-    }
-    /* ── Review Modal ── */
+    /* ── Review Modal ───────────────────────────────────────────────────────── */
     #review-modal {
         position: fixed;
         inset: 0;
@@ -1161,31 +1286,25 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
     .review-modal-backdrop {
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0.55);
-        backdrop-filter: blur(3px);
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
     }
     .review-modal-box {
         position: relative;
         background: #fff;
-        border-radius: 14px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        border-radius: 16px;
+        box-shadow: 0 24px 64px rgba(0,0,0,0.2);
         max-width: 540px;
         width: 100%;
         max-height: 85vh;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        animation: modalIn 0.22s ease;
+        animation: modalIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     @keyframes modalIn {
-        from {
-            opacity: 0;
-            transform: scale(0.94) translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
+        from { opacity: 0; transform: scale(0.95) translateY(8px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
     }
     .review-modal-header {
         display: flex;
@@ -1195,20 +1314,18 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         border-bottom: 1px solid #f0f0f0;
     }
     .review-modal-header.has-errors {
-        background: linear-gradient(135deg, #fff5f5 0%, #fff 60%);
-        border-bottom-color: #ffd6d6;
+        background: linear-gradient(135deg, #fef2f2 0%, #fff 60%);
+        border-bottom-color: #fecaca;
     }
     .review-modal-header.is-ok {
-        background: linear-gradient(135deg, #f0fff4 0%, #fff 60%);
-        border-bottom-color: #c3f0d4;
+        background: linear-gradient(135deg, #f0fdf4 0%, #fff 60%);
+        border-bottom-color: #bbf7d0;
     }
-    .review-modal-icon {
-        display: none;
-    }
+    .review-modal-icon { display: none; }
     .review-modal-header h2 {
         font-size: 17px;
         font-weight: 700;
-        color: #222;
+        color: #1e293b;
         margin: 0;
     }
     .review-modal-body {
@@ -1216,10 +1333,220 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         overflow-y: auto;
         flex: 1;
     }
+    .review-btn-fix {
+        background: #f8fafc;
+        color: #475569;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-size: 13.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    .review-btn-fix:hover { background: #f1f5f9; border-color: #cbd5e1; }
+    .review-btn-confirm {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 22px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    .review-btn-confirm:hover {
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+        transform: translateY(-1px);
+    }
+
+    /* ── Mobile responsiveness ──────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+        .registration-wrapper {
+            padding: 16px 8px;
+        }
+        .container {
+            border-radius: 12px;
+        }
+        .form-header {
+            padding: 20px 20px 18px;
+        }
+        .form-header h1 {
+            font-size: 18px;
+        }
+        .header-subtitle {
+            font-size: 12px;
+        }
+        .form-body {
+            padding: 20px 16px;
+        }
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        .form-actions {
+            flex-direction: column;
+        }
+        .progress-label {
+            font-size: 9px;
+        }
+        .progress-circle {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+        .progress-step:not(:last-child)::after {
+            top: 15px;
+            left: calc(50% + 18px);
+            width: calc(100% - 36px);
+        }
+        .section-title {
+            font-size: 16px;
+        }
+        .btn-next, .btn-prev, .btn-submit {
+            padding: 14px 20px;
+            font-size: 15px;
+        }
+        /* Larger touch targets on mobile */
+        .checkbox-item,
+        .radio-item {
+            padding: 8px 10px;
+            min-height: 44px;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .registration-wrapper {
+            padding: 8px 4px;
+        }
+        .form-header {
+            padding: 16px 16px 14px;
+        }
+        .form-body {
+            padding: 16px 12px;
+        }
+        .progress-bar {
+            gap: 2px;
+            margin-bottom: 24px;
+        }
+        .progress-label {
+            font-size: 8px;
+            max-width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .progress-circle {
+            width: 28px;
+            height: 28px;
+            font-size: 11px;
+        }
+    }
+
+    /* ── Focus-visible outlines for accessibility ──────────────────────────── */
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    button:focus-visible {
+        outline: 2px solid #145da0;
+        outline-offset: 2px;
+    }
+
+    /* ── Disabled state ─────────────────────────────────────────────────────── */
+    input:disabled, select:disabled, textarea:disabled {
+        background: #f9fafb !important;
+        color: #9ca3af !important;
+        cursor: not-allowed;
+    }
+
+    /* ── Print styles ───────────────────────────────────────────────────────── */
+    @media print {
+        .registration-wrapper { background: #fff; padding: 0; }
+        .container { box-shadow: none; border: 1px solid #ddd; }
+        .form-actions, .toggle, .lang-toggle-row { display: none !important; }
+        .form-section { display: block !important; page-break-inside: avoid; }
+        .progress-bar { display: none; }
+    }
+</style>
+
+<!-- Global styles for JS-created elements (Astro scoped styles won't reach document.createElement) -->
+<style is:global>
+    /* ══════════════════════════════════════════════════════════════════════════
+       DYNAMIC ELEMENT STYLES — field errors, toasts, review modal content
+       These elements are created by JS at runtime, so they need :global scope.
+       ══════════════════════════════════════════════════════════════════════════ */
+
+    /* ── Inline field error messages ─────────────────────────────────────── */
+    .field-error-msg {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 6px;
+        padding: 8px 12px;
+        background: linear-gradient(135deg, #fef2f2 0%, #fff5f5 100%);
+        border: 1px solid #fecaca;
+        border-left: 3px solid #dc2626;
+        border-radius: 0 8px 8px 0;
+        color: #991b1b;
+        font-size: 12.5px;
+        font-weight: 600;
+        line-height: 1.4;
+        animation: shakeIn 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+    .field-error-msg::before {
+        content: "";
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23dc2626'%3E%3Cpath fill-rule='evenodd' d='M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.168 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    @keyframes shakeIn {
+        0%   { opacity: 0; transform: translateX(-8px); }
+        30%  { transform: translateX(5px); }
+        60%  { transform: translateX(-3px); }
+        80%  { transform: translateX(1px); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .checkbox-group-error {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        background: linear-gradient(135deg, #fef2f2 0%, #fff5f5 100%);
+        border: 1px solid #fecaca;
+        border-left: 3px solid #dc2626;
+        border-radius: 0 8px 8px 0;
+        color: #991b1b;
+        font-size: 12.5px;
+        font-weight: 600;
+        line-height: 1.4;
+        animation: shakeIn 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+    .checkbox-group-error::before {
+        content: "";
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23dc2626'%3E%3Cpath fill-rule='evenodd' d='M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.168 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    /* ── Review modal dynamic content ────────────────────────────────────── */
     .review-issue-list {
         list-style: none;
-        margin: 0;
-        padding: 0;
+        margin: 0; padding: 0;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -1228,182 +1555,156 @@ const description = "Form pendaftaran siswa Ultimate Education untuk berbagai pr
         display: flex;
         align-items: baseline;
         gap: 10px;
-        background: #fdf2f2;
-        border-left: 3px solid #e74c3c;
-        border-radius: 0 6px 6px 0;
+        background: #fef2f2;
+        border-left: 3px solid #ef4444;
+        border-radius: 0 8px 8px 0;
         padding: 10px 14px;
         font-size: 13.5px;
-        color: #333;
+        color: #334155;
         line-height: 1.5;
     }
     .review-issue-item .issue-dot {
-        width: 6px;
-        height: 6px;
+        width: 6px; height: 6px;
         border-radius: 50%;
-        background: #e74c3c;
+        background: #ef4444;
         flex-shrink: 0;
         margin-top: 7px;
     }
-    .review-issue-item .issue-text {
-        flex: 1;
-    }
-    .review-issue-item .issue-label {
-        font-weight: 700;
-        color: #c0392b;
-    }
-    .review-issue-item .issue-detail {
-        color: #666;
-        font-weight: 400;
-    }
+    .review-issue-item .issue-text { flex: 1; }
+    .review-issue-item .issue-label { font-weight: 700; color: #b91c1c; }
+    .review-issue-item .issue-detail { color: #6b7280; font-weight: 400; }
     .review-ok-msg {
-        background: #f0faf4;
-        border-left: 3px solid #27ae60;
-        border-radius: 0 6px 6px 0;
+        background: #f0fdf4;
+        border-left: 3px solid #22c55e;
+        border-radius: 0 8px 8px 0;
         padding: 16px 18px;
         font-size: 14px;
-        color: #1e8449;
+        color: #166534;
         font-weight: 500;
         line-height: 1.6;
     }
-    .review-modal-footer {
-        padding: 14px 24px;
-        border-top: 1px solid #f0f0f0;
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-    }
-    .review-btn-fix {
-        background: #f5f5f5;
-        color: #333;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px 22px;
-        font-size: 13.5px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.15s;
-    }
-    .review-btn-fix:hover {
-        background: #eee;
-    }
-    .review-btn-confirm {
-        background: #27ae60;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 22px;
-        font-size: 13.5px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: opacity 0.15s;
-    }
-    .review-btn-confirm:hover {
-        opacity: 0.88;
-    }
 
-    /* ── Inline field error messages ── */
-    .field-error-msg {
-        color: #c0392b;
-        font-size: 11.5px;
-        font-weight: 500;
-        margin-top: 4px;
-        padding: 0;
-        background: none;
-        border: none;
-        animation: fadeInMsg 0.2s ease;
-    }
-    @keyframes fadeInMsg {
-        from {
-            opacity: 0;
-            transform: translateY(-2px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    .checkbox-group-error {
-        margin-top: 6px;
-        color: #c0392b;
-        font-size: 11.5px;
-        font-weight: 500;
-        animation: fadeInMsg 0.2s ease;
-    }
-
-    /* Toast notifications */
+    /* ── Toast notifications ─────────────────────────────────────────────── */
     #toast-container {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 24px;
+        right: 24px;
         z-index: 99999;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         pointer-events: none;
     }
     .toast {
-        min-width: 300px;
-        max-width: 420px;
+        min-width: 340px;
+        max-width: 460px;
         color: #fff;
-        background: #1e1e2e;
-        border-radius: 8px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        border-radius: 14px;
         display: flex;
-        align-items: stretch;
+        align-items: center;
         pointer-events: auto;
-        transform: translateX(110%);
+        transform: translateX(110%) scale(0.95);
         opacity: 0;
         transition:
-            transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
-            opacity 220ms ease;
+            transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 250ms ease;
         overflow: hidden;
     }
-    .toast.show {
-        transform: translateX(0);
-        opacity: 1;
+    .toast.show { transform: translateX(0) scale(1); opacity: 1; }
+
+    /* Error toast — bold red gradient + warning icon */
+    .toast.error {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        box-shadow:
+            0 10px 40px rgba(220, 38, 38, 0.4),
+            0 2px 8px rgba(0, 0, 0, 0.15);
     }
+    /* Success toast — bold green gradient + check icon */
+    .toast.success {
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        box-shadow:
+            0 10px 40px rgba(22, 163, 74, 0.4),
+            0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
     .toast-accent {
-        width: 4px;
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 4px 14px 16px;
     }
-    .toast.error .toast-accent {
-        background: #e74c3c;
+    .toast-accent::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        background-size: 18px 18px;
+        background-position: center;
+        background-repeat: no-repeat;
     }
-    .toast.success .toast-accent {
-        background: #27ae60;
+    .toast.error .toast-accent::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
     }
+    .toast.success .toast-accent::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E");
+    }
+
     .toast-body {
         flex: 1;
-        padding: 12px 14px;
+        padding: 14px 8px 14px 12px;
         display: flex;
         flex-direction: column;
         gap: 2px;
     }
     .toast-label {
         font-size: 10.5px;
-        font-weight: 700;
+        font-weight: 800;
         letter-spacing: 0.8px;
         text-transform: uppercase;
-        opacity: 0.5;
+        opacity: 0.85;
     }
     .toast .msg {
-        font-size: 13px;
-        line-height: 1.4;
+        font-size: 13.5px;
+        line-height: 1.45;
         font-weight: 500;
+        opacity: 0.95;
     }
     .toast .close {
-        background: transparent;
+        background: rgba(255, 255, 255, 0.15);
         border: 0;
-        color: rgba(255, 255, 255, 0.35);
+        color: rgba(255, 255, 255, 0.8);
         font-size: 18px;
+        font-weight: 700;
         cursor: pointer;
-        padding: 0 14px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
-        transition: color 0.15s;
+        justify-content: center;
+        margin-right: 12px;
+        flex-shrink: 0;
+        transition: all 0.15s;
     }
     .toast .close:hover {
-        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.3);
+        color: #fff;
+    }
+
+    /* ── Toast + field error mobile overrides ────────────────────────────── */
+    @media (max-width: 768px) {
+        .toast {
+            min-width: 260px;
+            max-width: calc(100vw - 40px);
+        }
+        #toast-container {
+            right: 10px;
+            left: 10px;
+        }
     }
 </style>
 
